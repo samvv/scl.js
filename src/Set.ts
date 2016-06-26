@@ -1,5 +1,7 @@
 
-export class Set<T> implements Set<T> {
+import { Container } from "../interfaces/Container"
+
+export class Set<T> implements Container<T> {
 
   elements: Object
 
