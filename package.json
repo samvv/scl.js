@@ -1,0 +1,5 @@
+{
+  "name": "containers",
+  "description": "A collection of typed containers for JavaScript.",
+  "repo": "http://github.com/samvv/typescript-containers"
+}
