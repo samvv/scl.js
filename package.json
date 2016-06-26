@@ -1,5 +1,8 @@
 {
   "name": "containers",
   "description": "A collection of typed containers for JavaScript.",
-  "repo": "http://github.com/samvv/typescript-containers"
+  "repo": "http://github.com/samvv/typescript-containers",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
 }
