@@ -7,13 +7,14 @@ This is my personal collection of common JavaScript containers, plain and simple
 I was fed up with writing the same boilerplate code over and over again, and I
 needed a library over which I had some control. I ended up writing my own.
 
-| Container    | Type                  | Unique |
-|--------------|-----------------------|--------|
-| Bag          | T                     | No     |
-| Set          | T                     | Yes    |
-| Dict         | Pair&lt;K, V&gt;      | Yes    |
-| MultiDict    | Pair&lt;K, V&gt;      | No     |
-| NamedSet<T>  | Pair&lt;string, V&gt; | Yes    |
+| Container    | Type                  | Unique | Order     |
+|--------------|-----------------------|--------|------------
+| Bag          | T                     | No     | No
+| Set          | T                     | Yes    | No
+| List         | T                     | No     | Yes     
+| Dict         | Pair&lt;K, V&gt;      | Yes    | No
+| MultiDict    | Pair&lt;K, V&gt;      | No     | No
+| NamedSet     | Pair&lt;string, V&gt; | Yes    | No
 
 Found an issue? Need a certain kind of container? [File an
 issue](https://github.com/samvv/typescript-containers/issues) or [send me a
