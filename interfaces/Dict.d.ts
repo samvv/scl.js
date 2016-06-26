@@ -7,6 +7,7 @@ export interface Pair<K, V> {
 }
 
 export interface Dict<K, V> extends Container<Pair<K, V>> {
+  addPair(key: K, value: V)
   hasKey(key: K)
   hasValue(value: V)
   removeKey(key: K)
