@@ -41,6 +41,8 @@ Consult the [API docs](http://samvv.github.io/project/typescript-containers/api)
 
 You might also be interested in knowing [how this library's iterators work](http://github.com/samvv/typescript-containers/wiki/Iterators).
 
+Need to go asynchronous? Check out our [asynchronous containers](https://github.com/samvv/typescript-async-containers) library.
+
 Found an issue? Need a certain kind of container? [File an
 issue](https://github.com/samvv/typescript-containers/issues) or [send me a
 pull request](https://github.com/samvv/typescript-containers/pulls).
