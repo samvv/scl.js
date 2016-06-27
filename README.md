@@ -7,6 +7,8 @@ TypeScript Containers
 npm install --save sync-containers
 ```
 
+:warning: **Seeking maintainers**: we are seeking people who can help expand and maintain this library.
+
 This is my personal collection of common JavaScript containers, plain and simple.
 I was fed up with writing the same boilerplate code over and over again, and I
 needed a library over which I had some control. I ended up writing my own.
