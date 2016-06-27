@@ -12,7 +12,7 @@ I was fed up with writing the same boilerplate code over and over again, and I
 needed a library over which I had some control. I ended up writing my own.
 
 | Container        | Type                  | Unique | Order     |
-|------------------|-----------------------|--------|------------
+|------------------|-----------------------|--------|-----------|
 | Bag              | T                     | No     | No        |
 | Set              | T                     | Yes    | No        |
 | List             | T                     | No     | Yes       |
@@ -23,8 +23,9 @@ needed a library over which I had some control. I ended up writing my own.
 
 ### Unordered Containers
 
-| Name           | Memory | Insert | Append | Prepend
-|----------------|--------|--------|--------|-------------
+| Name           | Memory | Add    | Remove | Member  |
+|----------------|--------|--------|--------|---------|
+| HashSet        | O(n)   | O(1)   | O(1)   | O(1)    |
 
 ### Ordered Containers
 
