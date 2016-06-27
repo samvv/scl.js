@@ -1,15 +1,23 @@
 
-/**
- * A bag is much like a set, in that no order is specified on the underlying
- * elements, but contrary to a set it can hold multiple values of the same
- * kind.
- */
-export class Bag<T> {
+/// <reference path="../typings/index.d.ts" />
+
+import { ArrayIterator } from "./ArrayIterator"
+import { Bag } from "../interfaces/Bag"
+
+export class ArrayBag<T> implements Bag<T> {
 
   elements: T[] = []
 
   add(el: T) { 
     this.elements.push(el)
+  }
+
+  [Symbol.iterator]() {
+    return this.iterator()
+  }
+
+  iterator() {
+    return new ArrayIterator(this.elements)
   }
 
   remove(el: T) {
