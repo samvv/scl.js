@@ -11,6 +11,8 @@ This is my personal collection of common JavaScript containers, plain and simple
 I was fed up with writing the same boilerplate code over and over again, and I
 needed a library over which I had some control. I ended up writing my own.
 
+:point_up: We could use a helping hand. If you think you're up for it, [open an issue](https://github.com/samvv/typescript-containers/issues/new).
+
 | Container        | Type                  | Unique | Order     |
 |------------------|-----------------------|--------|-----------|
 | Bag              | T                     | No     | No        |
