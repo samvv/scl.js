@@ -1,7 +1,7 @@
 {
   "name": "sync-containers",
   "description": "A collection of typed containers for JavaScript.",
-  "repo": "http://github.com/samvv/typescript-containers",
+  "repository": "samvv/typescript-containers",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
