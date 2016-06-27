@@ -13,12 +13,25 @@ needed a library over which I had some control. I ended up writing my own.
 
 | Container    | Type                  | Unique | Order     |
 |--------------|-----------------------|--------|------------
-| Bag          | T                     | No     | No
-| Set          | T                     | Yes    | No
-| List         | T                     | No     | Yes     
-| Dict         | Pair&lt;K, V&gt;      | Yes    | No
-| MultiDict    | Pair&lt;K, V&gt;      | No     | No
-| NamedSet     | Pair&lt;string, V&gt; | Yes    | No
+| Bag          | T                     | No     | No        |
+| Set          | T                     | Yes    | No        |
+| List         | T                     | No     | Yes       |
+| Dict         | Pair&lt;K, V&gt;      | Yes    | No        |
+| MultiDict    | Pair&lt;K, V&gt;      | No     | No        |
+| NamedSet     | Pair&lt;string, V&gt; | Yes    | No        |
+
+### Unordered Containers
+
+| Name           | Memory | Insert | Append | Prepend
+|----------------|--------|--------|--------|-------------
+
+### Ordered Containers
+
+| Name              | Memory  | Insert  | Append  | Prepend | Next | Prev | 
+|-------------------|---------|---------|---------|---------|------|------|
+| ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(1) | O(§) | 
+| SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(1) | O(n) |
+| DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(1) | O(1) |
 
 Found an issue? Need a certain kind of container? [File an
 issue](https://github.com/samvv/typescript-containers/issues) or [send me a
