@@ -27,11 +27,11 @@ needed a library over which I had some control. I ended up writing my own.
 
 ### Ordered Containers
 
-| Name              | Memory  | Insert  | Append  | Prepend | Next | Prev | 
-|-------------------|---------|---------|---------|---------|------|------|
-| ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(1) | O(§) | 
-| SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(1) | O(n) |
-| DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(1) | O(1) |
+| Name              | Memory  | Insert  | Append  | Prepend | Ref  | Next | Prev | 
+|-------------------|---------|---------|---------|---------|------|------|------|
+| ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(1) | O(1) | O(1) | 
+| SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(n) | O(1) | O(n) |
+| DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(n) | O(1) | O(1) |
 
 Found an issue? Need a certain kind of container? [File an
 issue](https://github.com/samvv/typescript-containers/issues) or [send me a
