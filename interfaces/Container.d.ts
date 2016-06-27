@@ -30,5 +30,11 @@ export interface Container<T> {
    * container that does provide this guarantee.
    */
   iterator(): Iterator<T> 
+
+  /**
+   * Remove all elements from this container, effectively setting the container
+   * to the empty state.
+   */
+  clear()
 }
 
