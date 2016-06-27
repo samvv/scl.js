@@ -32,6 +32,7 @@ needed a library over which I had some control. I ended up writing my own.
 | Name              | Memory  | Insert  | Append  | Prepend | Member | Ref  | Next | Prev | 
 |-------------------|---------|---------|---------|---------|--------|------|------|------|
 | ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) | 
+| ArrayList         | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
 | SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
 | DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
