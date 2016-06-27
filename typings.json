@@ -1,6 +1,7 @@
 {
   "dependencies": {},
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160602141332"
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "mocha": "registry:dt/mocha#2.2.5+20160619032855"
   }
 }
