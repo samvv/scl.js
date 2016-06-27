@@ -11,14 +11,15 @@ This is my personal collection of common JavaScript containers, plain and simple
 I was fed up with writing the same boilerplate code over and over again, and I
 needed a library over which I had some control. I ended up writing my own.
 
-| Container    | Type                  | Unique | Order     |
-|--------------|-----------------------|--------|------------
-| Bag          | T                     | No     | No        |
-| Set          | T                     | Yes    | No        |
-| List         | T                     | No     | Yes       |
-| Dict         | Pair&lt;K, V&gt;      | Yes    | No        |
-| MultiDict    | Pair&lt;K, V&gt;      | No     | No        |
-| NamedSet     | Pair&lt;string, V&gt; | Yes    | No        |
+| Container        | Type                  | Unique | Order     |
+|------------------|-----------------------|--------|------------
+| Bag              | T                     | No     | No        |
+| Set              | T                     | Yes    | No        |
+| List             | T                     | No     | Yes       |
+| Vector           | T                     | No     | Yes       |
+| Dict             | Pair&lt;K, V&gt;      | Yes    | No        |
+| MultiDict        | Pair&lt;K, V&gt;      | No     | No        |
+| NamedSet         | Pair&lt;string, V&gt; | Yes    | No        |
 
 ### Unordered Containers
 
