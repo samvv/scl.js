@@ -42,20 +42,6 @@ Consult the [API docs](http://samvv.github.io/project/typescript-containers/api)
 
 You might also be interested in knowing [how this library's iterators work](http://github.com/samvv/typescript-containers/wiki/Iterators).
 
-## Examples
-
-```ts
-const set = new HashSet<number>()
-set.add(1)
-set.add(1) // throws error
-if (set.has(1))
-  set.add(3)
-set.remove(1)
-set.remove(5) // throws error
-for (const num of set)
-  console.log(`Set has ${num}`)
-```
-
 Found an issue? Need a certain kind of container? [File an
 issue](https://github.com/samvv/typescript-containers/issues) or [send me a
 pull request](https://github.com/samvv/typescript-containers/pulls).
