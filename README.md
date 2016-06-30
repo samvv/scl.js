@@ -45,7 +45,7 @@ needed a library over which I had some control. I ended up writing my own.
 ### Queues
 
 | Name           | Enqueue   | Dequeue    | Reschedule   | Implemented |
-|----------------------------------------------------------------------|
+|----------------|-----------|------------|--------------|-------------|
 | Queue          | O(1)      | O(1)       | n.a.         |             | 
 | PriorityQueue  | O(log(n)) | O(1)       | O(log(n))    | in progress |
 
