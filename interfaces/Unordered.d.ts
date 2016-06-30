@@ -15,10 +15,5 @@ export interface UnorderedContainer<T> extends Container<T> {
    * the container picks one of them.
    */
   remove(el: T)
-  /**
-   * Remove all occurrences of the given element from the container. This is
-   * only needed for containers that have no uniqueness constraint on them.
-   */
-  removeAll?(el: T)
 }
 
