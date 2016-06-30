@@ -2,17 +2,37 @@
 /// <reference path="../typings/index.d.ts" />
 
 import { Pair, Dict } from "../interfaces/Dict"
+import { ArrayIterator } from "./ArrayIterator"
 
 export class NamedSet<T> implements  Dict<string, T> {
 
-  elements: { [name: string]: T }
+  elements: { [name: string]: T } = {};
 
   [Symbol.iterator]() {
-    return Object.keys(this.elements).map(key => ({ key: key, value: this.elements[key] }))
+    return this.iterator()
+  }
+
+  clear() {
+    this.elements = {}
+  }
+
+  iterator() {
+    return new ArrayIterator(Object.keys(this.elements))
+      .map(key => ({ key: key, value: this.elements[key] }))
+  }
+
+  getValue(name: string) {
+    if (!this.elements[name])
+      throw new Error(`name '${name}' not found`)
+    return this.elements[name]
   }
 
   add(pair: Pair<string, T>) {
     this.addPair(pair.key, pair.value)
+  }
+
+  has(pair: Pair<string, T>) {
+    return !!this.elements[pair.key]
   }
 
   remove(pair: Pair<string, T>) {
