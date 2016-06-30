@@ -1,14 +1,14 @@
 
-// TODO: add me to http://github.com/samvv/typescript-containers
+import { Pair, Dict } from "../interfaces/Dict"
 
 /**
  * Maps keys to object where keys are separable in several smaller chunks.
  */
-export class DeepDict<T> {
+export class DeepDict<K, V> implements Dict<K[], V> {
 
   rootNode: any = {}
 
-  has(path: any[]) {
+  hasKey(path: K[]) {
     let node = this.rootNode
     for (const chunk of path) {
       node = node[chunk]
@@ -18,7 +18,11 @@ export class DeepDict<T> {
     return true
   }
 
-  get(path: any[]) {
+  hasValue(value: V) {
+    throw new Error(`not implemented`)
+  }
+
+  get(path: K[]) {
     let node = this.rootNode
     for (const chunk of path) {
       node = node[chunk]
@@ -28,7 +32,11 @@ export class DeepDict<T> {
     return node
   }
 
-  add(path: any[], el: T) {
+  add(pair: Pair<K[], V>) {
+    this.addPair(pair.key, pair.value)
+  }
+
+  addPair(path: K[], el: V) {
     let node = this.rootNode
     for (const chunk of path.slice(0, -1)) {
       if (!node[chunk])
