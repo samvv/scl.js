@@ -5,5 +5,8 @@
   "globalDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160602141332",
     "mocha": "registry:dt/mocha#2.2.5+20160619032855"
+  },
+  "devDependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160415060238"
   }
 }
