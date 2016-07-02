@@ -32,7 +32,7 @@ needed a library over which I had some control. I ended up writing my own.
 |----------------|-----------|-----------|-----------|---------|
 | HashSet        | O(n)      | O(1)      | O(1)      | O(1)    |
 | NamedSet       | O(n)      | O(1)      | O(1)      | O(1)    |
-| PriorityQueue  | Memory(n) | O(log(n)) | O(log(n)) | O(n)    |
+| PriorityQueue  | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
 
 ### Ordered Containers
 
