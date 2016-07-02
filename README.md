@@ -49,7 +49,7 @@ needed a library over which I had some control. I ended up writing my own.
 | Queue          | O(1)      | O(1)       | n.a.         |             | 
 | PriorityQueue  | O(log(n)) | O(1)       | O(log(n))    | in progress |
 
-Consult the [API docs](http://samvv.github.io/project/typescript-containers/api) for more information on how to use them.
+Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
 
 You might also be interested in knowing [how this library's iterators work](http://github.com/samvv/typescript-containers/wiki/Iterators).
 
