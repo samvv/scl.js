@@ -28,6 +28,10 @@ export class PriorityQueue<T> {
     return this.heap.min()
   }
 
+  isEmpty() {
+    return this.heap.isEmpty()
+  }
+
   dequeue() {
     const min = this.heap.min()
     this.heap.removeMin()
