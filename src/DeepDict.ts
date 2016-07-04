@@ -29,6 +29,8 @@ export class DeepDict<K, V> implements Dict<K[], V> {
   }
 
   hasKey(path: K[]) {
+    if (!(path instanceof Array))
+      return false
     let node = this.rootNode
     for (const chunk of path) {
       node = node[chunk]
