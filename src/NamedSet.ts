@@ -36,7 +36,7 @@ export class NamedSet<T> implements  Dict<string, T> {
   }
 
   remove(pair: Pair<string, T>) {
-    if (!this.elements[pair.key])
+    if (this.elements[pair.key] === undefined)
       throw new Error(`name '${pair.key}' not part of set`)
     if (this.elements[pair.key] !== pair.value)
       throw new Error(`name '${pair.key}' refers to a different value`)
@@ -44,19 +44,19 @@ export class NamedSet<T> implements  Dict<string, T> {
   }
 
   addPair(name: string, value: T) {
-    if (!this.elements[name])
+    if (this.elements[name] !== undefined)
       throw new Error(`name '${name}' already exists`)
     this.elements[name] = value
   }
 
   removeKey(name: string) {
-    if (!this.elements[name])
+    if (this.elements[name] === undefined)
       throw new Error(`name '${name}' not found`)
     delete this.elements[name]
   }
 
   hasKey(name: string) {
-    return !!this.elements[name]
+    return this.elements[name] !== undefined
   }
 
   hasValue(value: T) {
