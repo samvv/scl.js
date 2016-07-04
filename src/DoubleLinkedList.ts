@@ -77,18 +77,18 @@ export class DoubleLinkedList<T> implements List<T> {
     return this.lastCell.value
   }
 
-  removeFirst(el: T) {
-    const cell = this.findCell(el)
-    if (!cell)
-      throw new Error(`element ${el} not found`)
-    this.removeCell(cell)
+  removeFirst() {
+    if (this.firstCell === null)
+      throw new Error(`list is empty`)
+    this.firstCell = this.firstCell.next
+    this.firstCell.prev = null
   }
 
-  removeLast(el: T) {
-    const cell = this.findLastCell(el)
-    if (!cell)
-      throw new Error(`element ${el} not found`)
-    this.removeCell(cell)
+  removeLast() {
+    if (this.lastCell === null)
+      throw new Error(`list is empty`)
+    this.lastCell = this.firstCell.prev
+    this.lastCell.next = null
   }
 
   private findCell(el: T) {
