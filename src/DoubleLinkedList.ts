@@ -65,6 +65,18 @@ export class DoubleLinkedList<T> implements List<T> {
     return this.iterator()
   }
 
+  first() {
+    if (this.firstCell === null)
+      throw new Error(`list is empty`)
+    return this.firstCell.value
+  }
+
+  last() {
+    if (this.lastCell === null)
+      throw new Error(`list is empty`)
+    return this.lastCell.value
+  }
+
   removeFirst(el: T) {
     const cell = this.findCell(el)
     if (!cell)
