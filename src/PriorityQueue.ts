@@ -41,6 +41,10 @@ export class PriorityQueue<T> {
   has(el: T) {
     return this.heap.has(el)
   }
+  
+  clear() {
+    this.heap.clear()
+  }
 
   remove(el: T) {
     this.heap.remove(el)
