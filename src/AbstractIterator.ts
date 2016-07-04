@@ -11,7 +11,7 @@ export abstract class AbstractIterator<T> implements Iterator<T> {
       next(): { done: boolean, value?: R } {
         const n = parent.next()
         if (n.done)
-          return { done: false }
+          return { done: true }
         return { done: false, value: proc(n.value) }
       }
     }
