@@ -1,6 +1,7 @@
 
 /// <reference path="../typings/index.d.ts" />
 
+
 import { ArrayIterator } from "../src/ArrayIterator"
 import { UnorderedContainer } from "../interfaces/UnorderedContainer"
 
@@ -8,15 +9,22 @@ export class HashSet<T> implements UnorderedContainer<T> {
 
   elements: Object = {}
 
-  iterator() {
+  iterator(): Iterator<T> {
     const keys = Object.keys(this.elements)
         , set = this
     return new ArrayIterator(keys)
-      .map(key => ({ key: key, value: this.elements[key] }))
   }
 
-  [Symbol.iterator]() { 
+  [Symbol.iterator](): Iterator<T> { 
     return this.iterator()
+  }
+
+  isEmpty() {
+    return Object.keys(this.elements).length === 0
+  }
+
+  clear() {
+    this.elements = {}
   }
 
   add(el: T) {
