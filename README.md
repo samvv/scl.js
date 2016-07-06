@@ -11,7 +11,12 @@ This is my personal collection of common JavaScript containers, plain and simple
 I was fed up with writing the same boilerplate code over and over again, and I
 needed a library over which I had some control. I ended up writing my own.
 
-:point_up: We could use a helping hand. If you think you're up for it, [open an issue](https://github.com/samvv/typescript-containers/issues/new).
+:point_up: We could use a helping hand. If you think you're up for it,
+[open an issue](https://github.com/samvv/typescript-containers/issues/new).
+
+:warning: These containers have not extensively been tested just yet. However,
+I do make use of them in my projects, so most common use cases should work.
+Above that, you are invited to make use of them and report any issue on GitHub.
 
 ### Interfaces
 
@@ -36,18 +41,18 @@ needed a library over which I had some control. I ended up writing my own.
 
 ### Ordered Containers
 
-|   | Name              | Memory  | Insert  | Append  | Prepend | Member | Ref  | Next | Prev |
-|---|-------------------|---------|---------|---------|---------|--------|------|------|------|
-| ✓ | ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
-| ✓ | SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
-| ✓ | DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
+| Name              | Memory  | Insert  | Append  | Prepend | Member | Ref  | Next | Prev |
+|-------------------|---------|---------|---------|---------|--------|------|------|------|
+| ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
+| SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
+| DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
 ### Queues
 
-| Name           | Enqueue   | Dequeue    | Reschedule   | Implemented |
-|----------------|-----------|------------|--------------|-------------|
-| Queue          | O(1)      | O(1)       | n.a.         |             | 
-| PriorityQueue  | O(log(n)) | O(1)       | O(log(n))    | in progress |
+| Name           | Enqueue   | Dequeue    | Reschedule   |
+|----------------|-----------|------------|--------------|
+| Queue          | O(1)      | O(1)       | n.a.         |
+| PriorityQueue  | O(log(n)) | O(1)       | O(log(n))    |
 
 Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
 
