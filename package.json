@@ -1,6 +1,7 @@
 {
   "name": "sync-containers",
-  "version": "0.2.4",
+  "version": "0.3.6",
+  "main": "lib/index.js",
   "description": "A collection of typed containers for JavaScript.",
   "repository": "samvv/typescript-containers",
   "devDependencies": {
