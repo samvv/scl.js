@@ -30,6 +30,12 @@ export interface Container<T> {
   iterator(): Iterator<T> 
 
   /**
+   * Count the amount of elements in the container. In most cases, this should
+   * be an O(1) operation.
+   */
+  size(): number
+
+  /**
    * Remove all elements from this container, effectively setting the container
    * to the empty state.
    */
