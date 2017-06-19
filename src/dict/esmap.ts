@@ -9,6 +9,10 @@ export class MapDict<K, V> implements Dict<K, V> {
     this.addPair(key, val)
   }
 
+  size() {
+    return this._map.size
+  }
+
   has(pair: Pair<K, V>) {
     return this.hasKey(pair[0])
   }

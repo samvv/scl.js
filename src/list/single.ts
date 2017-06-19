@@ -84,7 +84,18 @@ export class SingleLinkedList<T> implements List<T> {
     }
   }
 
-  count() {
+  count(el: T) {
+    let res = 0
+    let node = this._first
+    while (node !== null) {
+      if (node.value === el)
+        ++res
+      node = node.next
+    }
+    return res
+  }
+
+  size() {
     let res = 0
     let node = this._first
     while (node !== null) {

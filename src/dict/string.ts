@@ -9,6 +9,10 @@ export class StringDict<V> implements Dict<string, V> {
     this.addPair(key, val)
   }
 
+  size() {
+    return Object.keys(this._values).length
+  }
+
   has(pair: Pair<string, V>) {
     return this.hasKey(pair[0])
   }
