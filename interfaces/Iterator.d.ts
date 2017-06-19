@@ -1,13 +1,8 @@
 
 /**
- * Compatible with ES6 definition of the 
- * <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">iterator protocol</a>.
+ * Compatible with ES6 definition of the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">iterator protocol</a>.
  */
-export interface Iterator<T> {
-  /**
-   * Get the next available value.
-   */
-  next(): { done: boolean, value?: T }
+export interface Iterator<T> extends IterableIterator<T> {
   /**
    * Get the value residing before the current one.
    */
