@@ -30,29 +30,6 @@ export interface Container<T> {
   iterator(): Iterator<T> 
 
   /**
-   * Get the first element in the container.
-   *
-   * For queuelike structures such as a stack, this method will be of great
-   * significance.
-   *
-   * For maplike structures such as a set, this method is <b>not</b> guaranteed
-   * to give back the element that was first inserted.
-   */
-  first(): T
-
-  /**
-   * Get the last element in the container.
-   *
-   * For queuelike structures such as a stack, it is preferred to reverse the
-   * order of the container and use `first()` instead, as this can be faster
-   * than finding the last element.
-   *
-   * For unordered containers such as a set, this method is <b>not</b>
-   * guaranteed to give back the element that was most recently inserted.
-   */
-  last(): T
-
-  /**
    * Remove all elements from this container, effectively setting the container
    * to the empty state.
    */
