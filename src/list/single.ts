@@ -26,8 +26,8 @@ class SLIterator<T> implements Iterator<T> {
     if (this._node === null)
       return { _node: this._node, _prevNode: this._prevNode, done: true, value: undefined }
     const res = { _node: this._node, _prevNode: this._prevNode, done: false, value: this._node.value }
-    this._node = this._node.next
     this._prevNode = this._node
+    this._node = this._node.next
     return res
   }
 
@@ -40,17 +40,20 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   insertBefore(pos: IteratorResult<T>, el: T) {
-    if ((<SLIteratorResult<T>>pos)._prevNode === null) {
+    const slpos = (<SLIteratorResult<T>>pos);
+    if (slpos._prevNode === null) {
       this.prepend(el)
+      slpos._prevNode = this._first
     } else {
-      const newNode = { next: (<SLIteratorResult<T>>pos)._node, value: el };
-      (<SLIteratorResult<T>>pos)._prevNode.next = newNode;
-      (<SLIteratorResult<T>>pos)._prevNode = newNode;
+      const newNode = { next: slpos._node, value: el };
+      slpos._prevNode.next = newNode;
+      slpos._prevNode = newNode;
     }
   }
 
   insertAfter(pos: IteratorResult<T>, el: T) {
-    (<SLIteratorResult<T>>pos)._node.next = { value: el, next: null }
+    const node = (<SLIteratorResult<T>>pos)._node;
+    node.next = { value: el, next: node.next }
   }
 
   prepend(el: T) {
