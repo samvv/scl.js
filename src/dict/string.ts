@@ -5,12 +5,12 @@ export class StringDict<V> implements Dict<string, V> {
 
   _values: { [key: string]: V } = Object.create(null)
 
-  add(pair: Pair<string, V>) {
-    this.addPair(pair.key, pair.value)
+  add([key, val]: Pair<string, V>) {
+    this.addPair(key, val)
   }
 
   has(pair: Pair<string, V>) {
-    return this.hasKey(pair.key)
+    return this.hasKey(pair[0])
   }
 
   addPair(key: string, value: V) {
@@ -39,9 +39,9 @@ export class StringDict<V> implements Dict<string, V> {
     return this._values[key] !== undefined
   }
 
-  *iterator() {
+  *iterator(): Iterator<Pair<string, V>> {
     for (const key of Object.keys(this._values))
-      yield { key, value: this._values[key] }
+      yield [key, this._values[key]]
   }
 
   [Symbol.iterator]() {
@@ -49,7 +49,7 @@ export class StringDict<V> implements Dict<string, V> {
   }
 
   delete(pair: Pair<string, V>) {
-    this.deleteKey(pair.key)
+    this.deleteKey(pair[0])
   }
 
   deleteKey(key: string) {
