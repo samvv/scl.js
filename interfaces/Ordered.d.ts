@@ -38,6 +38,6 @@ export interface OrderedContainer<T> extends Container<T> {
    * Return an iterator that is places at the element which is the Nth element
    * in the ascending row leading up to element.
    */
-  at(position: number): Iterator<T>
+  at(position: number): IteratorResult<T>
 }
 
