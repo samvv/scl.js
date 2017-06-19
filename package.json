@@ -1,5 +1,5 @@
 {
-  "name": "scl",
+  "name": "sync-containers",
   "version": "0.3.6",
   "main": "index.js",
   "description": "A collection of typed containers for JavaScript.",
