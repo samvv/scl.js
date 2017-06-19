@@ -12,6 +12,11 @@ import MultiContainer from "./Multi"
  * user.
  */
 export interface Queuelike<T> extends UnorderedContainer<T>, MultiContainer<T> {
-
+  /**
+   * Gets the next element in the order of the queue and removes it from the container.
+   *
+   * This method is very similar to `first()` except that it mutates the container.
+   */
+  dequeue(): T
 }
 
