@@ -20,7 +20,5 @@ export interface Iterator<T> {
    * Rewind {@param offset} values and return the one before it.
    */
   prevN?(offset: number): { done: boolean, value?: T }
-
-  map<R>(proc: (T) => R): Iterator<R>
 }
 
