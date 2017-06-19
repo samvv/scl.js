@@ -1,9 +1,7 @@
 
-/// <reference path="../typings/index.d.ts" />
-
 require('source-map-support').install()
 
-import { HashSet } from "../src/HashSet"
+import { HashSet } from "../HashSet"
 
 import addCTests from "./Container"
 import addUCTests from "./UnorderedContainer"

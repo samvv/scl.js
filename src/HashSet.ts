@@ -1,9 +1,6 @@
 
-/// <reference path="../typings/index.d.ts" />
-
-
-import { ArrayIterator } from "../src/ArrayIterator"
-import { UnorderedContainer } from "../interfaces/UnorderedContainer"
+import { ArrayIterator } from "./ArrayIterator"
+import { UnorderedContainer } from "../interfaces"
 
 export class HashSet<T> implements UnorderedContainer<T> {
 

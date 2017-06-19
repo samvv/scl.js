@@ -1,7 +1,5 @@
 
-/// <reference path="../typings/index.d.ts" />
-
-import { OrderedContainer } from "../interfaces/OrderedContainer"
+import { OrderedContainer } from "../../interfaces"
 import { expect } from "chai"
 
 export default function addGenericOrderedContainerTests(createEmptyOrderedContainer: () => OrderedContainer<any>) {

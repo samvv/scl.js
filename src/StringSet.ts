@@ -1,9 +1,6 @@
 
-/// <reference path="../typings/index.d.ts" />
-
-import { Iterator } from "../interfaces/Iterator"
-import { ArrayIterator } from "../src/ArrayIterator"
-import { UnorderedContainer } from "../interfaces/Unordered"
+import { Iterator, UnorderedContainer  } from "../interfaces"
+import { ArrayIterator } from "./ArrayIterator"
 
 export class StringSet implements UnorderedContainer<string> {
 

@@ -1,9 +1,7 @@
 
-/// <reference path="../typings/index.d.ts" />
-
 import { expect } from "chai"
 
-import { UnorderedContainer } from "../interfaces/UnorderedContainer"
+import { UnorderedContainer } from "../../interfaces"
 
 export default function addGenericUnorderedContainerTests(createEmptyUnorderedContainer: () => UnorderedContainer<any>) {
 

@@ -1,7 +1,5 @@
 
-/// <reference path="../typings/index.d.ts" />
-
-import { SingleLinkedList } from "../src/SingleLinkedList"
+import { SingleLinkedList } from "../SingleLinkedList"
 import addCTests from "./Container"
 import addOCTests from "./OrderedContainer"
 

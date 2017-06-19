@@ -2,7 +2,7 @@
 import addGenericUnorderedContainerTests from "./UnorderedContainer"
 import addGenericBagTests from "./Bag"
 
-import { ArrayBag } from "../src/ArrayBag"
+import { ArrayBag } from "../ArrayBag"
 
 describe('array-based bag', () => {
   function createEmptyBag() { 

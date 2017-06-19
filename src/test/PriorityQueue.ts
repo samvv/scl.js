@@ -1,9 +1,7 @@
 
-/// <reference path="../typings/index.d.ts" />
-
 require('source-map-support').install()
 
-import { PriorityQueue } from "../src/PriorityQueue"
+import { PriorityQueue } from "../PriorityQueue"
 import { expect } from "chai"
 
 function integers(n) {

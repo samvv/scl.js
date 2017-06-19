@@ -1,7 +1,5 @@
 
-/// <reference path="../typings/index.d.ts" />
-
-import { Bag } from "../interfaces/Bag"
+import { Bag } from "../../interfaces"
 import { expect } from "chai"
 
 export default function addGenericBagTests(createEmptyBag: () => Bag<any>) {

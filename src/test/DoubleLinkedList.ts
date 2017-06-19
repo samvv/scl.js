@@ -1,7 +1,5 @@
 
-
-
-import { DoubleLinkedList } from "../src/DoubleLinkedList"
+import { DoubleLinkedList } from "../DoubleLinkedList"
 import addCTests from "./Container"
 import addOCTests from "./OrderedContainer"
 
