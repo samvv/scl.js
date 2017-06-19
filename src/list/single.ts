@@ -39,18 +39,18 @@ export class SingleLinkedList<T> implements List<T> {
 
   }
 
-  insertBefore(pos: Iterator<T>, el: T) {
-    if ((<SLIterator<T>>pos)._prevNode === null) {
+  insertBefore(pos: IteratorResult<T>, el: T) {
+    if ((<SLIteratorResult<T>>pos)._prevNode === null) {
       this.prepend(el)
     } else {
-      const newNode = { next: (<SLIterator<T>>pos)._node, value: el };
-      (<SLIterator<T>>pos)._prevNode.next = newNode;
-      (<SLIterator<T>>pos)._prevNode = newNode;
+      const newNode = { next: (<SLIteratorResult<T>>pos)._node, value: el };
+      (<SLIteratorResult<T>>pos)._prevNode.next = newNode;
+      (<SLIteratorResult<T>>pos)._prevNode = newNode;
     }
   }
 
-  insertAfter(pos: Iterator<T>, el: T) {
-    (<SLIterator<T>>pos)._node.next = { value: el, next: null }
+  insertAfter(pos: IteratorResult<T>, el: T) {
+    (<SLIteratorResult<T>>pos)._node.next = { value: el, next: null }
   }
 
   prepend(el: T) {
