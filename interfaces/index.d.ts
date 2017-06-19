@@ -9,4 +9,5 @@ export * from "./List"
 export * from "./Set"
 export * from "./Bag"
 export * from "./Dict"
+export * from "./MultiDict"
 
