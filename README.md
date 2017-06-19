@@ -31,33 +31,39 @@ Examples at the bottom of the README.
 | Set              | T                     | Yes    | No        |
 | List             | T                     | No     | Yes       |
 | Vector           | T                     | No     | Yes       |
-| PriorityQueue    | T                     | No     | No        |
+| Queuelike        | T                     | No     | Yes       |
 | Dict             | Pair&lt;K, V&gt;      | Yes    | No        |
-| NamedSet         | Pair&lt;string, V&gt; | Yes    | No        |
 | MultiDict        | Pair&lt;K, V&gt;      | No     | No        |
+
+### Implementations
 
 ### Unordered Containers
 
 | Name           | Memory    | Add       | Remove    | Member  |
 |----------------|-----------|-----------|-----------|---------|
-| HashSet        | O(n)      | O(1)      | O(1)      | O(1)    |
-| NamedSet       | O(n)      | O(1)      | O(1)      | O(1)    |
-| PriorityQueue  | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
+| set/string     | O(n)      | O(1)      | O(1)      | O(1)    |
+| set/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
+| map/string     | O(n)      | O(1)      | O(1)      | O(1)    |
+| map/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
+| queue          | O(n)      | O(1)      | O(1)      | O(n)    |
+| stack          | O(n)      | O(1)      | O(1)      | O(n)    |
+| priority-queue | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
 
 ### Ordered Containers
 
-| Name              | Memory  | Insert  | Append  | Prepend | Member | Ref  | Next | Prev |
-|-------------------|---------|---------|---------|---------|--------|------|------|------|
-| ArrayVector       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
-| SingleLinkedList  | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
-| DoubleLinkedList  | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
+| Name               | Memory  | Insert  | Append  | Prepend | Member | At   | Next | Prev |
+|--------------------|---------|---------|---------|---------|--------|------|------|------|
+| vector/array       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
+| list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
+| list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
-### Queues
+### Queue-like structures
 
 | Name           | Enqueue   | Dequeue    | Reschedule   |
 |----------------|-----------|------------|--------------|
-| Queue          | O(1)      | O(1)       | n.a.         |
-| PriorityQueue  | O(log(n)) | O(1)       | O(log(n))    |
+| stack          | O(1)      | O(1)       | n.a.         |
+| queue          | O(1)      | O(1)       | n.a.         |
+| priority-queue | O(log(n)) | O(1)       | O(log(n))    |
 
 Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
 
@@ -66,8 +72,7 @@ Consult the [API docs](http://samvv.github.io/project/sync-containers) for more 
 ### Lists and vectors
 
 ```ts
-import { SingleLinkedList } from "sync-containers"
-
+import SingleLinkedList from "sync-containers/list/single"
 
 const difficulties = new SingleLinkedList<string>()
 
@@ -93,7 +98,7 @@ that operations have a different time complexity (see the tables above).
 ### Sets
 
 ```ts
-import { HashSet } from "sync-containers"
+import HashSet from "sync-containers/set/es6"
 
 interface Service { name: string }
 
@@ -119,7 +124,7 @@ set.remove(testService)
 Building on top of the first example:
 
 ```ts
-import { PriorityQueue } from "sync-containers" 
+import PriorityQueue from "sync-containers/priority-queue" 
 
 interface Level {
   difficulty: number
@@ -146,9 +151,9 @@ that levels will be `dequeue()`-ed in the order they were inserted.
 
 ```ts
 // a named set is a special kind of dict
-import { NamedSet } from "sync-containers"
+import StringDict "sync-containers/dict/string"
 
-const users = new NamedSet<User>
+const users = new StringDict<User>()
 users.addPair("bertie", {
   email: "bertie@yahoo.com"
 })
@@ -169,9 +174,6 @@ for (const pair of users)
   console.log(`User ${pair.key} has email ${pair.value.email}`)
 
 ```
-
-`HashDict<K, V>` and `HashMutliDict<K, V>` are just generalizations of
-`NamedSet<T>`, so using them should be pretty straightforward.
 
 ## Credits 
 
