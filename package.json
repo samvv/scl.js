@@ -8,6 +8,7 @@
     "url": "git+https://github.com/samvv/typescript-containers.git"
   },
   "devDependencies": {
+    "@types/mocha": "^2.2.41",
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "source-map-support": "^0.4.2"
