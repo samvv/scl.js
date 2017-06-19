@@ -14,6 +14,6 @@ export interface UnorderedContainer<T> extends Container<T> {
    * Remove an element from the container. If multiple elements are matched,
    * the container picks one of them.
    */
-  remove(el: T)
+  delete(el: T)
 }
 
