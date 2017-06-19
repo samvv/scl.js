@@ -18,6 +18,9 @@ needed a library over which I had some control. I ended up writing my own.
 I do make use of them in my projects, so most common use cases should work.
 Above that, you are invited to make use of them and report any issue on GitHub.
 
+The interfaces are fully documented. You can find the full documentation
+[here](https://samvv.github.io/typescript-containers).
+
 Examples at the bottom of the README.
 
 ### Interfaces
