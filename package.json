@@ -1,7 +1,7 @@
 {
   "name": "sync-containers",
   "version": "0.3.6",
-  "main": "lib/index.js",
+  "main": "index.js",
   "description": "A collection of typed containers for JavaScript.",
   "repository": {
     "type": "git",
