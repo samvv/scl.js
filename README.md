@@ -1,5 +1,5 @@
-TypeScript Containers
-=====================
+Standard JavaScript Containers Library
+======================================
 
 > A collection of typed containers for JavaScript.
 
