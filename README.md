@@ -37,33 +37,36 @@ Examples at the bottom of the README.
 
 ### Implementations
 
+A :heavy_check_mark: indicates that the implementation has been completed. On the other hand, a
+missing :heavy_check_mark: means that implementation is stil pending.
+
 ### Unordered Containers
 
-| Name           | Memory    | Add       | Remove    | Member  |
-|----------------|-----------|-----------|-----------|---------|
-| set/string     | O(n)      | O(1)      | O(1)      | O(1)    |
-| set/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
-| map/string     | O(n)      | O(1)      | O(1)      | O(1)    |
-| map/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
-| queue          | O(n)      | O(1)      | O(1)      | O(n)    |
-| stack          | O(n)      | O(1)      | O(1)      | O(n)    |
-| priority-queue | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
+|                    | Name           | Memory    | Add       | Remove    | Member  |
+|--------------------|----------------|-----------|-----------|-----------|---------|
+| :heavy_check_mark: | set/string     | O(n)      | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | set/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | map/string     | O(n)      | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | map/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
+|                    | queue          | O(n)      | O(1)      | O(1)      | O(n)    |
+| :heavy_check_mark: | stack          | O(n)      | O(1)      | O(1)      | O(n)    |
+|                    | priority-queue | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
 
 ### Ordered Containers
 
-| Name               | Memory  | Insert  | Append  | Prepend | Member | At   | Next | Prev |
-|--------------------|---------|---------|---------|---------|--------|------|------|------|
-| vector/array       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
-| list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
-| list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
+|                    | Name               | Memory  | Insert  | Append  | Prepend | Member | At   | Next | Prev |
+|--------------------|--------------------|---------|---------|---------|---------|--------|------|------|------|
+| :heavy_check_mark: | vector       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
+| :heavy_check_mark: | list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
+|                    | list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
 ### Queue-like structures
 
-| Name           | Enqueue   | Dequeue    | Reschedule   |
-|----------------|-----------|------------|--------------|
-| stack          | O(1)      | O(1)       | n.a.         |
-| queue          | O(1)      | O(1)       | n.a.         |
-| priority-queue | O(log(n)) | O(1)       | O(log(n))    |
+|                    | Name           | Enqueue   | Dequeue    | Reschedule   |
+|--------------------|----------------|-----------|------------|--------------|
+| :heavy_check_mark: | stack          | O(1)      | O(1)       | n.a.         |
+|                    | queue          | O(1)      | O(1)       | n.a.         |
+|                    | priority-queue | O(log(n)) | O(1)       | O(log(n))    |
 
 Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
 
