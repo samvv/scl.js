@@ -1,6 +1,7 @@
 
 export * from "./Container"
 export * from "./Ordered"
+export * from "./Unordered"
 export * from "./Multi"
 export * from "./Unique"
 export * from "./Iterator"
