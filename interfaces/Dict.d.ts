@@ -11,7 +11,7 @@ export interface Dict<K, V> extends Container<Pair<K, V>> {
   hasKey(key: K)
   getValue(key: K)
   hasValue(value: V)
-  removeKey(key: K)
-  removeValues(value: V)
+  deleteKey(key: K)
+  deleteValues(value: V)
 }
 
