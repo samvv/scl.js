@@ -2,10 +2,7 @@
 import UnorderedContainer from "./Unordered"
 import UniqueContainer from "./Unique"
 
-export interface Pair<K, V> {
-  key: K
-  value: V
-}
+export type Pair<K, V> = [K, V]
 
 export interface Dict<K, V> extends UniqueContainer<Pair<K, V>>, UnorderedContainer<Pair<K, V>> {
   addPair(key: K, value: V)
