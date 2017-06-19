@@ -26,7 +26,7 @@ class SLIterator<T> implements Iterator<T> {
       return { _node: this._node, _prevNode: this._prevNode, done: true, value: undefined }
     const res = { _node: this._node, _prevNode: this._prevNode, done: false, value: this._node.value }
     this._node = this._node.next
-    this._prevNode = this._prevNode.next
+    this._prevNode = this._node
     return res
   }
 
