@@ -15,6 +15,8 @@ export interface MultiContainer<T> extends Container<T> {
    * Remove all occurrences of the given element in the container, possibly
    * doing nothing in the case there are no elements to be removed.
    */
-  removeAll(el: T)
+  deleteAll(el: T)
 }
+
+export default MultiContainer
 

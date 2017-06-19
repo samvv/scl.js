@@ -17,3 +17,5 @@ export interface UnorderedContainer<T> extends Container<T> {
   delete(el: T)
 }
 
+export default UnorderedContainer
+
