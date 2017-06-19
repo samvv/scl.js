@@ -1,5 +1,6 @@
 
 import { List } from "../../interfaces"
+import { getPosAt } from "../iterator"
 
 interface Node<T> {
   next: Node<T>
@@ -104,15 +105,7 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   at(count: number) {
-    const it = this.begin()
-    while (true) { 
-      --count
-      const pos = it.next()
-      if (pos.done && count > 0)
-        throw new Error(`out of bounds`)
-      if (count === 0)
-        return pos
-    }
+    return getPosAt(this.begin(), count)
   }
 
   deleteAll(el: T) {
