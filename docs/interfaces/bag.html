@@ -108,10 +108,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="bag.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="bag.html#clear" class="tsd-kind-icon">clear</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="bag.html#count" class="tsd-kind-icon">count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="bag.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="bag.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="bag.html#has" class="tsd-kind-icon">has</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="bag.html#iterator" class="tsd-kind-icon">iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="bag.html#remove" class="tsd-kind-icon">remove</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="bag.html#removeall" class="tsd-kind-icon">remove<wbr>All</a></li>
 							</ul>
 						</section>
 					</div>
@@ -131,7 +131,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#___iterator">__@iterator</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L20">Container.d.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L20">Container.d.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -156,7 +156,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="unorderedcontainer.html">UnorderedContainer</a>.<a href="unorderedcontainer.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Unordered.d.ts#L12">Unordered.d.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Unordered.d.ts#L12">Unordered.d.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -187,7 +187,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#clear">clear</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L36">Container.d.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L36">Container.d.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -211,7 +211,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="multicontainer.html">MultiContainer</a>.<a href="multicontainer.html#count">count</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Multi.d.ts#L13">Multi.d.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Multi.d.ts#L13">Multi.d.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -230,6 +230,66 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="delete" class="tsd-anchor"></a>
+					<h3>delete</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="unorderedcontainer.html">UnorderedContainer</a>.<a href="unorderedcontainer.html#delete">delete</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Unordered.d.ts#L17">Unordered.d.ts:17</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove an element from the container. If multiple elements are matched,
+									the container picks one of them.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>el: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="deleteall" class="tsd-anchor"></a>
+					<h3>delete<wbr>All</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="multicontainer.html">MultiContainer</a>.<a href="multicontainer.html#deleteall">deleteAll</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Multi.d.ts#L18">Multi.d.ts:18</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove all occurrences of the given element in the container, possibly
+									doing nothing in the case there are no elements to be removed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>el: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="has" class="tsd-anchor"></a>
 					<h3>has</h3>
@@ -242,7 +302,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#has">has</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L15">Container.d.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L15">Container.d.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -276,7 +336,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#iterator">iterator</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#iterator">iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L30">Container.d.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L30">Container.d.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -289,66 +349,6 @@
 								container that does provide this guarantee.</p>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="remove" class="tsd-anchor"></a>
-					<h3>remove</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">remove<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="unorderedcontainer.html">UnorderedContainer</a>.<a href="unorderedcontainer.html#remove">remove</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Unordered.d.ts#L17">Unordered.d.ts:17</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Remove an element from the container. If multiple elements are matched,
-									the container picks one of them.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>el: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="removeall" class="tsd-anchor"></a>
-					<h3>remove<wbr>All</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>All<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="multicontainer.html">MultiContainer</a>.<a href="multicontainer.html#removeall">removeAll</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Multi.d.ts#L18">Multi.d.ts:18</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Remove all occurrences of the given element in the container, possibly
-									doing nothing in the case there are no elements to be removed.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>el: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -381,17 +381,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="bag.html#count" class="tsd-kind-icon">count</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="bag.html#delete" class="tsd-kind-icon">delete</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="bag.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="bag.html#has" class="tsd-kind-icon">has</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="bag.html#iterator" class="tsd-kind-icon">iterator</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="bag.html#remove" class="tsd-kind-icon">remove</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="bag.html#removeall" class="tsd-kind-icon">remove<wbr>All</a>
 							</li>
 						</ul>
 					</li>
@@ -419,10 +419,7 @@
 						<a href="orderedcontainer.html" class="tsd-kind-icon">Ordered<wbr>Container</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="pair.html" class="tsd-kind-icon">Pair</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="queue.html" class="tsd-kind-icon">Queue</a>
+						<a href="queuelike.html" class="tsd-kind-icon">Queuelike</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="set.html" class="tsd-kind-icon">Set</a>
@@ -435,6 +432,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
 					</li>
 				</ul>
 			</nav>

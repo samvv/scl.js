@@ -116,10 +116,12 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#begin" class="tsd-kind-icon">begin</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="orderedcontainer.html#clear" class="tsd-kind-icon">clear</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#end" class="tsd-kind-icon">end</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#first" class="tsd-kind-icon">first</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="orderedcontainer.html#has" class="tsd-kind-icon">has</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#insertafter" class="tsd-kind-icon">insert<wbr>After</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#insertbefore" class="tsd-kind-icon">insert<wbr>Before</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="orderedcontainer.html#iterator" class="tsd-kind-icon">iterator</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#last" class="tsd-kind-icon">last</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="orderedcontainer.html#prepend" class="tsd-kind-icon">prepend</a></li>
 							</ul>
 						</section>
@@ -139,7 +141,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L20">Container.d.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L20">Container.d.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,7 +165,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L23">Ordered.d.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L26">Ordered.d.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,13 +188,13 @@
 					<a name="at" class="tsd-anchor"></a>
 					<h3>at</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L41">Ordered.d.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L72">Ordered.d.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,7 +209,7 @@
 									<h5>position: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -221,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L32">Ordered.d.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L61">Ordered.d.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -244,7 +246,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L36">Container.d.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L36">Container.d.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L36">Ordered.d.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L66">Ordered.d.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -276,6 +278,32 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="first" class="tsd-anchor"></a>
+					<h3>first</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">first<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L44">Ordered.d.ts:44</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the first element in the container.</p>
+								</div>
+								<p>For queuelike structures such as a stack, this method will be of great
+								significance.</p>
+								<p>For maplike structures such as a set, this method is <b>not</b> guaranteed
+								to give back the element that was first inserted.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -290,7 +318,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L15">Container.d.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L15">Container.d.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -316,13 +344,13 @@
 					<a name="insertafter" class="tsd-anchor"></a>
 					<h3>insert<wbr>After</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">insert<wbr>After<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">insert<wbr>After<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L13">Ordered.d.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L14">Ordered.d.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -334,7 +362,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>position: <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>position: <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>el: <span class="tsd-signature-type">T</span></h5>
@@ -348,13 +376,13 @@
 					<a name="insertbefore" class="tsd-anchor"></a>
 					<h3>insert<wbr>Before</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">insert<wbr>Before<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">insert<wbr>Before<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L18">Ordered.d.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L20">Ordered.d.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -366,7 +394,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>position: <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>position: <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>el: <span class="tsd-signature-type">T</span></h5>
@@ -387,7 +415,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#iterator">iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Container.d.ts#L30">Container.d.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L30">Container.d.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -404,6 +432,33 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="last" class="tsd-anchor"></a>
+					<h3>last</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">last<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L56">Ordered.d.ts:56</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the last element in the container.</p>
+								</div>
+								<p>For queuelike structures such as a stack, it is preferred to reverse the
+									order of the container and use <code>first()</code> instead, as this can be faster
+								than finding the last element.</p>
+								<p>For unordered containers such as a set, this method is <b>not</b>
+								guaranteed to give back the element that was most recently inserted.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="prepend" class="tsd-anchor"></a>
 					<h3>prepend</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -413,7 +468,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/a8d8f54/interfaces/Ordered.d.ts#L28">Ordered.d.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L32">Ordered.d.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,6 +543,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="orderedcontainer.html#end" class="tsd-kind-icon">end</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="orderedcontainer.html#first" class="tsd-kind-icon">first</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="orderedcontainer.html#has" class="tsd-kind-icon">has</a>
 							</li>
@@ -501,6 +559,9 @@
 								<a href="orderedcontainer.html#iterator" class="tsd-kind-icon">iterator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="orderedcontainer.html#last" class="tsd-kind-icon">last</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="orderedcontainer.html#prepend" class="tsd-kind-icon">prepend</a>
 							</li>
 						</ul>
@@ -508,10 +569,7 @@
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="pair.html" class="tsd-kind-icon">Pair</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="queue.html" class="tsd-kind-icon">Queue</a>
+						<a href="queuelike.html" class="tsd-kind-icon">Queuelike</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="set.html" class="tsd-kind-icon">Set</a>
@@ -524,6 +582,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
 					</li>
 				</ul>
 			</nav>

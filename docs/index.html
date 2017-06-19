@@ -62,10 +62,304 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="scl-typescript-interfaces">SCL TypeScript Interfaces</h1>
-				<p>The following pages contain all interfaces that are predefined by this library.
-					You can use them to create your own kind of containers, or to require that a
-				variable has to implement the specific interface.</p>
+				<h1 id="standard-javascript-containers-library">Standard JavaScript Containers Library</h1>
+				<blockquote>
+					<p>A collection of typed containers for JavaScript.</p>
+				</blockquote>
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save sync-containers</span>
+</code></pre><p>This is my personal collection of common JavaScript containers, plain and simple.
+					I was fed up with writing the same boilerplate code over and over again, and I
+				needed a library over which I had some control. I ended up writing my own.</p>
+				<p>:point_up: We could use a helping hand. If you think you&#39;re up for it,
+				<a href="https://github.com/samvv/typescript-containers/issues/new">open an issue</a>.</p>
+				<p>:warning: These containers have not extensively been tested just yet. However,
+					I do make use of them in my projects, so most common use cases should work.
+				Above that, you are invited to make use of them and report any issue on GitHub.</p>
+				<p>The interfaces are fully documented. You can find the full documentation
+				<a href="https://samvv.github.io/typescript-containers">here</a>.</p>
+				<p>Examples at the bottom of the README.</p>
+				<h3 id="interfaces">Interfaces</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Container</th>
+							<th>Type</th>
+							<th>Unique</th>
+							<th>Order</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Bag</td>
+							<td>T</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>Set</td>
+							<td>T</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>List</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Vector</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Queue</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>PriorityQueue</td>
+							<td>T</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>Dict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>MultiDict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 id="implementations">Implementations</h3>
+				<h3 id="unordered-containers">Unordered Containers</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Memory</th>
+							<th>Add</th>
+							<th>Remove</th>
+							<th>Member</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>HashSet</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>NamedSet</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>PriorityQueue</td>
+							<td>O(n)</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(n)</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 id="ordered-containers">Ordered Containers</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Memory</th>
+							<th>Insert</th>
+							<th>Append</th>
+							<th>Prepend</th>
+							<th>Member</th>
+							<th>Ref</th>
+							<th>Next</th>
+							<th>Prev</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>vector/array</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>list/single</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+						</tr>
+						<tr>
+							<td>list/doubel</td>
+							<td>O(2n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 id="queue-like-structures">Queue-like structures</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Enqueue</th>
+							<th>Dequeue</th>
+							<th>Reschedule</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>stack</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>n.a.</td>
+						</tr>
+						<tr>
+							<td>queue</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>n.a.</td>
+						</tr>
+						<tr>
+							<td>priority-queue</td>
+							<td>O(log(n))</td>
+							<td>O(1)</td>
+							<td>O(log(n))</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>Consult the <a href="http://samvv.github.io/project/sync-containers">API docs</a> for more information on how to use them.</p>
+				<h2 id="examples">Examples</h2>
+				<h3 id="lists-and-vectors">Lists and vectors</h3>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> SingleLinkedList <span class="hljs-keyword">from</span> <span class="hljs-string">"sync-containers/list/single"</span>
+
+<span class="hljs-keyword">const</span> difficulties = <span class="hljs-keyword">new</span> SingleLinkedList&lt;<span class="hljs-built_in">string</span>&gt;()
+
+difficulties.append(<span class="hljs-string">'hard'</span>))
+difficulties.prepend((<span class="hljs-string">'easy'</span>))
+difficulties.insertBefore(difficulties.end(), <span class="hljs-string">'medium'</span>)) <span class="hljs-comment">// takes long for SL-lists</span>
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> level of difficulties)
+  <span class="hljs-built_in">console</span>.log(level)
+
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// easy</span>
+<span class="hljs-comment">// medium</span>
+<span class="hljs-comment">// hard</span>
+
+difficulties.clear()
+<span class="hljs-comment">// container now empty</span>
+</code></pre>
+				<p>The same example can be used with an <code>ArrayVector</code>, the only difference being
+				that operations have a different time complexity (see the tables above).</p>
+				<h3 id="sets">Sets</h3>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> HashSet <span class="hljs-keyword">from</span> <span class="hljs-string">"sync-containers/set/es6"</span>
+
+<span class="hljs-keyword">interface</span> Service { name: <span class="hljs-built_in">string</span> }
+
+<span class="hljs-keyword">const</span> testService = <span class="hljs-keyword">new</span> TestService()
+    , fooService = <span class="hljs-keyword">new</span> FooService()
+
+<span class="hljs-keyword">const</span> services = <span class="hljs-keyword">new</span> HashSet&lt;Service&gt;()
+services.add(testService)
+services.has(testService) <span class="hljs-comment">// true</span>
+services.has(fooService) <span class="hljs-comment">// false</span>
+services.add(fooService)
+services.add(testService) <span class="hljs-comment">// throws error: already added</span>
+
+<span class="hljs-comment">// order of iteration is NOT guaranteed!</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> service of services)
+  <span class="hljs-built_in">console</span>.log(service.name)
+
+<span class="hljs-keyword">set</span>.remove(testService)
+</code></pre>
+				<h3 id="queues-and-priority-queues">Queues and priority queues</h3>
+				<p>Building on top of the first example:</p>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> PriorityQueue <span class="hljs-keyword">from</span> <span class="hljs-string">"sync-containers/priority-queue"</span>
+
+<span class="hljs-keyword">interface</span> Level {
+  difficulty: <span class="hljs-built_in">number</span>
+}
+
+<span class="hljs-keyword">class</span> EasyLevel <span class="hljs-keyword">implements</span> Level { difficulty = <span class="hljs-number">1</span> }
+<span class="hljs-keyword">class</span> HardLevel <span class="hljs-keyword">implements</span> Level { difficulty = <span class="hljs-number">2</span> }
+<span class="hljs-keyword">class</span> MasterLevel <span class="hljs-keyword">implements</span> Level { difficulty = <span class="hljs-number">3</span> }
+
+<span class="hljs-keyword">const</span> levels = <span class="hljs-keyword">new</span> PriorityQueue&lt;Level&gt;<span class="hljs-function">(<span class="hljs-params">(<span class="hljs-params">a, b</span>) =&gt; a.difficulty &lt; b.difficulty</span>)
+<span class="hljs-params">levels</span>.<span class="hljs-params">enqueue</span>(<span class="hljs-params"><span class="hljs-keyword">new</span> HardLevel(<span class="hljs-params"></span>)</span>)
+<span class="hljs-params">levels</span>.<span class="hljs-params">enqueue</span>(<span class="hljs-params"><span class="hljs-keyword">new</span> EasyLevel(<span class="hljs-params"></span>)</span>)
+<span class="hljs-params">levels</span>.<span class="hljs-params">enqueue</span>(<span class="hljs-params"><span class="hljs-keyword">new</span> MasterLevel(<span class="hljs-params"></span>)</span>)
+
+<span class="hljs-params">levels</span>.<span class="hljs-params">dequeue</span><span class="hljs-params">()</span> // <span class="hljs-params">easy</span> <span class="hljs-params">level</span>
+<span class="hljs-params">levels</span>.<span class="hljs-params">dequeue</span><span class="hljs-params">()</span> // <span class="hljs-params">hard</span> <span class="hljs-params">level</span>
+<span class="hljs-params">levels</span>.<span class="hljs-params">dequeue</span><span class="hljs-params">()</span> // <span class="hljs-params">master</span> <span class="hljs-params">level</span></span>
+</code></pre>
+				<p>The same example can be used with a normal queue, the only difference being
+				that levels will be <code>dequeue()</code>-ed in the order they were inserted.</p>
+				<h3 id="dictionaries">Dictionaries</h3>
+				<pre><code class="lang-ts"><span class="hljs-comment">// a named set is a special kind of dict</span>
+<span class="hljs-keyword">import</span> StringDict <span class="hljs-string">"sync-containers/dict/string"</span>
+
+<span class="hljs-keyword">const</span> users = <span class="hljs-keyword">new</span> StringDict&lt;User&gt;()
+users.addPair(<span class="hljs-string">"bertie"</span>, {
+  email: <span class="hljs-string">"bertie@yahoo.com"</span>
+})
+users.add({
+  key: <span class="hljs-string">"benjamin"</span>
+  value: {
+    email: <span class="hljs-string">"benjamin@gmail.com"</span>
+  }
+})
+
+users.hasKey(<span class="hljs-string">"benjamin"</span>) <span class="hljs-comment">// true</span>
+users.hasKey(<span class="hljs-string">"anne"</span>) <span class="hljs-comment">// false</span>
+
+users.getValue(<span class="hljs-string">"benjamin"</span>) <span class="hljs-comment">// { email: ... }</span>
+users.getValue(<span class="hljs-string">"mary"</span>) <span class="hljs-comment">// throws error</span>
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> pair of users)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`User <span class="hljs-subst">${pair.key}</span> has email <span class="hljs-subst">${pair.value.email}</span>`</span>)
+</code></pre>
+				<h2 id="credits">Credits</h2>
+				<p>Thanks to <a href="https://soft.vub.ac.be/soft/user/128">Wolfang de Meuter</a> of the
+					<a href="https://soft.vub.ac.be/soft/">Software Langagues Lab</a> for teaching me the data
+					structures which are contained in this library and for providing a reference
+				implementation which highly influenced this library.</p>
+				<h2 id="support">Support</h2>
+				<p>You might also be interested in knowing <a href="http://github.com/samvv/typescript-containers/wiki/Iterators">how this library&#39;s iterators work</a>.</p>
+				<p>Need to go asynchronous? Check out our <a href="https://github.com/samvv/typescript-async-containers">asynchronous containers</a> library.</p>
+				<p>Found an issue? A certain mistake? Need a certain kind of container? <a href="https://github.com/samvv/typescript-containers/issues">File an
+						issue</a> or <a href="https://github.com/samvv/typescript-containers/pulls">send me a
+				pull request</a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -103,10 +397,7 @@
 						<a href="interfaces/orderedcontainer.html" class="tsd-kind-icon">Ordered<wbr>Container</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/pair.html" class="tsd-kind-icon">Pair</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/queue.html" class="tsd-kind-icon">Queue</a>
+						<a href="interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/set.html" class="tsd-kind-icon">Set</a>
@@ -119,6 +410,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#pair" class="tsd-kind-icon">Pair</a>
 					</li>
 				</ul>
 			</nav>
