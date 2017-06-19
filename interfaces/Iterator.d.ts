@@ -2,7 +2,10 @@
 /**
  * Compatible with ES6 definition of the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">iterator protocol</a>.
  */
-export interface Iterator<T> extends IterableIterator<T> {
+export interface Iterator<T> {
+  next(value?: any): IteratorResult<T>;
+  return?(value?: any): IteratorResult<T>;
+  throw?(e?: any): IteratorResult<T>;
   /**
    * Get the value residing before the current one.
    */
