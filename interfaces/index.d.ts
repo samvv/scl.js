@@ -6,6 +6,8 @@ export * from "./Multi"
 export * from "./Unique"
 export * from "./Iterator"
 
+export * from "./Vector"
+export * from "./Queuelike"
 export * from "./List"
 export * from "./Set"
 export * from "./Bag"
