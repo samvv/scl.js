@@ -10,12 +10,12 @@ export interface OrderedContainer<T> extends Container<T> {
    * Insert an element after the element at the given position. The position is
    * deduced from the iterator that is given to the method.
    */
-  insertAfter(position: Iterator<T>, el: T) 
+  insertAfter(position: IteratorResult<T>, el: T) 
   /**
    * Insert an element before the element at the given position. The position is
    * deduced from the iterator that is goven to the method.
    */
-  insertBefore(position: Iterator<T>, el: T)
+  insertBefore(position: IteratorResult<T>, el: T)
   /**
    * Append an item at the end of the container. The element will be given the
    * highest order.
