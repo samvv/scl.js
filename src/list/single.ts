@@ -51,6 +51,19 @@ export class SingleLinkedList<T> implements List<T> {
     }
   }
 
+  first() {
+    if (this._first === null)
+      throw new Error(`container is empty`)
+    return this._first.value
+  }
+
+  last() {
+    if (this._first === null)
+      throw new Error(`container is empty`)
+    // HACK
+    return this.end().next()._prevNode.value
+  }
+
   insertAfter(pos: IteratorResult<T>, el: T) {
     const node = (<SLIteratorResult<T>>pos)._node;
     node.next = { value: el, next: node.next }
