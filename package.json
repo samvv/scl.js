@@ -3,11 +3,34 @@
   "version": "0.3.6",
   "main": "lib/index.js",
   "description": "A collection of typed containers for JavaScript.",
-  "repository": "samvv/typescript-containers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samvv/typescript-containers.git"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "source-map-support": "^0.4.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/samvv/typescript-containers/issues"
+  },
+  "homepage": "https://github.com/samvv/typescript-containers#readme",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "data",
+    "algorithm",
+    "data-structure",
+    "library",
+    "typescript",
+    "interface"
+  ],
+  "author": "Sam Vervaeck",
+  "license": "MIT"
 }
