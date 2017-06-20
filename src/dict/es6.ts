@@ -1,7 +1,7 @@
 
 import { Pair, Dict } from "../../interfaces"
 
-export class MapDict<K, V> implements Dict<K, V> {
+export class ESDict<K, V> implements Dict<K, V> {
   
   _map = new Map<K, V>()
 
@@ -70,4 +70,6 @@ export class MapDict<K, V> implements Dict<K, V> {
   }
 
 }
+
+export default ESDict
 
