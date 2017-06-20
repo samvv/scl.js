@@ -42,15 +42,17 @@ missing :heavy_check_mark: means that implementation is stil pending.
 
 ### Unordered Containers
 
-|                    | Name           | Memory    | Add       | Remove    | Member  |
-|--------------------|----------------|-----------|-----------|-----------|---------|
-| :heavy_check_mark: | set/string     | O(n)      | O(1)      | O(1)      | O(1)    |
-| :heavy_check_mark: | set/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
-| :heavy_check_mark: | map/string     | O(n)      | O(1)      | O(1)      | O(1)    |
-| :heavy_check_mark: | map/es6        | O(2n)     | O(1)      | O(1)      | O(1)    |
-|                    | queue          | O(n)      | O(1)      | O(1)      | O(n)    |
-| :heavy_check_mark: | stack          | O(n)      | O(1)      | O(1)      | O(n)    |
-|                    | priority-queue | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
+|                    | Name              | Memory    | Add       | Remove    | Member  |
+|--------------------|-------------------|-----------|-----------|-----------|---------|
+| :heavy_check_mark: | set/string        | O(n)      | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | set/es6           | O(2n)     | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | dict/string       | O(n)      | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | dict/es6          | O(2n)     | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | dict/multi/string | O(n)      | O(1)      | O(1)      | O(1)    |
+| :heavy_check_mark: | dict/multi/es6    | O(2n)     | O(1)      | O(1)      | O(1)    |
+|                    | queue             | O(n)      | O(1)      | O(1)      | O(n)    |
+| :heavy_check_mark: | stack             | O(n)      | O(1)      | O(1)      | O(n)    |
+|                    | priority-queue    | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
 
 ### Ordered Containers
 
