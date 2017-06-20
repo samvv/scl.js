@@ -114,16 +114,10 @@
 							<td>Yes</td>
 						</tr>
 						<tr>
-							<td>Queue</td>
+							<td>Queuelike</td>
 							<td>T</td>
 							<td>No</td>
 							<td>Yes</td>
-						</tr>
-						<tr>
-							<td>PriorityQueue</td>
-							<td>T</td>
-							<td>No</td>
-							<td>No</td>
 						</tr>
 						<tr>
 							<td>Dict</td>
@@ -140,10 +134,13 @@
 					</tbody>
 				</table>
 				<h3 id="implementations">Implementations</h3>
+				<p>A :heavy_check_mark: indicates that the implementation has been completed. On the other hand, a
+				missing :heavy_check_mark: means that implementation is stil pending.</p>
 				<h3 id="unordered-containers">Unordered Containers</h3>
 				<table>
 					<thead>
 						<tr>
+							<th></th>
 							<th>Name</th>
 							<th>Memory</th>
 							<th>Add</th>
@@ -153,21 +150,72 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>HashSet</td>
+							<td>:heavy_check_mark:</td>
+							<td>set/string</td>
 							<td>O(n)</td>
 							<td>O(1)</td>
 							<td>O(1)</td>
 							<td>O(1)</td>
 						</tr>
 						<tr>
-							<td>NamedSet</td>
+							<td>:heavy_check_mark:</td>
+							<td>set/es6</td>
+							<td>O(2n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/string</td>
 							<td>O(n)</td>
 							<td>O(1)</td>
 							<td>O(1)</td>
 							<td>O(1)</td>
 						</tr>
 						<tr>
-							<td>PriorityQueue</td>
+							<td>:heavy_check_mark:</td>
+							<td>dict/es6</td>
+							<td>O(2n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/multi/string</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/multi/es6</td>
+							<td>O(2n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>queue</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>stack</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>priority-queue</td>
 							<td>O(n)</td>
 							<td>O(log(n))</td>
 							<td>O(log(n))</td>
@@ -179,20 +227,22 @@
 				<table>
 					<thead>
 						<tr>
+							<th></th>
 							<th>Name</th>
 							<th>Memory</th>
 							<th>Insert</th>
 							<th>Append</th>
 							<th>Prepend</th>
 							<th>Member</th>
-							<th>Ref</th>
+							<th>At</th>
 							<th>Next</th>
 							<th>Prev</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>vector/array</td>
+							<td>:heavy_check_mark:</td>
+							<td>vector</td>
 							<td>O(n)</td>
 							<td>O(n)</td>
 							<td>O(n)</td>
@@ -203,6 +253,7 @@
 							<td>O(1)</td>
 						</tr>
 						<tr>
+							<td>:heavy_check_mark:</td>
 							<td>list/single</td>
 							<td>O(n)</td>
 							<td>O(n)</td>
@@ -214,7 +265,8 @@
 							<td>O(n)</td>
 						</tr>
 						<tr>
-							<td>list/doubel</td>
+							<td></td>
+							<td>list/double</td>
 							<td>O(2n)</td>
 							<td>O(n)</td>
 							<td>O(1)</td>
@@ -230,6 +282,7 @@
 				<table>
 					<thead>
 						<tr>
+							<th></th>
 							<th>Name</th>
 							<th>Enqueue</th>
 							<th>Dequeue</th>
@@ -238,18 +291,21 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td>:heavy_check_mark:</td>
 							<td>stack</td>
 							<td>O(1)</td>
 							<td>O(1)</td>
 							<td>n.a.</td>
 						</tr>
 						<tr>
+							<td></td>
 							<td>queue</td>
 							<td>O(1)</td>
 							<td>O(1)</td>
 							<td>n.a.</td>
 						</tr>
 						<tr>
+							<td></td>
 							<td>priority-queue</td>
 							<td>O(log(n))</td>
 							<td>O(1)</td>

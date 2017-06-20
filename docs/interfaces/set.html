@@ -76,7 +76,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="orderedcontainer.html" class="tsd-signature-type">OrderedContainer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="unorderedcontainer.html" class="tsd-signature-type">UnorderedContainer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 					</li>
 					<li>
 						<a href="uniquecontainer.html" class="tsd-signature-type">UniqueContainer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
@@ -96,18 +96,12 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="set.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#append" class="tsd-kind-icon">append</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#at" class="tsd-kind-icon">at</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#begin" class="tsd-kind-icon">begin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="set.html#clear" class="tsd-kind-icon">clear</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#end" class="tsd-kind-icon">end</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#first" class="tsd-kind-icon">first</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#delete" class="tsd-kind-icon">delete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="set.html#has" class="tsd-kind-icon">has</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#insertafter" class="tsd-kind-icon">insert<wbr>After</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#insertbefore" class="tsd-kind-icon">insert<wbr>Before</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="set.html#iterator" class="tsd-kind-icon">iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#last" class="tsd-kind-icon">last</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="set.html#prepend" class="tsd-kind-icon">prepend</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="set.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
 					</div>
@@ -127,7 +121,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#___iterator">__@iterator</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L20">Container.d.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Container.d.ts#L20">Container.d.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -142,23 +136,23 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="append" class="tsd-anchor"></a>
-					<h3>append</h3>
+					<a name="add" class="tsd-anchor"></a>
+					<h3>add</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">append<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#append">append</a></p>
+								<p>Inherited from <a href="unorderedcontainer.html">UnorderedContainer</a>.<a href="unorderedcontainer.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L26">Ordered.d.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Unordered.d.ts#L12">Unordered.d.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Append an item at the end of the container. The element will be given the
-									highest order.</p>
+									<p>Add an element to the container. The element is place where the container
+									sees fit.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -168,59 +162,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="at" class="tsd-anchor"></a>
-					<h3>at</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#at">at</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L72">Ordered.d.ts:72</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Return an iterator that is places at the element which is the Nth element
-									in the ascending row leading up to element.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>position: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="begin" class="tsd-anchor"></a>
-					<h3>begin</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">begin<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#begin">begin</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L61">Ordered.d.ts:61</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Return an iterator that is initially placed at the lowest element in the container.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -236,7 +177,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#clear">clear</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L36">Container.d.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Container.d.ts#L42">Container.d.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -250,52 +191,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="end" class="tsd-anchor"></a>
-					<h3>end</h3>
+					<a name="delete" class="tsd-anchor"></a>
+					<h3>delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">end<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#end">end</a></p>
+								<p>Inherited from <a href="unorderedcontainer.html">UnorderedContainer</a>.<a href="unorderedcontainer.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L66">Ordered.d.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Unordered.d.ts#L17">Unordered.d.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Return an iterator that is initially placed at the highest element in the container.</p>
+									<p>Remove an element from the container. If multiple elements are matched,
+									the container picks one of them.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="iterator.html" class="tsd-signature-type">Iterator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="first" class="tsd-anchor"></a>
-					<h3>first</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">first<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#first">first</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L44">Ordered.d.ts:44</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get the first element in the container.</p>
-								</div>
-								<p>For queuelike structures such as a stack, this method will be of great
-								significance.</p>
-								<p>For maplike structures such as a set, this method is <b>not</b> guaranteed
-								to give back the element that was first inserted.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>el: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -311,7 +232,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#has">has</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L15">Container.d.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Container.d.ts#L15">Container.d.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -333,72 +254,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="insertafter" class="tsd-anchor"></a>
-					<h3>insert<wbr>After</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">insert<wbr>After<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#insertafter">insertAfter</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L14">Ordered.d.ts:14</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Insert an element after the element at the given position. The position is
-									deduced from the iterator that is given to the method.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>position: <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>el: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="insertbefore" class="tsd-anchor"></a>
-					<h3>insert<wbr>Before</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">insert<wbr>Before<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#insertbefore">insertBefore</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L20">Ordered.d.ts:20</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Insert an element before the element at the given position. The position is
-									deduced from the iterator that is goven to the method.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>position: <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>el: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="iterator" class="tsd-anchor"></a>
 					<h3>iterator</h3>
@@ -411,7 +266,7 @@
 								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#iterator">iterator</a></p>
 								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#iterator">iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Container.d.ts#L30">Container.d.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Container.d.ts#L30">Container.d.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -427,61 +282,28 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="last" class="tsd-anchor"></a>
-					<h3>last</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">last<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#last">last</a></p>
+								<p>Inherited from <a href="container.html">Container</a>.<a href="container.html#size">size</a></p>
+								<p>Overrides <a href="container.html">Container</a>.<a href="container.html#size">size</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L56">Ordered.d.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/6080078/interfaces/Container.d.ts#L36">Container.d.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get the last element in the container.</p>
-								</div>
-								<p>For queuelike structures such as a stack, it is preferred to reverse the
-									order of the container and use <code>first()</code> instead, as this can be faster
-								than finding the last element.</p>
-								<p>For unordered containers such as a set, this method is <b>not</b>
-								guaranteed to give back the element that was most recently inserted.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="prepend" class="tsd-anchor"></a>
-					<h3>prepend</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">prepend<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="orderedcontainer.html">OrderedContainer</a>.<a href="orderedcontainer.html#prepend">prepend</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/typescript-containers/blob/9a259c7/interfaces/Ordered.d.ts#L32">Ordered.d.ts:32</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Prepend an item to the beginning of the container. The element will be
-									given the lowest order.</p>
+									<p>Count the amount of elements in the container. In most cases, this should
+									be an O(1) operation.</p>
 								</div>
 							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>el: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -533,40 +355,22 @@
 								<a href="set.html#___iterator" class="tsd-kind-icon">__@iterator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#append" class="tsd-kind-icon">append</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#at" class="tsd-kind-icon">at</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#begin" class="tsd-kind-icon">begin</a>
+								<a href="set.html#add" class="tsd-kind-icon">add</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="set.html#clear" class="tsd-kind-icon">clear</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#end" class="tsd-kind-icon">end</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#first" class="tsd-kind-icon">first</a>
+								<a href="set.html#delete" class="tsd-kind-icon">delete</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="set.html#has" class="tsd-kind-icon">has</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#insertafter" class="tsd-kind-icon">insert<wbr>After</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#insertbefore" class="tsd-kind-icon">insert<wbr>Before</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="set.html#iterator" class="tsd-kind-icon">iterator</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#last" class="tsd-kind-icon">last</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="set.html#prepend" class="tsd-kind-icon">prepend</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+								<a href="set.html#size" class="tsd-kind-icon">size</a>
 							</li>
 						</ul>
 					</li>
