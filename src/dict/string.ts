@@ -59,6 +59,7 @@ export class StringDict<V> implements Dict<string, V> {
   deleteKey(key: string) {
     if (this._values[key] === undefined)
       throw new Error(`key ${key} not found`)
+    delete this._values[key]
   }
 
   deleteValue(value: V) {
