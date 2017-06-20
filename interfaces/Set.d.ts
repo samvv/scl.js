@@ -1,8 +1,8 @@
 
-import { OrderedContainer } from "./Ordered"
+import { UnorderedContainer } from "./Unordered"
 import { UniqueContainer } from "./Unique"
 
-export interface Set<T> extends OrderedContainer<T>, UniqueContainer<T> {
+export interface Set<T> extends UnorderedContainer<T>, UniqueContainer<T> {
 
 }
 
