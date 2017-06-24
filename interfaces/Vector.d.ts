@@ -8,6 +8,11 @@ import { OrderedContainer } from "./Ordered"
  * given position, while inserting elements at a given position is generally
  * slower
  */
-export interface Vector<T> extends MultiContainer<T>, OrderedContainer<T> { }
-
+export interface Vector<T> extends MultiContainer<T>, OrderedContainer<T> { 
+  /**
+   * Allocates the specified amount of free space at the end of the vector for
+   * storing data, without changing its `size()`.
+   */
+  allocate(amnt: number)
+}
 

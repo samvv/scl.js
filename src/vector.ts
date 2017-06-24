@@ -25,6 +25,10 @@ export class ArrayVector<T> implements Vector<T> {
 
   protected _elements: T[] = []
 
+  allocate(amnt: number) {
+    this._elements.length = this._elements.length+amnt
+  }
+
   has(el: T) {
     return this._elements.indexOf(el) !== -1
   }
