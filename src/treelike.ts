@@ -215,17 +215,28 @@ export class TreeBox<T> {
       return node.getValue().toString()
     }
     const children = this.node.getChildren()
-    let output = ' '.repeat(this.nodeOffset)+renderValue(this.node)
+    let output = ' '.repeat(Math.max(this.nodeOffset, 0))+renderValue(this.node)
     output += '\n'
-    for (let j = 0; j < this.getTotalWidth(); ++j) {
+    for (let j = Math.min(this.nodeOffset, 0); j < this.getTotalWidth(); ++j) {
       const child = this.getChildOnOffset(j)
-      if (j === 0) {
+      if (j < 0) {
+        if (j === this.nodeOffset) {
+          if (children.length === 1)
+            output += '│'
+          else
+            output += '└'
+        } else {
+          output += '─'
+        }
+      } else if (j === 0) {
         if (this.nodeOffset === 0) {
           if (children.length === 1)
             output += '│'
           else
             output += '├'
-        } else
+        } else if (this.nodeOffset < 0)
+          output += '┬'
+        else
           output += '┌'
       } else if (j === this.getTotalWidth()-1) {
         if (j === this.nodeOffset) {
@@ -251,6 +262,7 @@ export class TreeBox<T> {
       }
     }
     output += '\n'
+    output += ' '.repeat(-Math.min(this.nodeOffset, 0))
     for (let i = 0; i < children.length; ++i) {
       const child = children[i]
       output += renderValue(child)
