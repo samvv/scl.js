@@ -1,5 +1,9 @@
 
 import Queue from "./queue"
+import { Vec2, Mat2d, add, max } from "./math"
+import { trimLineRight, isOverlapping, hasConflict, Cursor } from "./text"
+import Grid from "./grid"
+import { Box, StaticBox, OverlapBox, BoxTransform } from "./box"
 
 function flattenDeep<T>(arr: T[]) {
   let res = []
@@ -33,20 +37,6 @@ export function getLeaves(tree) {
   return children.map(getLeaves)
 }
 
-function max(...els) {
-  let res = 0
-  for (const el of els)
-    res = Math.max(el, res)
-  return res
-}
-
-function add(...els) {
-  let res = 0
-  for (const el of els)
-    res += el
-  return res
-}
-
 // TODO: add support for paths?
 export function breadthFirst<T>(tree: TreeLike<T>, proc: (node: TreeLike<T>, level: number, parent: TreeLike<T> | null) => void) {
   let queue = new Queue<[number, TreeLike<T>, TreeLike<T> | null]>()
@@ -76,81 +66,6 @@ export function parentize<T>(tree: TreeLike<T>) {
     tree.parent = parent
   })
   return tree
-}
-
-type Vec2 = [number, number]
-
-interface Box {
-  //getBounds(): Vec2
-  render(): string
-}
-
-class Cursor {
-
-  constructor(public position: Vec2 = [0, 0]) {
-
-  }
-
-  advance(str: string) {
-    for (const c of str) {
-      if (c === '\n') {
-        ++this.position[1];
-        this.position[0] = 0;
-      } else 
-        ++this.position[0]
-    }
-  }
-
-}
-
-function cursorsEqual(a: Cursor, b: Cursor) {
-  return a.position[0] === b.position[0] && a.position[1] === b.position[1]
-}
-
-function trimRight(str) {
-  return str.replace(/\s*$/, '')
-}
-
-export function rightLineTrim(str: string) {
-  return str.split('\n').map(line => trimRight(line)).join('\n')
-}
-
-export function seek(str: string, [x, y]: Vec2) {
-  let offset = 0
-  for (let i = 0; y > 0; ++i) {
-    if (i >= str.length)
-      throw new Error(`nog enough lines`)
-    const c = str[i]
-    if (c === '\n')
-      --y;
-    ++offset;
-  }
-  for (let i = 0; x > 0; ++i) {
-    const c = str[i]
-    if (c === '\n')
-      throw new Error(`line not long enough`)
-    --x;
-    ++offset;
-  }
-  return str.substring(offset)
-}
-
-export function isOverlapping(stra: string, strb: string, offset: Vec2 = [0,0]): boolean {
-  stra = seek(stra, offset)
-  let cursorA = new Cursor(), cursorB = new Cursor()
-  for (let i = 0; i < stra.length && i < strb.length; ++i) {
-    cursorA.advance(stra[i])
-    cursorB.advance(strb[i])
-    if (cursorsEqual(cursorA, cursorB)
-        && !/\s/.test(stra[i])
-        && !/\s/.test(strb[i]))
-        return true
-  }
-  return false
-}
-
-export function indent(text: string, amount: number) {
-  return text.split('\n').map(line => ' '.repeat(amount)+line).join('\n')
 }
 
 export class TreeBox<T> {
@@ -187,12 +102,27 @@ export class TreeBox<T> {
     this.nodeOffset = offset
   }
 
-  getBounds(): Vec2 {
-    return [add(...this.spacings)+this.spacings.length, 2]
+  leftChildren() {
+    const res = []
+        , children = this.node.getChildren()
+    let offset = 0;
+    for (let i = 0; i < children.length && offset < this.nodeOffset; ++i) {
+      res.push(children[i])
+      offset += this.spacings[i]+1
+    }
+    return res
   }
 
-  getOffsetOfChild(i) {
-    return add(...this.spacings.slice(0, i))
+  rightChildren() {
+    return this.node.getChildren().slice(this.leftChildren().length)
+  }
+
+  getBounds(): Vec2 {
+    return [this.getTotalWidth(), 2]
+  }
+
+  getOffsetOfChild(i: number) {
+    return -Math.min(this.nodeOffset, 0)+add(...this.spacings.slice(0, i))+i
   }
 
   getTotalWidth() {
@@ -240,7 +170,6 @@ export class TreeBox<T> {
           output += '┌'
       } else if (j === this.getTotalWidth()-1) {
         if (j === this.nodeOffset) {
-          console.log('here')
           if (child === null)
             output += '┘'
           else
@@ -277,17 +206,21 @@ export class TreeBox<T> {
 export function renderTree<T>(tree: TreeLike<T>) {
 
   function createBox(tree) {
-    let rootBox = new TreeBox(tree)
     const children = tree.getChildren()
-    for (let i = 0; i < children.length; ++i) {
-      const child = children[i]
-      const childBox = createBox(child)
-      while (isOverlapping(rootBox.render(), childBox.render()), [rootBox.getOffsetOfChild(i), 1]) {
-        console.log(rootBox.getOffsetOfChild(i))
+    if (children.length === 0)
+      return new StaticBox(tree.getValue().toString())
+    let rootBox = new TreeBox(tree)
+    let mergedBox = rootBox
+    let childBoxes = children.map((child, i) => {
+      let childBox: Box = createBox(child)
+      while (hasConflict(rootBox.render(), childBox.render(), [rootBox.getOffsetOfChild(i), 2])) {
         ++rootBox.spacings[i]
+        if (rootBox.getOffsetOfChild(i) < rootBox.nodeOffset)
+          ++rootBox.nodeOffset
       }
-    }
-    return rootBox
+      return new BoxTransform(childBox, Mat2d.fromTranslation([rootBox.getOffsetOfChild(i), 2]))
+    })
+    return new OverlapBox(rootBox, ...childBoxes)
   }
 
   const box = createBox(tree)
