@@ -70,6 +70,17 @@ export namespace Mat2d {
     ]
   }
 
+  export function fromTranslation(v: Vec2): Mat2d {
+    return [
+      1,
+      0,
+      0,
+      1,
+      v[0],
+      v[1],
+    ]
+  }
+
   export function translate(a: Mat2d, v: Vec2): Mat2d {
     const a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
           v0 = v[0], v1 = v[1];
