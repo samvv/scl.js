@@ -155,18 +155,59 @@ export function indent(text: string, amount: number) {
 
 export class TreeBox<T> {
 
+  nodeOffset: number
   spacings: number[]
   
   constructor(public node: TreeLike<T>) {
-    this.spacings = node.getChildren().map(child => 0)
+    const children = node.getChildren()
+    this.spacings = (new Array(children.length-1)).fill(1)
+    //this.nodeOffset = this.getOffsetOfChild(children.length % 2 === 0 ? children.length / 2 : Math.floor(children.length / 2)+1)
+    this.alignMiddle()
+  }
+
+  alignMiddle() {
+    this.nodeOffset = Math.floor(this.getTotalWidth() / 2)
+  }
+
+  alignLeft() {
+    this.nodeOffset = 0
+  }
+
+  alignRight() {
+    this.nodeOffset = this.getTotalWidth()
+  }
+
+  alignWithChild(i: number) {
+    const children = this.node.getChildren()
+    let offset = 0
+    while (i > 0) {
+      offset += this.spacings[i]+1
+      --i
+    }
+    this.nodeOffset = offset
   }
 
   getBounds(): Vec2 {
     return [add(...this.spacings)+this.spacings.length, 2]
   }
 
-  getRelativeOffsetOfChild(i) {
-    return add(...this.spacings.slice(0, i))+i
+  getOffsetOfChild(i) {
+    return add(...this.spacings.slice(0, i))
+  }
+
+  getTotalWidth() {
+    return Math.max(add(...this.spacings)+this.node.getChildren().length, this.nodeOffset !== undefined ? this.nodeOffset+1 : 0)
+  }
+
+  getChildOnOffset(offset: number) {
+    for (let i = 0; i < this.spacings.length; ++i) {
+      offset -= (this.spacings[i]+1)
+      if (offset < 0)
+        return null
+      if (offset === 0)
+        return i
+    }
+    return offset === 0 ? 0 : null
   }
 
   render() {
@@ -174,48 +215,49 @@ export class TreeBox<T> {
       return node.getValue().toString()
     }
     const children = this.node.getChildren()
-    let output = ''
-    if (children.length === 0)
-      output += `${renderValue(this.node)}`
-    else if (children.length === 1)
-      output += `${renderValue(this.node)}\n│\n${renderValue(children[0])}`
-    else if (children.length % 2 === 1) {
-      output += ' '.repeat(this.getRelativeOffsetOfChild(Math.floor(children.length / 2))+1)+renderValue(this.node)+'\n'
-      for (let i = 0; i < children.length; ++i) {
-        if (i === 0)
-          output += '┌'+'─'.repeat(this.spacings[i]+1)
-        else if (i === children.length-1)
+    let output = ' '.repeat(this.nodeOffset)+renderValue(this.node)
+    output += '\n'
+    for (let j = 0; j < this.getTotalWidth(); ++j) {
+      const child = this.getChildOnOffset(j)
+      if (j === 0) {
+        if (this.nodeOffset === 0) {
+          if (children.length === 1)
+            output += '│'
+          else
+            output += '├'
+        } else
+          output += '┌'
+      } else if (j === this.getTotalWidth()-1) {
+        if (j === this.nodeOffset) {
+          console.log('here')
+          if (child === null)
+            output += '┘'
+          else
+            output += '┤'
+        } else if (child !== null)
           output += '┐'
-        else if (i === Math.floor(children.length / 2))
-          output += '┼'+'─'.repeat(this.spacings[i]+1)
         else
-          output += '┬'+'─'.repeat(this.spacings[i]+1)
-      }
-      output += '\n'
-      for (let i = 0; i < children.length; ++i) {
-        const child = children[i]
-        output += ' '.repeat(i === 0 ? 0 : this.spacings[i-1])+renderValue(child)+' '
-      }
-    } else { 
-      output += ' '.repeat(this.getRelativeOffsetOfChild(children.length / 2)+children.length / 2-1)+renderValue(this.node)+'\n'
-      for (let i = 0; i < children.length; ++i) {
-        const line = ((children.length / 2)-1 === i) ?  '┴' : '─'
-        if (i === 0)
-          output += `┌${'─'.repeat(this.spacings[i])}${line}`
-        else if (i === children.length-1)
-          output += '─'.repeat(this.spacings[i])+'┐'
+          output += '─'
+      } else {
+        if (this.nodeOffset === j) {
+          if (child !== null)
+            output += '┼'
+          else
+            output += '┴'
+        } else if (child !== null)
+          output += '┬'
         else
-          output += `┬${'─'.repeat(this.spacings[i])}${line}`
-      }
-      output += '\n'
-      for (let i = 0; i < children.length; ++i) {
-        const child = children[i]
-        output += i === children.length-1 
-          ? ' '.repeat(this.spacings[i])+renderValue(child) 
-          : renderValue(child)+' '.repeat(this.spacings[i]+1)
+          output += '─'
       }
     }
-    return rightLineTrim(output)
+    output += '\n'
+    for (let i = 0; i < children.length; ++i) {
+      const child = children[i]
+      output += renderValue(child)
+      if (i !== children.length-1)
+        output += ' '.repeat(this.spacings[i])
+    }
+    return output
   }
 
 }
@@ -228,8 +270,8 @@ export function renderTree<T>(tree: TreeLike<T>) {
     for (let i = 0; i < children.length; ++i) {
       const child = children[i]
       const childBox = createBox(child)
-      while (isOverlapping(rootBox.render(), childBox.render()), [rootBox.getRelativeOffsetOfChild(i), 1]) {
-        console.log(rootBox.getRelativeOffsetOfChild(i))
+      while (isOverlapping(rootBox.render(), childBox.render()), [rootBox.getOffsetOfChild(i), 1]) {
+        console.log(rootBox.getOffsetOfChild(i))
         ++rootBox.spacings[i]
       }
     }
