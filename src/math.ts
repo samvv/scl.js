@@ -1,14 +1,16 @@
 
 export type Vec2 = [number, number]
 
+const numMax = max
+
 export namespace Vec2 {
 
   export function add(a: Vec2, b: Vec2): Vec2 {
     return [a[0]+b[0], a[1]+b[1]]
   }
 
-  export function max(a: Vec2, b: Vec2): Vec2 {
-    return [Math.max(a[0],b[0]), Math.max(a[1],b[1])]
+  export function max(...vs: Vec2[]): Vec2 {
+    return [numMax(...(vs.map(v => v[0]))), numMax(...vs.map(v => v[1]))]
   }
 
   export function transformMat2d(a: Vec2, m: Mat2d): Vec2 {
