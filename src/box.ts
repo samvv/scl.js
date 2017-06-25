@@ -85,7 +85,6 @@ export class BoxTransform {
 
   getBounds() {
     const [w, h] = this.box.getBounds()
-    console.log([w,h])
     return Vec2.max(
       Vec2.transformMat2d([0,0], this.transform),
       Vec2.transformMat2d([w,0], this.transform),
