@@ -11,6 +11,15 @@ export namespace Vec2 {
     return [Math.max(a[0],b[0]), Math.max(a[1],b[1])]
   }
 
+  export function transformMat2d(a: Vec2, m: Mat2d): Vec2 {
+    const x = a[0],
+          y = a[1];
+    return [
+      m[0] * x + m[2] * y + m[4],
+      m[1] * x + m[3] * y + m[5],
+    ]
+  };
+
 }
 
 export type Mat2d = [number, number, number, number, number, number]
