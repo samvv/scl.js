@@ -83,14 +83,14 @@ export namespace Mat2d {
 
 }
 
-export function max(...els) {
+export function max(...els: number[]) {
   let res = 0
   for (const el of els)
     res = Math.max(el, res)
   return res
 }
 
-export function add(...els) {
+export function add(...els: number[]) {
   let res = 0
   for (const el of els)
     res += el
