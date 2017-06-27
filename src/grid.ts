@@ -1,7 +1,8 @@
 
 import { Vec2 } from "./math"
+import { Grid } from "../interfaces"
 
-export class Grid<T> {
+export class ArrayGrid<T> implements Grid<T> {
   
   _values: T[]
 
@@ -17,11 +18,15 @@ export class Grid<T> {
     this._values[x * this.height + y] = val
   }
 
+  has([x, y]: Vec2) {
+    return this._valeus[x * this.height + y] !== undefined
+  }
+
   delete([x, y]: Vec2) {
     delete this._values[x * this.height + y]
   }
 
 }
 
-export default Grid
+export default ArrayGrid
 
