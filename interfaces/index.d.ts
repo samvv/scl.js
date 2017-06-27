@@ -14,3 +14,5 @@ export * from "./Bag"
 export * from "./Dict"
 export * from "./MultiDict"
 
+export * from "./Grid"
+
