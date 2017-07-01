@@ -40,5 +40,7 @@ export interface Container<T> {
    * to the empty state.
    */
   clear()
+
+  clone?()
 }
 
