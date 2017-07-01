@@ -70,13 +70,6 @@ missing :heavy_check_mark: means that implementation is stil pending.
 
 Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
 
-## Credits 
-
-Thanks to [Wolfang de Meuter](https://soft.vub.ac.be/soft/user/128) of the
-[Software Langagues Lab](https://soft.vub.ac.be/soft/) for teaching me the data
-structures which are contained in this library and for providing a reference
-implementation which highly influenced this library.
-
 ## Support
 
 You might also be interested in knowing [how this library's iterators work](http://github.com/samvv/typescript-containers/wiki/Iterators).
