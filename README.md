@@ -1,27 +1,18 @@
-Standard JavaScript Containers Library
-======================================
 
-> A collection of typed containers for JavaScript.
-
-```
-npm install --save sync-containers
-```
-
-This is my personal collection of common JavaScript containers, plain and simple.
-I was fed up with writing the same boilerplate code over and over again, and I
-needed a library over which I had some control. I ended up writing my own.
+This is a curated, open-source collection of common JavaScript containers with
+full support for TypeScript. Initially started as a side-project to abstract
+away some common patterns in other projects, this library grows to become 
+a full standard library for JavaScript and friends.
 
 :point_up: We could use a helping hand. If you think you're up for it,
 [open an issue](https://github.com/samvv/typescript-containers/issues/new).
 
-:warning: These containers have not extensively been tested just yet. However,
-I do make use of them in my projects, so most common use cases should work.
-Above that, you are invited to make use of them and report any issue on GitHub.
-
-The interfaces are fully documented. You can find the full documentation
-[here](https://samvv.github.io/typescript-containers).
-
 ### Interfaces
+
+**scl** provides some interfaces which you can use as a template to define your
+own custom containers, which in turn allows you to make use of one of the
+various algoritms that come shipped with this library. Documentation for these
+interfaces is pending.
 
 | Container        | Type                  | Unique | Order     |
 |------------------|-----------------------|--------|-----------|
@@ -36,7 +27,8 @@ The interfaces are fully documented. You can find the full documentation
 ### Implementations
 
 A :heavy_check_mark: indicates that the implementation has been completed. On the other hand, a
-missing :heavy_check_mark: means that implementation is stil pending.
+missing :heavy_check_mark: means that implementation is stil pending or only
+partially completed.
 
 ### Unordered Containers
 
