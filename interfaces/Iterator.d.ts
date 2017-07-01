@@ -4,7 +4,7 @@
  */
 export interface IteratorResult<T> {
   done: boolean
-  value?: T
+  value: T
   delete?(): void
 }
 
