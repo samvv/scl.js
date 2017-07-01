@@ -86,6 +86,12 @@ export class BinaryHeap<T> implements MinHeap<T> {
     throw new Error(`element ${el} not found`)
   }
 
+  deleteAll(el: T) {
+    for (let i = 0; i < this._vec.size(); ++i)
+      if (this._vec[i] === el)
+        this._deleteAt(i+1)
+  }
+
   deleteMin() {
     this._deleteAt(1)
   }
