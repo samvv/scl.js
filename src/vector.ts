@@ -23,14 +23,23 @@ export class ArrIterator<T> implements Iterator<T> {
 
 export class ArrayVector<T> implements Vector<T> {
 
-  protected _elements: T[] = []
+  constructor(protected _elements: T[] = []) {
+
+  }
 
   allocate(amnt: number) {
-    this._elements.length = this._elements.length+amnt
+    // TODO
+    //this._elements.length = this._elements.length+amnt
   }
 
   has(el: T) {
     return this._elements.indexOf(el) !== -1
+  }
+
+  replace(pos: number, val: T) {
+    if (pos < 0 || pos >= this._elements.length)
+      throw new Error(`invalid position`)
+    this._elements[pos] = val
   }
 
   count(el: T) {
@@ -40,6 +49,14 @@ export class ArrayVector<T> implements Vector<T> {
         ++res
     return res
   }
+
+  ref(pos: number) {
+    return this._elements[pos]
+  }
+
+  setSize(size: number) {
+    this._elements.length = size
+  } 
 
   size() {
     return this._elements.length
@@ -93,8 +110,8 @@ export class ArrayVector<T> implements Vector<T> {
     this._elements.push(el)
   }
 
-  at(count: number) {
-    if (count > this._elements.length)
+  at(count: number): ArrIteratorResult<T> {
+    if (count < 0 || count > this._elements.length)
       throw new Error(`invalid range`)
     return {
       done: false,
@@ -114,6 +131,10 @@ export class ArrayVector<T> implements Vector<T> {
 
   clear() {
     this._elements.splice(0, this._elements.length)
+  }
+
+  clone() {
+    return new ArrayVector(this._elements.slice())
   }
 
 }

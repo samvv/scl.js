@@ -121,6 +121,10 @@ export class BinaryHeap<T> implements MinHeap<T> {
     }
   }
 
+  clone() {
+    return new BinaryHeap(this.compare, this._vec.clone())
+  }
+
   private _siftUp(pos: number) {
     let el = this._vec.ref(pos-1)
     while (pos > 1) {
