@@ -1,6 +1,40 @@
 
-import { Vector, UnorderedContainer, MinHeap } from "../interfaces"
+import { Iterator, IteratorResult, Vector, UnorderedContainer, MinHeap } from "../interfaces"
 import ArrayVector from "./vector"
+
+class HeapIteratorResult<T> implements IteratorResult<T> {
+
+  done = false
+
+  get value() {
+    return this.heap._vec.ref(this._idx)
+  }
+
+  constructor(public heap: BinaryHeap<T>, private _idx) {
+    
+  }
+
+  delete() {
+    this.heap._deleteAt(this._idx+1)
+  }
+
+}
+
+class HeapIterator<T> implements Iterator<T> {
+
+  constructor(public heap: BinaryHeap<T>, private _idx = 0) {
+
+  }
+
+  next()  {
+    if (this._idx === this.heap.size())
+      return { done: true, value: undefined }
+    const res = new HeapIteratorResult(this.heap, this._idx);
+    ++this._idx;
+    return res
+  }
+
+}
 
 export class BinaryHeap<T> implements MinHeap<T> {
 
@@ -17,7 +51,7 @@ export class BinaryHeap<T> implements MinHeap<T> {
   }
 
   [Symbol.iterator]() {
-    return this._vec.iterator()
+    return new HeapIterator(this)
   }
 
   iterator() {
