@@ -16,4 +16,5 @@ export * from "./MultiDict"
 
 export * from "./Grid"
 export * from "./Tree"
+export * from "./Heap"
 
