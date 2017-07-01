@@ -11,9 +11,9 @@
     "@types/mocha": "^2.2.41",
     "chai": "^4.0.2",
     "mocha": "^3.4.2",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "merge-char": "^1.3.4"
   },
-  "dependencies": {},
   "bugs": {
     "url": "https://github.com/samvv/typescript-containers/issues"
   },
