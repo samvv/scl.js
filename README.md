@@ -52,13 +52,13 @@ missing :heavy_check_mark: means that implementation is stil pending.
 | :heavy_check_mark: | dict/multi/es6    | O(2n)     | O(1)      | O(1)      | O(1)    |
 |                    | queue             | O(n)      | O(1)      | O(1)      | O(n)    |
 | :heavy_check_mark: | stack             | O(n)      | O(1)      | O(1)      | O(n)    |
-|                    | priority-queue    | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
+| :heavy_check_mark: | priority-queue    | O(n)      | O(log(n)) | O(log(n)) | O(n)    |
 
 ### Ordered Containers
 
 |                    | Name               | Memory  | Insert  | Append  | Prepend | Member | At   | Next | Prev |
 |--------------------|--------------------|---------|---------|---------|---------|--------|------|------|------|
-| :heavy_check_mark: | vector       | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
+| :heavy_check_mark: | vector             | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
 | :heavy_check_mark: | list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
 |                    | list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
@@ -68,7 +68,7 @@ missing :heavy_check_mark: means that implementation is stil pending.
 |--------------------|----------------|-----------|------------|--------------|
 | :heavy_check_mark: | stack          | O(1)      | O(1)       | n.a.         |
 |                    | queue          | O(1)      | O(1)       | n.a.         |
-|                    | priority-queue | O(log(n)) | O(1)       | O(log(n))    |
+| :heavy_check_mark: | priority-queue | O(log(n)) | O(1)       | O(log(n))    |
 
 Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
 
