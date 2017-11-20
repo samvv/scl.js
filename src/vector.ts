@@ -120,7 +120,7 @@ export class ArrayVector<T> implements Vector<T> {
     }
   }
 
-  delete(pos: ArrIteratorResult<T>) {
+  deleteAt(pos: ArrIteratorResult<T>) {
     this._elements.splice(pos._idx, 1);
   }
 

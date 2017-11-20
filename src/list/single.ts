@@ -144,7 +144,7 @@ export class SingleLinkedList<T> implements List<T> {
     return getPosAt(this.begin(), count)
   }
 
-  delete(pos: SLIteratorResult<T>) {
+  deleteAt(pos: SLIteratorResult<T>) {
     pos._prevNode.next = pos._node.next;
     --this._size;
   }

@@ -74,7 +74,7 @@ export interface OrderedContainer<T> extends Container<T> {
   /**
    * Remove the element pointed to by the iterator result from this container.
    */
-  delete(pos: IteratorResult<T>): void;
+  deleteAt(pos: IteratorResult<T>): void;
 
   /**
    * Allows taking a direct reference to a value in the container at a given

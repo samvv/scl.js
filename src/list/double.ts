@@ -140,7 +140,7 @@ export class DoubleLinkedList<T> implements List<T> {
     return getPosAt(this.begin(), count)
   }
 
-  delete(pos: DLIteratorResult<T>) {
+  deleteAt(pos: DLIteratorResult<T>) {
     pos._node.prev.next = pos._node.next;
     pos._node.next.prev = pos._node.prev;
     --this._size;
