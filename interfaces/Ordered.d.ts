@@ -76,5 +76,12 @@ export interface OrderedContainer<T> extends Container<T> {
    */
   delete(pos: IteratorResult<T>): void;
 
+  /**
+   * Allows taking a direct reference to a value in the container at a given
+   * indexed position, without the need for constructing iterators and iterator
+   * results.
+   */
+  ref?(position: number): T
+
 }
 
