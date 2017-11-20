@@ -35,7 +35,7 @@ class SLIterator<T> implements Iterator<T> {
 
 export class SingleLinkedList<T> implements List<T> {
 
-  constructor(public _first: Node<T> | null = null) {
+  constructor(public _first: Node<T> = null, public _last: Node<T> = null, public _size = 0) {
 
   }
 
@@ -46,8 +46,12 @@ export class SingleLinkedList<T> implements List<T> {
       slpos._prevNode = this._first
     } else {
       const newNode = { next: slpos._node, value: el };
+      if (slpos._prevNode.next === null) {
+        this._last = newNode;
+      }
       slpos._prevNode.next = newNode;
       slpos._prevNode = newNode;
+      ++this._size;
     }
   }
 
@@ -60,28 +64,39 @@ export class SingleLinkedList<T> implements List<T> {
   last() {
     if (this._first === null)
       throw new Error(`container is empty`)
-    // HACK
-    return this.end().next()._prevNode.value
+    return this._last.value;
   }
 
   insertAfter(pos: IteratorResult<T>, el: T) {
     const node = (<SLIteratorResult<T>>pos)._node;
-    node.next = { value: el, next: node.next }
+    const newNode = { value: el, next: node.next };
+    if (node.next === null) {
+      this._last = newNode;
+    } else {
+      node.next = newNode;
+    }
+    ++this._size;
   }
 
   prepend(el: T) {
-    this._first = { next: this._first, value: el }
+    const newNode = { next: this._first, value: el };
+    this._first = newNode;
+    if (this._last === null) {
+      this._last = newNode;
+    }
+    ++this._size;
   }
 
   append(el: T) {
     const newNode = { next: null, value: el }
     if (this._first === null) {
       this._first = newNode
+      this._last = newNode;
     } else {
-      let node = this._first
-      while (node.next !== null) node = node.next;
-      node.next = newNode
+      this._last.next = newNode;
+      this._last = newNode;
     }
+    ++this._size;
   }
 
   count(el: T) {
@@ -96,13 +111,7 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   size() {
-    let res = 0
-    let node = this._first
-    while (node !== null) {
-      ++res
-      node = node.next
-    }
-    return res
+    return this._size;
   }
 
   has(el: T) {
@@ -137,30 +146,27 @@ export class SingleLinkedList<T> implements List<T> {
 
   delete(pos: SLIteratorResult<T>) {
     pos._prevNode.next = pos._node.next;
+    --this._size;
   }
 
   deleteAll(el: T) {
-    let prev = null, node = this._first
-    while (node !== null) {
-      if (node.value === el) {
-        if (prev === null)
-          this._first = node.next
-        else
-          prev._next = node.next
-      }
-      prev = node
-      node = node.next
+    const it = this[Symbol.iterator]();
+    let pos;
+    while (!(pos = it.next()).done) {
+      this.delete(pos);
     }
   }
 
   rest() {
     if (this._first === null)
       throw new Error(`list is empty`)
-    return new SingleLinkedList(this._first.next)
+    return new SingleLinkedList(this._first.next, this._last, this._size-1)
   }
 
   clear() {
-    this._first = null
+    this._first = null;
+    this._last = null;
+    this._size = 0;
   }
 
 }
