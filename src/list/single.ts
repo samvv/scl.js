@@ -153,7 +153,7 @@ export class SingleLinkedList<T> implements List<T> {
     const it = this[Symbol.iterator]();
     let pos;
     while (!(pos = it.next()).done) {
-      this.delete(pos);
+      this.deleteAt(pos);
     }
   }
 
