@@ -15,17 +15,17 @@ export interface Container<T> {
   has(el: T): boolean
 
   /**
-   * @see #iterator()
-   */
-  [Symbol.iterator](): Iterator<T>
-
-  /**
    * Returns an object which is able to sift through the values in this container.
    *
    * One iterator is guaranteed to loop over its elements in the same order
    * that it was created. However, different iterators are not guaranteed to
    * produce the same order. See {@link OrderedContainer} if you need a
    * container that does provide this guarantee.
+   */
+  [Symbol.iterator](): Iterator<T>
+
+  /**
+   * @deprecated
    */
   iterator(): Iterator<T> 
 
