@@ -49,7 +49,7 @@ partially completed.
 |                    | Name               | Memory  | Insert  | Append  | Prepend | Member | At   | Next | Prev |
 |--------------------|--------------------|---------|---------|---------|---------|--------|------|------|------|
 | :heavy_check_mark: | vector             | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
-| :heavy_check_mark: | list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
+| :heavy_check_mark: | list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 | :heavy_check_mark: | list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
 ### Queue-like structures
