@@ -5,14 +5,14 @@
   "description": "A collection of typed containers for JavaScript.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samvv/typescript-containers.git"
+    "url": "git+https://github.com/TypeForce/scl.js.git"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.41",
     "chai": "^4.0.2",
+    "merge-char": "^1.3.4",
     "mocha": "^3.4.2",
-    "source-map-support": "^0.4.15",
-    "merge-char": "^1.3.4"
+    "source-map-support": "^0.4.15"
   },
   "bugs": {
     "url": "https://github.com/samvv/typescript-containers/issues"
