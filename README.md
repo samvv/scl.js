@@ -50,7 +50,7 @@ partially completed.
 |--------------------|--------------------|---------|---------|---------|---------|--------|------|------|------|
 | :heavy_check_mark: | vector             | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
 | :heavy_check_mark: | list/single        | O(n)    | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(n) |
-|                    | list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
+| :heavy_check_mark: | list/double        | O(2n)   | O(n)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
 
 ### Queue-like structures
 
