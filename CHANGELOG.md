@@ -7,6 +7,7 @@ This document keeps track of any changes made to the software.
 
  - Created a change log
  - Fixed missing stack implementation
+ - Fixed `deleteAll` in list implementations
  - Added a queue implementation
 
 ### v0.4.1
