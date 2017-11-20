@@ -3,6 +3,10 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.5.1
+
+ - Fixed missing compiled files in published package
+
 ### v0.5.0
 
  - Created a change log
