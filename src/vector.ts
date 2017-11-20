@@ -120,9 +120,8 @@ export class ArrayVector<T> implements Vector<T> {
     }
   }
 
-  delete(el: T) {
-    const idx = this._elements.indexOf(el)
-    this._elements.splice(idx, 1)
+  delete(pos: ArrIteratorResult<T>) {
+    this._elements.splice(pos._idx, 1);
   }
 
   deleteAll(el: T) {

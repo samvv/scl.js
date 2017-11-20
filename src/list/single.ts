@@ -135,6 +135,10 @@ export class SingleLinkedList<T> implements List<T> {
     return getPosAt(this.begin(), count)
   }
 
+  delete(pos: SLIteratorResult<T>) {
+    pos._prevNode.next = pos._node.next;
+  }
+
   deleteAll(el: T) {
     let prev = null, node = this._first
     while (node !== null) {

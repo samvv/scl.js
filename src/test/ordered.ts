@@ -1,6 +1,7 @@
 
 import { OrderedContainer } from "../../interfaces"
 import { expect } from "chai"
+import { getPosAt } from "../iterator"
 
 function addOrderedTests(create : () => OrderedContainer<any>) { 
 
@@ -81,6 +82,27 @@ function addOrderedTests(create : () => OrderedContainer<any>) {
     expect(c.size()).to.equal(4)
   })
 
+  it('returns an iterator at the begining of the container', () => {
+    const c = create();
+    c.append('a');
+    c.append('b');
+    c.append('c');
+    c.append('d');
+    const it = c.begin();
+    expect(it.next().value).to.equal('a');
+  });
+
+  it('can delete an element at the given position', () => {
+    const c = create();
+    c.append('a');
+    c.append('b');
+    c.append('c');
+    c.append('d');
+    const it = c.begin();
+    const pos = getPosAt(it, 1);
+    c.delete(pos);
+    expect([...c]).to.deep.equal(['a', 'c', 'd']);
+  });
 
   it('cannot get the first element when the container is empty', () => {
     const c = create()
