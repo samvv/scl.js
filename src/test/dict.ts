@@ -1,6 +1,7 @@
 
-import { Dict } from "../../interfaces"
+import { Dict } from "../interfaces"
 import { expect } from "chai"
+import { forEachTestSet } from "./_common"
 
 export function addDictTests(create: () => Dict<any, any>) {
  
@@ -24,6 +25,18 @@ export function addDictTests(create: () => Dict<any, any>) {
     expect(d.has(['a', 1])).to.be.false
     expect(d.has(['b', 2])).to.be.true
   })
+
+  forEachTestSet((ins, outs, i) => {
+    it(`works on test set ${i}`, () => {
+      const d = create();
+      for (const n of ins)  {
+        d.add([n, n+1]);
+      }
+      for (const n of outs) {
+        d.deleteKey([n, n+1]);
+      }
+    });
+  });
 
 }
 
