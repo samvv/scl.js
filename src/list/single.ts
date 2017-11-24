@@ -12,16 +12,12 @@ class NodeCursor<T> implements Cursor<T> {
     
   }
 
-  [Symbol.iterator](): Iterator<T> {
+  *[Symbol.iterator](): Iterator<T> {
     let node = this._node;
-    return {
-      next() {
-        if (node === null) return <IteratorResult<T>>{ done: true };
-        const out = { done: false, value: node.value };
-        node = node.next;
-        return out;
-      }
-    }
+    do {
+      yield node.value;
+      node = node.next;
+    } while (node !== null);
   }
 
   get value() {

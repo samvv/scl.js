@@ -116,11 +116,10 @@ export class DoubleLinkedList<T> implements List<T> {
     return false
   }
 
-  [Symbol.iterator](): Iterator<T> {
-    if (this._first === null) {
-      return emptyIterator();
-    }
-    return this._first[Symbol.iterator]();
+  *[Symbol.iterator](): Iterator<T> {
+    if (this._first === null)
+      return;
+    yield* this._first;
   }
 
   begin() {
