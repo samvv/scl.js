@@ -1,29 +1,6 @@
 
 import { expect } from "chai"
 
-import { spread, spreadR } from "../iterator"
-
-export function shuffle<T>(array: T[]) {
-
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-}
-
-const TEST_SETS_COUNT = 4;
-
 import AVL from "../avl"
 
 function* inorder(node) {
@@ -45,42 +22,6 @@ describe('an AVL-tree', () => {
     expect([...t1]).to.deep.equal([1, 2, 3, 4, 5]);
   });
 
-  for (let i = 1; i <= TEST_SETS_COUNT; ++i) {
-    it(`can insert from random set ${i}`, () => {
-      const els = require(`./numbers${i}.json`);   
-      const t1 = new AVL();
-      for (const el of els) {
-        t1.add(el);
-        let last = -1;
-        for (const inserted of t1) {
-          expect(last).to.be.below(inserted);
-        }
-      }
-    });
-  }
-
-  for (let i = 1; i <= TEST_SETS_COUNT; ++i) {
-    it(`can insert from random set ${i}`, () => {
-      const els = require(`./numbers${i}.json`);   
-      const t1 = new AVL();
-      for (const el of els) {
-        t1.add(el);
-        let last = -1;
-        for (const inserted of t1) {
-          expect(last).to.be.below(inserted);
-        }
-      }
-      els.sort((a,b) => a-b);
-      const s = new Set<number>(els);
-      shuffle(els);
-      for (const el of els) {
-        t1.delete(el);
-        s.delete(el);
-        expect([...t1]).to.deep.equal([...s]);
-      }
-    });
-  }
-
   it('can store multiple equal keys', () => {
     const t1 = new AVL();
     t1.add(1);
@@ -92,7 +33,6 @@ describe('an AVL-tree', () => {
     t1.add(4);
     expect([...t1]).to.deep.equal([1,2,3,3,3,4,5]);
   })
-
 
   it('can delete elements', () => {
     const t1 = new AVL();
