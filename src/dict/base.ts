@@ -37,6 +37,10 @@ export class DictBase<K, V> {
     this.add([key, value]);
   }
 
+  deleteKey(key: K) {
+    this._data.delete([key, null]);
+  }
+
   deleteAt(pos: Cursor<[K, V]>) {
     this._data.deleteAt(pos);
   }
