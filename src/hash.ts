@@ -1,8 +1,11 @@
 
-import { Cursor } from "./interfaces"
+import { Container, Cursor } from "./interfaces"
 import DLList, { Cursor as DLCursor } from "./list/double"
+import { DictMode } from "./util"
 
-class Element<T> {
+export type Bucket<T> = DLList<Element<T>>;
+
+export class Element<T> {
 
   constructor(public value: T, public _index: number) {
 
@@ -53,11 +56,15 @@ class BucketView<T> {
 
 export class Hash<T> implements UnorderedContainer<T> {
   
-  _array: DLList<Element<T>>[];
+  _array: Bucket<T>[];
   _list = new DLList<Element<T>>();
 
-  constructor(public getHash: (el: T) => number, public isEqual: (a: T, b: T) => boolean, public size = 100) {
-    this._array = new Array(size);          
+  _getConflict(bucket: Bucket<T>, val: T): Element<T> {
+    return null;
+  }
+
+  constructor(public getHash: (el: T) => number, public isEqual: (a: T, b: T) => boolean, size = 100) {
+    this._array = new Array(size);
   }
 
   equal(el: T) {
@@ -73,6 +80,10 @@ export class Hash<T> implements UnorderedContainer<T> {
       this._array[i] = new DLList<Element<T>>();
     }
     const bucket = this._array[i];
+    const conflict = this._getConflict(bucket, val);
+    if (conflict !== null) {
+      return conflict; 
+    }
     const el = new Element(val, i);
     el._bucketPos = bucket.append(el);
     el._listPos = this._list.append(el);
@@ -106,7 +117,7 @@ export class Hash<T> implements UnorderedContainer<T> {
 
   *[Symbol.iterator]() {
     for (const el of this._list) 
-      yield el[1];
+      yield el.value;
   }
 
 }
