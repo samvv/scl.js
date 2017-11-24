@@ -82,14 +82,32 @@ function addOrderedTests(create : () => OrderedContainer<any>) {
     expect(c.size()).to.equal(4)
   })
 
-  it('returns an iterator at the begining of the container', () => {
+  it('generates the full sequence when starting from the beginning', () => {
     const c = create();
     c.append('a');
     c.append('b');
     c.append('c');
     c.append('d');
     const it = c.begin();
-    expect(it.next().value).to.equal('a');
+    expect([...it]).to.deep.equal(['a','b','c','d']);
+  });
+
+  it('can iterate full container step-by-step when starting from the beginning', () => {
+    const c = create();
+    c.append('a');
+    c.append('b');
+    c.append('c');
+    c.append('d');
+    const r1 = c.begin();
+    expect(r1.value).to.equal('a');
+    const r2 = r1.next();
+    expect(r2.value).to.equal('b');
+    const r3 = r2.next();
+    expect(r3.value).to.equal('c');
+    const r4 = r3.next();
+    expect(r4.value).to.equal('d');
+    const r5 = r4.next();
+    expect(r5).to.be.null;
   });
 
   it('can delete an element at the given position', () => {
@@ -98,9 +116,8 @@ function addOrderedTests(create : () => OrderedContainer<any>) {
     c.append('b');
     c.append('c');
     c.append('d');
-    const it = c.begin();
-    const pos = getPosAt(it, 1);
-    c.delete(pos);
+    const pos = c.at(1);
+    c.deleteAt(pos);
     expect([...c]).to.deep.equal(['a', 'c', 'd']);
   });
 
