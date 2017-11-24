@@ -8,7 +8,7 @@ interface Node<T> {
 
 class NodeCursor<T> implements Cursor<T> {
 
-  constructor(public _list: SingleLinkedList<T>, public _node: Node<T>, public _prev: Node<T> | false) {
+  constructor(public _list: SingleLinkedList<T>, public _node: Node<T>, public _prev: Node<T> | false = false) {
     
   }
 
@@ -66,10 +66,10 @@ export class SingleLinkedList<T> implements List<T> {
 
   insertBefore(pos: NodeCursor<T>, el: T) {
     const prev = pos._getPrev();
+    let newNode;
     if (prev === null) {
-      const newNode = this.prepend(el)
+      newNode = this.prepend(el)
       pos._prev = this._first
-      return newNode;
     } else {
       const newNode = { next: pos._node, value: el };
       if (prev.next === null) {
@@ -78,8 +78,8 @@ export class SingleLinkedList<T> implements List<T> {
       prev.next = newNode;
       pos._prev = newNode;
       ++this._size;
-      return newNode;
     }
+    return new NodeCursor<T>(this, newNode);
   }
 
   first() {
@@ -103,7 +103,7 @@ export class SingleLinkedList<T> implements List<T> {
       node.next = newNode;
     }
     ++this._size;
-    return newNode;
+    return new NodeCursor<T>(this, newNode, node);
   }
 
   prepend(el: T) {
@@ -113,11 +113,12 @@ export class SingleLinkedList<T> implements List<T> {
       this._last = newNode;
     }
     ++this._size;
-    return newNode;
+    return new NodeCursor<T>(this, newNode, null);
   }
 
   append(el: T) {
     const newNode = { next: null, value: el }
+    let prev = this._last;
     if (this._first === null) {
       this._first = newNode
       this._last = newNode;
@@ -126,7 +127,7 @@ export class SingleLinkedList<T> implements List<T> {
       this._last = newNode;
     }
     ++this._size;
-    return newNode;
+    return new NodeCursor<T>(this, newNode, prev);
   }
 
   count(el: T) {
