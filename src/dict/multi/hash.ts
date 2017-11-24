@@ -1,6 +1,6 @@
 
 import { Hash } from "../../hash"
-import { DictBase } from "../base"
+import { DictBase } from "./base"
 import { digest } from "json-hash"
 import { equal } from "../../util"
 
