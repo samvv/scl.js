@@ -3,6 +3,11 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.7.2
+
+ - Added variants of the hash-based dictionaries
+ - Standard hash-based dictionary now replaces keys
+
 ### v0.7.1
 
  - Many fixes in hash implementation
