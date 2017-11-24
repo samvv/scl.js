@@ -157,14 +157,18 @@ export interface MultiContainer<T> extends Container<T> {
   /**
    * Count all elements which belong to the same kind as the element being
    * passed in.
+   *
+   * @deprecated
    */
-  count(el: T): number
+  count?(el: T): number
 
   /**
    * Remove all occurrences of the given element in the container, possibly
    * doing nothing in the case there are no elements to be removed.
+   *
+   * @deprecated
    */
-  deleteAll(el: T)
+  deleteAll?(el: T)
 
 }
 
@@ -180,6 +184,11 @@ export interface Cursor<T> {
    * into the container.
    */
   value: T;
+
+  /**
+   * Generates the sequence of all subsequent elements as ordered by the container.
+   */
+  [Symbol.iterator](): Iterator<T>;
 
   /**
    * Get a reference to the cursor that is immediately after this one's, as

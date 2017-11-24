@@ -5,7 +5,7 @@ import DLList from "../list/double"
 
 describe('a double-linked list', () => {
 
-  addTests(() => new DLList())
+  addTests(() => new DLList<any>())
 
 })
 

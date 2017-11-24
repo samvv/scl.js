@@ -1,5 +1,6 @@
 
 import { List, Cursor } from "../interfaces"
+import { emptyIterator } from "../util"
 
 class Node<T> implements Cursor<T> {
 
@@ -12,7 +13,7 @@ class Node<T> implements Cursor<T> {
     return {
       next() {
         if (node === null) {
-          return { done: true };
+          return <IteratorResult<T>>{ done: true };
         }
         const out = { done: false, value: node.value };
         node = node._nextNode;
@@ -117,7 +118,7 @@ export class DoubleLinkedList<T> implements List<T> {
 
   [Symbol.iterator](): Iterator<T> {
     if (this._first === null) {
-      return { next() { return { done: true } } };
+      return emptyIterator();
     }
     return this._first[Symbol.iterator]();
   }

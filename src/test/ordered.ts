@@ -1,5 +1,5 @@
 
-import { OrderedContainer } from "../../interfaces"
+import { OrderedContainer } from "../interfaces"
 import { expect } from "chai"
 import { getPosAt } from "../iterator"
 

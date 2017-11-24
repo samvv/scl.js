@@ -97,8 +97,6 @@ class RSlicedArrView<T> implements View<T> {
 
 export class ArrayVector<T> implements Vector<T> {
 
-  _elements: T[];
-
   constructor(public _elements: T[] = []) {
 
   }
@@ -167,7 +165,7 @@ export class ArrayVector<T> implements Vector<T> {
   }
 
   end() {
-    return new Element(this._element, this._elements.length-1);
+    return new Element(this._elements, this._elements.length-1);
   }
 
   prepend(el: T) {

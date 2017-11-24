@@ -1,5 +1,5 @@
 
-import { List, Cursor, View } from "./interfaces"
+import { List, Cursor, View } from "../interfaces"
 
 interface Node<T> {
   next: Node<T>
@@ -12,11 +12,11 @@ class NodeCursor<T> implements Cursor<T> {
     
   }
 
-  [Symbol.iterator]() {
+  [Symbol.iterator](): Iterator<T> {
     let node = this._node;
     return {
       next() {
-        if (node === null) return { done: true };
+        if (node === null) return <IteratorResult<T>>{ done: true };
         const out = { done: false, value: node.value };
         node = node.next;
         return out;

@@ -5,7 +5,7 @@ import SLList from "../list/single"
 
 describe('a single-linked list', () => {
 
-  addTests(() => new SLList())
+  addTests(() => new SLList<any>())
 
 })
 
