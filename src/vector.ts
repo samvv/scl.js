@@ -15,15 +15,10 @@ export class Element<T> {
     
   }
 
-  [Symbol.iterator]() {
-    let i = this._index, els = this._elements;
-    return {
-      next() {
-        if (i === els.length) {
-          return <IteratorResult<T>>{ done: true };
-        }
-        return { done: false, value: els[i++] };
-      }
+  *[Symbol.iterator]() {
+    let els = this._elements;
+    for (let i = this._index; i < els.length; ++i) {
+      yield els[i];
     }
   }
 
@@ -57,15 +52,10 @@ class SlicedArrView<T> implements View<T> {
     return new SlicedArrView(this._elements, this._min+a, this._min+b);
   }
 
-  [Symbol.iterator]() {
-    let i = this._min, els = this._elements, max = this._max;
-    return {
-      next() {
-        if (i === max) {
-          return <IteratorResult<T>>{ done: true };
-        }
-        return { done: false, value: els[i++] };
-      }
+  *[Symbol.iterator]() {
+    let els = this._elements, max = this._max;
+    for (let i = this._min; i < max; ++i) {
+      yield els[i];
     }
   }
 

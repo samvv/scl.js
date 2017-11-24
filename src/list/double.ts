@@ -32,6 +32,8 @@ class Node<T> implements Cursor<T> {
 
 }
 
+export { Node as Cursor };
+
 export class DoubleLinkedList<T> implements List<T> {
   
   constructor(public _first: Node<T> = null, public _last: Node<T> = null, public _size = 0) {
@@ -40,12 +42,13 @@ export class DoubleLinkedList<T> implements List<T> {
 
   insertBefore(pos: Node<T>, el: T) {
     if (pos._prevNode === null) {
-      this.prepend(el)
+      return this.prepend(el)
     } else {
       const newNode = new Node(el, pos._prevNode, pos);
       pos._prevNode._nextNode = newNode;
       pos._prevNode = newNode;
       ++this._size;
+      return newNode;
     }
   }
 
@@ -70,6 +73,7 @@ export class DoubleLinkedList<T> implements List<T> {
     }
     pos._nextNode = newNode;
     ++this._size;
+    return newNode;
   }
 
   prepend(el: T) {
@@ -79,6 +83,7 @@ export class DoubleLinkedList<T> implements List<T> {
       this._last = newNode;
     }
     ++this._size;
+    return newNode;
   }
 
   append(el: T) {
@@ -90,6 +95,7 @@ export class DoubleLinkedList<T> implements List<T> {
     }
     this._last = newNode;
     ++this._size;
+    return newNode;
   }
 
   //count(el: T) {

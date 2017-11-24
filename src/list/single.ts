@@ -67,8 +67,9 @@ export class SingleLinkedList<T> implements List<T> {
   insertBefore(pos: NodeCursor<T>, el: T) {
     const prev = pos._getPrev();
     if (prev === null) {
-      this.prepend(el)
+      const newNode = this.prepend(el)
       pos._prev = this._first
+      return newNode;
     } else {
       const newNode = { next: pos._node, value: el };
       if (prev.next === null) {
@@ -77,6 +78,7 @@ export class SingleLinkedList<T> implements List<T> {
       prev.next = newNode;
       pos._prev = newNode;
       ++this._size;
+      return newNode;
     }
   }
 
@@ -101,6 +103,7 @@ export class SingleLinkedList<T> implements List<T> {
       node.next = newNode;
     }
     ++this._size;
+    return newNode;
   }
 
   prepend(el: T) {
@@ -110,6 +113,7 @@ export class SingleLinkedList<T> implements List<T> {
       this._last = newNode;
     }
     ++this._size;
+    return newNode;
   }
 
   append(el: T) {
@@ -122,6 +126,7 @@ export class SingleLinkedList<T> implements List<T> {
       this._last = newNode;
     }
     ++this._size;
+    return newNode;
   }
 
   count(el: T) {
@@ -147,19 +152,12 @@ export class SingleLinkedList<T> implements List<T> {
     return false
   }
 
-  [Symbol.iterator](): Iterator<T> {
+  *[Symbol.iterator](): Iterator<T> {
     let node = this._first;
-    return {
-      next: () => {
-        if (node === null) {
-          return <IteratorResult<T>>{ done: true };
-        }
-        const out = { done: false, value: node.value };
-        node = node.next;
-        return out;
-      }
+    while (node !== null) {
+      yield node.value;
+      node = node.next;
     }
-    //return new NodeCursor<T>(this, this._first, null);
   }
 
   begin() {
