@@ -25,7 +25,7 @@ export interface Container<T> {
   /**
    * @deprecated
    */
-  iterator(): Iterator<T> 
+  iterator?(): Iterator<T> 
 
   /**
    * Count the amount of elements in the container. In most cases, this should
@@ -51,13 +51,13 @@ export interface OrderedContainer<T> extends Container<T> {
    * Insert an element after the element at the given position. The position is
    * deduced from the iterator that is given to the method.
    */
-  insertAfter(position: IteratorResult<T>, el: T) 
+  insertAfter(position: Cursor<T>, el: T) 
 
   /**
    * Insert an element before the element at the given position. The position is
    * deduced from the iterator that is goven to the method.
    */
-  insertBefore(position: IteratorResult<T>, el: T)
+  insertBefore(position: Cursor<T>, el: T)
 
   /**
    * Append an item at the end of the container. The element will be given the
@@ -98,23 +98,23 @@ export interface OrderedContainer<T> extends Container<T> {
   /**
    * Return an iterator that is initially placed at the lowest element in the container.
    */
-  begin(): Iterator<T>
+  begin(): Cursor<T>
 
   /**
    * Return an iterator that is initially placed at the highest element in the container.
    */
-  end(): Iterator<T>
+  end(): Cursor<T>
 
   /**
    * Return an iterator that is places at the element which is the Nth element
    * in the ascending row leading up to element.
    */
-  at(position: number): IteratorResult<T>
+  at(position: number): Cursor<T>
 
   /**
    * Remove the element pointed to by the iterator result from this container.
    */
-  deleteAt(pos: IteratorResult<T>): void;
+  deleteAt(pos: Cursor<T>): void;
 
   /**
    * Allows taking a direct reference to a value in the container at a given
