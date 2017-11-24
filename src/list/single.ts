@@ -1,34 +1,57 @@
 
-import { List } from "../../interfaces"
-import { getPosAt } from "../iterator"
+import { List, Cursor, View } from "./interfaces"
 
 interface Node<T> {
   next: Node<T>
   value: T
 }
 
-interface SLIteratorResult<T> extends IteratorResult<T> {
-  _prevNode: Node<T> | null
-  _node: Node<T>
-}
+class NodeCursor<T> implements Cursor<T> {
 
-class SLIterator<T> implements Iterator<T> {
-
-  _prevNode: Node<T> | null
-  _node: Node<T> | null
-
-  constructor(list: SingleLinkedList<T>) {
-    this._node = list._first
-    this._prevNode = null
+  constructor(public _list: SingleLinkedList<T>, public _node: Node<T>, public _prev: Node<T> | false) {
+    
   }
 
-  next(): SLIteratorResult<T> {
-    if (this._node === null)
-      return { _node: this._node, _prevNode: this._prevNode, done: true, value: undefined }
-    const res = { _node: this._node, _prevNode: this._prevNode, done: false, value: this._node.value }
-    this._prevNode = this._node
-    this._node = this._node.next
-    return res
+  [Symbol.iterator]() {
+    let node = this._node;
+    return {
+      next() {
+        if (node === null) return { done: true };
+        const out = { done: false, value: node.value };
+        node = node.next;
+        return out;
+      }
+    }
+  }
+
+  get value() {
+    return this._node.value;
+  }
+
+  set value(newValue: T) {
+    this._node.value = newValue;
+  }
+
+  _getPrev(): Node<T> {
+    if (this._prev === false) {
+      this._prev = this._list._findPrev(this._node);
+    }
+    return this._prev;
+  }
+
+  prev() {
+    const prev = this._getPrev();
+    if (prev === null) {
+      return null;
+    }
+    return new NodeCursor<T>(this._list, prev, false);
+  }
+
+  next() {
+    if (this._node.next === null) {
+      return null;
+    }
+    return new NodeCursor<T>(this._list, this._node.next, this._node);
   }
 
 }
@@ -39,18 +62,24 @@ export class SingleLinkedList<T> implements List<T> {
 
   }
 
-  insertBefore(pos: IteratorResult<T>, el: T) {
-    const slpos = (<SLIteratorResult<T>>pos);
-    if (slpos._prevNode === null) {
+  _findPrev(node: Node<T>) {
+    let prev = this._first;
+    while (prev.next !== node) prev = prev.next;
+    return prev;
+  }
+
+  insertBefore(pos: NodeCursor<T>, el: T) {
+    const prev = pos._getPrev();
+    if (prev === null) {
       this.prepend(el)
-      slpos._prevNode = this._first
+      pos._prev = this._first
     } else {
-      const newNode = { next: slpos._node, value: el };
-      if (slpos._prevNode.next === null) {
+      const newNode = { next: pos._node, value: el };
+      if (prev.next === null) {
         this._last = newNode;
       }
-      slpos._prevNode.next = newNode;
-      slpos._prevNode = newNode;
+      prev.next = newNode;
+      pos._prev = newNode;
       ++this._size;
     }
   }
@@ -67,8 +96,8 @@ export class SingleLinkedList<T> implements List<T> {
     return this._last.value;
   }
 
-  insertAfter(pos: IteratorResult<T>, el: T) {
-    const node = (<SLIteratorResult<T>>pos)._node;
+  insertAfter(pos: NodeCursor<T>, el: T) {
+    const node = pos._node;
     const newNode = { value: el, next: node.next };
     if (node.next === null) {
       this._last = newNode;
@@ -122,30 +151,41 @@ export class SingleLinkedList<T> implements List<T> {
     return false
   }
 
-  iterator(): SLIterator<T> {
-    return new SLIterator(this)
-  }
-
-  [Symbol.iterator](): SLIterator<T> {
-    return this.iterator()
+  [Symbol.iterator](): Iterator<T> {
+    let node = this._first;
+    return {
+      next: () => {
+        if (node === null) {
+          return <IteratorResult<T>>{ done: true };
+        }
+        const out = { done: false, value: node.value };
+        node = node.next;
+        return out;
+      }
+    }
+    //return new NodeCursor<T>(this, this._first, null);
   }
 
   begin() {
-    return this.iterator()
+    return new NodeCursor<T>(this, this._first, null);
   }
 
   end() {
-    const it = this.begin()
-    while (!it.next().done);
-    return it;
+    return new NodeCursor<T>(this, this._last, false);
   }
 
   at(count: number) {
-    return getPosAt(this.begin(), count)
+    let curr = this._first, prev = null;
+    while (count > 0) {
+      prev = curr;
+      curr = curr.next;
+      --count;
+    }
+    return new NodeCursor(this, curr, prev);
   }
 
-  deleteAt(pos: SLIteratorResult<T>) {
-    pos._prevNode.next = pos._node.next;
+  deleteAt(pos: NodeCursor<T>) {
+    pos._getPrev().next = pos._node.next;
     --this._size;
   }
 
