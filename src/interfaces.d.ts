@@ -40,6 +40,12 @@ export interface Container<T> {
   clear()
 
   clone?()
+
+  /**
+   * Remove the element pointed to by the iterator result from this container.
+   */
+  deleteAt(pos: Cursor<T>): void;
+
 }
 
 /**
@@ -51,26 +57,25 @@ export interface OrderedContainer<T> extends Container<T> {
    * Insert an element after the element at the given position. The position is
    * deduced from the iterator that is given to the method.
    */
-  insertAfter(position: Cursor<T>, el: T) 
+  insertAfter(position: Cursor<T>, el: T): Cursor<T>;
 
   /**
    * Insert an element before the element at the given position. The position is
    * deduced from the iterator that is goven to the method.
    */
-  insertBefore(position: Cursor<T>, el: T)
+  insertBefore(position: Cursor<T>, el: T): Cursor<T>;
 
   /**
    * Append an item at the end of the container. The element will be given the
    * highest order.
    */
-  append(el: T)
+  append(el: T): Cursor<T>;
 
   /**
    * Prepend an item to the beginning of the container. The element will be
    * given the lowest order.
    */
-  prepend(el: T) 
-
+  prepend(el: T): Cursor<T>;
 
   /**
    * Get the first element in the container.
@@ -112,11 +117,6 @@ export interface OrderedContainer<T> extends Container<T> {
   at(position: number): Cursor<T>
 
   /**
-   * Remove the element pointed to by the iterator result from this container.
-   */
-  deleteAt(pos: Cursor<T>): void;
-
-  /**
    * Allows taking a direct reference to a value in the container at a given
    * indexed position, without the need for constructing iterators and iterator
    * results.
@@ -129,16 +129,25 @@ export interface OrderedContainer<T> extends Container<T> {
  * Represents a container that explicitly has no order defined on its elements.
  */
 export interface UnorderedContainer<T> extends Container<T> {
+
   /**
    * Add an element to the container. The element is place where the container
    * sees fit.
    */
-  add(el: T)
+  add(el: T): Cursor<T>;
+
   /**
    * Remove an element from the container. If multiple elements are matched,
    * the container picks one of them.
    */
-  delete(el: T)
+  delete(el: T);
+
+  equal?(el: T): View<T>;
+
+  lower?(el: T): Cursor<T>;
+
+  upper?(el: T): Cursor<T>;
+
 }
 
 /**
