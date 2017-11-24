@@ -125,7 +125,6 @@ export interface OrderedContainer<T> extends Container<T> {
 
 }
 
-
 /**
  * Represents a container that explicitly has no order defined on its elements.
  */
@@ -143,6 +142,78 @@ export interface UnorderedContainer<T> extends Container<T> {
 }
 
 /**
+ * A container that never contains multiple occurrences of the same element.
+ */
+export interface UniqueContainer<T> extends Container<T> { 
+
+} 
+
+/**
+ * Represents any container which can contain multiple elements of the same
+ * kind.
+ */
+export interface MultiContainer<T> extends Container<T> {
+
+  /**
+   * Count all elements which belong to the same kind as the element being
+   * passed in.
+   */
+  count(el: T): number
+
+  /**
+   * Remove all occurrences of the given element in the container, possibly
+   * doing nothing in the case there are no elements to be removed.
+   */
+  deleteAll(el: T)
+
+}
+
+/**
+ * Cursors correspond to what are called 'iterators' in most other languages.
+ * It is not to be confused with JavaScript iterators, which change their own
+ * state when a new result value is requested.
+ */
+export interface Cursor<T> {
+
+  /**
+   * A reference to the element pointed to by this cursor, as it was inserted
+   * into the container.
+   */
+  value: T;
+
+  /**
+   * Get a reference to the cursor that is immediately after this one's, as
+   * defined by the container's order.
+   */
+  next(): Cursor<T>;
+
+  /**
+   * Get a reference to the cursor that is immediately before to this one's, as
+   * defined by the container's order.
+   */
+  prev(): Cursor<T>;
+
+}
+
+/**
+ * A view represents a customised order on (a subset of) the elements of a container.
+ */
+export interface View<T> {
+
+  /**
+   * Reverse the order of the elements that would be generated with the
+   * iterator.
+   */
+  reverse(): View<T>;
+
+  /**
+   * Get an iterator that sequences the elements contained in this cursor.
+   */
+  [Symbol.iterator](): Iterator<T>;
+
+}
+
+/**
  * A bag is much like a set, in that no order is specified on the underlying
  * elements, but contrary to a set it can hold multiple values of the same
  * kind.
@@ -151,22 +222,42 @@ export interface Bag<T> extends UnorderedContainer<T>, MultiContainer<T> {
 
 }
 
-
-export interface UniqueContainer<T> extends Container<T> { 
-
-} 
-
+/**
+ * Simple sugar for an array-based pair. Used by dictionaries to denote the
+ * actual value that is stored in the container.
+ */
 export type Pair<K, V> = [K, V]
 
+/**
+ * A dictionary, also known as 'maps' in other languages, associates a certain
+ * value (called the key) with another value, providing efficient lookup of the
+ * value when given the key.
+ */
 export interface Dict<K, V> extends UniqueContainer<Pair<K, V>>, UnorderedContainer<Pair<K, V>> {
-  addPair(key: K, value: V)
-  hasKey(key: K): boolean
-  hasValue(value: V): boolean
-  getValue(key: K): V
-  deleteKey(key: K): void
-  deleteValue(value: V): void
-}
 
+  /**
+   * Creates a new pair and inserts it in the underlying container.
+   */
+  emplace(key: K, value: V)
+
+  /**
+   * Checks whether there a pair in this container that has the given
+   * key. In some cases, this might be faster than a `count`-operation. In
+   * others, it will be equivalent to it.
+   */
+  hasKey(key: K): boolean
+
+  /**
+   * Get the value that is associated with the given key.
+   */
+  getValue(key: K): V
+
+  /**
+   * Delete a pair from the underlying container that has the given key as key.
+   */
+  deleteKey(key: K): void
+
+}
 
 type Vec2 = [number, number]
 
@@ -190,66 +281,50 @@ export interface MaxHeap<T> extends UnorderedContainer<T> {
 }
 
 /**
- * Compatible with ES6 definition of the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">iterator protocol</a>.
- */
-export interface IteratorResult<T> {
-  done: boolean
-  value: T
-}
-
-/**
- * Compatible with ES6 definition of the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">iterator protocol</a>.
- */
-export interface Iterator<T> {
-  next(value?: any): IteratorResult<T>;
-  return?(value?: any): IteratorResult<T>;
-  throw?(e?: any): IteratorResult<T>;
-  /**
-   * Get the value residing before the current one.
-   */
-  prev?(): { done: boolean, value?: T }
-  /**
-   * Skip {@param offset} values and return the next one.
-   */
-  nextN?(offset: number): { done: boolean, value?: T }
-  /**
-   * Rewind {@param offset} values and return the one before it.
-   */
-  prevN?(offset: number): { done: boolean, value?: T }
-}
-
-/**
  * A list is a positional container which can contain multiple elements of the
- * same kind. A list is characterized by low-cost insertion of elements, while
+ * same kind. 
+ *
+ * A list is characterized by low-cost insertion of elements, while
  * referencing an element at a given position is generally slower.
  */
 export interface List<T> extends MultiContainer<T>, OrderedContainer<T> {
+
+  /**
+   * Get the rest of the list. This operation usually is in $O(1)$.
+   */
   rest(): List<T>
+
 }
 
 /**
- * Represents any container which can contain multiple elements of the same
- * kind.
+ * A `MultiDict` is much like a `Dict`, except that one key can be associated
+ * with many values.
  */
-export interface MultiContainer<T> extends Container<T> {
-  /**
-   * Count all elements which belong to the same kind as the element being
-   * passed in.
-   */
-  count(el: T): number
-  /**
-   * Remove all occurrences of the given element in the container, possibly
-   * doing nothing in the case there are no elements to be removed.
-   */
-  deleteAll(el: T)
-}
-
 export interface MultiDict<K, V> extends MultiContainer<Pair<K, V>>, UnorderedContainer<Pair<K, V>> {
-  hasKey(key: K): boolean
-  hasValue(value: V): boolean
-  getValues(key: K): V[]
+
+  /**
+   * Checks whether there is any pair in the underlying container that has the
+   * given value as key. In some cases, this might be faster than a `count`-operation. In
+   * others, it will be equivalent to it.
+   */
+  hasKey(key: K, value?: V): boolean;
+
+  /**
+   * Returns a number indicating how many pairs the underlying container has
+   * with the given key.
+   */
+  countKeys(key: K);
+
+  /**
+   * Get all values that are associated with the given key.
+   */
+  getValues(key: K): V[];
+
+  /**
+   * Removes all pairs with the given key from the container. 
+   */
   deleteKeys(key: K): void
-  deleteValues(value: V): void
+
 }
 
 /**
@@ -285,7 +360,7 @@ export interface Vector<T> extends MultiContainer<T>, OrderedContainer<T> {
    * Allocates the specified amount of free space at the end of the vector for
    * storing data, without changing its `size()`.
    */
-  allocate(amnt: number)
+  allocate?(amnt: number)
 
   replace(pos: number, newEl: T): void;
 
