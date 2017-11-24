@@ -1,5 +1,5 @@
 
-import { Queuelike } from "../interfaces"
+import { Queuelike } from "./interfaces"
 
 import find from "./find"
 import SLList from "./list/single"

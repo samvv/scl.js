@@ -1,5 +1,6 @@
 
-import { Iterator, IteratorResult, Vector, UnorderedContainer, MinHeap } from "../interfaces"
+import { Vector, MinHeap } from "./interfaces"
+
 import ArrayVector from "./vector"
 
 class HeapIteratorResult<T> implements IteratorResult<T> {
