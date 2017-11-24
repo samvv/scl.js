@@ -10,7 +10,7 @@ export class TreeDict<K, V> extends DictBase<K, V> {
       public lessThan: (a: K, b: K) => boolean = lesser
     , valuesEqual = (a, b) => !lessThan(a, b) && !lessThan(b, a)) {
     super(valuesEqual);
-    this._data = new AVL((a: [K, V], b: [K, V]) => lessThan(a[0], b[0]));
+    this._data = new AVL((a: [K, V], b: [K, V]) => lessThan(a[0], b[0]), true);
   }
 
   //add(pair: [K, V]) {
