@@ -3,6 +3,10 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.7.1
+
+ - Many fixes in hash implementation
+
 ### v0.7.0
   
  - Removed dangling ES6 wrappers
