@@ -6,85 +6,161 @@ import { lesser } from "./util"
 //   return { parent, left, right, balance: height, value, data };
 // }
 
-interface Node<T> {
-  balance: number;
-  parent: Node<T>
-  left: Node<T>;
-  right: Node<T>;
-  value: T;
+class Node<T> {
+
+  balance: number = 0;
+  left: Node<T> = null;
+  right: Node<T> = null;
+
+  constructor(public value: T, public parent: Node<T> = null) {
+
+  }
+
+  [Symbol.iterator]() {
+    let curr: Node<T> = this;
+    return {
+      next() {
+        const node = curr;
+        if (node === null) {
+          return <AVLIteratorResult<T>>{ done: true };
+        }
+        curr = node.next();
+        return { done: false, value: node.value, _node: node };
+      }
+    }
+  }
+
+  next(): Node<T> {
+    if (this.right !== null) {
+      let node = this.right;
+      while (node.left !== null) node = node.left;
+      return node;
+    }
+  
+    let node: Node<T> = this;
+    while (node.parent !== null && node === node.parent.right) {
+      node = node.parent;
+    }
+    return node.parent;
+  }
+
+  prev(): Node<T> {
+    if (this.left !== null) { 
+      let node = this.left;
+      while (node.right !== null) node = node.right;
+      return node;
+    }
+  
+    let node: Node<T> = this;
+    while (node.parent !== null && node === node.parent.left) {
+      node = node.parent;
+    }
+    return node.parent;
+  }
+
+  reverse() {
+    return new RNode<T>(this);
+  }
+
 }
 
-function mirror(parent: Node<T>, node: Node<T>) {
-  if (parent.left === node) {
-    return parent.right;
-  } else {
-    return parent.left;
+class RNode<T> {
+
+  get value() {
+    return this._node.value;
   }
+
+  set value(newVal: T) {
+    this._node.value = newVal;
+  }
+
+  constructor(public _node: Node<T>) {
+
+  }
+
+  next() {
+    return this._node.prev();
+  }
+
+  prev() {
+    return this._node.next();
+  }
+
+  [Symbol.iterator]() {
+    let curr: Node<T> = this._node;
+    return {
+      next() {
+        const node = curr;
+        if (node === null) {
+          return <AVLIteratorResult<T>>{ done: true };
+        }
+        curr = node.prev();
+        return { done: false, value: node.value, _node: node };
+      }
+    }
+  }
+
+  reverse() {
+    return this._node;
+  }
+
+}
+
+class NodeRange<T> {
+
+  constructor(public min: Node<T>, public max: Node<T>) {
+
+  }
+
+  [Symbol.iterator]() {
+    let curr: Node<T> = this.min;
+    return {
+      next: () => {
+        const node = curr;
+        if (node === null) {
+          return <AVLIteratorResult<T>>{ done: true };
+        }
+        if (node === this.max) {
+          curr = null; 
+        } else {
+          curr = node.next();
+        }
+        return { done: false, value: node.value, _node: node };
+      }
+    }   
+  }
+
+}
+
+class RNodeRange<T> {
+
+  constructor(public _range: NodeRange<T>) {
+
+  }
+
+  [Symbol.iterator]() {
+    let curr: Node<T> = this._range.max;
+    return {
+      next: () => {
+        const node = curr;
+        if (node === null || node === this._range.min) {
+          return <AVLIteratorResult<T>>{ done: true };
+        }
+        curr = node.prev();
+        return { done: false, value: node.value, _node: node };
+      }
+    }   
+  }
+
+  reverse() {
+    return this._range;
+  }
+
 }
 
 interface AVLIteratorResult<T> extends IteratorResult<T> {
   _node: Node<T>;
 }
-
-function createStack(node) {
-  const s = [];
-  while (node) {
-    s.push(node);
-    node = node.parent;
-  }
-  return s;
-}
-
-
-class AVLIterator<T> implements Iterator<T> {
-
-  constructor(public _avl: AVLTree<T>, public _node: Node<T>, public _stack: Node<T>[] = []) {
-      
-  }
-
-  next() {
-    const node = this._node;
-    if (node === null) {
-      return <AVLIteratorResult<T>>{ done: true };
-    }
-    this._node = this._avl._findHigher(node);
-    return { done: false, value: node.value, _node: node };
-    //if (this._node !== null) {
-      //let node = this._node;
-      //while (true) { 
-        //this._stack.push(node);
-        //if (node.left !== null)
-          //node = node.left;
-        //else
-          //break
-      //}
-      //this._node = node;
-    //}
-    //if (this._stack.length > 0) {
-      //const node = this._stack.pop();
-      //this._node = node.right;
-      //return { done: false, value: node.value, _node: node };
-    //}
-    //return <AVLIteratorResult<T>>{ done: true };
-  }
-
-  prev() {
-    //if (this._node === null) {
-      //let node = this._avl._root;
-      //while (node.right) node = node.right;
-      //this._node = node;
-      //return { done: false, value: node.value, _node: node };
-    //}
-    const node = this._node;
-    if (node === null) {
-      return <AVLIteratorResult<T>>{ done: true };
-    }
-    this._node = this._avl._findLower(node);
-    return { done: false, value: node.value, _node: node };
-  }
-
-}
-
 
 function rotateLeft<T>(node: Node<T>) {
   var rightNode = node.right;
@@ -175,6 +251,7 @@ export class AVLTree<T> {
   _size = 0;
   _root: Node<T> = null;
   _comparator: (a: T, b: T) => number;
+  _noDuplicates: boolean;
 
   /**
    * Clear the tree
@@ -201,10 +278,7 @@ export class AVLTree<T> {
    */
   insert (value) {
     if (!this._root) {
-      this._root = {
-        parent: null, left: null, right: null, balance: 0,
-        value
-      };
+      this._root = new Node<T>(value);
       this._size++;
       return this._root;
     }
@@ -231,12 +305,7 @@ export class AVLTree<T> {
       }
     }
 
-    var newNode = {
-      left: null,
-      right: null,
-      balance: 0,
-      parent, value
-    };
+    var newNode = new Node<T>(value, parent);
     var newRoot;
     if (cmp <= 0) parent.left  = newNode;
     else         parent.right = newNode;
@@ -271,7 +340,6 @@ export class AVLTree<T> {
     return newNode;
   }
 
-
   /**
    * Whether the tree contains a node with the given value
    * @param  {Key} value
@@ -292,160 +360,99 @@ export class AVLTree<T> {
   }
 
 
-  /* eslint-disable class-methods-use-this */
-
-  /**
-   * Successor node
-   * @param  {Node} node
-   * @return {?Node}
-   */
-  next (node) {
-    var successor = node;
-    if (successor) {
-      if (successor.right) {
-        successor = successor.right;
-        while (successor && successor.left) successor = successor.left;
-      } else {
-        successor = node.parent;
-        while (successor && successor.right === node) {
-          node = successor; successor = successor.parent;
-        }
-      }
-    }
-    return successor;
-  }
-
-
-  /**
-   * Predecessor node
-   * @param  {Node} node
-   * @return {?Node}
-   */
-  prev (node) {
-    var predecessor = node;
-    if (predecessor) {
-      if (predecessor.left) {
-        predecessor = predecessor.left;
-        while (predecessor && predecessor.right) predecessor = predecessor.right;
-      } else {
-        predecessor = node.parent;
-        while (predecessor && predecessor.left === node) {
-          node = predecessor;
-          predecessor = predecessor.parent;
-        }
-      }
-    }
-    return predecessor;
-  }
-
   /**
    * @param  {forEachCallback} callback
    * @return {AVLTree}
    */
-  forEach(callback) {
-    var current = this._root;
-    var s = [], done = false, i = 0;
-    
-    while (!done) {
-      // Reach the left most Node of the current Node
-      if (current) {
-        // Place pointer to a tree node on the stack
-        // before traversing the node's left subtree
-        s.push(current);
-        current = current.left;
-      } else {
-        // BackTrack from the empty subtree and visit the Node
-        // at the top of the stack; however, if the stack is
-        // empty you are done
-        if (s.length > 0) {
-          current = s.pop();
-          callback(current, i++);
-
-          // We have visited the node and its left
-          // subtree. Now, it's right subtree's turn
-          current = current.right;
-        } else done = true;
-      }
-    }
-    return this;
-  }
-
-
-  /**
-   * Returns all values in order
-   * @return {Array<Key>}
-   */
-  values () {
-    var current = this._root;
-    var s = [], r = [], done = false;
-
-    while (!done) {
-      if (current) {
-        s.push(current);
-        current = current.left;
-      } else {
-        if (s.length > 0) {
-          current = s.pop();
-          r.push(current.value);
-          current = current.right;
-        } else done = true;
-      }
-    }
-    return r;
-  }
-
-
-  /**
-   * Returns `data` fields of all nodes in order.
-   * @return {Array<Value>}
-   */
-  //values () {
+  //forEach(callback) {
     //var current = this._root;
-    //var s = [], r = [], done = false;
-
+    //var s = [], done = false, i = 0;
+    
     //while (!done) {
+      //// Reach the left most Node of the current Node
       //if (current) {
+        //// Place pointer to a tree node on the stack
+        //// before traversing the node's left subtree
         //s.push(current);
         //current = current.left;
       //} else {
+        //// BackTrack from the empty subtree and visit the Node
+        //// at the top of the stack; however, if the stack is
+        //// empty you are done
         //if (s.length > 0) {
           //current = s.pop();
-          //r.push(current.data);
+          //callback(current, i++);
+
+          //// We have visited the node and its left
+          //// subtree. Now, it's right subtree's turn
           //current = current.right;
         //} else done = true;
       //}
     //}
-    //return r;
+    //return this;
   //}
 
-  _findHigher(node: Node<T>) {
+  equal(val: T): NodeRange<T> {
 
-    if (node.right !== null) {
-      node = node.right;
-      while (node.left !== null) node = node.left;
+    const lt = this.lessThan;
+    const equal = (a, b) => !lt(a ,b) && !lt(b, a);
+
+    let min = (function findMin(node) {
+      if (lt(node.value, val)) {
+        if (node.right !== null)
+          return findMin(node.right);
+        return null;
+      }
+      if (lt(val, node.value)) {
+        if (node.left !== null)
+          return findMin(node.left);
+        return null;
+      }
+      if (node.left !== null) {
+        const res = findMin(node.left);
+        if (res !== null) {
+          return res;
+        }
+      }
+      if (node.right !== null) {
+        const res = findMin(node.right);
+        if (res !== null) {
+          return res;
+        }
+      }
       return node;
-    }
+    })(this._root);
 
-    while (node.parent !== null && node === node.parent.right) {
-      node = node.parent;
-    }
-    return node.parent;
+    let max = (function findMax(node) {
+      if (lt(node.value, val)) {
+        if (node.right !== null)
+          return findMax(node.right);
+        return null;
+      }
+      if (lt(val, node.value)) {
+        if (node.left !== null)
+          return findMax(node.left);
+        return null;
+      }
+      if (node.right !== null) {
+        const res = findMax(node.right);
+        if (res !== null) {
+          return res;
+        }
+      }
+      if (node.left !== null) {
+        const res = findMax(node.left);
+        if (res !== null) {
+          return res;
+        }
+      }
+      return node;
+    })(this._root);
+
+    return new NodeRange<T>(min, max);
   }
 
-  _findLower(node: Node<T>) {
-    if (node.left !== null) { 
-      node = node.left;
-      while (node.right !== null) node = node.right;
-      return node;
-    }
-
-    while (node.parent !== null && node === node.parent.left) {
-      node = node.parent;
-    }
-    return node.parent;
-  }
-
-  lower(val: T): AVLIterator<T> {
+  lower(val: T): Node<T> {
 
     const lt = this.lessThan;
     let node = this._root;
@@ -461,10 +468,10 @@ export class AVLTree<T> {
       node = node.right;
       while (node.left !== null) node = node.left;
     }
-    return new AVLIterator(this, node);
+    return node;
   }
 
-  upper(val: T): AVLIterator<T> {
+  upper(val: T): Node<T> {
 
     const lt = this.lessThan;
     let node = this._root;
@@ -483,25 +490,28 @@ export class AVLTree<T> {
       }
     }
 
-    return new AVLIterator(this, node);
+    return node;
   }
 
-  begin() {
-    if (this._root === null) return new AVLIterator(this, null);
+  begin(): Node<T> {
+    if (this._root === null) return null;
     let node = this._root;
     while (node.left !== null) node = node.left;
-    return new AVLIterator(this, node);
+    return node;
   }
 
-  end() {
-    if (this._root === null) return new AVLIterator(this, null);
+  end(): Node<T> {
+    if (this._root === null) return null;
     let node = this._root;
     while (node.right !== null) node = node.right;
-    return new AVLIterator(this, node);
+    return node;
   }
 
   [Symbol.iterator]() {
-    return this.begin();
+    if (this._size === 0) {
+      return { next() { return { done: true } } };
+    }
+    return this.begin()[Symbol.iterator]();
   }
 
   /**
@@ -511,7 +521,6 @@ export class AVLTree<T> {
    */
   remove (value) {
     if (!this._root) return null;
-
     var node = this._root;
     var compare = this._comparator;
     var cmp = 0;

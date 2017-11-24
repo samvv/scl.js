@@ -81,6 +81,19 @@ describe('an AVL-tree', () => {
     });
   }
 
+  it('can store multiple equal keys', () => {
+    const t1 = new AVL();
+    t1.insert(1);
+    t1.insert(5);
+    t1.insert(2);
+    t1.insert(3);
+    t1.insert(3);
+    t1.insert(3);
+    t1.insert(4);
+    expect([...t1]).to.deep.equal([1,2,3,3,3,4,5]);
+  })
+
+
   it('can delete elements', () => {
     const t1 = new AVL();
     t1.insert(1);
@@ -108,8 +121,8 @@ describe('an AVL-tree', () => {
     t1.insert(2);
     t1.insert(3);
     t1.insert(4);
-    const it = t1.lower(2);
-    expect(spread(it)).to.deep.equal([3,4,5]);
+    const pos = t1.lower(2);
+    expect(pos.value).to.equal(3);
   });
 
   it('can find the upper bound', () => {
@@ -119,10 +132,10 @@ describe('an AVL-tree', () => {
     t1.insert(2);
     t1.insert(3);
     t1.insert(4);
-    const it1 = t1.upper(4);
-    expect(spreadR(it1)).to.deep.equal([3,2,1]);
-    const it2 = t1.upper(2);
-    expect(spreadR(it2)).to.deep.equal([1]);
+    const pos1 = t1.upper(4);
+    expect(pos1.value).to.equal(3);
+    const pos2 = t1.upper(2);
+    expect(pos2.value).to.equal(1);
   });
 
   it('can reverse-iterate over elements', () => {
@@ -132,22 +145,21 @@ describe('an AVL-tree', () => {
     t1.insert(2);
     t1.insert(3);
     t1.insert(4);
-    const it = t1.end();
-    const r1 = it.prev();
-    expect(r1.done).to.be.false;
-    expect(r1.value).to.equal(5);
-    const r2 = it.prev();
-    expect(r2.done).to.be.false;
-    expect(r2.value).to.equal(4);
-    const r3 = it.prev();
-    expect(r3.done).to.be.false;
-    expect(r3.value).to.equal(3);
-    const r4 = it.prev();
-    expect(r4.done).to.be.false;
-    expect(r4.value).to.equal(2);
-    const r5 = it.prev();
-    expect(r5.done).to.be.false;
-    expect(r5.value).to.equal(1);
+    const pos = t1.end();
+    expect([...pos.reverse()]).to.deep.equal([5,4,3,2,1]);
+  });
+
+  it('can traverse an equal range', () => {
+    const t1 = new AVL();
+    t1.insert(1);
+    t1.insert(2);
+    t1.insert(3);
+    t1.insert(3);
+    t1.insert(3);
+    t1.insert(4);
+    t1.insert(5);
+    expect([...t1.equal(7)]).to.deep.equal([]);
+    expect([...t1.equal(3)]).to.deep.equal([3,3,3]);
   });
 
 
