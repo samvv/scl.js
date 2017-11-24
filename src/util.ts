@@ -1,4 +1,16 @@
 
+export function isObject(val: any) {
+  return typeof val === 'object' 
+    && val !== null 
+    && typeof val.length === 'undefined';
+}
+
+export function isArray(val: any) {
+  return typeof val === 'object' 
+    && val !== null 
+    && typeof val.length !== 'undefined';
+}
+
 export function lesser(a: any, b: any) {
   //if (a === undefined && b !== undefined) {
     //return true;
@@ -46,5 +58,9 @@ export function lesser(a: any, b: any) {
   } else {
     return false;
   }
+}
+
+export function equal(a: any, b: any) {
+  return !lesser(a, b) && !lesser(b, a);
 }
 
