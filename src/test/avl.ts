@@ -37,11 +37,11 @@ describe('an AVL-tree', () => {
 
   it('can insert elements', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(5);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(4);
+    t1.add(1);
+    t1.add(5);
+    t1.add(2);
+    t1.add(3);
+    t1.add(4);
     expect([...t1]).to.deep.equal([1, 2, 3, 4, 5]);
   });
 
@@ -50,7 +50,7 @@ describe('an AVL-tree', () => {
       const els = require(`./numbers${i}.json`);   
       const t1 = new AVL();
       for (const el of els) {
-        t1.insert(el);
+        t1.add(el);
         let last = -1;
         for (const inserted of t1) {
           expect(last).to.be.below(inserted);
@@ -64,7 +64,7 @@ describe('an AVL-tree', () => {
       const els = require(`./numbers${i}.json`);   
       const t1 = new AVL();
       for (const el of els) {
-        t1.insert(el);
+        t1.add(el);
         let last = -1;
         for (const inserted of t1) {
           expect(last).to.be.below(inserted);
@@ -74,7 +74,7 @@ describe('an AVL-tree', () => {
       const s = new Set<number>(els);
       shuffle(els);
       for (const el of els) {
-        t1.remove(el);
+        t1.delete(el);
         s.delete(el);
         expect([...t1]).to.deep.equal([...s]);
       }
@@ -83,55 +83,55 @@ describe('an AVL-tree', () => {
 
   it('can store multiple equal keys', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(5);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(3);
-    t1.insert(3);
-    t1.insert(4);
+    t1.add(1);
+    t1.add(5);
+    t1.add(2);
+    t1.add(3);
+    t1.add(3);
+    t1.add(3);
+    t1.add(4);
     expect([...t1]).to.deep.equal([1,2,3,3,3,4,5]);
   })
 
 
   it('can delete elements', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(5);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(4);
+    t1.add(1);
+    t1.add(5);
+    t1.add(2);
+    t1.add(3);
+    t1.add(4);
     expect([...t1]).to.deep.equal([1, 2, 3, 4, 5]);
-    t1.remove(4);
+    t1.delete(4);
     expect([...t1]).to.deep.equal([1, 2, 3, 5]);
-    t1.remove(1);
+    t1.delete(1);
     expect([...t1]).to.deep.equal([2, 3, 5]);
-    t1.remove(2);
+    t1.delete(2);
     expect([...t1]).to.deep.equal([3, 5]);
-    t1.remove(3);
+    t1.delete(3);
     expect([...t1]).to.deep.equal([5]);
-    t1.remove(5);
+    t1.delete(5);
     expect([...t1]).to.deep.equal([]);
   });
 
   it('can find the lower bound', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(5);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(4);
+    t1.add(1);
+    t1.add(5);
+    t1.add(2);
+    t1.add(3);
+    t1.add(4);
     const pos = t1.lower(2);
     expect(pos.value).to.equal(3);
   });
 
   it('can find the upper bound', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(5);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(4);
+    t1.add(1);
+    t1.add(5);
+    t1.add(2);
+    t1.add(3);
+    t1.add(4);
     const pos1 = t1.upper(4);
     expect(pos1.value).to.equal(3);
     const pos2 = t1.upper(2);
@@ -140,24 +140,24 @@ describe('an AVL-tree', () => {
 
   it('can reverse-iterate over elements', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(5);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(4);
+    t1.add(1);
+    t1.add(5);
+    t1.add(2);
+    t1.add(3);
+    t1.add(4);
     const pos = t1.end();
     expect([...pos.reverse()]).to.deep.equal([5,4,3,2,1]);
   });
 
   it('can traverse an equal range', () => {
     const t1 = new AVL();
-    t1.insert(1);
-    t1.insert(2);
-    t1.insert(3);
-    t1.insert(3);
-    t1.insert(3);
-    t1.insert(4);
-    t1.insert(5);
+    t1.add(1);
+    t1.add(2);
+    t1.add(3);
+    t1.add(3);
+    t1.add(3);
+    t1.add(4);
+    t1.add(5);
     expect([...t1.equal(7)]).to.deep.equal([]);
     expect([...t1.equal(3)]).to.deep.equal([3,3,3]);
   });
