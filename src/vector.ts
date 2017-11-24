@@ -1,29 +1,105 @@
 
-import { Iterator, Vector } from "../interfaces"
+import { Vector, View, Cursor } from "./interfaces"
 
-interface ArrIteratorResult<T> extends IteratorResult<T> {
-  _idx: number
-}
+export class Element<T> {
 
-export class ArrIterator<T> implements Iterator<T> {
-  
-  constructor(public _arr: T[], public _idx: number) {
+  get value() {
+    return this._elements[this._index]; 
+  }
 
+  set value(newValue: T) {
+    this._elements[this._index] = newValue;
+  }
+
+  constructor(public _elements: T[], public _index: number) {
+    
+  }
+
+  [Symbol.iterator]() {
+    let i = this._index, els = this._elements;
+    return {
+      next() {
+        if (i === els.length) {
+          return <IteratorResult<T>>{ done: true };
+        }
+        return { done: false, value: els[i++] };
+      }
+    }
   }
 
   next() {
-    if (this._idx >= this._arr.length)
-      return { done: true, _idx: -1, value: undefined }
-    const res = { done: false, _idx: this._idx, value: this._arr[this._idx] }
-    ++this._idx
-    return res
+    if (this._index === this._elements.length-1) {
+      return null;
+    }
+    return new Element<T>(this._elements, this._index+1);
+  }
+
+  prev() {
+    if (this._index === 0) {
+      return null;
+    }
+    return new Element<T>(this._elements, this._index-1);
   }
 
 }
 
+class SlicedArrView<T> implements View<T> {
+
+  constructor(public _elements: T[], public _min = 0, public _max = _elements.length) {
+    
+  }
+
+  reverse() {
+    return new RSlicedArrView<T>(this);
+  }
+
+  slice(a: number, b: number) {
+    return new SlicedArrView(this._elements, this._min+a, this._min+b);
+  }
+
+  [Symbol.iterator]() {
+    let i = this._min, els = this._elements, max = this._max;
+    return {
+      next() {
+        if (i === max) {
+          return <IteratorResult<T>>{ done: true };
+        }
+        return { done: false, value: els[i++] };
+      }
+    }
+  }
+
+}
+
+class RSlicedArrView<T> implements View<T> {
+
+  constructor(public _view: SlicedArrView<T>) {
+
+  }
+
+  [Symbol.iterator]() {
+    let i = this._view._max, els = this._view._elements, min = this._view._min;
+    return {
+      next() {
+        if (i === min) {
+          return <IteratorResult<T>>{ done: true };
+        }
+        return { done: false, value: els[i--] };
+      }
+    }
+  }
+
+  reverse() {
+    return this._view;
+  }
+
+};
+
 export class ArrayVector<T> implements Vector<T> {
 
-  constructor(protected _elements: T[] = []) {
+  _elements: T[];
+
+  constructor(public _elements: T[] = []) {
 
   }
 
@@ -62,12 +138,16 @@ export class ArrayVector<T> implements Vector<T> {
     return this._elements.length
   }
 
-  insertAfter(pos: IteratorResult<T>, el: T) {
-    this._elements.splice((<ArrIteratorResult<T>>pos)._idx+1, 0, el)
+  insertAfter(pos: Element<T>, el: T) {
+    this._elements.splice(pos._index+1, 0, el)
   }
 
-  insertBefore(pos: IteratorResult<T>, el: T) {
-    this._elements.splice((<ArrIteratorResult<T>>pos)._idx, 0, el)
+  insertBefore(pos: Element<T>, el: T) {
+    this._elements.splice(pos._index, 0, el)
+  }
+
+  slice(a: number, b: number) {
+    return new SlicedArrView<T>(this._elements, a, b);
   }
 
   first() {
@@ -83,11 +163,11 @@ export class ArrayVector<T> implements Vector<T> {
   }
 
   begin() {
-    return new ArrIterator(this._elements, 0)
+    return new Element(this._elements, 0);
   }
 
   end() {
-    return new ArrIterator(this._elements, this._elements.length)
+    return new Element(this._element, this._elements.length-1);
   }
 
   prepend(el: T) {
@@ -101,31 +181,23 @@ export class ArrayVector<T> implements Vector<T> {
   [Symbol.iterator]() {
     return this._elements[Symbol.iterator]()
   }
-  
-  iterator() {
-    return this._elements[Symbol.iterator]()
-  }
 
   add(el: T) {
     this._elements.push(el)
   }
 
-  at(count: number): ArrIteratorResult<T> {
+  at(count: number): Element<T> {
     if (count < 0 || count > this._elements.length)
-      throw new Error(`invalid range`)
-    return {
-      done: false,
-      value: this._elements[count],
-      _idx: count
-    }
+      return null;
+    return new Element(this._elements, count);
   }
 
-  deleteAt(pos: ArrIteratorResult<T>) {
-    this._elements.splice(pos._idx, 1);
+  deleteAt(pos: Element<T>) {
+    this._elements.splice(pos._index, 1);
   }
 
   deleteAll(el: T) {
-    this._elements = this._elements.filter(otherEl => el === otherEl)
+    this._elements = this._elements.filter(other => el === other)
   }
 
   clear() {
