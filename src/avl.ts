@@ -509,7 +509,7 @@ export class AVLTree<T> {
 
   [Symbol.iterator]() {
     if (this._size === 0) {
-      return { next() { return { done: true } } };
+      return <Iterator<T>>{ next() { return { done: true } } };
     }
     return this.begin()[Symbol.iterator]();
   }
