@@ -37,7 +37,9 @@ partially completed.
 |                    | Name               | Add       | Remove    | Member    |
 |--------------------|--------------------|-----------|-----------|-----------|
 |                    | set/tree           | O(log(n)) | O(log(n)) | O(log(n)) |
-|                    | dict/tree          | O(log(n)) | O(log(n)) | O(log(n)) |
+|                    | set/hash           | O(1)      | O(1)      | O(1)      |
+| :heavy_check_mark: | dict/tree          | O(log(n)) | O(log(n)) | O(log(n)) |
+| :heavy_check_mark: | dict/hash          | O(1)      | O(1)      | O(1)      |
 |                    | set/es6            | O(1)      | O(1)      | O(1)      |
 |                    | dict/string        | O(1)      | O(1)      | O(1)      |
 |                    | dict/es6           | O(1)      | O(1)      | O(1)      |
