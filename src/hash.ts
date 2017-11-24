@@ -2,33 +2,28 @@
 import { Cursor } from "./interfaces"
 import DLList, { Cursor as DLCursor } from "./list/double"
 
-export class HashCursor<T> {
+class Element<T> {
 
-  constructor(public _listPos: DLCursor<[DLList<T>,DLCursor<T>]>) {
+  constructor(public value: T, public _index: number) {
 
   }
 
-  get value() {
-    return this._listPos.value[1].value;
-  }
-
-  set value(newVal: T) {
-    this._listPos.value[1].value = newVal;
-  }
+  _bucketPos: DLCursor<Element<T>> = null;
+  _listPos: DLCursor<Element<T>> = null;
 
   next() {
-    return new HashCursor(this._listPos.next());
+    return this._listPos.next();
   }
 
   prev() {
-    return new HashCursor(this._listPos.next());
+    return this._listPos.next();
   }
 
 }
 
 class BucketView<T> {
 
-  constructor(public _hash: Hash<T>, public _el: T, public _bucket: DLList<T>) {
+  constructor(public _hash: Hash<T>, public _el: T, public _bucket: DLList<Element<T>>) {
     
   }
 
@@ -40,23 +35,17 @@ class BucketView<T> {
 
   *[Symbol.iterator]() {
     if (this._reversed) {
-      let pos = this._bucket.begin();
-      do {
-        if (this._hash.isEqual(pos.value, this._el)) {
-          yield pos.value;
-          break;
+      for (const el of this._bucket) {
+        if (this._hash.isEqual(el.value, this._el)) {
+          yield el.value;
         }
-        pos = pos.next();
-      } while (pos !== null);
+      }
     } else {
-      let pos = this._bucket.begin();
-      do {
-        if (this._hash.isEqual(pos.value, this._el)) {
-          yield pos.value;
-          break;
+      for (const el of this._bucket) {
+        if (this._hash.isEqual(el.value, this._el)) {
+          yield el.value;
         }
-        pos = pos.next();
-      } while (pos !== null);
+      }
     }
   }
 
@@ -64,8 +53,8 @@ class BucketView<T> {
 
 export class Hash<T> implements UnorderedContainer<T> {
   
-  _array: DLList<T>[];
-  _list = new DLList<[DLList<T>,DLCursor<T>]>();
+  _array: DLList<Element<T>>[];
+  _list = new DLList<Element<T>>();
 
   constructor(public getHash: (el: T) => number, public isEqual: (a: T, b: T) => boolean, public size = 100) {
     this._array = new Array(size);          
@@ -77,21 +66,42 @@ export class Hash<T> implements UnorderedContainer<T> {
     return new BucketView(this, el, this._array[i] === undefined ? null : this._array[i]);
   }
 
-  add(el: T) {
-    const h = this.getHash(el);
+  add(val: T) {
+    const h = this.getHash(val);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
-      this._array[i] = new DLList<T>();
+      this._array[i] = new DLList<Element<T>>();
     }
-    const bpos = this._array[i].append(el);
-    const lpos = this._list.append([this._array[i], bpos]);
-    return new HashCursor<T>(lpos);
+    const bucket = this._array[i];
+    const el = new Element(val, i);
+    el._bucketPos = bucket.append(el);
+    el._listPos = this._list.append(el);
+    return el;
   }
 
-  deleteAt(pos: HashCursor<T>) {
-    const [bucket, bucketPos] = pos._listPos.value;
+  deleteAt(pos: Element<T>) {
+    this._array[pos._index].deleteAt(pos._bucketPos);
     this._list.deleteAt(pos._listPos);
-    bucket.deleteAt(bucketPos);
+  }
+
+  find(val: T): Element<T> {
+    const h = this.getHash(val);
+    const i = h % this._array.length;
+    if (this._array[i] === undefined) {
+      return null;
+    }
+    for (const el of this._array[i]) {
+      if (this.isEqual(el.value, val)) {
+        return el;
+      }
+    }
+  }
+
+  delete(el: T) {
+    const pos = this.find(el);
+    if (pos !== null) {
+      this.deleteAt(pos);
+    }
   }
 
   *[Symbol.iterator]() {
