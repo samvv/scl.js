@@ -90,7 +90,6 @@ export class Hash<T> implements UnorderedContainer<T> {
 
   deleteAt(pos: HashCursor<T>) {
     const [bucket, bucketPos] = pos._listPos.value;
-    console.log(pos._listPos);
     this._list.deleteAt(pos._listPos);
     bucket.deleteAt(bucketPos);
   }
