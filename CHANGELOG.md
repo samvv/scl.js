@@ -3,6 +3,16 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.7.0
+  
+ - Removed dangling ES6 wrappers
+ - Added a hash set and hash dictionary 
+ - Updated container API to include `deleteAt()`
+ - Made all inserters return a cursor in container API
+ - Updated list implementations to return cursors upon insertion
+ - Added a tree set and tree dictionary
+ - Removed unclear grid data structures
+
 ### v0.6.0
 
  - Introduced new cursor API for iterating through container elements
