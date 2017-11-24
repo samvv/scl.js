@@ -235,15 +235,13 @@ function rotateRight<T>(node: Node<T>) {
 
 export class AVLTree<T> {
 
-  constructor (lessThan = lesser, noDuplicates = false) {
+  constructor (lessThan = lesser, public _mode = 2) {
     this.lessThan = lessThan;
     this._comparator = (a: T, b: T) => {
       if (lessThan(a, b)) return -1;
       if (lessThan(b, a)) return 1;
       return 0;
     }
-
-    this._noDuplicates = !!noDuplicates;
   }
   
   lessThan: (a: T, b: T) => boolean;
@@ -251,7 +249,6 @@ export class AVLTree<T> {
   _size = 0;
   _root: Node<T> = null;
   _comparator: (a: T, b: T) => number;
-  _noDuplicates: boolean;
 
   /**
    * Clear the tree
@@ -288,11 +285,14 @@ export class AVLTree<T> {
     var parent  = null;
     var cmp     = 0;
 
-    if (this._noDuplicates) {
+    if (this._mode === 0) {
       while (node) {
         cmp = compare(value, node.value);
         parent = node;
-        if      (cmp === 0) return null;
+        if      (cmp === 0) { 
+          node.value = value;
+          return null;
+        }
         else if (cmp < 0)   node = node.left;
         else                node = node.right;
       }
