@@ -2,6 +2,7 @@
 import { Dict } from "../interfaces"
 import { expect } from "chai"
 import { forEachTestSet } from "./_common"
+import { DictMode } from "../util"
 
 export function addDictTests(create: () => Dict<any, any>) {
  
@@ -38,6 +39,33 @@ export function addDictTests(create: () => Dict<any, any>) {
     });
   });
 
+}
+
+export function addSingleTests(create) {
+  it('can hold only one of the same key', () => {
+    const d = create();
+    d.add([1, 2]);
+    d.add([1, 3]);
+    expect([...d]).to.deep.equal([[1, 3]]);
+  });
+}
+
+export function addManyTests(create) {
+  it('can hold only one of the same pair', () => {
+    const d = create();
+    d.add([1, 2]);
+    d.add([1, 2]);
+    expect([...d]).to.deep.equal([[1, 2]]);
+  });
+}
+
+export function addMultiTests(create) {
+  it('can hold many of the same pair', () => {
+    const d = create();
+    d.add([1, 2]);
+    d.add([1, 2]);
+    expect([...d]).to.deep.equal([[1, 2], [1, 2]]);
+  });
 }
 
 export default addDictTests
