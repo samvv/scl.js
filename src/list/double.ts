@@ -141,8 +141,12 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   deleteAt(pos: Node<T>) {
-    pos._prevNode._nextNode = pos._nextNode;
-    pos._nextNode._prevNode = pos._prevNode;
+    if (pos._prevNode !== null) {
+      pos._prevNode._nextNode = pos._nextNode;
+    }
+    if (pos._nextNode !== null) {
+      pos._nextNode._prevNode = pos._prevNode;
+    }
     --this._size;
     if (pos === this._first) {
       this._first = pos._nextNode;
