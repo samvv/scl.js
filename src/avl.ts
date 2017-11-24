@@ -276,7 +276,7 @@ export class AVLTree<T> {
    * @param  {Value} [data]
    * @return {?Node}
    */
-  insert (value) {
+  add (value) {
     if (!this._root) {
       this._root = new Node<T>(value);
       this._size++;
@@ -519,7 +519,7 @@ export class AVLTree<T> {
    * @param  {Key} value
    * @return {?Node}
    */
-  remove (value) {
+  delete (value) {
     if (!this._root) return null;
     var node = this._root;
     var compare = this._comparator;
@@ -532,7 +532,11 @@ export class AVLTree<T> {
       else                node = node.right;
     }
     if (!node) return null;
+    this.deleteAt(node);
+  }
 
+  deleteAt(node) {
+    var compare = this._comparator;
     var returnValue = node.value;
     var max, min;
 

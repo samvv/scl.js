@@ -62,7 +62,7 @@ class BucketView<T> {
 
 }
 
-export class Hash<T> {
+export class Hash<T> implements UnorderedContainer<T> {
   
   _array: DLList<T>[];
   _list = new DLList<[DLList<T>,DLCursor<T>]>();
@@ -77,7 +77,7 @@ export class Hash<T> {
     return new BucketView(this, el, this._array[i] === undefined ? null : this._array[i]);
   }
 
-  insert(el: T) {
+  add(el: T) {
     const h = this.getHash(el);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
@@ -88,7 +88,7 @@ export class Hash<T> {
     return new HashCursor<T>(lpos);
   }
 
-  remove(pos: HashCursor<T>) {
+  deleteAt(pos: HashCursor<T>) {
     const [bucket, bucketPos] = pos._listPos.value;
     console.log(pos._listPos);
     this._list.deleteAt(pos._listPos);
