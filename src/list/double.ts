@@ -1,31 +1,32 @@
 
-import { List } from "../../interfaces"
-import { getPosAt } from "../iterator"
+import { List, Cursor } from "../interfaces"
 
-interface Node<T> {
-  prev: Node<T>
-  next: Node<T>
-  value: T
-}
+class Node<T> implements Cursor<T> {
 
-interface DLIteratorResult<T> extends IteratorResult<T> {
-  _node: Node<T>
-}
+  constructor(public value: T, public _prevNode: Node<T> = null, public _nextNode: Node<T> = null) {
 
-class DLIterator<T> implements Iterator<T> {
-
-  _node: Node<T> | null
-
-  constructor(list: DoubleLinkedList<T>) {
-    this._node = list._first
   }
 
-  next(): DLIteratorResult<T> {
-    if (this._node === null)
-      return { _node: this._node, done: true, value: undefined }
-    const res = { _node: this._node, done: false, value: this._node.value }
-    this._node = this._node.next
-    return res
+  [Symbol.iterator]() {
+    let node: Node<T> = this;
+    return {
+      next() {
+        if (node === null) {
+          return { done: true };
+        }
+        const out = { done: false, value: node.value };
+        node = node._nextNode;
+        return out;
+      }
+    }
+  }
+
+  next() {
+    return this._nextNode;
+  }
+  
+  prev() {
+    return this._prevNode;
   }
 
 }
@@ -36,14 +37,13 @@ export class DoubleLinkedList<T> implements List<T> {
 
   }
 
-  insertBefore(pos: IteratorResult<T>, el: T) {
-    const dlpos = (<DLIteratorResult<T>>pos);
-    if (dlpos._node.prev === null) {
+  insertBefore(pos: Node<T>, el: T) {
+    if (pos._prevNode === null) {
       this.prepend(el)
     } else {
-      const newNode = { prev: dlpos._node.prev, next: dlpos._node, value: el };
-      dlpos._node.prev.next = newNode;
-      dlpos._node.prev = newNode;
+      const newNode = new Node(el, pos._prevNode, pos);
+      pos._prevNode._nextNode = newNode;
+      pos._prevNode = newNode;
       ++this._size;
     }
   }
@@ -60,20 +60,19 @@ export class DoubleLinkedList<T> implements List<T> {
     return this._last.value;
   }
 
-  insertAfter(pos: IteratorResult<T>, el: T) {
-    const node = (<DLIteratorResult<T>>pos)._node;
-    const newNode = { value: el, prev: node.prev, next: node.next };
-    if (node.next === null) {
+  insertAfter(pos: Node<T>, el: T) {
+    const newNode = new Node<T>(el, pos._prevNode, pos._nextNode);
+    if (pos._nextNode === null) {
       this._last = newNode;
     } else {
-      node.next.prev = newNode;
+      pos._nextNode._prevNode = newNode;
     }
-    node.next = newNode;
+    pos._nextNode = newNode;
     ++this._size;
   }
 
   prepend(el: T) {
-    const newNode = { prev: null, next: this._first, value: el };
+    const newNode = new Node<T>(el, null, this._first);
     this._first = newNode;
     if (this._last === null) {
       this._last = newNode;
@@ -82,30 +81,28 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   append(el: T) {
-    const newNode = { prev: this._last, next: null, value: el }
-    this._last = newNode;
+    const newNode = new Node<T>(el, this._last, null);
     if (this._first === null) {
       this._first = newNode
     } else {
-      let node = this._first
-      while (node.next !== null) node = node.next;
-      node.next = newNode
+      this._last._nextNode = newNode
     }
+    this._last = newNode;
     ++this._size;
   }
 
-  count(el: T) {
-    let res = 0
-    let node = this._first
-    while (node !== null) {
-      if (node.value === el)
-        ++res
-      node = node.next
-    }
-    return res
-  }
+  //count(el: T) {
+    //let i = 0;
+    //let res = 0
+    //let node = this._first
+    //while (node !== null) {
+      //if (node.value === el)
+        //++res
+      //node = node.next
+    //}
+    //return res
+  //}
 
-  // TODO
   size() {
     return this._size;
   }
@@ -118,52 +115,54 @@ export class DoubleLinkedList<T> implements List<T> {
     return false
   }
 
-  iterator(): DLIterator<T> {
-    return new DLIterator(this)
-  }
-
-  [Symbol.iterator](): DLIterator<T> {
-    return this.iterator()
+  [Symbol.iterator](): Iterator<T> {
+    if (this._first === null) {
+      return { next() { return { done: true } } };
+    }
+    return this._first[Symbol.iterator]();
   }
 
   begin() {
-    return this.iterator()
+    return this._first;
   }
 
   end() {
-    const it = this.begin()
-    while (!it.next().done);
-    return it;
+    return this._last;
   }
 
   at(count: number) {
-    return getPosAt(this.begin(), count)
+    let node = this._first;
+    while (count > 0) {
+      node = node._nextNode;
+      --count;
+    }
+    return node;
   }
 
-  deleteAt(pos: DLIteratorResult<T>) {
-    pos._node.prev.next = pos._node.next;
-    pos._node.next.prev = pos._node.prev;
+  deleteAt(pos: Node<T>) {
+    pos._prevNode._nextNode = pos._nextNode;
+    pos._nextNode._prevNode = pos._prevNode;
     --this._size;
-    if (pos._node === this._first) {
-      this._first = pos._node.next;
+    if (pos === this._first) {
+      this._first = pos._nextNode;
     }
-    if (pos._node === this._last) {
-      this._last = pos._node.prev;
+    if (pos === this._last) {
+      this._last = pos._prevNode;
     }
   }
 
-  deleteAll(el: T) {
-    const it = this[Symbol.iterator]();
-    let pos;
-    while (!(pos = it.next()).done) {
-      this.deleteAt(pos);
-    }
-  }
+  //deleteAll(el: T) {
+    //const it = this[Symbol.iterator]();
+    //let pos;
+    //while (!(pos = it.next()).done) {
+      //this.deleteAt(pos);
+    //}
+  //}
 
   rest() {
     if (this._first === null)
       throw new Error(`list is empty`)
-    return new DoubleLinkedList(this._first.next, this._last, this._size-1);
+    return new DoubleLinkedList(this._first._nextNode, this._last, this._size-1);
   }
 
   clear() {
