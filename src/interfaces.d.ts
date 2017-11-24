@@ -4,6 +4,7 @@
  * sense of the word.
  */
 export interface Container<T> {
+
   /**
    * Checks if the container holds the given element.
    *
@@ -336,12 +337,12 @@ export interface MultiDict<K, V> extends MultiContainer<Pair<K, V>>, UnorderedCo
   /**
    * Get all values that are associated with the given key.
    */
-  getValues(key: K): V[];
+  getValues(key: K): View<V>;
 
   /**
    * Removes all pairs with the given key from the container. 
    */
-  deleteKeys(key: K): void
+  deleteKey(key: K): void
 
 }
 
