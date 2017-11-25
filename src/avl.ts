@@ -11,23 +11,18 @@ class Node<T> {
   balance: number = 0;
   left: Node<T> = null;
   right: Node<T> = null;
+  data?: any;
 
   constructor(public value: T, public parent: Node<T> = null) {
 
   }
 
-  [Symbol.iterator]() {
-    let curr: Node<T> = this;
-    return {
-      next() {
-        const node = curr;
-        if (node === null) {
-          return <AVLIteratorResult<T>>{ done: true };
-        }
-        curr = node.next();
-        return { done: false, value: node.value, _node: node };
-      }
-    }
+  *[Symbol.iterator]() {
+    let node: Node<T> = this;
+    do {
+      yield node.value;
+      node = node.next();
+    } while (node !== null);
   }
 
   next(): Node<T> {
@@ -86,18 +81,12 @@ class RNode<T> {
     return this._node.next();
   }
 
-  [Symbol.iterator]() {
-    let curr: Node<T> = this._node;
-    return {
-      next() {
-        const node = curr;
-        if (node === null) {
-          return <AVLIteratorResult<T>>{ done: true };
-        }
-        curr = node.prev();
-        return { done: false, value: node.value, _node: node };
-      }
-    }
+  *[Symbol.iterator]() {
+    let node: Node<T> = this._node;
+    do {
+      yield node.value;
+      node = node.prev();
+    } while (node !== null);
   }
 
   reverse() {
@@ -108,52 +97,32 @@ class RNode<T> {
 
 class NodeRange<T> {
 
-  constructor(public min: Node<T>, public max: Node<T>) {
+  constructor(public min: Node<T>, public max: Node<T>, public _reversed = false) {
 
-  }
-
-  [Symbol.iterator]() {
-    let curr: Node<T> = this.min;
-    return {
-      next: () => {
-        const node = curr;
-        if (node === null) {
-          return <AVLIteratorResult<T>>{ done: true };
-        }
-        if (node === this.max) {
-          curr = null; 
-        } else {
-          curr = node.next();
-        }
-        return { done: false, value: node.value, _node: node };
-      }
-    }   
-  }
-
-}
-
-class RNodeRange<T> {
-
-  constructor(public _range: NodeRange<T>) {
-
-  }
-
-  [Symbol.iterator]() {
-    let curr: Node<T> = this._range.max;
-    return {
-      next: () => {
-        const node = curr;
-        if (node === null || node === this._range.min) {
-          return <AVLIteratorResult<T>>{ done: true };
-        }
-        curr = node.prev();
-        return { done: false, value: node.value, _node: node };
-      }
-    }   
   }
 
   reverse() {
-    return this._range;
+    return new NodeRange(min, max, !this._reversed);
+  }
+
+  *[Symbol.iterator]() {
+    if (!this._reversed) {
+      let node: Node<T> = this.min, max = this.max;
+      while (node !== null) {
+        yield node.value;
+        if (node === max)
+          break;
+        node = node.next();
+      }
+    } else {
+      let node: Node<T> = this.max, min = this.min;
+      while (node !== null) {
+        yield node.value;
+        node = node.prev();
+        if (node === min)
+          break;
+      }
+    }
   }
 
 }
@@ -235,79 +204,71 @@ function rotateRight<T>(node: Node<T>) {
 
 export class AVLTree<T> {
 
-  constructor (lessThan = lesser, public _mode = 2) {
-    this.lessThan = lessThan;
-    this._comparator = (a: T, b: T) => {
-      if (lessThan(a, b)) return -1;
-      if (lessThan(b, a)) return 1;
-      return 0;
-    }
+  constructor(public _comparator, public _allowDuplicates = true) {
+
   }
   
   lessThan: (a: T, b: T) => boolean;
 
   _size = 0;
   _root: Node<T> = null;
-  _comparator: (a: T, b: T) => number;
 
-  /**
-   * Clear the tree
-   * @return {AVLTree}
-   */
   clear() {
     this._root = null;
     this._size = 0;
   }
 
-  /**
-   * Number of nodes
-   * @return {number}
-   */
   get size () {
     return this._size;
   }
 
-  /**
-   * Insert a node into the tree
-   * @param  {Key} key
-   * @param  {Value} [data]
-   * @return {?Node}
-   */
-  add (value) {
-    if (!this._root) {
-      this._root = new Node<T>(value);
-      this._size++;
-      return this._root;
-    }
+  addHint (value: T) {
+    
+    const compare = this._comparator;
+    let node    = this._root
+      , parent  = null
+      , cmp;
 
-    var compare = this._comparator;
-    var node    = this._root;
-    var parent  = null;
-    var cmp     = 0;
-
-    if (this._mode === 0) {
-      while (node) {
-        cmp = compare(value, node.value);
+    if (!this._allowDuplicates) {
+      while (node !== null) {
+        cmp = compare(node.value, value);
         parent = node;
-        if      (cmp === 0) { 
-          node.value = value;
-          return null;
-        }
-        else if (cmp < 0)   node = node.left;
+        if      (cmp === 0) return [false, node];
+        else if (cmp > 0)   node = node.left;
         else                node = node.right;
       }
     } else {
-      while (node) {
-        cmp = compare(value, node.value);
+      while (node !== null) {
+        cmp = compare(node.value, value);
         parent = node;
-        if      (cmp <= 0)  node = node.left; //return null;
+        if      (cmp >= 0)  node = node.left; //return null;
         else                node = node.right;
       }
     }
 
+    return [true, parent];   
+  }
+
+  add (value: T, parent?: Node<T>) {
+    if (!this._root) {
+      this._root = new Node<T>(value);
+      this._size++;
+      return [true, this._root];
+    }
+
+    if (parent === undefined) {
+      let shouldAdd;
+      [shouldAdd, parent] = this.addHint(value);
+      if (!shouldAdd) {
+        return;
+      }
+    }
+    
+    const compare = this._comparator;
+    let cmp = compare(parent.value, value);
     var newNode = new Node<T>(value, parent);
     var newRoot;
-    if (cmp <= 0) parent.left  = newNode;
+    if (cmp >= 0) parent.left  = newNode;
     else         parent.right = newNode;
 
     while (parent) {
@@ -337,15 +298,10 @@ export class AVLTree<T> {
     }
 
     this._size++;
-    return newNode;
+    return [true, newNode];
   }
 
-  /**
-   * Whether the tree contains a node with the given value
-   * @param  {Key} value
-   * @return {boolean} true/false
-   */
-  contains (value) {
+  has (value) {
     if (this._root)  {
       var node       = this._root;
       var comparator = this._comparator;
@@ -359,92 +315,60 @@ export class AVLTree<T> {
     return false;
   }
 
-
-  /**
-   * @param  {forEachCallback} callback
-   * @return {AVLTree}
-   */
-  //forEach(callback) {
-    //var current = this._root;
-    //var s = [], done = false, i = 0;
-    
-    //while (!done) {
-      //// Reach the left most Node of the current Node
-      //if (current) {
-        //// Place pointer to a tree node on the stack
-        //// before traversing the node's left subtree
-        //s.push(current);
-        //current = current.left;
-      //} else {
-        //// BackTrack from the empty subtree and visit the Node
-        //// at the top of the stack; however, if the stack is
-        //// empty you are done
-        //if (s.length > 0) {
-          //current = s.pop();
-          //callback(current, i++);
-
-          //// We have visited the node and its left
-          //// subtree. Now, it's right subtree's turn
-          //current = current.right;
-        //} else done = true;
-      //}
-    //}
-    //return this;
-  //}
+  find<R = T>(val: R): Node<T> {
+    let node = this._root;
+    const compare = this._comparator;
+    while (node !== null) {
+      const cmp = compare(node.value, val);
+      if (cmp > 0)   node = node.left;
+      else if (cmp < 0) node = node.right;
+      else return node;
+    }
+    return null;
+  }
 
   equal(val: T): NodeRange<T> {
 
-    const lt = this.lessThan;
-    const equal = (a, b) => !lt(a ,b) && !lt(b, a);
+    const compare = this._comparator;
 
     let min = (function findMin(node) {
-      if (lt(node.value, val)) {
-        if (node.right !== null)
-          return findMin(node.right);
+      if (node === null) 
         return null;
+      const cmp = compare(node.value, val);
+      if (cmp < 0) {
+        return findMin(node.right);
       }
-      if (lt(val, node.value)) {
-        if (node.left !== null)
-          return findMin(node.left);
-        return null;
+      if (cmp > 0) {
+        return findMin(node.left);
       }
-      if (node.left !== null) {
-        const res = findMin(node.left);
-        if (res !== null) {
-          return res;
-        }
+      const res1 = findMin(node.left);
+      if (res1 !== null) {
+        return res1;
       }
-      if (node.right !== null) {
-        const res = findMin(node.right);
-        if (res !== null) {
-          return res;
-        }
+      const res2 = findMin(node.right);
+      if (res2 !== null) {
+        return res2;
       }
       return node;
     })(this._root);
 
     let max = (function findMax(node) {
-      if (lt(node.value, val)) {
-        if (node.right !== null)
-          return findMax(node.right);
+      if (node === null) 
         return null;
+      const cmp = compare(node.value, val);
+      if (cmp < 0) {
+        return findMax(node.right);
       }
-      if (lt(val, node.value)) {
-        if (node.left !== null)
-          return findMax(node.left);
-        return null;
+      if (cmp > 0) {
+        return findMax(node.left);
       }
-      if (node.right !== null) {
-        const res = findMax(node.right);
-        if (res !== null) {
-          return res;
-        }
+      const res1 = findMax(node.right);
+      if (res1 !== null) {
+        return res1;
       }
-      if (node.left !== null) {
-        const res = findMax(node.left);
-        if (res !== null) {
-          return res;
-        }
+      const res2 = findMax(node.left);
+      if (res2 !== null) {
+        return res2;
       }
       return node;
     })(this._root);
@@ -454,9 +378,9 @@ export class AVLTree<T> {
 
   lower(val: T): Node<T> {
 
-    const lt = this.lessThan;
+    const compare = this._comparator;
     let node = this._root;
-    while (lt(val, node.value) && !lt(node.value, val)) { 
+    while (compare(node.value, val) > 0) { 
       if (node.left !== null) {
         node = node.left;
       } else { 
@@ -464,7 +388,7 @@ export class AVLTree<T> {
         break;
       }
     }
-    if (node !== null && !lt(val, node.value)) {
+    if (node !== null && compare(node.value, val) === 0) {
       node = node.right;
       while (node.left !== null) node = node.left;
     }
@@ -473,9 +397,9 @@ export class AVLTree<T> {
 
   upper(val: T): Node<T> {
 
-    const lt = this.lessThan;
+    const compare = this._comparator;
     let node = this._root;
-    while (lt(node.value, val) && !lt(val, node.value)) {
+    while (compare(node.value, val) < 0) {
       if (node.right !== null) {
         node = node.right;
       } else { 
@@ -483,7 +407,7 @@ export class AVLTree<T> {
         break;
       }
     }
-    if (node !== null && !lt(node.value, val)) {
+    if (node !== null && compare(node.value, val) === 0) {
       node = node.left;
       if (node !== null) {
         while (node.right !== null) node = node.right;
@@ -507,36 +431,20 @@ export class AVLTree<T> {
     return node;
   }
 
-  [Symbol.iterator]() {
+  *[Symbol.iterator]() {
     if (this._size === 0) {
-      return <Iterator<T>>{ next() { return { done: true } } };
+      return;
     }
-    return this.begin()[Symbol.iterator]();
+    yield* this.begin();
   }
 
-  /**
-   * Removes the node from the tree. If not found, returns null.
-   * @param  {Key} value
-   * @return {?Node}
-   */
   delete (value) {
-    if (!this._root) return null;
-    var node = this._root;
-    var compare = this._comparator;
-    var cmp = 0;
-
-    while (node) {
-      cmp = compare(value, node.value);
-      if      (cmp === 0) break;
-      else if (cmp < 0)   node = node.left;
-      else                node = node.right;
-    }
-    if (!node) return null;
+    const node = this.find(value);
+    if (node === null) return null;
     this.deleteAt(node);
   }
 
   deleteAt(node) {
-    var compare = this._comparator;
     var returnValue = node.value;
     var max, min;
 
@@ -620,5 +528,4 @@ export class AVLTree<T> {
 }
 
 export default AVLTree;
-
 
