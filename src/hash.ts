@@ -1,52 +1,48 @@
 
-import { Container, Cursor } from "./interfaces"
-import DLList, { Cursor as DLCursor } from "./list/double"
-import { DictMode } from "./util"
+import { UnorderedContainer, Cursor } from "./interfaces"
+import List, { Cursor as ListCursor } from "./list/double"
 
-export type Bucket<T> = DLList<Element<T>>;
+export type Bucket<T> = List<T>;
 
-export class Element<T> {
+class HashCursor<T> implements Cursor<T> {
 
-  constructor(public value: T, public _index: number) {
+  constructor(public _bucketIndex: number, public _bucketPos: ListCursor<T>) {
 
   }
 
-  _bucketPos: DLCursor<Element<T>> = null;
-  _listPos: DLCursor<Element<T>> = null;
-
-  next() {
-    return this._listPos.next();
+  get value() {
+    return this._bucketPos.value;
   }
 
-  prev() {
-    return this._listPos.next();
+  set value(newVal: T) {
+    this._bucketPos.value = newVal;
   }
 
 }
 
+export { HashCursor as Cursor };
+
 class BucketView<T> {
 
-  constructor(public _hash: Hash<T>, public _el: T, public _bucket: DLList<Element<T>>) {
+  constructor(public _hash: Hash<T>, public _val: T, public _bucket: Bucket<T>, public _reversed = false) {
     
   }
 
-  _reversed = false;
-
   reverse() {
-    this._reversed = !this._reversed;   
+    return new BucketView<T>(this._hash, this._val, this._bucket, !this._reversed);
   }
 
   *[Symbol.iterator]() {
     if (this._reversed) {
-      for (const el of this._bucket) {
-        if (this._hash.isEqual(el.value, this._el)) {
-          yield el.value;
+      for (const val of this._bucket) {
+        if (this._hash.isEqual(val, this._val)) {
+          yield val;
         }
       }
     } else {
-      for (const el of this._bucket) {
-        if (this._hash.isEqual(el.value, this._el)) {
-          yield el.value;
+      for (const val of this._bucket) {
+        if (this._hash.isEqual(val, this._val)) {
+          yield val;
         }
       }
     }
@@ -57,14 +53,22 @@ class BucketView<T> {
 export class Hash<T> implements UnorderedContainer<T> {
   
   _array: Bucket<T>[];
-  _list = new DLList<Element<T>>();
+  _size = 0;
 
-  _getConflict(bucket: Bucket<T>, val: T): Element<T> {
+  _getConflict(bucket: Bucket<T>, val: T): HashCursor<T> {
     return null;
   }
 
   constructor(public getHash: (el: T) => number, public isEqual: (a: T, b: T) => boolean, size = 100) {
     this._array = new Array(size);
+  }
+
+  size() {
+    return this._size;
+  }
+
+  clear() {
+    this._array.splice(0, this._array.length);
   }
 
   equal(el: T) {
@@ -73,39 +77,42 @@ export class Hash<T> implements UnorderedContainer<T> {
     return new BucketView(this, el, this._array[i] === undefined ? null : this._array[i]);
   }
 
-  add(val: T) {
+  add(val: T): [boolean, HashCursor<T>] {
     const h = this.getHash(val);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
-      this._array[i] = new DLList<Element<T>>();
+      this._array[i] = new List<T>();
     }
     const bucket = this._array[i];
     const conflict = this._getConflict(bucket, val);
     if (conflict !== null) {
-      return conflict; 
+      return [false, conflict]; 
     }
-    const el = new Element(val, i);
-    el._bucketPos = bucket.append(el);
-    el._listPos = this._list.append(el);
-    return el;
+    const bucketPos = bucket.append(val);
+    return [true, new HashCursor<T>(i, bucketPos)];
   }
 
-  deleteAt(pos: Element<T>) {
-    this._array[pos._index].deleteAt(pos._bucketPos);
-    this._list.deleteAt(pos._listPos);
+  deleteAt(pos: HashCursor<T>) {
+    this._array[pos._bucketIndex].deleteAt(pos._bucketPos);
   }
 
-  find(val: T): Element<T> {
+  find(val: T): HashCursor<T> {
     const h = this.getHash(val);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       return null;
     }
-    for (const el of this._array[i]) {
-      if (this.isEqual(el.value, val)) {
-        return el;
-      }
-    }
+    let curr = this._array[i].begin();
+    do {
+      if (curr === null)
+        return null;
+      curr =  curr.next();
+    } while (!this.isEqual(val, curr.value)) 
+    return new HashCursor<T>(i, curr);
+  }
+
+  has(val: T) {
+    return this.find(val) !== null;
   }
 
   delete(el: T) {
@@ -113,11 +120,6 @@ export class Hash<T> implements UnorderedContainer<T> {
     if (pos !== null) {
       this.deleteAt(pos);
     }
-  }
-
-  *[Symbol.iterator]() {
-    for (const el of this._list) 
-      yield el.value;
   }
 
 }
