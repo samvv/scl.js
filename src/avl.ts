@@ -233,7 +233,7 @@ export class AVLTree<T> {
       while (node !== null) {
         cmp = compare(node.value, value);
         parent = node;
-        if      (cmp === 0) return [false, node];
+        if      (cmp === 0) return [false, cmp, parent];
         else if (cmp > 0)   node = node.left;
         else                node = node.right;
       }
@@ -246,26 +246,27 @@ export class AVLTree<T> {
       }
     }
 
-    return [true, parent];   
+    return [true, cmp, parent];
   }
 
-  add (value: T, parent?: Node<T>) {
+  add (value: T, hint?: Node<T>) {
     if (!this._root) {
       this._root = new Node<T>(value);
       this._size++;
       return [true, this._root];
     }
 
-    if (parent === undefined) {
-      let shouldAdd;
-      [shouldAdd, parent] = this.addHint(value);
-      if (!shouldAdd) {
-        return;
-      }
+    if (hint === undefined) {
+      hint = this.addHint(value);
+    }
+
+    let [shouldAdd, cmp, parent] = hint;
+
+    if (!shouldAdd) {
+      return;
     }
     
     const compare = this._comparator;
-    let cmp = compare(parent.value, value);
     var newNode = new Node<T>(value, parent);
     var newRoot;
     if (cmp >= 0) parent.left  = newNode;
