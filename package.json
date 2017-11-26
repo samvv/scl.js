@@ -1,6 +1,6 @@
 {
   "name": "scl",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "index.js",
   "description": "A collection of typed containers for JavaScript.",
   "repository": {
@@ -38,6 +38,7 @@
   "author": "Sam Vervaeck",
   "license": "MIT",
   "dependencies": {
-    "json-hash": "^1.2.0"
+    "json-hash": "^1.2.0",
+    "proxy-deep": "^1.2.1"
   }
 }
