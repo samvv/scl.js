@@ -94,11 +94,13 @@ export class Hash<T, K = T> implements UnorderedContainer<T> {
       return [false, new HashCursor<T>(i, conflict)]; 
     }
     const bucketPos = bucket.append(val);
+    ++this._size;
     return [true, new HashCursor<T>(i, bucketPos)];
   }
 
   deleteAt(pos: HashCursor<T>) {
     this._array[pos._bucketIndex].deleteAt(pos._bucketPos);
+    --this._size;
   }
 
   findKey(key: K): HashCursor<T> {
@@ -128,7 +130,7 @@ export class Hash<T, K = T> implements UnorderedContainer<T> {
     }
     let curr = this._array[i].begin();
     while (curr !== null) {
-      if (this.valuesEqual(getKey(curr.value), key) && this.valuesEqual(curr.value, val)) { 
+      if (this.keysEqual(getKey(curr.value), key) && this.valuesEqual(curr.value, val)) { 
         return new HashCursor<T>(i, curr);
       }
       curr =  curr.next();
@@ -136,20 +138,32 @@ export class Hash<T, K = T> implements UnorderedContainer<T> {
     return null;
   }
 
+  has(val: T) {
+    return this.find(val) !== null;
+  }
+
   hasKey(key: K) {
+    return this.findKey(key) !== null;
+  }
+
+  deleteKey(key: K) {
     const getKey = this.getKey;
     const h = this.getHash(key);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       return null;
     }
-    let curr = this._array[i].begin();
-    do {
-      if (curr === null)
-        return null;
+    let curr = this._array[i].begin(), deleted = 0;
+    while (curr !== null) {
+      if (this.keysEqual(getKey(curr.value), key)) { 
+        // inlined from deleteAt
+        this._array[i].deleteAt(curr);
+        ++deleted;
+        --this._size;
+      }
       curr =  curr.next();
-    } while (!this.keysEqual(getKey(curr.value), key));
-    return new HashCursor<T>(i, curr);
+    } 
+    return deleted;
   }
 
   delete(el: T) {
