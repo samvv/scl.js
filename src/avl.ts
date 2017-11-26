@@ -212,7 +212,7 @@ export class AVLTree<T, K = T> {
     this._size = 0;
   }
 
-  get size () {
+  size () {
     return this._size;
   }
 
