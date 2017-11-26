@@ -39,6 +39,6 @@
   "license": "MIT",
   "dependencies": {
     "json-hash": "^1.2.0",
-    "proxy-deep": "^1.2.1"
+    "proxy-deep": "^2.0.0"
   }
 }
