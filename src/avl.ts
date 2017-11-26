@@ -1,6 +1,6 @@
 
 import "source-map-support/register"
-import { lesser } from "./util"
+import { lesser, ViewBase } from "./util"
 
 // function createNode (parent, left, right, height, value, data) {
 //   return { parent, left, right, balance: height, value, data };
@@ -95,14 +95,14 @@ class RNode<T> {
 
 }
 
-class NodeRange<T> {
+class NodeRange<T> extends ViewBase<T> {
 
   constructor(public min: Node<T>, public max: Node<T>, public _reversed = false) {
-
+    super();
   }
 
   reverse() {
-    return new NodeRange(min, max, !this._reversed);
+    return new NodeRange<T>(this.min, this.max, !this._reversed);
   }
 
   *[Symbol.iterator]() {
@@ -192,19 +192,13 @@ function rotateRight<T>(node: Node<T>) {
   return leftNode;
 }
 
-// function leftBalance (node) {
-//   if (node.left.balance === -1) rotateLeft(node.left);
-//   return rotateRight(node);
-// }
+export class AVLTree<T, K = T> {
 
-// function rightBalance (node) {
-//   if (node.right.balance === 1) rotateRight(node.right);
-//   return rotateLeft(node);
-// }
-
-export class AVLTree<T> {
-
-  constructor(public _comparator, public _allowDuplicates = true) {
+  constructor(
+    public _comparator: (a: K, b: K) => number
+    , public _getKey: (val: T) => K = val => val
+    , public isEqual: (a: T, b: T) => boolean = (a, b) => a === b
+    , public _allowDuplicates = true) {
 
   }
   
@@ -222,26 +216,27 @@ export class AVLTree<T> {
     return this._size;
   }
 
-  addHint (value: T) {
+  addHint (key: K) {
     
-    const compare = this._comparator;
+    const compare = this._comparator
+        , getKey = this._getKey;
     let node    = this._root
       , parent  = null
       , cmp;
 
     if (!this._allowDuplicates) {
       while (node !== null) {
-        cmp = compare(node.value, value);
+        cmp = compare(key, getKey(node.value));
         parent = node;
         if      (cmp === 0) return [false, cmp, parent];
-        else if (cmp > 0)   node = node.left;
+        else if (cmp < 0)   node = node.left;
         else                node = node.right;
       }
     } else {
       while (node !== null) {
-        cmp = compare(node.value, value);
+        cmp = compare(key, getKey(node.value));
         parent = node;
-        if      (cmp >= 0)  node = node.left; //return null;
+        if      (cmp <= 0)  node = node.left; //return null;
         else                node = node.right;
       }
     }
@@ -249,15 +244,16 @@ export class AVLTree<T> {
     return [true, cmp, parent];
   }
 
-  add (value: T, hint?: Node<T>) {
+  add (value: T, hint?) {
     if (!this._root) {
       this._root = new Node<T>(value);
       this._size++;
       return [true, this._root];
     }
 
+    const getKey = this._getKey;
     if (hint === undefined) {
-      hint = this.addHint(value);
+      hint = this.addHint(getKey(value));
     }
 
     let [shouldAdd, cmp, parent] = hint;
@@ -269,11 +265,11 @@ export class AVLTree<T> {
     const compare = this._comparator;
     var newNode = new Node<T>(value, parent);
     var newRoot;
-    if (cmp >= 0) parent.left  = newNode;
+    if (cmp <= 0) parent.left  = newNode;
     else         parent.right = newNode;
 
     while (parent) {
-      cmp = compare(parent.value, value);
+      cmp = compare(getKey(parent.value), getKey(value));
       if (cmp < 0) parent.balance -= 1;
       else         parent.balance += 1;
 
@@ -302,12 +298,13 @@ export class AVLTree<T> {
     return [true, newNode];
   }
 
-  has (value) {
+  has (key: K) {
     if (this._root)  {
       var node       = this._root;
       var comparator = this._comparator;
+      var getKey = this._getKey;
       while (node)  {
-        var cmp = comparator(value, node.value);
+        var cmp = comparator(key, getKey(node.value));
         if      (cmp === 0) return true;
         else if (cmp < 0)   node = node.left;
         else                node = node.right;
@@ -316,72 +313,103 @@ export class AVLTree<T> {
     return false;
   }
 
-  find<R = T>(val: R): Node<T> {
+  find (val: T): Node<T> {
     let node = this._root;
-    const compare = this._comparator;
+    const compare = this._comparator
+        , getKey = this._getKey
+    , key = getKey(val);
+    const locateEqual = (node: Node<T>) => {
+      if (node === null)
+        return null;
+      if (this.isEqual(node.value, val))
+        return node;
+      return locateEqual(node.left) || locateEqual(node.right);
+    }
     while (node !== null) {
-      const cmp = compare(node.value, val);
+      const cmp = compare(getKey(node.value), key);
       if (cmp > 0)   node = node.left;
       else if (cmp < 0) node = node.right;
+      else return locateEqual(node);
+    }
+    return null;
+  }
+
+  /**
+   * Always returns the topmost node that satisfies the given constraints.
+   */
+  findKey (key: K): Node<T> {
+    let node = this._root;
+    const compare = this._comparator;
+    const getKey = this._getKey;
+    while (node !== null) {
+      const cmp = compare(key, getKey(node.value));
+      if (cmp < 0)   node = node.left;
+      else if (cmp > 0) node = node.right;
       else return node;
     }
     return null;
   }
 
-  equal(val: T): NodeRange<T> {
+  _findMin (key: K, node = this.findKey(key)) {
+    if (node === null)
+      return null;
+    const cmp = this._comparator(key, this._getKey(node.value));
+    if (cmp < 0)
+      return this._findMin(key, node.left);
+    if (cmp > 0)
+      return this._findMin(key, node.right);
+    return this._findMin(key, node.left) 
+        || this._findMin(key, node.right) 
+        || node;
+  }
 
-    const compare = this._comparator;
+  _findMax (key: K, node = this.findKey(key)) {
+    if (node === null)
+      return null;
+    const cmp = this._comparator(key, this._getKey(node.value));
+    if (cmp < 0)
+      return this._findMax(key, node.left);
+    if (cmp > 0)
+      return this._findMax(key, node.right);
+    return this._findMax(key, node.right) 
+        || this._findMax(key, node.left) 
+        || node;
+  }
 
-    let min = (function findMin(node) {
-      if (node === null) 
-        return null;
-      const cmp = compare(node.value, val);
-      if (cmp < 0) {
-        return findMin(node.right);
-      }
-      if (cmp > 0) {
-        return findMin(node.left);
-      }
-      const res1 = findMin(node.left);
-      if (res1 !== null) {
-        return res1;
-      }
-      const res2 = findMin(node.right);
-      if (res2 !== null) {
-        return res2;
-      }
-      return node;
-    })(this._root);
+  _nodesWithKey(key: K): Node<T>[] {
 
-    let max = (function findMax(node) {
-      if (node === null) 
-        return null;
-      const cmp = compare(node.value, val);
-      if (cmp < 0) {
-        return findMax(node.right);
-      }
-      if (cmp > 0) {
-        return findMax(node.left);
-      }
-      const res1 = findMax(node.right);
-      if (res1 !== null) {
-        return res1;
-      }
-      const res2 = findMax(node.left);
-      if (res2 !== null) {
-        return res2;
-      }
-      return node;
-    })(this._root);
+    let top = this.findKey(key)
+        , min = this._findMin(key, top)
+        , max = this._findMax(key, top);
 
+    let out = [], node = min;
+    while (node !== null) {
+      out.push(node);
+      if (node === max)
+        break;
+      node = node.next();
+    }
+
+    return out;
+  }
+
+  equalKeys(key: K): NodeRange<T> {
+    const top = this.findKey(key)
+        , min = this._findMin(key, top)
+        , max = this._findMax(key, top);
     return new NodeRange<T>(min, max);
   }
 
-  lower(val: T): Node<T> {
+  equal(val: T) {
+    return this.equalKeys(this._getKey(val)).filter(oth => this.isEqual(oth, val));
+  }
+
+  lower(key: K): Node<T> {
 
     const compare = this._comparator;
+    const getKey = this._getKey;
     let node = this._root;
-    while (compare(node.value, val) > 0) { 
+    while (node !== null && compare(getKey(node.value), key) > 0) {
       if (node.left !== null) {
         node = node.left;
       } else { 
@@ -389,18 +417,19 @@ export class AVLTree<T> {
         break;
       }
     }
-    if (node !== null && compare(node.value, val) === 0) {
+    if (node !== null && compare(getKey(node.value), key) === 0) {
       node = node.right;
       while (node.left !== null) node = node.left;
     }
     return node;
   }
 
-  upper(val: T): Node<T> {
+  upper(key: K): Node<T> {
 
     const compare = this._comparator;
+    const getKey = this._getKey;
     let node = this._root;
-    while (compare(node.value, val) < 0) {
+    while (node !== null && compare(getKey(node.value), key) < 0) {
       if (node.right !== null) {
         node = node.right;
       } else { 
@@ -408,7 +437,7 @@ export class AVLTree<T> {
         break;
       }
     }
-    if (node !== null && compare(node.value, val) === 0) {
+    if (node !== null && compare(getKey(node.value), key) === 0) {
       node = node.left;
       if (node !== null) {
         while (node.right !== null) node = node.right;
@@ -439,10 +468,24 @@ export class AVLTree<T> {
     yield* this.begin();
   }
 
-  delete (value) {
-    const node = this.find(value);
-    if (node === null) return null;
-    this.deleteAt(node);
+  deleteKey (key: K) {
+    let deleteCount = 0, nodes = this._nodesWithKey(key);
+    for (const node of nodes) {
+      this.deleteAt(node);
+      ++deleteCount;
+    }
+    return deleteCount;
+  }
+
+  delete (value: T) {
+    let deleteCount = 0, nodes = this._nodesWithKey(this._getKey(value));
+    for (const node of nodes) {
+      if (this.isEqual(node.value, value)) {
+        this.deleteAt(node);
+        ++deleteCount;
+      }
+    }
+    return deleteCount;
   }
 
   deleteAt(node) {
