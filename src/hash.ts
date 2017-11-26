@@ -22,26 +22,27 @@ class HashCursor<T> implements Cursor<T> {
 
 export { HashCursor as Cursor };
 
-class BucketView<T> {
+class BucketView<T, K> {
 
-  constructor(public _hash: Hash<T>, public _val: T, public _bucket: Bucket<T>, public _reversed = false) {
+  constructor(public _hash: Hash<T, K>, public _key: K, public _bucket: Bucket<T>, public _reversed = false) {
     
   }
 
   reverse() {
-    return new BucketView<T>(this._hash, this._val, this._bucket, !this._reversed);
+    return new BucketView<T, K>(this._hash, this._key, this._bucket, !this._reversed);
   }
 
   *[Symbol.iterator]() {
+    const getKey = this._hash.getKey;
     if (this._reversed) {
       for (const val of this._bucket) {
-        if (this._hash.isEqual(val, this._val)) {
+        if (this._hash.keysEqual(getKey(val), this._key)) {
           yield val;
         }
       }
     } else {
       for (const val of this._bucket) {
-        if (this._hash.isEqual(val, this._val)) {
+        if (this._hash.keysEqual(getKey(val), this._key)) {
           yield val;
         }
       }
@@ -50,16 +51,20 @@ class BucketView<T> {
 
 }
 
-export class Hash<T> implements UnorderedContainer<T> {
+export class Hash<T, K = T> implements UnorderedContainer<T> {
   
   _array: Bucket<T>[];
   _size = 0;
 
-  _getConflict(bucket: Bucket<T>, val: T): HashCursor<T> {
+  _getConflict(bucket: Bucket<T>, val: T): ListCursor<T> {
     return null;
   }
 
-  constructor(public getHash: (el: T) => number, public isEqual: (a: T, b: T) => boolean, size = 100) {
+  constructor(
+        public getHash: (el: K) => number
+      , public keysEqual: (a: K, b: K) => boolean
+      , public valuesEqual: (a: T, b: T) => boolean
+      , public getKey = val => val, size = 100) {
     this._array = new Array(size);
   }
 
@@ -71,14 +76,14 @@ export class Hash<T> implements UnorderedContainer<T> {
     this._array.splice(0, this._array.length);
   }
 
-  equal(el: T) {
-    const h = this.getHash(el);
+  equalKeys(key: K) {
+    const h = this.getHash(key);
     const i = h % this._array.length;
-    return new BucketView(this, el, this._array[i] === undefined ? null : this._array[i]);
+    return new BucketView<T, K>(this, key, this._array[i] === undefined ? null : this._array[i]);
   }
 
   add(val: T): [boolean, HashCursor<T>] {
-    const h = this.getHash(val);
+    const h = this.getHash(this.getKey(val));
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       this._array[i] = new List<T>();
@@ -86,7 +91,7 @@ export class Hash<T> implements UnorderedContainer<T> {
     const bucket = this._array[i];
     const conflict = this._getConflict(bucket, val);
     if (conflict !== null) {
-      return [false, conflict]; 
+      return [false, new HashCursor<T>(i, conflict)]; 
     }
     const bucketPos = bucket.append(val);
     return [true, new HashCursor<T>(i, bucketPos)];
@@ -97,7 +102,7 @@ export class Hash<T> implements UnorderedContainer<T> {
   }
 
   find(val: T): HashCursor<T> {
-    const h = this.getHash(val);
+    const h = this.getHash(this.getKey(val));
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       return null;
@@ -107,22 +112,35 @@ export class Hash<T> implements UnorderedContainer<T> {
       if (curr === null)
         return null;
       curr =  curr.next();
-    } while (!this.isEqual(val, curr.value)) 
+    } while (!this.valuesEqual(curr.value, val));
     return new HashCursor<T>(i, curr);
   }
 
-  has(val: T) {
-    return this.find(val) !== null;
+  hasKey(key: K) {
+    const getKey = this.getKey;
+    const h = this.getHash(key);
+    const i = h % this._array.length;
+    if (this._array[i] === undefined) {
+      return null;
+    }
+    let curr = this._array[i].begin();
+    do {
+      if (curr === null)
+        return null;
+      curr =  curr.next();
+    } while (!this.keysEqual(getKey(curr.value), key));
+    return new HashCursor<T>(i, curr);
   }
 
   delete(el: T) {
-    const pos = this.find(el);
+    const pos = this.find(this.getKey(el));
     if (pos !== null) {
       this.deleteAt(pos);
     }
   }
 
 }
+
 
 export default Hash;
 

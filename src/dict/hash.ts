@@ -1,35 +1,58 @@
 
-import DLList from "../list/double"
-import { Element, Hash, Bucket } from "../hash"
+import { Dict } from "../interfaces"
+import List, { Cursor as ListCursor } from "../list/double"
+import { Hash, Cursor as HashCursor, Bucket } from "../hash"
 import { digest } from "json-hash"
-import { equal } from "../util"
-import { DictBase } from "./base"
+import { equal, find } from "../util"
 
-export class SingleHash<K, V> extends Hash<[K, V]> {
-  _getConflict(bucket: Bucket<[K, V]>, val: [K, V]) {
-    for (const el of bucket) {
-      if (this.isEqual(el.value, val)) {
-        el.value = val;
-        return el;
-      }
-    }
-    return null;
-  }
-}
+export class HashDict<K, V> extends Hash<[K, V], K> {
 
-export class HashDict<K, V = K> extends DictBase<K, V> {
   constructor(
-      public getHash: (k: K) => number = digest
-      , public isEqual: (a: K, b: K) => boolean = equal
-      , valuesEqual: (a, b) => boolean = isEqual
+        getHash: (k: K) => number = digest
+      , keysEqual: (a: K, b: K) => boolean = equal
+      , valuesEqual: (a, b) => boolean = keysEqual
       , size?: number) {
-    super(valuesEqual);
-    this._data = new SingleHash(
-      (el: [K, V]) => getHash(el[0])
-      , (a: [K, V], b: [K, V]) => isEqual(a[0], b[0])
+    super(
+        getHash
+      , keysEqual
+      , valuesEqual
+      , pair => pair[0]
       , size
     );
   }
+
+  _getConflict(bucket: Bucket<T>, val: [K, V]) {
+    const getKey = this.getKey;
+    let curr = bucket.begin();
+    while (true) {
+      if (curr === null) {
+        return null;
+      }
+      if (this.keysEqual(getKey(curr.value), getKey(val))) {
+        curr.value = val;
+        return curr; 
+      }
+      curr = curr.next();
+    }
+  }
+
+  getValue(key: K) {
+    const getKey = this.getKey;
+    const h = this.getHash(getKey(key));
+    const i = h % this._array.length;
+    if (this._array[i] === undefined) {
+      return null;
+    }
+    let curr = this._array[i].begin();
+    while (true) {
+      if (curr === null)
+        return null;
+      if (this.keysEqual(key, getKey(curr.value)))
+        return new HashCursor<T>(i, curr);
+      curr =  curr.next();
+    }
+  }
+
 }
 
 export default HashDict;

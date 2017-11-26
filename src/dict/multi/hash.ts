@@ -1,21 +1,26 @@
 
 import { Hash } from "../../hash"
-import { DictBase } from "./base"
 import { digest } from "json-hash"
-import { equal } from "../../util"
+import { equal, mapView } from "../../util"
 
-export class HashMultiDict<K, V> extends DictBase<K, V> {
+export class HashMultiDict<K, V> extends Hash<[K, V], K> {
 
   constructor(
-        public getHash: (k: K) => number = digest
-      , public isEqual: (a: K, b: K) => boolean = equal
-      , valuesEqual: (a: V, b: V) => boolean = isEqual
+        getHash: (k: K) => number = digest
+      , isEqual: (a: K, b: K) => boolean = equal
+      , valuesEqual: (a: [K, V], b: [K, V]) => boolean = (a, b) => a === b
     , size?: number) {
-    super(valuesEqual);
-    this._data = new Hash(
-      (el: [K, V]) => getHash(el[0])
-      , (a: [K, V], b: [K, V]) => isEqual(a[0], b[0])
-      , size);
+    super(
+        getHash
+      , isEqual
+      , valuesEqual
+      , pair => pair[0]
+      , size
+    );
+  }
+
+  getValues(key: K) {
+    return mapView(this.equalKeys(key), pair => pair[1]);
   }
 
 }
