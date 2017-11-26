@@ -3,15 +3,35 @@ import { DictBase } from "./base"
 import { digest } from "json-hash"
 import { equal } from "../util"
 import AVL from "../avl"
-import { lesser } from "../util"
+import { lesser, liftLesser } from "../util"
 
-export class TreeDict<K, V> extends DictBase<K, V> {
-  constructor(
-      public lessThan: (a: K, b: K) => boolean = lesser
-    , valuesEqual = (a, b) => !lessThan(a, b) && !lessThan(b, a)) {
-    super(valuesEqual);
-    this._data = new AVL((a: [K, V], b: [K, V]) => lessThan(a[0], b[0]), 0);
+export class TreeDict<K, V> extends AVL<[K, V], K> {
+
+  constructor(lessThan: (a: K, b: K) => boolean = lesser, isEqual = (a, b) => a === b) {
+    super(
+      liftLesser(lessThan)
+      , pair => pair[0]
+      , isEqual
+      , false
+    );
   }
+
+  add(p: [K, V]) {
+    const hint = this.addHint(p[0]);
+    if (!hint[0]) {
+      hint[1].value = p;
+    }
+    return super.add(p, hint);
+  }
+
+  getValue(key: K) {
+    const match = this.findKey(key);
+    if (match !== null) {
+      return match.value[1];
+    }
+    return null;
+  }
+
 }
 
 export default TreeDict;
