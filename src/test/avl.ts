@@ -13,7 +13,7 @@ function* inorder(node) {
 describe('an AVL-tree', () => {
 
   it('can insert elements', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -23,7 +23,7 @@ describe('an AVL-tree', () => {
   });
 
   it('can store multiple equal keys', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -35,7 +35,7 @@ describe('an AVL-tree', () => {
   })
 
   it('can delete elements', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -55,7 +55,7 @@ describe('an AVL-tree', () => {
   });
 
   it('can find the lower bound', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -66,7 +66,7 @@ describe('an AVL-tree', () => {
   });
 
   it('can find the upper bound', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -79,7 +79,7 @@ describe('an AVL-tree', () => {
   });
 
   it('can reverse-iterate over elements', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -90,7 +90,7 @@ describe('an AVL-tree', () => {
   });
 
   it('can traverse an equal range', () => {
-    const t1 = new AVL();
+    const t1 = new AVL((a, b) => a - b);
     t1.add(1);
     t1.add(2);
     t1.add(3);
