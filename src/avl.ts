@@ -228,7 +228,7 @@ export class AVLTree<T, K = T> {
       while (node !== null) {
         cmp = compare(key, getKey(node.value));
         parent = node;
-        if      (cmp === 0) return [false, cmp, parent];
+        if      (cmp === 0) return [false, node];
         else if (cmp < 0)   node = node.left;
         else                node = node.right;
       }
@@ -256,11 +256,11 @@ export class AVLTree<T, K = T> {
       hint = this.addHint(getKey(value));
     }
 
-    let [shouldAdd, cmp, parent] = hint;
-
-    if (!shouldAdd) {
-      return;
+    if (!hint[0]) {
+      return hint[1];
     }
+
+    let parent = hint[2], cmp = hint[1];
     
     const compare = this._comparator;
     var newNode = new Node<T>(value, parent);
@@ -358,9 +358,7 @@ export class AVLTree<T, K = T> {
       return this._findMin(key, node.left);
     if (cmp > 0)
       return this._findMin(key, node.right);
-    return this._findMin(key, node.left) 
-        || this._findMin(key, node.right) 
-        || node;
+    return this._findMin(key, node.left) || node;
   }
 
   _findMax (key: K, node = this.findKey(key)) {
@@ -371,9 +369,7 @@ export class AVLTree<T, K = T> {
       return this._findMax(key, node.left);
     if (cmp > 0)
       return this._findMax(key, node.right);
-    return this._findMax(key, node.right) 
-        || this._findMax(key, node.left) 
-        || node;
+    return this._findMax(key, node.right) || node;
   }
 
   _nodesWithKey(key: K): Node<T>[] {
