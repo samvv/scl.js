@@ -298,19 +298,13 @@ export class AVLTree<T, K = T> {
     return [true, newNode];
   }
 
-  has (key: K) {
-    if (this._root)  {
-      var node       = this._root;
-      var comparator = this._comparator;
-      var getKey = this._getKey;
-      while (node)  {
-        var cmp = comparator(key, getKey(node.value));
-        if      (cmp === 0) return true;
-        else if (cmp < 0)   node = node.left;
-        else                node = node.right;
-      }
-    }
-    return false;
+  has (val: T) {
+    return this.find(val) !== null;
+  }
+
+
+  hasKey(key: K) {
+    return this.findKey(key) !== null;
   }
 
   find (val: T): Node<T> {
