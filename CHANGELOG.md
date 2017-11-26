@@ -3,6 +3,17 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.8.0
+
+ - Rename UnorderedContainer to Sequence in interfaces
+ - `add()` is now a required method of Container interface
+ - Made iterator, next() and prev() optional in Cursor interface
+ - Added tree-based dictionaries
+ - Optimised min/max-search in AVL tree
+ - Made order undefined for dictionaries
+ - Removed sequenced list from hash implementation
+ - Added basic support for container composition
+
 ### v0.7.2
 
  - Added variants of the hash-based dictionaries
