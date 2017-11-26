@@ -6,6 +6,12 @@
 export interface Container<T> {
 
   /**
+   * Add an element to the container. The element is place where the container
+   * sees fit.
+   */
+  add(el: T): [boolean, Cursor<T>];
+
+  /**
    * Checks if the container holds the given element.
    *
    * @param el The element to check membership of.
@@ -21,7 +27,7 @@ export interface Container<T> {
    * produce the same order. See {@link OrderedContainer} if you need a
    * container that does provide this guarantee.
    */
-  [Symbol.iterator](): Iterator<T>
+  [Symbol.iterator]?(): Iterator<T>
 
   /**
    * @deprecated
@@ -124,18 +130,18 @@ export interface OrderedContainer<T> extends Container<T> {
    */
   ref?(position: number): T
 
+  /**
+   * Since ordered containers have keep track of the position of elements, it
+   * is required to define an iterator.
+   */
+  [Symbol.iterator](): Iterator<T>
+
 }
 
 /**
  * Represents a container that explicitly has no order defined on its elements.
  */
 export interface UnorderedContainer<T> extends Container<T> {
-
-  /**
-   * Add an element to the container. The element is place where the container
-   * sees fit.
-   */
-  add(el: T): Cursor<T>;
 
   /**
    * Remove an element from the container. If multiple elements are matched,
@@ -198,19 +204,19 @@ export interface Cursor<T> {
   /**
    * Generates the sequence of all subsequent elements as ordered by the container.
    */
-  [Symbol.iterator](): Iterator<T>;
+  [Symbol.iterator]?(): Iterator<T>;
 
   /**
    * Get a reference to the cursor that is immediately after this one's, as
    * defined by the container's order.
    */
-  next(): Cursor<T>;
+  next?(): Cursor<T>;
 
   /**
    * Get a reference to the cursor that is immediately before to this one's, as
    * defined by the container's order.
    */
-  prev(): Cursor<T>;
+  prev?(): Cursor<T>;
 
 }
 
