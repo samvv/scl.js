@@ -37,20 +37,11 @@ export class HashDict<K, V> extends Hash<[K, V], K> {
   }
 
   getValue(key: K) {
-    const getKey = this.getKey;
-    const h = this.getHash(getKey(key));
-    const i = h % this._array.length;
-    if (this._array[i] === undefined) {
-      return null;
+    const match = this.findKey(key);
+    if (match !== null) {
+      return match.value[1];
     }
-    let curr = this._array[i].begin();
-    while (true) {
-      if (curr === null)
-        return null;
-      if (this.keysEqual(key, getKey(curr.value)))
-        return new HashCursor<T>(i, curr);
-      curr =  curr.next();
-    }
+    return null;
   }
 
 }

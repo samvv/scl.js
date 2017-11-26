@@ -101,19 +101,39 @@ export class Hash<T, K = T> implements UnorderedContainer<T> {
     this._array[pos._bucketIndex].deleteAt(pos._bucketPos);
   }
 
-  find(val: T): HashCursor<T> {
-    const h = this.getHash(this.getKey(val));
+  findKey(key: K): HashCursor<T> {
+    const getKey = this.getKey;
+    const h = this.getHash(key);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       return null;
     }
     let curr = this._array[i].begin();
-    do {
-      if (curr === null)
-        return null;
+    while (curr !== null) {
+      if (this.keysEqual(getKey(curr.value), key)) { 
+        return new HashCursor<T>(i, curr);
+      }
       curr =  curr.next();
-    } while (!this.valuesEqual(curr.value, val));
-    return new HashCursor<T>(i, curr);
+    } 
+    return null;
+  }
+
+  find(val: T): HashCursor<T> {
+    const getKey = this.getKey;
+    const key = getKey(val);
+    const h = this.getHash(key);
+    const i = h % this._array.length;
+    if (this._array[i] === undefined) {
+      return null;
+    }
+    let curr = this._array[i].begin();
+    while (curr !== null) {
+      if (this.valuesEqual(getKey(curr.value), key) && this.valuesEqual(curr.value, val)) { 
+        return new HashCursor<T>(i, curr);
+      }
+      curr =  curr.next();
+    } 
+    return null;
   }
 
   hasKey(key: K) {
