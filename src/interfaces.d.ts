@@ -58,7 +58,7 @@ export interface Container<T> {
 /**
  * Represents any container that has an order defined on its elements.
  */
-export interface OrderedContainer<T> extends Container<T> {
+export interface Sequence<T> extends Container<T> {
 
   /**
    * Insert an element after the element at the given position. The position is
