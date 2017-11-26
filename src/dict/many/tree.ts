@@ -16,7 +16,6 @@ export class TreeDict<K, V> extends MultiTreeDict<K, V> {
   }
 
   add(p: [K, V]) {
-    console.log(this._nodesWithKey(p[0]))
     for (const node of this._nodesWithKey(p[0])) {
       if (this.isEqual(p, node.value)) {
         node.value = p;
