@@ -1,5 +1,5 @@
 
-import { addSingleTests, addManyTests, addMultiTests } from "./dict"
+import { addTests, addSingleTests, addManyTests, addMultiTests } from "./dict"
 import TeeeDict from "../dict/tree"
 import TeeeManyDict from "../dict/many/tree"
 import TeeeMultiDict from "../dict/multi/tree"

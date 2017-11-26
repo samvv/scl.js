@@ -4,7 +4,38 @@ import { expect } from "chai"
 import { forEachTestSet } from "./_common"
 import { DictMode } from "../util"
 
+function addTests(create) {
+
+  it('correctly reports whether a pair is there', () => {
+    const d = create();
+    const p1 = [1, 2];
+    const p2 = [3, 4]
+    d.add(p1);
+    d.add(p2);
+    expect(d.has(p1)).to.be.true;
+    expect(d.has(p1)).to.be.true;
+    expect(d.has([3, 2])).to.be.false;
+    expect(d.has([1, 4])).to.be.false;
+    expect(d.has([5, 6])).to.be.false;
+  });
+
+  it('correctly reports whether a key is there', () => {
+    const d = create();
+    const p1 = [1, 2];
+    const p2 = [3, 4]
+    d.add(p1);
+    d.add(p2);
+    expect(d.hasKey(1)).to.be.true;
+    expect(d.hasKey(2)).to.be.false;
+    expect(d.hasKey(3)).to.be.true;
+    expect(d.hasKey(4)).to.be.false;
+  });
+
+}
+
 export function addSingleTests(create) {
+
+  addTests(create);
 
   it('replaces the value when keys are the same', () => {
     const d = create();
@@ -16,6 +47,8 @@ export function addSingleTests(create) {
 }
 
 export function addMDictTests(create) {
+
+  addTests(create)
 
   it('can return a view of all values for a key', () => {
     const d = create();

@@ -13,7 +13,6 @@ describe('a hash-based dictionary', () => {
 
 describe('a hash-based multi-key dictionary', () => {
 
-  addManyTests(() => new HashManyDict<any>());
 
 });
 
