@@ -7,7 +7,57 @@ a full standard library for JavaScript and friends.
 :point_up: We could use a helping hand. If you think you're up for it,
 [open an issue](https://github.com/samvv/typescript-containers/issues/new).
 
+```ts
+import TreeDict from "scl/dict/multi/tree"
+
+const d = new TreeDict();
+d.emplace(1, 'uno');
+d.emplace(2, 'dos');
+d.emplace(1, 'one');
+d.emplace(2, 'two');
+d.emplace(2, 'duo');
+
+console.log(d.getValues(1)); // will output ['one', 'uno']
+
+console.log(d.hasKey(3)); // outputs false
+
+const pos = d.emplace(3, 'tres');
+
+console.log([...d.keys()]) // outputs [1, 2, 3] in order
+
+d.deleteAt(pos)
+
+console.log([...d.keys()]) // outputs [1, 2] in order
+
+```
+
 ## Overview
+
+### Container composition
+
+**scl** comes with a powerful system for composing mupltiple indexes on the same
+data structure into one big structure. This is called 'container composition',
+and the following example demonstrates its use.
+
+```ts
+import scl from "scl"
+
+const fastMemberCheck = scl()
+  .sequenced()
+  .hash()
+  .build();
+
+fastMemberCheck.append(1);
+const pos = fastMemberCheck.prepend(2);
+fastMemberCheck.insertBefore(pos, 3);
+fastMemberCheck.insertAfter(pos, 4);
+
+console.log(fastMemberCheck.has(1)); // outputs true
+console.log(fastMemberCheck.has(6)); // outputs false
+
+console.log([...fastMemberCheck]); // outputs [2,3,1,3] in order
+
+```
 
 ### Interfaces
 
