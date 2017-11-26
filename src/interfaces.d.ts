@@ -273,6 +273,11 @@ export interface Dict<K, V> extends UniqueContainer<Pair<K, V>>, UnorderedContai
   hasKey(key: K): boolean
 
   /**
+   * Similar to `getValue`, except that it returns the pair that was inserted in the container. 
+   */
+  findKey(key: K): Cursor<[K, V]>;
+
+  /**
    * Get the value that is associated with the given key.
    */
   getValue(key: K): V
