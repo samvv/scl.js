@@ -6,6 +6,18 @@ import { DictMode } from "../util"
 
 function addTests(create) {
 
+
+  it('reports the correct size', () => {
+    const d = create();
+    expect(d.size()).to.equal(0);
+    d.add([1, 2]);
+    expect(d.size()).to.equal(1);
+    d.add([2, 3]);
+    expect(d.size()).to.equal(2);
+    d.deleteKey(1);
+    expect(d.size()).to.equal(1);
+  })
+
   it('correctly reports whether a pair is there', () => {
     const d = create();
     const p1 = [1, 2];
