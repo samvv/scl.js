@@ -10,7 +10,7 @@ export function addSingleTests(create) {
     const d = create();
     d.add([1, 2]);
     d.add([1, 3]);
-    expect(d.getValue(1).value).to.deep.equal([1, 3]);
+    expect(d.getValue(1)).to.deep.equal(3);
   });
 
 }
@@ -24,7 +24,7 @@ export function addMDictTests(create) {
     d.add([1, 4]);
     d.add([2, 3]);
     d.add([4, 5]);
-    expect([...d.getValues(1)]).to.deep.equal([1, 3, 4]);
+    expect([...d.getValues(1)].sort((a, b) => a - b)).to.deep.equal([1, 3, 4]);
   });
 
 }
