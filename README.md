@@ -86,15 +86,14 @@ partially completed.
 
 |                    | Name               | Add       | Remove    | Member    |
 |--------------------|--------------------|-----------|-----------|-----------|
-|                    | set/tree           | O(log(n)) | O(log(n)) | O(log(n)) |
-|                    | set/hash           | O(1)      | O(1)      | O(1)      |
+| :heavy_check_mark: | set/tree           | O(log(n)) | O(log(n)) | O(log(n)) |
+| :heavy_check_mark: | set/hash           | O(1)      | O(1)      | O(1)      |
 | :heavy_check_mark: | dict/tree          | O(log(n)) | O(log(n)) | O(log(n)) |
 | :heavy_check_mark: | dict/hash          | O(1)      | O(1)      | O(1)      |
-|                    | set/es6            | O(1)      | O(1)      | O(1)      |
-|                    | dict/string        | O(1)      | O(1)      | O(1)      |
-|                    | dict/es6           | O(1)      | O(1)      | O(1)      |
-|                    | dict/multi/string  | O(1)      | O(1)      | O(1)      |
-|                    | dict/multi/es6     | O(1)      | O(1)      | O(1)      |
+| :heavy_check_mark: | dict/many/tree     | O(log(n)) | O(log(n)) | O(log(n)) |
+| :heavy_check_mark: | dict/many/hash     | O(1)      | O(1)      | O(1)      |
+| :heavy_check_mark: | dict/multi/tree    | O(log(n)) | O(log(n)) | O(log(n)) |
+| :heavy_check_mark: | dict/multi/hash    | O(1)      | O(1)      | O(1)      |
 | :heavy_check_mark: | queue              | O(1)      | O(1)      | O(n)      |
 | :heavy_check_mark: | stack              | O(1)      | O(1)      | O(n)      |
 | :heavy_check_mark: | priority-queue     | O(log(n)) | O(log(n)) | O(n)      |
