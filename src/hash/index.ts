@@ -1,6 +1,7 @@
 
-import { UnorderedContainer, Cursor } from "./interfaces"
-import List, { Cursor as ListCursor } from "./list/double"
+import { Structure, Cursor } from "../interfaces"
+import List, { Cursor as ListCursor } from "../list/double"
+import { registerContainer } from "../discovery"
 
 export type Bucket<T> = List<T>;
 
@@ -51,7 +52,7 @@ class BucketView<T, K> {
 
 }
 
-export class Hash<T, K = T> implements UnorderedContainer<T> {
+export class Hash<T, K = T> implements Structure<T, K> {
   
   _array: Bucket<T>[];
   _size = 0;
@@ -174,7 +175,6 @@ export class Hash<T, K = T> implements UnorderedContainer<T> {
   }
 
 }
-
 
 export default Hash;
 

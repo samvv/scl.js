@@ -1,10 +1,6 @@
 
-import "source-map-support/register"
-import { lesser, ViewBase } from "./util"
-
-// function createNode (parent, left, right, height, value, data) {
-//   return { parent, left, right, balance: height, value, data };
-// }
+import { Structure } from "../interfaces"
+import { lesser, ViewBase } from "../util"
 
 class Node<T> {
 
@@ -127,10 +123,6 @@ class NodeRange<T> extends ViewBase<T> {
 
 }
 
-interface AVLIteratorResult<T> extends IteratorResult<T> {
-  _node: Node<T>;
-}
-
 function rotateLeft<T>(node: Node<T>) {
   var rightNode = node.right;
   node.right    = rightNode.left;
@@ -192,7 +184,7 @@ function rotateRight<T>(node: Node<T>) {
   return leftNode;
 }
 
-export class AVLTree<T, K = T> {
+export class AVLTree<T, K = T> implements Structure<T, K> {
 
   constructor(
     public _comparator: (a: K, b: K) => number
