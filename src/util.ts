@@ -1,5 +1,26 @@
 
-import { UnorderedContainer, Sequence, Cursor, View } from "./interfaces"
+import { Structure, Sequence, Cursor, View } from "./interfaces"
+import * as XXH from "xxhashjs"
+
+// TODO optimize
+export function hash(val: any) {
+  return XXH.h32(JSON.stringify(val), 0xABCD).toNumber();
+}
+
+export function get(val: any, path: any[]) {
+  for (const chunk of path) {
+    val = val[chunk];
+  }
+  return val;
+}
+
+export function liftKeyed(proc: Function, path: string[]): Function {
+  if (path.length === 0) {
+    return proc;
+  } else {
+    return (...args) => proc(...args.map(arg => get(arg, path)));
+  }
+}
 
 export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => number {
   return function (a, b) {
@@ -10,7 +31,6 @@ export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => numb
     return 0;
   }
 }
-
 export abstract class ViewBase<T> implements View<T> {
 
   abstract reverse(): View<T>;
@@ -82,16 +102,16 @@ export function find<T>(pos: Cursor<T>, val: T, eq: (a: T, b: T) => boolean = eq
   }
 }
 
-export function makeAppender<T>(Cont: Newable<OrderedContainer<T>>) {
-  return class extends Cont implements UnorderedContainer<T> {
+export function makeAppender<T>(Cont: Newable<Sequence<T>>) {
+  return class extends Cont implements Structure<T> {
     add(el: T) {
       return this.append(el);
     }
   }
 }
 
-export function makePrepender<T>(Cont: Newable<OrderedContainer<T>>) {
-  return class extends Cont implements UnorderedContainer<T> {
+export function makePrepender<T>(Cont: Newable<Sequence<T>>) {
+  return class extends Cont implements Structure<T> {
     add(el: T) {
       return this.prepend(el);
     }
