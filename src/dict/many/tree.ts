@@ -1,7 +1,6 @@
 
-import { DictBase } from "../multi/base"
 import MultiTreeDict from "../multi/tree"
-import { lesser, liftLesser } from "../../util"
+import { lesser } from "../../util"
 
 export class TreeDict<K, V> extends MultiTreeDict<K, V> {
 
@@ -9,10 +8,6 @@ export class TreeDict<K, V> extends MultiTreeDict<K, V> {
       lessThan: (a: K, b: K) => boolean = lesser
     , valuesEqual = (a, b) => a === b) {
     super(lessThan, valuesEqual);
-  }
-
-  emplace(key: K, val: V) {
-    return this.add([key, val]);
   }
 
   add(p: [K, V]) {

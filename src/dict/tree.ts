@@ -1,15 +1,13 @@
 
-import { DictBase } from "./base"
 import { digest } from "json-hash"
-import { equal } from "../util"
 import AVL from "../avl"
-import { lesser, liftLesser } from "../util"
+import { lesser, equal, liftLesser } from "../util"
 
 export class TreeDict<K, V> extends AVL<[K, V], K> {
 
   constructor(lessThan: (a: K, b: K) => boolean = lesser, isEqual = (a, b) => a === b) {
     super(
-      liftLesser(lessThan)
+        lessThan
       , pair => pair[0]
       , isEqual
       , false
