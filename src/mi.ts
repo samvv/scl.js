@@ -1,264 +1,248 @@
 
-import { Container, Sequence, UnorderedContainer, Dict, MultiDict, Cursor } from "./interfaces"
-import { lesser, equal } from "./util"
-import { digest } from "json-hash"
+import { Container, Sequence, Structure, Dict, MultiDict, Cursor } from "./interfaces"
+import { get, lesser, equal, hash } from "./util"
+import Types, { Type } from "./types"
+import toPath = require("lodash/toPath");
+import isArray = require('lodash/isArray');
 
-import List from "./list/double"
-import HashDict from "./dict/hash"
-import HashManyDict from "./dict/many/hash"
-import HashMultiDict from "./dict/multi/hash"
-import TreeDict from "./dict/tree"
-import TreeManyDict from "./dict/many/tree"
-import TreeMultiDict from "./dict/multi/tree"
-import AVL from "./avl"
-import Hash from "./hash"
+const registeredContainers = [];
 
-enum Arity {
-  One,
-  MultiKey,
-  MultiElement,
+const E_NO_MATCH = `No registered container found that matched given criteria. Perhaps you forgot import the implementation or your container forgot to call registerContainer()?`;
+
+export function registerContainer(config) {
+  registeredContainers.push(config);
 }
 
-class DirectedList<T> extends List<T> {
-  add(el: T) {
-    return this.append(el);
-  }
+function push<T>(arr: T[], val: T): T[] {
+  const newArr = arr.slice();
+  newArr.push(val);
+  return newArr;
 }
 
-enum IndexKind {
-  List,
-  Tree,
-  Hash,
+function andmap<T>(vals: T[], proc: (el: T) => boolean): boolean {
+  for (const el of vals) {
+    if (!proc(el))
+      return false
+  }
+  return true;
 }
 
-interface IndexType {
-  name: string;
-  key: string;
-  arity: Arity;
-  kind: IndexKind,
-  reversed: boolean;
-  lesser?: (a, b) => boolean;
-  equal?: (a, b) => boolean;
-  hash?: (a) => number;
-}
-
-function findMatchingType() {
-}
-
-function sortArgs(args: any[]) {
-  let proc, key;
-  if (typeof args[0] === 'function') {
-    key = args[1];
-    proc = args[0];
-  }
-  if (typeof args[1] === 'function') {
-    key = args[0];
-    proc = args[1]
-  }
-  key = args[0];
-  return [key, proc];
-}
-
-export class IndexBuilder<T> {
-
-  _indexTypes = [];
-  _indexIDNames = Object.create(null);
-  _defaultIndex: number = 0;
-  
-  //_types = Object.create(null);
-  _hashers = Object.create(null);
-  _equals = Object.create(null);
-  _lesser = Object.create(null);
-
-  _getLesser(indexType: IndexType) {
-    const lt = indexType.lesser || this._lesser[indexType.key] || lesser;
-    if (indexType.key) {
-      return (a, b) => lt(a[indexType.key], b[indexType.key]);
-    }
-    return lt;
-  }
-
-  _getEquality(indexType: IndexType) {
-    const eq = indexType.equal || this._equals[indexType.key] || equal;
-    if (indexType.key) {
-      return (a, b) => eq(a[indexType.key], b[indexType.key]);
-    }
-    return eq;
-  }
-
-  _getHasher(indexType: IndexType) {
-    const hash = indexType.hash || this._hashers[indexType.key] || digest;
-    if (indexType.key) {
-      return el => hash(el[indexType.key]);
-    }
-    return hash;
-  }
-
-  _getIndexType(name?: string) {
-    if (name === undefined) {
-      const newType = { arity: Arity.MultiElement, key: null, sortOrder: 0 };
-      this._indexTypes.push(newType);
-      return newType;
-    }
-    if (this._indexIDNames[name] === undefined) {
-      const newType = { name, arity: Arity.MultiElement, key: null, sortOrder: 0 };
-      this._indexIDNames[name] = this._indexTypes.length;
-      this._indexTypes.push(newType);
-      return newType;
-    }
-    return this._indexTypes[this._indexIDNames[name]];
-  }
-
-  default(name: string) {
-    this._defaultIndex = this._indexIDNames[name];
-  }
-
-  sequenced(name: string = '') {
-    const type = this._getIndexType(name);
-    type.kind = IndexKind.List;
-    return this;
-  }
-
-  unique(name: string = '') {
-    const type = this._getIndexType(name);
-    type.arity = Arity.One;
-    return this;
-  }
-
-  equal<V>(proc: (a: V, b: V) => boolean, key: string = '') {
-    this._equals[key] = proc;
-    return this;
-  }
-
-  lesser(proc, key: string = '') {
-    this._lesser[key] = proc;
-    return this;
-  }
-
-  defaultHash(...args) {
-    const [key, hasher] = sortArgs(args);
-    this._hashers[key || ''] = hasher || lesser;
-    return this;
-  }
-
-  hash<V>(...args) {
-    const [name, customDigest] = sortArgs(args);
-    const type = this._getIndexType(name);
-    type.kind = IndexKind.Hash;
-    if (customDigest) {
-      type.hash = customDigest;
-    }
-    return this;
-  }
-
-  sortedAsc(...args) {
-    const [name, customLesser] = sortArgs(args);
-    const type = this._getIndexType(name);
-    type.reversed = true;
-    type.kind = IndexKind.Tree;
-    if (customLesser) {
-      type.lesser = customLesser;
-    }
-    return this;
-  }
-
-  sortedDesc<V>(...args) {
-    const [name, customLesser] = sortArgs(args);
-    const type = this._getIndexType(name);
-    type.reversed = false;
-    type.kind = IndexKind.Tree;
-    if (customLesser) {
-      type.lesser = customLesser;
-    }
-    return this;
-  }
-
-  //analyse() {
-    //for (const indexType of this._indexTypes) {
-    //}
-  //}
-
-  build() {
-
-    const getCursorIndex = (name: string) => {
-      if (name === null) {
-        return this._defaultIndex;
+function pathToType(name: string, type: Type, path = []) {
+  switch (type.name) {
+  case name:
+    return path;
+  case 'Array':
+    for (let i = 0; i < type.args.length; ++i) {
+      const p = pathToType(name, type.args[i], push(path, i));
+      if (p !== null) {
+        return p;
       }
-      return this._indexIDNames[name];
+    }
+    return null;
+  default:
+    return null;
+  }
+}
+
+function isOfType(type: Type, val: any) {
+  switch (type.resolve().name) {
+  case 'Function':
+    return typeof val === 'function';
+  case 'String':
+    return typeof val === 'string';
+  case 'Number':
+    return typeof val === 'number';
+  case 'PropertyKey':
+    return isPropertyKey(val);
+  case 'PropertyPath':
+  return typeof val === 'string' 
+      || (isArray(val) && andmap(val, isPropertyKey));
+  default:
+    return false;
+  }
+}
+
+function isPropertyKey(val: any) {
+  return typeof val === 'string'
+      || typeof val === 'number'
+      || typeof val === 'symbol';
+}
+
+function fromPath(path: string | string[]) {
+  if (path === undefined)
+    return [];
+  if (typeof path === 'string')
+    return path;
+  return path.join('.');
+}
+
+function last<T>(arr: T[]): T {
+  return arr[arr.length-1];
+}
+
+export function builder<T = any>() {
+
+  const calls = [];
+
+  let building = [null, false, null];
+
+  const keyDefaults = {
+    Lesser: Object.create(null),
+    Equality: Object.create(null),
+    Hasher: Object.create(null),
+  }
+
+  const uniqueKeys = new Set<string>();
+
+  const base: any = function () { };
+
+  const proxy = new Proxy(base, {
+    get(target, key, receiver) {
+      if (Reflect.has(target, key)) {
+        return Reflect.get(target, key);
+      }
+      building[0] = key;
+      return save;
+    }
+  });
+
+  function save(...args) {
+    building[2] = args;
+    calls.push(building)
+    building = [null, false, null]
+    return proxy;
+  }
+
+  base.defaultLesser = function (proc, key = '') {
+    keyDefaults.Lesser[fromPath(key)] = proc;
+    return proxy;
+  }
+
+  base.unique = function (key?: string) {
+    uniqueKeys.add(fromPath(key));
+    return proxy;
+  }
+
+  base.reverse = function () {
+    const call = last(calls);
+    call[1] = true;
+    return proxy;
+  }
+
+  base.defaultEqual = function(proc, key = '') {
+    keyDefaults.Equality[fromPath(key)] = proc;
+    return proxy;
+  }
+
+  base.defaultHash = function (proc, key = '') {
+    keyDefaults.Hasher[fromPath(key)] = proc;
+    return proxy;
+  }
+
+  base.build = function () {
+
+    const argDefaults = {
+      Lesser: lesser,
+      Equality: equal,
+      Hasher: hash,
     }
 
     const descriptor = new Descriptor<T>();
+    let currComplexity = { lookup: Infinity }
 
-    const createIndex = (indexType: IndexType, i: number) => {
+    for (const call of calls) {
+
+      const [syntax, reversed, args] = call;
+      const match = registeredContainers.filter(type => type.name === syntax)[0];
+      if (match === undefined) {
+        throw new Error(E_NO_MATCH);
+      }
+
+      const nextArg = (type: Type, def?: any) => {
+        for (let i = 0; i < args.length; ++i) {
+          if (isOfType(type, args[i])) {
+            const arg = args[i];
+            args.splice(i, 1);
+            return arg;
+          }
+        }
+        return def;
+      }
       
-      if (indexType.kind === IndexKind.List) {
-        return new SeqIndex<T>(new DirectedList<Element<T>>());
+      const keyPath = toPath(nextArg(Types.PropertyPath(), []));
+      let name = nextArg(Types.String());
+      if (name === undefined && keyPath.length === 1) {
+        name = keyPath[0];
+      }
+      const elPath = pathToType('Key', match.elementType) || [];
+
+      const getArg = (type: Type) => {
+        let res = nextArg(type) 
+        if (res !== undefined) return res;
+        res = keyDefaults[fromPath(keyPath)];
+        if (res !== undefined) return res;
+        return argDefaults[type.name]
       }
 
-      if (indexType.kind === IndexKind.Hash) {
-        const hash = this._getHasher(indexType);
-        const equal = this._getEquality(indexType);
-        if (!indexType.key) {
-          const index = new DictIndex<T>(new HashDict<T, Element<T>>(hash, equal));
-          if (!descriptor._fastLookup)
-            descriptor._fastLookup = index;
-          return index;
-        }
-        //switch (indexType.arity) {
-        //case Arity.One:
-            //return new DictIndex<T, any>(new HashDict<any, Element<T>>(el => hash(el.value), (a, b) => equal(a.value, b.value), equalElements));
-        //case Arity.MultiKey:
-          //const equalValues = indexType.hashValue;
-          //return new DictIndex<T, any>(new HashManyDict<any, Element<T>>(el => hash(el.value), (a, b) => equal(a.value, b.value));
-        //case Arity.MultiElement:
-            //return new DictIndex<T, any>(new HashMultiDict<any, Element<T>>(hash, equal));
-        //}
-      }
+      const cached = new Map<any, any>();
 
-      if (indexType.kind === IndexKind.Tree) {
-        const lesser = this._getLesser(indexType);
-        if (!indexType.key) {
-          return new DictIndex(new TreeDict<T, Element<T>>((a, b) => lesser(a.value, b.value)));
+      const realArgs = match.paramTypes.map(type => {
+        switch (type.name) {
+        case 'KeyGetter':
+          const fullPath = elPath.concat(keyPath);
+          return el => get(el, fullPath);
+        case 'Hasher':
+          const hash = getArg(type);
+          return val => hash(val);
+        case 'Equality':
+        case 'Lesser':
+          const lt = getArg(type);
+          return reversed ? (a, b) => lt(b, a) && !lt(a, b) : lt
+        default:
+          return getArg(type);;
         }
-        switch (indexType.arity) {
-        case Arity.One:
-            return new DictIndex<T>(new TreeDict<any, Element<T>>((a, b) => lesser(a.value, b.value)));
-        case Arity.MultiKey:
-            return new DictIndex<T>(new TreeMultiDict<any, Element<T>>((a, b) => lesser(a.value, b.value)));
-        case Arity.MultiElement:
-            return new DictIndex<T>(new TreeMultiDict<any, Element<T>>((a, b) => lesser(a.value, b.value)));
-        }
-      }
+      });
 
-      throw new TypeError(`could not create index from given configuration`);
-    }
-
-    for (let i = 0; i < this._indexTypes.length; ++i) {
-      const indexType = this._indexTypes[i];
-      const index = createIndex(indexType, i);
-      index._indexID = i;
+      const index = uniqueKeys.has(fromPath(keyPath))
+        ? match.buildUnique(...realArgs)
+        : match.build(...realArgs);
+      index._info = match;
       index._descriptor = descriptor;
-      descriptor.addIndex(index, indexType.name);
+      descriptor.addIndex(index, name);
+      
+      if (!descriptor._fastLookup && match.optimized) {
+        descriptor._fastLookup = index;
+      }
+
     }
 
-    return descriptor._indices[0];
+    return descriptor.defaultIndex();
   }
 
+  return proxy;
 }
 
 interface NamedSet<T> {
   [key: string]: T;
 }
 
-class Descriptor<T> implements Container<T> {
+export class Descriptor<T> implements Container<T> {
 
   _indices: Index<T>[] = [];
   _indexNames: NamedSet<number> = Object.create(null);
   _fastLookup: Index<T>;
 
+  defaultIndex() {
+    if (this._indices.length === 0) {
+      throw new Error(`container has no indices defined`);
+    }
+    return this._indices[0];
+  }
+
   addIndex(index: Index<T>, name?: string) {
     const i = this._indices.length;
     this._indices.push(index);
+    index._indexID = i;
     if (name !== undefined) {
       this._indexNames[name] = i;
     }
@@ -266,15 +250,15 @@ class Descriptor<T> implements Container<T> {
 
   _add(src: Index<T>, val: T) {
     const el = new Element<T>(val);
-    const poss = [];
+    const posns = [];
     for (let i = 0; i < this._indices.length; ++i) {
       if (this._indices[i] !== src) {
         const [added, otherCursor] = this._indices[i]._add(el);
         if (!added) {
-          for (let j = 0; j < poss.length; ++j) {
-            this._indices[j]._deleteAt(poss[j]);
+          for (let j = 0; j < posns.length; ++j) {
+            this._indices[j]._deleteAt(posns[j]);
           }
-          return [false, poss[0].value];
+          return [false, posns[0].value];
         }
         el._cursors[i] = otherCursor;
       }
@@ -285,15 +269,21 @@ class Descriptor<T> implements Container<T> {
   _deleteAt(src: Index<T>, pos: Element<T>) {
     for (let i = 0; i < this._indices.length; ++i) {
       if (this._indices[i] !== src) {
-        this._indices[i]._deleteAt(pos._cursors[i].value);
+        this._indices[i]._deleteAt(pos._cursors[i]);
       }
     }
   }
 
+  _getIndexID(name: number | string) {
+    if (typeof name === 'number')
+      return name;
+    if (this._indexNames[name] === undefined)
+      throw new Error(`index '${name}' not found`);
+    return this._indexNames[name];
+  }
+
   index(name: number | string) {
-    if (typeof name === 'string') 
-      name = this._indexNames[name];
-    const index = this._indices[name];
+    const index = this._indices[this._getIndexID(name)];
     if (index === undefined) {
       throw new RangeError(`index ${name} not found`);
     }
@@ -304,20 +294,16 @@ class Descriptor<T> implements Container<T> {
     return this._fastLookup.has(val);
   }
 
-  [Symbol.iterator]() {
-    return this._indexes[0][Symbol.iterator]();
-  }
-
   add(val: T) {
     const el = new Element<T>(val);
-    const poss = [];
+    const posns = [];
     for (let i = 0; i < this._indices.length; ++i) {
       const [added, otherCursor] = this._indices[i]._add(el);
       if (!added) {
-        for (let j = 0; j < poss.length; ++j) {
-          this._indices[j]._deleteAt(poss[j]);
+        for (let j = 0; j < posns.length; ++j) {
+          this._indices[j]._deleteAt(posns[j]);
         }
-        return [false, otherCursor];
+        return [false, new IndexCursor(this, otherCursor.value, i)];
       }
       el._cursors[i] = otherCursor;
     }
@@ -326,7 +312,7 @@ class Descriptor<T> implements Container<T> {
 
   deleteAt(pos: Element<T>) {
     for (let i = 0; i < this._indices.length; ++i) {
-      this._indices[i]._deleteAt(pos._cursors[i].value);
+      this._indices[i]._deleteAt(pos._cursors[i]);
     }
   }
   
@@ -346,27 +332,27 @@ export class Element<T> implements Cursor<T> {
 
   }
 
-  next() {
-    const n = this._cursors[0].next();
-    if (n !== null) {
-      return n.value;
-    }
-    return null;
-  }
+  //next() {
+    //const n = this._cursors[0].next();
+    //if (n !== null) {
+      //return n.value;
+    //}
+    //return null;
+  //}
 
-  prev() {
-    const n = this._cursors[0].prev();
-    if (n !== null) {
-      return n.value;
-    }
-    return null;
-  }
+  //prev() {
+    //const n = this._cursors[0].prev();
+    //if (n !== null) {
+      //return n.value;
+    //}
+    //return null;
+  //}
 
 }
 
 class IndexCursor<T> implements Cursor<T> {
 
-  constructor(public _el: Element<T>, public _cursorIndex: number) {
+  constructor(public _descriptor: Descriptor<T>, public _el: Element<T>, public _cursorIndex: number) {
 
   }
 
@@ -378,6 +364,10 @@ class IndexCursor<T> implements Cursor<T> {
     this._el.value = newVal;
   }
 
+  get index() {
+    return this._descriptor._indices[this._cursorIndex];
+  }
+
   *[Symbol.iterator]() {
     for (const el of this._el._cursors[this._cursorIndex]) {
       yield el.value;
@@ -385,11 +375,22 @@ class IndexCursor<T> implements Cursor<T> {
   }
 
   next(name: number | string = this._cursorIndex) {
-    return this._el._cursors[name].next();
+    if (typeof name === 'string')
+      name = this._descriptor._getIndexID(name);
+    const n = this._el._cursors[name].next();
+    console.log(n);
+    if (n === null)
+      return null
+    return new IndexCursor(this._descriptor, this.index._getElement(n.value), this._cursorIndex);
   }
 
   prev(name: number | string = this._cursorIndex) {
-    return this._el._cursors[name].prev();
+    if (typeof name === 'string')
+      name = this._descriptor._getIndexID(name);
+    const p = this._el._cursors[name].prev();
+    if (p === null)
+      return null
+    return new IndexCursor(this._descriptor, this.index._getElement(p.value), this._cursorIndex);
   }
 
 }
@@ -400,15 +401,16 @@ interface Index<T, K = any> extends Container<Element<T>> {
   _descriptor: Descriptor<T>;
 
   _add(el: Element<T>): [boolean, Cursor<any>];
-  _deleteAt(el: Element<T>): void;
+  _deleteAt(el: Cursor<T>): void;
   _clear(): void;
 
+  index(name: number | string): Index<T>;
   add(val: T): [boolean, IndexCursor<T>];
   deleteAt(key: K): number;
 
 }
 
-class DictIndex<T, K = T> implements Index<T, K> {
+export class StructIndex<T, K = T> implements Index<T, K> {
 
   _indexID: number;
   _descriptor: Descriptor<T>;
@@ -417,24 +419,39 @@ class DictIndex<T, K = T> implements Index<T, K> {
     return this._descriptor.index(name);
   }
 
-  constructor(public _dict: Dict<K, Element<T>>) {
+  constructor(public _data: Structure<[T, Element<T>], K>) {
 
+  }
+
+  _getElement(val: T) {
+    return val[1];
   }
 
   _add(el: Element<T>) {
-    return this._dict.add([el.value, el]);
+    return this._data.add([el.value, el]);
+  }
+
+  find(key: K) {
+    const pos = this._data.findKey(key);
+    if (pos === null)
+      return null;
+    return new IndexCursor<T>(this._descriptor, pos.value[1], this._indexID);
   }
 
   add(val: T) {
-    return this._descriptor.add(val);
+    const [added, el] = this._descriptor.add(val);
+    if (!added) {
+      return [false, el];
+    }
+    return [added, new IndexCursor<T>(this._descriptor, el, this._indexID)];
   }
 
-  _deleteAt(el: Element<T>) {
-    return this._dict.deleteAt(el._cursors[this._indexID]);
+  _deleteAt(pos) {
+    return this._data.deleteAt(pos);
   }
 
   delete(key: K) {
-    const pos = this._dict.findKey(key);
+    const pos = this._data.findKey(key);
     if (pos !== null) {
       this._descriptor.deleteAt(pos.value[1]);
     }
@@ -445,22 +462,21 @@ class DictIndex<T, K = T> implements Index<T, K> {
   }
 
   has(el: K) {
-    console.log(el)
-    return this._dict.hasKey(el);
+    return this._data.hasKey(el);
   }
 
   *[Symbol.iterator]() {
-    for (const pair of this._dict) {
+    for (const pair of this._data) {
       yield pair[1].value;
     }
   }
 
   size() {
-    return this._dict.size();
+    return this._data.size();
   }
 
   _clear() {
-    this._dict.clear();
+    this._data.clear();
   }
 
   clear() {
@@ -469,7 +485,7 @@ class DictIndex<T, K = T> implements Index<T, K> {
 
 }
 
-class SeqIndex<T> implements Sequence<T>, Index<T, T> { 
+export class SeqIndex<T> implements Sequence<T>, Index<T, T> { 
 
   _indexID: number;
   _descriptor: Descriptor<T>;
@@ -478,14 +494,31 @@ class SeqIndex<T> implements Sequence<T>, Index<T, T> {
 
   }
 
+  _deleteAt(pos) {
+    console.log(pos);
+    this._seq.deleteAt(pos)
+  }
+
+  _getElement(val: T) {
+    return val;
+  }
+
   *[Symbol.iterator]() {
     for (const el of this._seq) {
       yield el.value;
     }
   }
 
+  index(name: string | number) {
+    return this._descriptor.index(name);
+  }
+
   has(el: T) {
     return this._descriptor.has(el);
+  }
+
+  find(el: T) {
+    return this._descriptor.find(el);
   }
 
   size() {
@@ -544,7 +577,11 @@ class SeqIndex<T> implements Sequence<T>, Index<T, T> {
     return [true, el._cursors[this._indexID]];
   }
 
+  deleteAt(pos: IndexCursor<T>) {
+    this._descriptor.deleteAt(pos._el);
+  }
+
 }
 
-export default IndexBuilder;
+export default builder;
 

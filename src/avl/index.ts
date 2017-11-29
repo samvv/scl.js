@@ -1,6 +1,6 @@
 
 import { Structure } from "../interfaces"
-import { lesser, ViewBase } from "../util"
+import { liftLesser, lesser, ViewBase } from "../util"
 
 class Node<T> {
 
@@ -187,14 +187,12 @@ function rotateRight<T>(node: Node<T>) {
 export class AVLTree<T, K = T> implements Structure<T, K> {
 
   constructor(
-    public _comparator: (a: K, b: K) => number
-    , public _getKey: (val: T) => K = val => val
-    , public isEqual: (a: T, b: T) => boolean = (a, b) => a === b
-    , public _allowDuplicates = true) {
-
+        public lessThan: (a: K, b: K) => boolean = lesser
+      , public _getKey: (val: T) => K = val => val
+      , public isEqual: (a: T, b: T) => boolean = (a, b) => a === b
+      , public _allowDuplicates = true) {
+    this._comparator = liftLesser(lessThan);
   }
-  
-  lessThan: (a: T, b: T) => boolean;
 
   _size = 0;
   _root: Node<T> = null;

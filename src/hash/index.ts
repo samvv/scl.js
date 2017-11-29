@@ -65,7 +65,8 @@ export class Hash<T, K = T> implements Structure<T, K> {
         public getHash: (el: K) => number
       , public keysEqual: (a: K, b: K) => boolean
       , public valuesEqual: (a: T, b: T) => boolean
-      , public getKey = val => val, size = 100) {
+      , public getKey = val => val
+      , size = 100) {
     this._array = new Array(size);
   }
 
@@ -105,13 +106,13 @@ export class Hash<T, K = T> implements Structure<T, K> {
   }
 
   findKey(key: K): HashCursor<T> {
-    const getKey = this.getKey;
     const h = this.getHash(key);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       return null;
     }
     let curr = this._array[i].begin();
+    const getKey = this.getKey;
     while (curr !== null) {
       if (this.keysEqual(getKey(curr.value), key)) { 
         return new HashCursor<T>(i, curr);
@@ -171,6 +172,42 @@ export class Hash<T, K = T> implements Structure<T, K> {
     const pos = this.find(this.getKey(el));
     if (pos !== null) {
       this.deleteAt(pos);
+    }
+  }
+
+}
+
+export class SingleElementHash<T, K = T> extends Hash<T, K> {
+
+  _getConflict(bucket: Bucket<T>, val: T) {
+    const getKey = this.getKey;
+    const key = getKey(val);
+    let curr = bucket.begin();
+    while (true) {
+      if (curr === null)
+        return null;
+      if (this.keysEqual(getKey(curr.value), key) && this.valuesEqual(curr.value[1], val[1]))
+        return curr;
+      curr = curr.next();
+    }
+  }
+
+}
+
+export class SingleKeyHash<T, K = T> extends Hash<T, K> {
+
+  _getConflict(bucket: Bucket<T>, val: T) {
+    const getKey = this.getKey;
+    let curr = bucket.begin();
+    while (true) {
+      if (curr === null) {
+        return null;
+      }
+      if (this.keysEqual(getKey(curr.value), getKey(val))) {
+        curr.value = val;
+        return curr; 
+      }
+      curr = curr.next();
     }
   }
 
