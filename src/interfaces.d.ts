@@ -141,7 +141,24 @@ export interface Sequence<T> extends Container<T> {
 /**
  * Represents a container that explicitly has no order defined on its elements.
  */
-export interface UnorderedContainer<T> extends Container<T> {
+export interface Structure<T, K = T> extends Container<T> {
+
+  /**
+   * Checks whether there a pair in this container that has the given
+   * key. In some cases, this might be faster than a `count`-operation. In
+   * others, it will be equivalent to it.
+   */
+  hasKey(key: K): boolean
+
+  /**
+   * Similar to `Dict.getValue`, except that it returns the pair that was inserted in the container. 
+   */
+  findKey(key: K): Cursor<T>;
+
+  /**
+   * Delete a pair from the underlying container that has the given key as key.
+   */
+  deleteKey(key: K): void
 
   /**
    * Remove an element from the container. If multiple elements are matched,
@@ -155,36 +172,11 @@ export interface UnorderedContainer<T> extends Container<T> {
 
   upper?(el: T): Cursor<T>;
 
-}
+  equalKeys?(key: K): View<T>;
 
-/**
- * A container that never contains multiple occurrences of the same element.
- */
-export interface UniqueContainer<T> extends Container<T> { 
+  lowerKey?(key: K): Cursor<T>;
 
-} 
-
-/**
- * Represents any container which can contain multiple elements of the same
- * kind.
- */
-export interface MultiContainer<T> extends Container<T> {
-
-  /**
-   * Count all elements which belong to the same kind as the element being
-   * passed in.
-   *
-   * @deprecated
-   */
-  count?(el: T): number
-
-  /**
-   * Remove all occurrences of the given element in the container, possibly
-   * doing nothing in the case there are no elements to be removed.
-   *
-   * @deprecated
-   */
-  deleteAll?(el: T)
+  upperKey?(key: K): Cursor<T>;
 
 }
 
@@ -243,7 +235,7 @@ export interface View<T> {
  * elements, but contrary to a set it can hold multiple values of the same
  * kind.
  */
-export interface Bag<T> extends UnorderedContainer<T>, MultiContainer<T> {
+export interface Bag<T> extends Structure<T> {
 
 }
 
@@ -254,38 +246,28 @@ export interface Bag<T> extends UnorderedContainer<T>, MultiContainer<T> {
 export type Pair<K, V> = [K, V]
 
 /**
- * A dictionary, also known as 'maps' in other languages, associates a certain
- * value (called the key) with another value, providing efficient lookup of the
- * value when given the key.
+ * Base interface for `Dict` and `MultiDict`.
  */
-export interface Dict<K, V> extends UniqueContainer<Pair<K, V>>, UnorderedContainer<Pair<K, V>> {
+export interface DictLike<K, V> extends Structure<[K, V], K> {
 
   /**
    * Creates a new pair and inserts it in the underlying container.
    */
   emplace(key: K, value: V)
 
-  /**
-   * Checks whether there a pair in this container that has the given
-   * key. In some cases, this might be faster than a `count`-operation. In
-   * others, it will be equivalent to it.
-   */
-  hasKey(key: K): boolean
+}
 
-  /**
-   * Similar to `getValue`, except that it returns the pair that was inserted in the container. 
-   */
-  findKey(key: K): Cursor<[K, V]>;
+/**
+ * A dictionary, also known as 'maps' in other languages, associates a certain
+ * value (called the key) with another value, providing efficient lookup of the
+ * value when given the key.
+ */
+export interface Dict<K, V> extends DictLike<K, V> {
 
   /**
    * Get the value that is associated with the given key.
    */
   getValue(key: K): V
-
-  /**
-   * Delete a pair from the underlying container that has the given key as key.
-   */
-  deleteKey(key: K): void
 
 }
 
@@ -300,12 +282,12 @@ export interface Grid<T> {
   has([x,y]: Vec2): boolean
 }
 
-export interface MinHeap<T> extends UnorderedContainer<T> {
+export interface MinHeap<T> extends Structure<T> {
   min(): T
   deleteMin()
 }
 
-export interface MaxHeap<T> extends UnorderedContainer<T> {
+export interface MaxHeap<T> extends Structure<T> {
   min(): T
   deleteMin()
 }
@@ -317,7 +299,7 @@ export interface MaxHeap<T> extends UnorderedContainer<T> {
  * A list is characterized by low-cost insertion of elements, while
  * referencing an element at a given position is generally slower.
  */
-export interface List<T> extends MultiContainer<T>, OrderedContainer<T> {
+export interface List<T> extends Sequence<T> {
 
   /**
    * Get the rest of the list. This operation usually is in $O(1)$.
@@ -330,30 +312,12 @@ export interface List<T> extends MultiContainer<T>, OrderedContainer<T> {
  * A `MultiDict` is much like a `Dict`, except that one key can be associated
  * with many values.
  */
-export interface MultiDict<K, V> extends MultiContainer<Pair<K, V>>, UnorderedContainer<Pair<K, V>> {
-
-  /**
-   * Checks whether there is any pair in the underlying container that has the
-   * given value as key. In some cases, this might be faster than a `count`-operation. In
-   * others, it will be equivalent to it.
-   */
-  hasKey(key: K, value?: V): boolean;
-
-  /**
-   * Returns a number indicating how many pairs the underlying container has
-   * with the given key.
-   */
-  countKeys(key: K);
+export interface MultiDict<K, V> extends DictLike<K, V> {
 
   /**
    * Get all values that are associated with the given key.
    */
   getValues(key: K): View<V>;
-
-  /**
-   * Removes all pairs with the given key from the container. 
-   */
-  deleteKey(key: K): void
 
 }
 
@@ -366,7 +330,7 @@ export interface MultiDict<K, V> extends MultiContainer<Pair<K, V>>, UnorderedCo
  * dictionaries and sets keep track of data, which does not matter to the end
  * user.
  */
-export interface Queuelike<T> extends UnorderedContainer<T>, MultiContainer<T> {
+export interface Queuelike<T> extends Structure<T> {
   /**
    * Gets the next element in the order of the queue and removes it from the container.
    *
@@ -375,7 +339,7 @@ export interface Queuelike<T> extends UnorderedContainer<T>, MultiContainer<T> {
   dequeue(): T
 }
 
-export interface Set<T> extends UnorderedContainer<T>, UniqueContainer<T> {
+export interface Set<T> extends Structure<T> {
 
 }
 
@@ -385,7 +349,7 @@ export interface Set<T> extends UnorderedContainer<T>, UniqueContainer<T> {
  * given position, while inserting elements at a given position is generally
  * slower
  */
-export interface Vector<T> extends MultiContainer<T>, OrderedContainer<T> { 
+export interface Vector<T> extends Sequence<T> { 
   /**
    * Allocates the specified amount of free space at the end of the vector for
    * storing data, without changing its `size()`.
