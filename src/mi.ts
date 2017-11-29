@@ -378,7 +378,6 @@ class IndexCursor<T> implements Cursor<T> {
     if (typeof name === 'string')
       name = this._descriptor._getIndexID(name);
     const n = this._el._cursors[name].next();
-    console.log(n);
     if (n === null)
       return null
     return new IndexCursor(this._descriptor, this.index._getElement(n.value), this._cursorIndex);
@@ -495,7 +494,6 @@ export class SeqIndex<T> implements Sequence<T>, Index<T, T> {
   }
 
   _deleteAt(pos) {
-    console.log(pos);
     this._seq.deleteAt(pos)
   }
 

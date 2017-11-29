@@ -84,7 +84,6 @@ describe('the README example', () => {
 
     expect(pos.prev('salary').value.name).to.equal('Fred')
     expect(pos.next('age').value.name).to.equal('Jane');
-    console.log(pos)
     employees.deleteAt(pos);
 
     expect([...employees].map(e => e.name)).to.deep.equal(['Jane', 'Fred']);
