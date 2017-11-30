@@ -3,6 +3,10 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.9.1
+
+ - Some bugfixes in container implementations
+
 ### v0.9.0
 
  - Added a container type registration system

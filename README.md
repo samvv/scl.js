@@ -23,11 +23,11 @@ console.log(d.hasKey(3)); // outputs false
 
 const pos = d.emplace(3, 'tres');
 
-console.log([...d.keys()]) // outputs [1, 2, 3] in order
+console.log([...d]) // outputs [1, 2, 3] in order
 
 d.deleteAt(pos)
 
-console.log([...d.keys()]) // outputs [1, 2] in order
+console.log([...d]) // outputs [1, 2] in order
 
 ```
 
@@ -43,7 +43,7 @@ and the following example demonstrates its use.
 import scl from "scl"
 
 const fastMemberCheck = scl()
-  .sequenced()
+  .list()
   .hash()
   .build();
 
@@ -55,7 +55,7 @@ fastMemberCheck.insertAfter(pos, 4);
 console.log(fastMemberCheck.has(1)); // outputs true
 console.log(fastMemberCheck.has(6)); // outputs false
 
-console.log([...fastMemberCheck]); // outputs [2,3,1,3] in order
+console.log([...fastMemberCheck]); // outputs [3,2,4,1] in order
 
 ```
 
