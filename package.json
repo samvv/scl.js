@@ -1,6 +1,6 @@
 {
   "name": "scl",
-  "version": "0.9.2",
+  "version": "1.0.0",
   "main": "index.js",
   "description": "A collection of typed containers for JavaScript.",
   "repository": {
@@ -20,9 +20,6 @@
     "url": "https://github.com/samvv/typescript-containers/issues"
   },
   "homepage": "https://github.com/samvv/typescript-containers#readme",
-  "directories": {
-    "test": "src/test"
-  },
   "scripts": {
     "test": "mocha",
     "build-docs": "cd interfaces/ && typedoc *.d.ts --readme interfaces/README.md --mode file --name 'TypeScript Containers' --includeDeclarations --excludeExternals --out ../docs/"

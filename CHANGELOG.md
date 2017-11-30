@@ -3,9 +3,9 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
-### v0.9.2
+### v1.0.0
 
- - Urgent fix of dependencies in package.json
+ - Fixed JavaScript not being pushed to registry
 
 ### v0.9.1
 
