@@ -1,16 +1,14 @@
 
 import { Dict } from "../interfaces"
-import List, { Cursor as ListCursor } from "../list/double"
-import { Hash, Cursor as HashCursor, Bucket } from "../hash"
-import { digest } from "json-hash"
-import { equal, find } from "../util"
+import { SingleKeyHash } from "../hash"
+import { hash, equal, find } from "../util"
 
-export class HashDict<K, V> extends Hash<[K, V], K> {
+export class HashDict<K, V> extends SingleKeyHash<[K, V], K> {
 
   constructor(
-        getHash: (k: K) => number = digest
+        getHash: (k: K) => number = hash
       , keysEqual: (a: K, b: K) => boolean = equal
-      , valuesEqual: (a, b) => boolean = keysEqual
+      , valuesEqual: (a, b) => boolean = (a, b) => a === b
       , size?: number) {
     super(
         getHash
@@ -21,19 +19,8 @@ export class HashDict<K, V> extends Hash<[K, V], K> {
     );
   }
 
-  _getConflict(bucket: Bucket<T>, val: [K, V]) {
-    const getKey = this.getKey;
-    let curr = bucket.begin();
-    while (true) {
-      if (curr === null) {
-        return null;
-      }
-      if (this.keysEqual(getKey(curr.value), getKey(val))) {
-        curr.value = val;
-        return curr; 
-      }
-      curr = curr.next();
-    }
+  emplace(key: K, val: V) {
+    return this.add([key, val]);
   }
 
   getValue(key: K) {

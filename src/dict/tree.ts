@@ -14,6 +14,10 @@ export class TreeDict<K, V> extends AVL<[K, V], K> {
     );
   }
 
+  emplace(key: K, val: V) {
+    return this.add([key, val]);
+  }
+
   add(p: [K, V]) {
     const hint = this.addHint(p[0]);
     if (!hint[0]) {

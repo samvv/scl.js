@@ -1,12 +1,11 @@
 
 import { Hash } from "../../hash"
-import { digest } from "json-hash"
-import { equal, mapView } from "../../util"
+import { hash, equal, mapView } from "../../util"
 
 export class HashMultiDict<K, V> extends Hash<[K, V], K> {
 
   constructor(
-        getHash: (k: K) => number = digest
+    getHash: (k: K) => number = hash
       , isEqual: (a: K, b: K) => boolean = equal
       , valuesEqual: (a: [K, V], b: [K, V]) => boolean = (a, b) => a === b
     , size?: number) {
@@ -17,6 +16,10 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
       , pair => pair[0]
       , size
     );
+  }
+
+  emplace(key: K, val: V) {
+    return this.add([key, val])
   }
 
   getValues(key: K) {
