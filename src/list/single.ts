@@ -180,7 +180,16 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   deleteAt(pos: NodeCursor<T>) {
-    pos._getPrev().next = pos._node.next;
+    const prev = pos._getPrev()
+      , next = pos._node.next;
+    if (next === null) {
+      this._last = prev;
+    }
+    if (prev === null) {
+      this._first = next;
+    } else {
+      prev.next = next;
+    }
     --this._size;
   }
 
