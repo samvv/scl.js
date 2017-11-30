@@ -3,6 +3,20 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v0.9.0
+
+ - Added a container type registration system
+ - Made container composition work with some examples
+ - Streamlined AVL and hash implementations
+ - Switched to XXHash for much better hashing results
+ - Removed UniqueContainer and MultiContainer interfaces
+ - Renamed UnorderedContainer to Sequence and OrderedContainer to Structure
+ 
+### v0.8.1
+
+
+ - Updated the README
+
 ### v0.8.0
 
  - Rename UnorderedContainer to Sequence in interfaces
