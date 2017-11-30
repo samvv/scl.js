@@ -40,7 +40,8 @@
   "dependencies": {
     "json-hash": "^1.2.0",
     "lodash": "^4.17.4",
-    "proxy-deep": "^2.0.0",
+    "proxy-deep": "^2.1.1",
+    "reflect-types": "1.0.0",
     "xxhashjs": "^0.2.1"
   }
 }
