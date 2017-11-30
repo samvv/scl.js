@@ -2,19 +2,23 @@
 import { Queuelike } from "./interfaces"
 
 import find from "./find"
-import SLList from "./list/single"
+import List from "./list/single"
 
-export class Queue<T> extends SLList<T> implements Queuelike<T> {
+export class Queue<T> extends List<T> implements Queuelike<T> {
 
   dequeue() {
-    const first = this.begin().next();
+    const first = this.begin();
+    if (first === null)
+      throw new RangeError(`queue is empty`);
     this.deleteAt(first);
     return first.value;
   }
 
   delete(el: T) {
     const match = find(this, el);
-    this.deleteAt(match);
+    if (match !== null) {
+      this.deleteAt(match);
+    }
   }
 
   add(el: T) {

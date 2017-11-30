@@ -13,11 +13,13 @@ export class Stack<T> extends SLList<T> implements Queuelike<T> {
 
   delete(el: T) {
     const match = find(this, el);
-    this.deleteAt(match);
+    if (match !== null) {
+      this.deleteAt(match);
+    }
   }
 
   dequeue() {
-    const first = this.begin().next();
+    const first = this.begin();
     this.deleteAt(first);
     return first.value;
   }
