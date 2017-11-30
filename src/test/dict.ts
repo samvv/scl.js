@@ -2,10 +2,15 @@
 import { Dict } from "../interfaces"
 import { expect } from "chai"
 import { forEachTestSet } from "./_common"
-import { DictMode } from "../util"
 
 function addTests(create) {
 
+  it('can emplace elements', () => {
+    const d = create();
+    const p1 = [1, 'one'];
+    const [added, pos] = d.emplace(1, 'one')
+    expect(d.has(pos.value)).to.be.true;
+  });
 
   it('reports the correct size', () => {
     const d = create();
