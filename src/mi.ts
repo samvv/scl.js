@@ -68,9 +68,9 @@ function isPropertyKey(val: any) {
       || typeof val === 'symbol';
 }
 
-function fromPath(path: string | string[]) {
+function fromPath(path: string | string[]): string {
   if (path === undefined)
-    return [];
+    return '';
   if (typeof path === 'string')
     return path;
   return path.join('.');
@@ -188,6 +188,9 @@ export function builder<T = any>() {
 
       const realArgs = match.paramTypes.map(type => {
         switch (type.name) {
+        //case 'Container':
+          //const [name, ...args] = type.args;
+          //return build(
         case 'KeyGetter':
           const fullPath = elPath.concat(keyPath);
           return el => get(el, fullPath);
@@ -226,7 +229,7 @@ interface NamedSet<T> {
   [key: string]: T;
 }
 
-export class Descriptor<T> implements Container<T> {
+export class Descriptor<T> {
 
   _indices: Index<T>[] = [];
   _indexNames: NamedSet<number> = Object.create(null);
@@ -324,7 +327,7 @@ export class Descriptor<T> implements Container<T> {
 
 }
 
-export class Element<T> implements Cursor<T> {
+export export class Element<T> implements Cursor<T> {
 
   _cursors: Cursor<any>[] = [];
 
@@ -350,7 +353,7 @@ export class Element<T> implements Cursor<T> {
 
 }
 
-class IndexCursor<T> implements Cursor<T> {
+export class IndexCursor<T> implements Cursor<T> {
 
   constructor(public _descriptor: Descriptor<T>, public _el: Element<T>, public _cursorIndex: number) {
 
@@ -369,8 +372,9 @@ class IndexCursor<T> implements Cursor<T> {
   }
 
   *[Symbol.iterator]() {
-    for (const el of this._el._cursors[this._cursorIndex]) {
-      yield el.value;
+    const index = this._descriptor._indices[this._cursorIndex];
+    for (const val of this._el._cursors[this._cursorIndex]) {
+      yield index._getValue(val);
     }
   }
 
@@ -394,10 +398,12 @@ class IndexCursor<T> implements Cursor<T> {
 
 }
 
-interface Index<T, K = any> extends Container<Element<T>> {
+export interface Index<T, K = any> {
 
   _indexID: number;
   _descriptor: Descriptor<T>;
+  _getElement(val: any): Element<T>;
+  _getValue(val: any): T;
 
   _add(el: Element<T>): [boolean, Cursor<any>];
   _deleteAt(el: Cursor<T>): void;
@@ -406,178 +412,7 @@ interface Index<T, K = any> extends Container<Element<T>> {
   index(name: number | string): Index<T>;
   add(val: T): [boolean, IndexCursor<T>];
   deleteAt(key: K): number;
-
-}
-
-export class StructIndex<T, K = T> implements Index<T, K> {
-
-  _indexID: number;
-  _descriptor: Descriptor<T>;
-
-  index(name: number | string) {
-    return this._descriptor.index(name);
-  }
-
-  constructor(public _data: Structure<[T, Element<T>], K>) {
-
-  }
-
-  _getElement(val: T) {
-    return val[1];
-  }
-
-  _add(el: Element<T>) {
-    return this._data.add([el.value, el]);
-  }
-
-  find(key: K) {
-    const pos = this._data.findKey(key);
-    if (pos === null)
-      return null;
-    return new IndexCursor<T>(this._descriptor, pos.value[1], this._indexID);
-  }
-
-  add(val: T) {
-    const [added, el] = this._descriptor.add(val);
-    if (!added) {
-      return [false, el];
-    }
-    return [added, new IndexCursor<T>(this._descriptor, el, this._indexID)];
-  }
-
-  _deleteAt(pos) {
-    return this._data.deleteAt(pos);
-  }
-
-  delete(key: K) {
-    const pos = this._data.findKey(key);
-    if (pos !== null) {
-      this._descriptor.deleteAt(pos.value[1]);
-    }
-  }
-
-  deleteAt(pos: IndexCursor<T>) {
-    return this._descriptor.deleteAt(pos._el);
-  }
-
-  has(el: K) {
-    return this._data.hasKey(el);
-  }
-
-  *[Symbol.iterator]() {
-    for (const pair of this._data) {
-      yield pair[1].value;
-    }
-  }
-
-  size() {
-    return this._data.size();
-  }
-
-  _clear() {
-    this._data.clear();
-  }
-
-  clear() {
-    this._descriptor.clear();
-  }
-
-}
-
-export class SeqIndex<T> implements Sequence<T>, Index<T, T> { 
-
-  _indexID: number;
-  _descriptor: Descriptor<T>;
-
-  constructor(public _seq: Sequence<Element<T>>) {
-
-  }
-
-  _deleteAt(pos) {
-    this._seq.deleteAt(pos)
-  }
-
-  _getElement(val: T) {
-    return val;
-  }
-
-  *[Symbol.iterator]() {
-    for (const el of this._seq) {
-      yield el.value;
-    }
-  }
-
-  index(name: string | number) {
-    return this._descriptor.index(name);
-  }
-
-  has(el: T) {
-    return this._descriptor.has(el);
-  }
-
-  find(el: T) {
-    return this._descriptor.find(el);
-  }
-
-  size() {
-    return this._seq.size();
-  }
-
-  _clear() {
-    this._seq.clear();
-  }
-
-  clear() {
-    this._descriptor.clear();
-  }
-
-  first() {
-    return this._seq.first();
-  }
-
-  last() {
-    return this._seq.last();
-  }
-
-  insertBefore(val: T, c: Element<T>) {
-    const [added, el] = this._descriptor._add(this, val);
-    if (!added) {
-      return [false, el]
-    }
-    el._cursors[this._indexID] = this._seq.insertBefore(c._cursors[this._indexID], el);
-    return [true, el._cursors[this._indexID]];
-  }
-
-  insertAfter(val: T, pos: Element<T>) {
-    const [added, el] = this._descriptor._add(this, val);
-    if (!added) {
-      return [false, el]
-    }
-    el._cursors[this._indexID] = this._seq.insertAfter(pos._cursors[this._indexID], el);
-    return [true, el._cursors[this._indexID]];
-  }
-
-  append(val: T) {
-    const [added, el] = this._descriptor._add(this, val);
-    if (!added) {
-      return [false, el]
-    }
-    el._cursors[this._indexID] = this._seq.append(el);
-    return [true, el._cursors[this._indexID]];
-  }
-
-  prepend(val: T) {
-    const [added, el] = this._descriptor._add(this, val);
-    if (!added) {
-      return [false, el]
-    }
-    el._cursors[this._indexID] = this._seq.prepend(el);
-    return [true, el._cursors[this._indexID]];
-  }
-
-  deleteAt(pos: IndexCursor<T>) {
-    this._descriptor.deleteAt(pos._el);
-  }
+  has(val: K): boolean;
 
 }
 
