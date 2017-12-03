@@ -228,6 +228,10 @@ export interface View<T> {
    */
   [Symbol.iterator](): Iterator<T>;
 
+  map<R>(proc: (el: T) => R): View<R>;
+
+  filter(pred: (el: T) => boolean): View<T>;
+
 }
 
 /**
