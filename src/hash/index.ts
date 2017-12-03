@@ -1,7 +1,7 @@
 
 import { Structure, Cursor } from "../interfaces"
 import List, { Cursor as ListCursor } from "../list/double"
-import { registerContainer } from "../discovery"
+import { ViewBase } from "../util"
 
 export type Bucket<T> = List<T>;
 
@@ -23,10 +23,10 @@ class HashCursor<T> implements Cursor<T> {
 
 export { HashCursor as Cursor };
 
-class BucketView<T, K> {
+class BucketView<T, K> extends ViewBase<T> {
 
   constructor(public _hash: Hash<T, K>, public _key: K, public _bucket: Bucket<T>, public _reversed = false) {
-    
+    super();   
   }
 
   reverse() {
