@@ -3,6 +3,10 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v1.0.1
+ 
+ - Fixed critical bug in reflect-types dependency
+
 ### v1.0.0
 
  - Fixed JavaScript not being pushed to registry
