@@ -37,7 +37,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "proxy-deep": "^2.1.1",
-    "reflect-types": "1.0.0",
+    "reflect-types": "^1.0.1",
     "xxhashjs": "^0.2.1"
   }
 }
