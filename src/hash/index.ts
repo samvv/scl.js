@@ -34,6 +34,8 @@ class BucketView<T, K> extends ViewBase<T> {
   }
 
   *[Symbol.iterator]() {
+    if (this._bucket === null)
+      return;
     const getKey = this._hash.getKey;
     if (this._reversed) {
       for (const val of this._bucket) {
