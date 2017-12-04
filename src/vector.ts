@@ -1,7 +1,7 @@
 
 import { Vector, View, Cursor } from "./interfaces"
 
-export class Element<T> {
+export class VectorCursor<T> {
 
   get value() {
     return this._elements[this._index]; 
@@ -26,14 +26,14 @@ export class Element<T> {
     if (this._index === this._elements.length-1) {
       return null;
     }
-    return new Element<T>(this._elements, this._index+1);
+    return new VectorCursor<T>(this._elements, this._index+1);
   }
 
   prev() {
     if (this._index === 0) {
       return null;
     }
-    return new Element<T>(this._elements, this._index-1);
+    return new VectorCursor<T>(this._elements, this._index-1);
   }
 
 }
@@ -126,11 +126,11 @@ export class ArrayVector<T> implements Vector<T> {
     return this._elements.length
   }
 
-  insertAfter(pos: Element<T>, el: T) {
+  insertAfter(pos: VectorCursor<T>, el: T) {
     this._elements.splice(pos._index+1, 0, el)
   }
 
-  insertBefore(pos: Element<T>, el: T) {
+  insertBefore(pos: VectorCursor<T>, el: T) {
     this._elements.splice(pos._index, 0, el)
   }
 
@@ -151,11 +151,11 @@ export class ArrayVector<T> implements Vector<T> {
   }
 
   begin() {
-    return new Element(this._elements, 0);
+    return new VectorCursor(this._elements, 0);
   }
 
   end() {
-    return new Element(this._elements, this._elements.length-1);
+    return new VectorCursor(this._elements, this._elements.length-1);
   }
 
   prepend(el: T) {
@@ -174,13 +174,13 @@ export class ArrayVector<T> implements Vector<T> {
     this._elements.push(el)
   }
 
-  at(count: number): Element<T> {
+  at(count: number): VectorCursor<T> {
     if (count < 0 || count > this._elements.length)
       return null;
-    return new Element(this._elements, count);
+    return new VectorCursor(this._elements, count);
   }
 
-  deleteAt(pos: Element<T>) {
+  deleteAt(pos: VectorCursor<T>) {
     this._elements.splice(pos._index, 1);
   }
 
