@@ -22,7 +22,7 @@ export class Queue<T> extends List<T> implements Queuelike<T> {
   }
 
   add(el: T) {
-    this.append(el);
+    return this.append(el);
   }
 
 }
