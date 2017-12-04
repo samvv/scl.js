@@ -65,15 +65,15 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   insertAfter(pos: Node<T>, el: T) {
-    const newNode = new Node<T>(el, pos._prevNode, pos._nextNode);
     if (pos._nextNode === null) {
-      this._last = newNode;
+      return this.append(el);
     } else {
+      const newNode = new Node<T>(el, pos, pos._nextNode);
       pos._nextNode._prevNode = newNode;
+      pos._nextNode = newNode;
+      ++this._size;
+      return newNode;
     }
-    pos._nextNode = newNode;
-    ++this._size;
-    return newNode;
   }
 
   prepend(el: T) {
