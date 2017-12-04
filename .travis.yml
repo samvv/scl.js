@@ -1,6 +1,7 @@
 language: node_js
 install:
 - 'npm i -g typescript mocha'
+- 'yarn'
 node_js:
 - '8'
 - '7'
