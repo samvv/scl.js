@@ -1,7 +1,7 @@
 
 import "./helpers"
 import Vector from "../vector"
-import addTests from "./ordered"
+import addTests from "./sequence"
 import { expect } from "chai"
 
 describe('an array-like vector', () => {
