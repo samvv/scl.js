@@ -1,6 +1,7 @@
 
 import Types from "../types"
-import { StructIndex, registerContainer } from "../mi"
+import StructIndex from "../indices/struct"
+import { registerContainer } from "../mi"
 import AVL from "./index"
 
 registerContainer({

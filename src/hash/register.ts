@@ -1,6 +1,7 @@
 
 import { get } from "../util"
-import { StructIndex, registerContainer } from "../mi"
+import StructIndex from "../indices/struct"
+import { registerContainer } from "../mi"
 import { Hash, SingleKeyHash } from "../hash"
 import Types from "../types"
 

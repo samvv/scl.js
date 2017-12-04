@@ -1,7 +1,8 @@
 
 import DoubleLinkedList from "../double"
 import Types from "../../types"
-import { SeqIndex, registerContainer } from "../../mi"
+import SeqIndex from "../../indices/seq"
+import { registerContainer } from "../../mi"
 
 registerContainer({
   name: 'list',
