@@ -3,6 +3,13 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v1.0.2
+
+ - Added more tests
+ - Fixed a few bugs 
+ - Moved indices to separate files
+ - Updated the lockfiles
+
 ### v1.0.1
  
  - Fixed critical bug in reflect-types dependency
