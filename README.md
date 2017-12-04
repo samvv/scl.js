@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.org/TypeForce/scl.js.svg?branch=master)](https://travis-ci.org/TypeForce/scl.js)
+
 This is a curated, open-source collection of common JavaScript containers with
 full support for TypeScript. Initially started as a side-project to abstract
 away some common patterns in other projects, this library grows to become 
