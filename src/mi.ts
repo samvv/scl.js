@@ -80,11 +80,18 @@ function last<T>(arr: T[]): T {
   return arr[arr.length-1];
 }
 
+interface IndexType {
+  reversed: boolean;
+  name: string
+  args: any[]
+  impl: string;
+}
+
 export function builder<T = any>() {
 
   const calls = [];
 
-  let building = [null, false, null];
+  let building: Partial<IndexType> = { reversed: false }
 
   const keyDefaults = {
     Lesser: Object.create(null),
@@ -101,13 +108,13 @@ export function builder<T = any>() {
       if (Reflect.has(target, key)) {
         return Reflect.get(target, key);
       }
-      building[0] = key;
+      building.impl = key;
       return save;
     }
   });
 
   function save(...args) {
-    building[2] = args;
+    building.args = args;
     calls.push(building)
     building = [null, false, null]
     return proxy;
@@ -125,7 +132,7 @@ export function builder<T = any>() {
 
   base.reverse = function () {
     const call = last(calls);
-    call[1] = true;
+    call.reversed = true;
     return proxy;
   }
 
@@ -136,6 +143,12 @@ export function builder<T = any>() {
 
   base.defaultHash = function (proc, key = '') {
     keyDefaults.Hasher[fromPath(key)] = proc;
+    return proxy;
+  }
+
+  base.named = function (name: string) {
+    const type = last(calls);
+    type.name = name;
     return proxy;
   }
 
@@ -152,8 +165,8 @@ export function builder<T = any>() {
 
     for (const call of calls) {
 
-      const [syntax, reversed, args] = call;
-      const match = registeredContainers.filter(type => type.name === syntax)[0];
+      let { impl, reversed, args, name } = call;
+      const match = registeredContainers.filter(type => type.name === impl)[0];
       if (match === undefined) {
         throw new Error(E_NO_MATCH);
       }
@@ -170,9 +183,8 @@ export function builder<T = any>() {
       }
       
       const keyPath = toPath(nextArg(Types.PropertyPath(), []));
-      let name = nextArg(Types.String());
       if (name === undefined && keyPath.length === 1) {
-        name = keyPath[0];
+          name = keyPath[0];
       }
       const elPath = pathToType('Key', match.elementType) || [];
 

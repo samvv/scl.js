@@ -103,6 +103,12 @@ describe('a multi-index builder', () => {
     expect(els.has(5)).to.be.false
   });
 
+  it('can assign names to indices', () => {
+    const els = scl<number>().list().named('foo').hash().named('bar').build();
+    expect(els.index('foo')).to.equal(els.index(0)
+    expect(els.index('bar')).to.equal(els.index(1)
+  });
+
 });
 
 describe('the README example', () => {
