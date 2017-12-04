@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/samvv/typescript-containers#readme",
   "scripts": {
-    "test": "mocha",
-    "build-docs": "cd interfaces/ && typedoc *.d.ts --readme interfaces/README.md --mode file --name 'TypeScript Containers' --includeDeclarations --excludeExternals --out ../docs/"
+    "prepare": "tsc",
+    "test": "mocha"
   },
   "keywords": [
     "data",
