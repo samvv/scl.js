@@ -6,6 +6,57 @@ import "../list/double/register"
 import "../hash/register"
 import "../avl/register"
 
+function addSeqIndexTests(create) {
+  
+  it('can append elements', () => {
+    const mi = create();
+    mi.append(1)
+    mi.append(2)
+    mi.append(3)
+    expect([...mi]).to.deep.equal([1, 2, 3])
+  })
+
+  it('can prepend elements', () => {
+    const mi = create();
+    mi.prepend(1)
+    mi.prepend(2)
+    mi.prepend(3)
+    expect([...mi]).to.deep.equal([3, 2, 1])
+  })
+
+  it('can insert an element after another', () => {
+    const mi = create()
+    const [added1, pos1] = mi.append(1)
+    mi.append(3)
+    const [added2, pos2] = mi.insertAfter(2, pos1);
+    expect(added2).to.be.true
+    expect(pos2.value).to.equal(2)
+    const n = pos2.next()
+    expect(n).to.not.be.null
+    expect(n.value).to.equal(3)
+  })
+
+  it('can get the next from a given position', () => {
+    const mi = create();
+    mi.append(1)
+    const [added, pos] = mi.append(2)
+    mi.append(3)
+    const n = pos.next()
+    expect(n).to.not.be.null
+    expect(n.value).to.equal(3);
+  })
+
+}
+
+describe('a simple sequenced multi-index', () => {
+  addSeqIndexTests(() => scl().list().build());
+})
+
+
+describe('a sequenced hash-index', () => {
+  addSeqIndexTests(() => scl().list().hash().build());
+})
+
 describe('a multi-index builder', () => {
 
   it('can create a simple list', () => {

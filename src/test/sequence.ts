@@ -131,8 +131,10 @@ export default function addTests(create : () => Sequence<any>) {
   it('can insert elements after a given position', () => {
     const c = create()
     c.append('a')
-    const pos = c.append('b')
+    c.append('b')
     c.append('c')
+    const pos = c.at(1)
+    expect(pos.value).to.equal('b')
     c.insertAfter(pos, 'd')
     expect([...c]).to.deep.equal(['a', 'b', 'd', 'c'])
   })
