@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/TypeForce/scl.js.svg?branch=master)](https://travis-ci.org/TypeForce/scl.js)
+[![Build Status](https://travis-ci.org/TypeForce/scl.js.svg?branch=master)](https://travis-ci.org/TypeForce/scl.js) [![Coverage Status](https://coveralls.io/repos/github/TypeForce/scl.js/badge.svg?branch=master)](https://coveralls.io/github/TypeForce/scl.js?branch=master)
 
 This is a curated, open-source collection of common JavaScript containers with
 full support for TypeScript. Initially started as a side-project to abstract
