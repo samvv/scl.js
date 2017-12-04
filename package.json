@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/samvv/typescript-containers#readme",
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "tsc; exit 0",
     "test": "mocha"
   },
   "keywords": [
