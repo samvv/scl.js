@@ -75,40 +75,45 @@ export class SeqIndex<T> implements Sequence<T>, Index<T, T> {
     return this._seq.last();
   }
 
-  insertBefore(val: T, c: Element<T>) {
+  insertBefore(val: T, pos: IndexCursor<T>) {
     const [added, el] = this._descriptor._add(this, val);
+    const newPos = new IndexCursor(this._descriptor, el, this._indexID);
     if (!added) {
-      return [false, el]
+      return [false, newPos]
     }
-    el._cursors[this._indexID] = this._seq.insertBefore(c._cursors[this._indexID], el);
-    return [true, el._cursors[this._indexID]];
+    el._cursors[this._indexID] = this._seq.insertBefore(pos._el._cursors[this._indexID], el);
+
+    return [true, newPos];
   }
 
-  insertAfter(val: T, pos: Element<T>) {
+  insertAfter(val: T, pos: IndexCursor<T>) {
     const [added, el] = this._descriptor._add(this, val);
+    const newPos = new IndexCursor(this._descriptor, el, this._indexID);
     if (!added) {
-      return [false, el]
+      return [false, newPos]
     }
-    el._cursors[this._indexID] = this._seq.insertAfter(pos._cursors[this._indexID], el);
-    return [true, el._cursors[this._indexID]];
+    el._cursors[this._indexID] = this._seq.insertAfter(pos._el._cursors[this._indexID], el);
+    return [true, newPos];
   }
 
   append(val: T) {
     const [added, el] = this._descriptor._add(this, val);
+    const newPos = new IndexCursor(this._descriptor, el, this._indexID);
     if (!added) {
-      return [false, el]
+      return [false, newPos]
     }
     el._cursors[this._indexID] = this._seq.append(el);
-    return [true, el._cursors[this._indexID]];
+    return [true, newPos];
   }
 
   prepend(val: T) {
     const [added, el] = this._descriptor._add(this, val);
+    const newPos = new IndexCursor(this._descriptor, el, this._indexID);
     if (!added) {
-      return [false, el]
+      return [false, newPos]
     }
     el._cursors[this._indexID] = this._seq.prepend(el);
-    return [true, el._cursors[this._indexID]];
+    return [true, newPos];
   }
 
   deleteAt(pos: IndexCursor<T>) {
