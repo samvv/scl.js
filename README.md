@@ -1,13 +1,13 @@
 
-[![Build Status](https://travis-ci.org/TypeForce/scl.js.svg?branch=master)](https://travis-ci.org/TypeForce/scl.js) [![Coverage Status](https://coveralls.io/repos/github/TypeForce/scl.js/badge.svg?branch=master)](https://coveralls.io/github/TypeForce/scl.js?branch=master)
+[![Build Status](https://travis-ci.org/samvv/scl.js.svg?branch=master)](https://travis-ci.org/samvv/scl.js) [![Coverage Status](https://coveralls.io/repos/github/samvv/scl.js/badge.svg?branch=master)](https://coveralls.io/github/samvv/scl.js?branch=master)
 
-This is a curated, open-source collection of common JavaScript containers with
+This is a curated, open-source project of common JavaScript collections with
 full support for TypeScript. Initially started as a side-project to abstract
 away some common patterns in other projects, this library grows to become 
 a full standard library for JavaScript and friends.
 
 :point_up: We could use a helping hand. If you think you're up for it,
-[open an issue](https://github.com/samvv/typescript-containers/issues/new).
+[open an issue](https://github.com/samvv/scl.js/issues/new).
 
 ```ts
 import TreeDict from "scl/dict/multi/tree"
@@ -38,7 +38,7 @@ console.log([...d]) // outputs [1, 2] in order
 ### Container composition
 
 **scl** comes with a powerful system for composing mupltiple indexes on the same
-data structure into one big structure. This is called 'container composition',
+data structure into one big structure. This is called 'collection composition',
 and the following example demonstrates its use.
 
 ```ts
@@ -64,7 +64,7 @@ console.log([...fastMemberCheck]); // outputs [3,2,4,1] in order
 ### Interfaces
 
 **scl** provides some interfaces which you can use as a template to define your
-own custom containers, which in turn allows you to make use of one of the
+own custom collections, which in turn allows you to make use of one of the
 various algoritms that come shipped with this library. Documentation for these
 interfaces is pending.
 
@@ -122,19 +122,19 @@ partially completed.
 |--------------------|----------|-----------|-----------|-----------|-------------|
 | :heavy_check_mark: | AVL tree | O(log(n)) | O(log(n)) | O(log(n)) | O(log(n))   | 
 
-Consult the [API docs](http://samvv.github.io/project/sync-containers) for more information on how to use them.
+Consult the [API docs](http://samvv.github.io/project/sync-collections) for more information on how to use them.
 
 ## Support
 
 You might also be interested in knowing [how this library's iterators
-work](http://github.com/samvv/typescript-containers/wiki/Iterators).
+work](http://github.com/samvv/scl.js/wiki/Iterators).
 
 Need to go asynchronous? Check out our [asynchronous
-containers](https://github.com/samvv/typescript-async-containers) library.
+collections](https://github.com/samvv/typescript-async-collections) library.
 
-Found an issue? A certain mistake? Need a certain kind of container? [File an
-issue](https://github.com/samvv/typescript-containers/issues) or [send me a
-pull request](https://github.com/samvv/typescript-containers/pulls).
+Found an issue? A certain mistake? Need a certain kind of collection? [File an
+issue](https://github.com/samvv/scl.js/issues) or [send me a
+pull request](https://github.com/samvv/scl.js/pulls).
 
 ## Credits
 
