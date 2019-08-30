@@ -38,7 +38,6 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.15",
-    "proxy-deep": "^2.2.1",
     "reflect-types": "^1.0.1",
     "xxhashjs": "^0.2.2"
   }
