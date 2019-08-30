@@ -3,7 +3,12 @@ install:
 - 'npm i -g typescript mocha'
 - 'yarn'
 node_js:
+- '12'
+- '10'
 - '8'
-- '7'
 - '6'
 after_success: 'npm run coveralls'
+notifications:
+  email:
+    on_success: never
+    on_failure: change
