@@ -1,31 +1,47 @@
 
 /**
- * Represents a non-hiercarchical holder of data values in the most abstract
- * sense of the word.
+ * Represents a non-hiercarchical holder of data values.
+ *
+ * @typeparam T The type of element in the collection.
  */
-export interface Container<T> {
+export interface Collection<T> {
 
   /**
-   * Add an element to the container. The element is place where the container
-   * sees fit.
+   * Returns a transparent object that can be used as an argument to {@link add} 
+   * to speed up things. Generally, you don't have to use this method.
    */
-  add(el: T): [boolean, Cursor<T>];
+  getAddHint?(element: T): any;
 
   /**
-   * Checks if the container holds the given element.
+   * Add an element to the collection. If the element already exists, update its
+   * value.
+   *
+   * The location where the element is placed depends on the collection type,
+   * and in the generic case there is no guarantee on the location where it is
+   * inserted.
+   *
+   * This method returns a pair with the first element indicating whether the
+   * element was added, while the second element refers to the actual location
+   * of the element.
+   *
+   * @param hint A transparent object obtained by {@link getAddHint}.
+   */
+  add(element: T, hint?: any): [boolean, Cursor<T>];
+
+  /**
+   * Checks if the collection holds the given element.
    *
    * @param el The element to check membership of.
-   * @return True if the containers holds the given element, false otherwise.
+   * @return True if the collections holds the given element, false otherwise.
    */
   has(el: T): boolean
 
   /**
-   * Returns an object which is able to sift through the values in this container.
+   * Returns an object which is able to sift through the values in this collection.
    *
-   * One iterator is guaranteed to loop over its elements in the same order
-   * that it was created. However, different iterators are not guaranteed to
-   * produce the same order. See {@link OrderedContainer} if you need a
-   * container that does provide this guarantee.
+   * The order by which the elements are traversed depends on the kind of collection.
+   * For unordered collections, the iteration order is unspecified and may even differ
+   * between two iterators on the same collection.
    */
   [Symbol.iterator]?(): Iterator<T>
 
@@ -35,30 +51,55 @@ export interface Container<T> {
   iterator?(): Iterator<T> 
 
   /**
-   * Count the amount of elements in the container. In most cases, this should
-   * be an O(1) operation.
+   * Count the amount of elements in the collection.
+   *
+   * ⚠️ In most cases, this should be an `O(1)` operation. However, there are
+   * cases where this can be an `O(n)` operation. Therefore, it is recommended
+   * to always cache the result in a local variable.
    */
-  size(): number
+  readonly size: number
 
   /**
-   * Remove all elements from this container, effectively setting the container
-   * to the empty state.
+   * Remove all elements from this collection, effectively setting the collection
+   * to the empty collection.
    */
-  clear()
-
-  clone?()
+  clear(): void
 
   /**
-   * Remove the element pointed to by the iterator result from this container.
+   * Copies all elements in the collection to a new one.
+   *
+   * @experimental
+   */
+  clone?(): Collection<T>
+
+  /**
+   * Remove the element pointed to by the iterator result from this collection.
    */
   deleteAt(pos: Cursor<T>): void;
+
+  /**
+   * Remove an element from the collection. If multiple elements are matched,
+   * the collection picks one of them.
+   */
+  delete(el: T): void;
+
+  /**
+   * Remove an element from the collection. If multiple elements are matched,
+   * the collection removes all of them.
+   */
+  deleteAll(el: T): void;
+
+  /**
+   * Converts the entire collection to a range.
+   */
+  toRange(): CollectionRange<T>;
 
 }
 
 /**
- * Represents any container that has an order defined on its elements.
+ * Represents any collection that has an order defined on its elements.
  */
-export interface Sequence<T> extends Container<T> {
+export interface Sequence<T> extends Collection<T> {
 
   /**
    * Insert an element after the element at the given position. The position is
@@ -73,164 +114,173 @@ export interface Sequence<T> extends Container<T> {
   insertBefore(position: Cursor<T>, el: T): Cursor<T>;
 
   /**
-   * Append an item at the end of the container. The element will be given the
+   * Append an item at the end of the collection. The element will be given the
    * highest order.
    */
   append(el: T): Cursor<T>;
 
   /**
-   * Prepend an item to the beginning of the container. The element will be
+   * Prepend an item to the beginning of the collection. The element will be
    * given the lowest order.
    */
   prepend(el: T): Cursor<T>;
 
   /**
-   * Get the first element in the container.
-   *
-   * For queuelike structures such as a stack, this method will be of great
-   * significance.
+   * Get the first element in the collection.
    *
    * For maplike structures such as a set, this method is <b>not</b> guaranteed
    * to give back the element that was first inserted.
    */
-  first(): T
+  first(): T | null
 
   /**
-   * Get the last element in the container.
+   * Get the last element in the collection.
    *
    * For queuelike structures such as a stack, it is preferred to reverse the
-   * order of the container and use `first()` instead, as this can be faster
+   * order of the collection and use `first()` instead, as this can be faster
    * than finding the last element.
    *
-   * For unordered containers such as a set, this method is <b>not</b>
+   * For unordered collections such as a set, this method is <b>not</b>
    * guaranteed to give back the element that was most recently inserted.
    */
   last(): T
 
   /**
-   * Return an iterator that is initially placed at the lowest element in the container.
-   */
-  begin(): Cursor<T>
-
-  /**
-   * Return an iterator that is initially placed at the highest element in the container.
-   */
-  end(): Cursor<T>
-
-  /**
-   * Return an iterator that is places at the element which is the Nth element
+   * Return an iterator that is placed at the element which is the Nth element
    * in the ascending row leading up to element.
    */
   at(position: number): Cursor<T>
 
   /**
-   * Allows taking a direct reference to a value in the container at a given
+   * Allows taking a direct reference to a value in the collection at a given
    * indexed position, without the need for constructing iterators and iterator
    * results.
    */
   ref?(position: number): T
 
   /**
-   * Since ordered containers have keep track of the position of elements, it
+   * Since ordered collections have keep track of the position of elements, it
    * is required to define an iterator.
    */
-  [Symbol.iterator](): Iterator<T>
+  [Symbol.iterator](): IterableIterator<T>
 
 }
 
 /**
- * Represents a container that explicitly has no order defined on its elements.
+ * Represents a collection that uses some part of the element to optimise
+ * certain operations.
  */
-export interface Structure<T, K = T> extends Container<T> {
+export interface KeyedCollection<T, K = T> extends Collection<T> {
 
   /**
-   * Checks whether there a pair in this container that has the given
-   * key. In some cases, this might be faster than a `count`-operation. In
-   * others, it will be equivalent to it.
+   * Checks whether there a pair in this collection that has the given key. 
+   *
+   * In some cases, this might be faster than accessing {@link CollectionRange.size} of {@link KeyedCollection.equal equal()}. In others,
+   * it will be equivalent to it.
    */
   hasKey(key: K): boolean
 
   /**
-   * Similar to `Dict.getValue`, except that it returns the pair that was inserted in the container. 
+   * Similar to `Dict.getValue`, except that it returns the pair that was inserted in the collection. 
    */
-  findKey(key: K): Cursor<T>;
+  findKey(key: K): Cursor<T> | null;
 
   /**
-   * Delete a pair from the underlying container that has the given key as key.
+   * Delete a pair from the underlying collection that has the given key as key.
+   * 
+   * Returns the amount of items that have been deleted.
    */
-  deleteKey(key: K): void
+  deleteKey(key: K): number;
+
+  /*
+   * Returns a range of items that have the same key.
+   */
+  equal?(key: K): CollectionRange<T>;
 
   /**
-   * Remove an element from the container. If multiple elements are matched,
-   * the container picks one of them.
+   * Returns the value that is just below the given value, if any.
    */
-  delete(el: T);
+  lower?(key: K): Cursor<T> | null;
 
-  equal?(el: T): View<T>;
-
-  lower?(el: T): Cursor<T>;
-
-  upper?(el: T): Cursor<T>;
-
-  equalKeys?(key: K): View<T>;
-
-  lowerKey?(key: K): Cursor<T>;
-
-  upperKey?(key: K): Cursor<T>;
+  /**
+   * Return the value that is just above the given value, if any.
+   */
+  upper?(key: K): Cursor<T> | null;
 
 }
 
 /**
- * Cursors correspond to what are called 'iterators' in most other languages.
- * It is not to be confused with JavaScript iterators, which change their own
- * state when a new result value is requested.
+ * A cursor is a handle to a specific element in a collection.
  */
 export interface Cursor<T> {
 
   /**
    * A reference to the element pointed to by this cursor, as it was inserted
-   * into the container.
+   * into the collection.
    */
   value: T;
 
   /**
-   * Generates the sequence of all subsequent elements as ordered by the container.
+   * Generates the sequence of all subsequent elements as defined by the order of the collection.
+   *
+   * If the collection does not specify an order, this method will not exist.
    */
   [Symbol.iterator]?(): Iterator<T>;
 
   /**
-   * Get a reference to the cursor that is immediately after this one's, as
-   * defined by the container's order.
+   * Get a reference to the cursor that is immediately after this one.
+   *
+   * If the collection does not specify an order, this method will not exist.
    */
-  next?(): Cursor<T>;
+  next?(): Cursor<T> | null;
 
   /**
-   * Get a reference to the cursor that is immediately before to this one's, as
-   * defined by the container's order.
+   * Get a reference to the cursor that is immediately before to this one. 
+   *
+   * If the collection does not specify an order, this method will not exist.
    */
-  prev?(): Cursor<T>;
+  prev?(): Cursor<T> | null;
 
 }
 
 /**
- * A view represents a customised order on (a subset of) the elements of a container.
+ * A range is a well-defined sequence of elements that are part of a collection.
+ *
+ * Traversing a range that is being mutated results is undefined behavior (with
+ * some exceptions). To be safe, you need to manually make a copy of the
+ * elements in the range before adding or removing elements.
  */
-export interface View<T> {
+export interface CollectionRange<T> {
 
   /**
    * Reverse the order of the elements that would be generated with the
    * iterator.
    */
-  reverse(): View<T>;
+  reverse(): CollectionRange<T>;
 
   /**
-   * Get an iterator that sequences the elements contained in this cursor.
+   * Get how many elements are in this range.
+   *
+   * ⚠️ This might be an expensive operation, so make sure to cache it if you need
+   * frequent access to it.
    */
-  [Symbol.iterator](): Iterator<T>;
+  readonly size: number;
 
-  map<R>(proc: (el: T) => R): View<R>;
+  /**
+   * Return an iterator that provides cursors to inspect the given element. 
+   *
+   * @see  {@link Cursor}
+   */
+  [Symbol.iterator](): IterableIterator<Cursor<T>>;
 
-  filter(pred: (el: T) => boolean): View<T>;
+  /**
+   * Get an iterator that sequences the elements contained in this range.
+   */
+  values(): IterableIterator<T>;
+
+  map?<R>(proc: (el: T) => R): CollectionRange<R>;
+
+  filter?(pred: (el: T) => boolean): CollectionRange<T>;
 
 }
 
@@ -239,25 +289,25 @@ export interface View<T> {
  * elements, but contrary to a set it can hold multiple values of the same
  * kind.
  */
-export interface Bag<T> extends Structure<T> {
+export interface Bag<T> extends KeyedCollection<T> {
 
 }
 
 /**
  * Simple sugar for an array-based pair. Used by dictionaries to denote the
- * actual value that is stored in the container.
+ * actual value that is stored in the collection.
  */
 export type Pair<K, V> = [K, V]
 
 /**
  * Base interface for `Dict` and `MultiDict`.
  */
-export interface DictLike<K, V> extends Structure<[K, V], K> {
+export interface DictLike<K, V> extends KeyedCollection<[K, V], K> {
 
   /**
-   * Creates a new pair and inserts it in the underlying container.
+   * Creates a new pair and inserts it in the underlying collection.
    */
-  emplace(key: K, value: V)
+  emplace(key: K, value: V): void;
 
 }
 
@@ -275,38 +325,66 @@ export interface Dict<K, V> extends DictLike<K, V> {
 
 }
 
-type Vec2 = [number, number]
+/**
+ * @experimental
+ */
+export type Vec2 = [number, number]
 
+/**
+ * @experimental
+ */
 export interface Grid<T> {
   width: number
   height: number
-  get([x,y]: Vec2): T
-  set([x,y]: Vec2, val: T): void
-  delete([x,y]: Vec2): void
-  has([x,y]: Vec2): boolean
+  get(point: Vec2): T
+  set(point: Vec2, val: T): void
+  delete(point: Vec2): void
+  has(point: Vec2): boolean
 }
 
-export interface MinHeap<T> extends Structure<T> {
+export interface MinHeap<T> extends KeyedCollection<T> {
   min(): T
-  deleteMin()
+  deleteMin(): void
 }
 
-export interface MaxHeap<T> extends Structure<T> {
+export interface MaxHeap<T> extends KeyedCollection<T> {
   min(): T
-  deleteMin()
+  deleteMax(): void
 }
 
 /**
- * A list is a positional container which can contain multiple elements of the
+ * A list is a positional collection which can contain multiple elements of the
  * same kind. 
  *
  * A list is characterized by low-cost insertion of elements, while
  * referencing an element at a given position is generally slower.
+ * 
+ * ```ts
+ * const myList = new DoubleLinkedList();
+ * 
+ * myList.append(1);
+ * myList.append(2);
+ * myList.append(3);
+ *
+ * for (const num of myList.toRange().reverse()) {
+ *   console.log(num)
+ * }
+ * ```
+ * 
+ * Result:
+ *
+ * <pre>
+ * 3
+ * 2
+ * 1
+ * </pre>
+ *
+ * @typeparam T The type of element in the list.
  */
 export interface List<T> extends Sequence<T> {
 
   /**
-   * Get the rest of the list. This operation usually is in $O(1)$.
+   * Get the rest of the list. This operation usually is in <code>O(1)</code>.
    */
   rest(): List<T>
 
@@ -321,47 +399,53 @@ export interface MultiDict<K, V> extends DictLike<K, V> {
   /**
    * Get all values that are associated with the given key.
    */
-  getValues(key: K): View<V>;
+  getValues(key: K): IterableIterator<V>;
 
 }
 
 /**
  * Queuelike structures hold their data in an order that is determined by the
  * structure itself rather than the end-user.
- *
- * The order the queuelike structure keeps track of its data is always of
- * significance to the user. This is contrary to the order with which
- * dictionaries and sets keep track of data, which does not matter to the end
- * user.
  */
-export interface Queuelike<T> extends Structure<T> {
+export interface Queuelike<T> extends Collection<T> {
   /**
-   * Gets the next element in the order of the queue and removes it from the container.
+   * Get the next element in the queue without removing it from the collection.
    *
-   * This method is very similar to `first()` except that it mutates the container.
+   * @see Queuelike.pop()
    */
-  dequeue(): T
+  peek(): T | undefined
+  /**
+   * Get the next element in the order defined by the queue and remove it
+   * from the collection.
+   *
+   * @see Queuelike.peek()
+   */
+  pop(): T | undefined
 }
 
-export interface Set<T> extends Structure<T> {
+export interface Set<T> extends KeyedCollection<T> {
 
 }
 
 /**
- * A vector is a positional container which can contain multiple elements of
+ * A vector is a positional collection which can contain multiple elements of
  * the same kind. A vector is characterized by low-cost lookup of elements at a
- * given position, while inserting elements at a given position is generally
- * slower
+ * given position, while inserting elements anywhere in the middle is much
+ * slower.
  */
 export interface Vector<T> extends Sequence<T> { 
+
   /**
    * Allocates the specified amount of free space at the end of the vector for
    * storing data, without changing its `size()`.
    */
-  allocate?(amnt: number)
+  allocate?(amount: number): void;
 
-  replace(pos: number, newEl: T): void;
+  replace(pos: number, newElement: T): void;
 
-  setSize(size: number);
+  /**
+   * @experimental
+   */
+  setSize(size: number): void;
 }
 

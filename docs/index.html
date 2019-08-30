@@ -1,0 +1,547 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Standard Library Collections</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Standard Library Collections</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Standard Library Collections</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="https://travis-ci.org/samvv/scl.js"><img src="https://travis-ci.org/samvv/scl.js.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/samvv/scl.js?branch=master"><img src="https://coveralls.io/repos/github/samvv/scl.js/badge.svg?branch=master" alt="Coverage Status"></a></p>
+				<p>This is a curated, open-source project of common JavaScript collections with
+					full support for TypeScript. Initially started as a side-project to abstract
+					away some common patterns in other projects, this library grows to become
+				a full standard library for JavaScript and friends.</p>
+				<p>:point_up: We could use a helping hand. If you think you&#39;re up for it,
+				<a href="https://github.com/samvv/scl.js/issues/new">open an issue</a>.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> TreeDict <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/dict/multi/tree"</span>
+
+<span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> TreeDict();
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'uno'</span>);
+d.emplace(<span class="hljs-number">2</span>, <span class="hljs-string">'dos'</span>);
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>);
+d.emplace(<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>);
+d.emplace(<span class="hljs-number">2</span>, <span class="hljs-string">'duo'</span>);
+
+<span class="hljs-built_in">console</span>.log(d.getValues(<span class="hljs-number">1</span>)); <span class="hljs-comment">// will output ['one', 'uno']</span>
+
+<span class="hljs-built_in">console</span>.log(d.hasKey(<span class="hljs-number">3</span>)); <span class="hljs-comment">// outputs false</span>
+
+<span class="hljs-keyword">const</span> pos = d.emplace(<span class="hljs-number">3</span>, <span class="hljs-string">'tres'</span>);
+
+<span class="hljs-built_in">console</span>.log([...d]) <span class="hljs-comment">// outputs [1, 2, 3] in order</span>
+
+d.deleteAt(pos)
+
+<span class="hljs-built_in">console</span>.log([...d]) <span class="hljs-comment">// outputs [1, 2] in order</span>
+</code></pre>
+				<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+					<h2>Overview</h2>
+				</a>
+				<a href="#container-composition" id="container-composition" style="color: inherit; text-decoration: none;">
+					<h3>Container composition</h3>
+				</a>
+				<p><strong>scl</strong> comes with a powerful system for composing mupltiple indexes on the same
+					data structure into one big structure. This is called &#39;collection composition&#39;,
+				and the following example demonstrates its use.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> scl <span class="hljs-keyword">from</span> <span class="hljs-string">"scl"</span>
+
+<span class="hljs-keyword">const</span> fastMemberCheck = scl()
+  .list()
+  .hash()
+  .build();
+
+fastMemberCheck.append(<span class="hljs-number">1</span>);
+<span class="hljs-keyword">const</span> pos = fastMemberCheck.prepend(<span class="hljs-number">2</span>);
+fastMemberCheck.insertBefore(pos, <span class="hljs-number">3</span>);
+fastMemberCheck.insertAfter(pos, <span class="hljs-number">4</span>);
+
+<span class="hljs-built_in">console</span>.log(fastMemberCheck.has(<span class="hljs-number">1</span>)); <span class="hljs-comment">// outputs true</span>
+<span class="hljs-built_in">console</span>.log(fastMemberCheck.has(<span class="hljs-number">6</span>)); <span class="hljs-comment">// outputs false</span>
+
+<span class="hljs-built_in">console</span>.log([...fastMemberCheck]); <span class="hljs-comment">// outputs [3,2,4,1] in order</span>
+</code></pre>
+				<a href="#interfaces" id="interfaces" style="color: inherit; text-decoration: none;">
+					<h3>Interfaces</h3>
+				</a>
+				<p><strong>scl</strong> provides some interfaces which you can use as a template to define your
+					own custom collections, which in turn allows you to make use of one of the
+					various algoritms that come shipped with this library. Documentation for these
+				interfaces is pending.</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Container</th>
+							<th>Type</th>
+							<th>Unique</th>
+							<th>Order</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>Bag</td>
+							<td>T</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>Set</td>
+							<td>T</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>List</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Vector</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Queuelike</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Dict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>MultiDict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+				</tbody></table>
+				<a href="#implementations" id="implementations" style="color: inherit; text-decoration: none;">
+					<h3>Implementations</h3>
+				</a>
+				<p>A :heavy_check_mark: indicates that the implementation has been completed. On the other hand, a
+					missing :heavy_check_mark: means that implementation is stil pending or only
+				partially completed.</p>
+				<a href="#unordered-containers" id="unordered-containers" style="color: inherit; text-decoration: none;">
+					<h4>Unordered Containers</h4>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th>Add</th>
+							<th>Remove</th>
+							<th>Member</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>:heavy_check_mark:</td>
+							<td>set/tree</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>set/hash</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/tree</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/hash</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/many/tree</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/many/hash</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/multi/tree</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>dict/multi/hash</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>queue</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>stack</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>priority-queue</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(n)</td>
+						</tr>
+				</tbody></table>
+				<a href="#ordered-containers" id="ordered-containers" style="color: inherit; text-decoration: none;">
+					<h4>Ordered Containers</h4>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th>Memory</th>
+							<th>Insert</th>
+							<th>Append</th>
+							<th>Prepend</th>
+							<th>Member</th>
+							<th>At</th>
+							<th>Next</th>
+							<th>Prev</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>:heavy_check_mark:</td>
+							<td>vector</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>list/single</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>list/double</td>
+							<td>O(2n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>O(n)</td>
+							<td>O(n)</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+						</tr>
+				</tbody></table>
+				<a href="#queue-like-structures" id="queue-like-structures" style="color: inherit; text-decoration: none;">
+					<h4>Queue-like structures</h4>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th>Enqueue</th>
+							<th>Dequeue</th>
+							<th>Reschedule</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>:heavy_check_mark:</td>
+							<td>stack</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>n.a.</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>queue</td>
+							<td>O(1)</td>
+							<td>O(1)</td>
+							<td>n.a.</td>
+						</tr>
+						<tr>
+							<td>:heavy_check_mark:</td>
+							<td>priority-queue</td>
+							<td>O(log(n))</td>
+							<td>O(1)</td>
+							<td>O(log(n))</td>
+						</tr>
+				</tbody></table>
+				<a href="#special-structures" id="special-structures" style="color: inherit; text-decoration: none;">
+					<h4>Special structures</h4>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th>Insert</th>
+							<th>Delete</th>
+							<th>Successor</th>
+							<th>Predecessor</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>:heavy_check_mark:</td>
+							<td>AVL tree</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+							<td>O(log(n))</td>
+						</tr>
+				</tbody></table>
+				<p>Consult the <a href="http://samvv.github.io/project/sync-collections">API docs</a> for more information on how to use them.</p>
+				<a href="#support" id="support" style="color: inherit; text-decoration: none;">
+					<h2>Support</h2>
+				</a>
+				<p>You might also be interested in knowing <a href="http://github.com/samvv/scl.js/wiki/Iterators">how this library&#39;s iterators
+				work</a>.</p>
+				<p>Need to go asynchronous? Check out our <a href="https://github.com/samvv/typescript-async-collections">asynchronous
+				collections</a> library.</p>
+				<p>Found an issue? A certain mistake? Need a certain kind of collection? <a href="https://github.com/samvv/scl.js/issues">File an
+						issue</a> or <a href="https://github.com/samvv/scl.js/pulls">send me a
+				pull request</a>.</p>
+				<a href="#credits" id="credits" style="color: inherit; text-decoration: none;">
+					<h2>Credits</h2>
+				</a>
+				<p>Thanks to Wolfgang De Meuter&#39;s introductory course to algorithms and data
+				structures for teaching many of the concepts that are used in this library.</p>
+				<p>Many thanks to @w8r for providing a <a href="https://github.com/w8r/avl">reference implementation</a> of the AVL-tree data structure.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>The MIT License</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/bag.html" class="tsd-kind-icon">Bag</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/cursor.html" class="tsd-kind-icon">Cursor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/dict.html" class="tsd-kind-icon">Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/grid.html" class="tsd-kind-icon">Grid</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/keyedcollection.html" class="tsd-kind-icon">Keyed<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/list.html" class="tsd-kind-icon">List</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/maxheap.html" class="tsd-kind-icon">Max<wbr>Heap</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/minheap.html" class="tsd-kind-icon">Min<wbr>Heap</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/sequence.html" class="tsd-kind-icon">Sequence</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/set.html" class="tsd-kind-icon">Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#pair" class="tsd-kind-icon">Pair</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#vec2" class="tsd-kind-icon">Vec2</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
