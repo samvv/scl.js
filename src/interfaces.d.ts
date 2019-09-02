@@ -41,9 +41,9 @@ export interface Collection<T> {
    *
    * The order by which the elements are traversed depends on the kind of collection.
    * For unordered collections, the iteration order is unspecified and may even differ
-   * between two iterators on the same collection.
+   * between two iterations on the same collection.
    */
-  [Symbol.iterator]?(): Iterator<T>
+  [Symbol.iterator](): IterableIterator<T>
 
   /**
    * @deprecated
@@ -80,14 +80,18 @@ export interface Collection<T> {
   /**
    * Remove an element from the collection. If multiple elements are matched,
    * the collection picks one of them.
+   *
+   * @return `true` if the element was found, `false` otherwise.
    */
-  delete(el: T): void;
+  delete(el: T): boolean;
 
   /**
    * Remove an element from the collection. If multiple elements are matched,
    * the collection removes all of them.
+   *
+   * @return The amount of elements that was removed.
    */
-  deleteAll(el: T): void;
+  deleteAll(el: T): number;
 
   /**
    * Converts the entire collection to a range.
@@ -126,37 +130,32 @@ export interface Sequence<T> extends Collection<T> {
   prepend(el: T): Cursor<T>;
 
   /**
-   * Get the first element in the collection.
+   * Get the first element in the sequence.
    *
-   * For maplike structures such as a set, this method is <b>not</b> guaranteed
-   * to give back the element that was first inserted.
+   * @throws An error object if the collection is empty.
    */
-  first(): T | null
+  first(): T 
 
   /**
    * Get the last element in the collection.
    *
-   * For queuelike structures such as a stack, it is preferred to reverse the
-   * order of the collection and use `first()` instead, as this can be faster
-   * than finding the last element.
-   *
-   * For unordered collections such as a set, this method is <b>not</b>
-   * guaranteed to give back the element that was most recently inserted.
+   * @throws An error object if the collection is empty.
    */
   last(): T
 
   /**
-   * Return an iterator that is placed at the element which is the Nth element
-   * in the ascending row leading up to element.
+   * Return a cursor that is placed at the index given by `position` in the
+   * sequence.
    */
   at(position: number): Cursor<T>
 
   /**
-   * Allows taking a direct reference to a value in the collection at a given
-   * indexed position, without the need for constructing iterators and iterator
-   * results.
+   * Allows taking an element directly out of the collection at a given position.
+   *
+   * This method might be faster than {@link at} because it is not forced to
+   * construct a cursor object.
    */
-  ref?(position: number): T
+  getAt(position: number): T
 
   /**
    * Since ordered collections have keep track of the position of elements, it
@@ -195,17 +194,17 @@ export interface KeyedCollection<T, K = T> extends Collection<T> {
   /*
    * Returns a range of items that have the same key.
    */
-  equal?(key: K): CollectionRange<T>;
+  equalKeys?(key: K): CollectionRange<T>;
 
   /**
    * Returns the value that is just below the given value, if any.
    */
-  lower?(key: K): Cursor<T> | null;
+  lowerKey?(key: K): Cursor<T> | null;
 
   /**
    * Return the value that is just above the given value, if any.
    */
-  upper?(key: K): Cursor<T> | null;
+  upperKey?(key: K): Cursor<T> | null;
 
 }
 
@@ -225,7 +224,7 @@ export interface Cursor<T> {
    *
    * If the collection does not specify an order, this method will not exist.
    */
-  [Symbol.iterator]?(): Iterator<T>;
+  [Symbol.iterator]?(): IterableIterator<T>;
 
   /**
    * Get a reference to the cursor that is immediately after this one.
@@ -255,8 +254,11 @@ export interface CollectionRange<T> {
   /**
    * Reverse the order of the elements that would be generated with the
    * iterator.
+   *
+   * Reversing a range is only possible when the order of the elements is
+   * well-defined, such as the elements in a tree dictionary.
    */
-  reverse(): CollectionRange<T>;
+  reverse?(): CollectionRange<T>;
 
   /**
    * Get how many elements are in this range.
@@ -267,7 +269,7 @@ export interface CollectionRange<T> {
   readonly size: number;
 
   /**
-   * Return an iterator that provides cursors to inspect the given element. 
+   * Return an iterator that provides cursors to inspect or delete the given element. 
    *
    * @see  {@link Cursor}
    */
@@ -277,10 +279,13 @@ export interface CollectionRange<T> {
    * Get an iterator that sequences the elements contained in this range.
    */
   values(): IterableIterator<T>;
-
-  map?<R>(proc: (el: T) => R): CollectionRange<R>;
-
-  filter?(pred: (el: T) => boolean): CollectionRange<T>;
+  
+  /**
+   * Filters this range using the given predicate. Iterating over the newly
+   * returned range will cause all cursors that did not match the predicate to
+   * be omitted.
+   */
+  filter?(pred: (el: Cursor<T>) => boolean): CollectionRange<T>;
 
 }
 
@@ -307,7 +312,7 @@ export interface DictLike<K, V> extends KeyedCollection<[K, V], K> {
   /**
    * Creates a new pair and inserts it in the underlying collection.
    */
-  emplace(key: K, value: V): void;
+  emplace(key: K, value: V): [boolean, Cursor<[K, V]>];
 
 }
 
@@ -321,7 +326,7 @@ export interface Dict<K, V> extends DictLike<K, V> {
   /**
    * Get the value that is associated with the given key.
    */
-  getValue(key: K): V
+  getValue(key: K): V | null;
 
 }
 
@@ -340,16 +345,6 @@ export interface Grid<T> {
   set(point: Vec2, val: T): void
   delete(point: Vec2): void
   has(point: Vec2): boolean
-}
-
-export interface MinHeap<T> extends KeyedCollection<T> {
-  min(): T
-  deleteMin(): void
-}
-
-export interface MaxHeap<T> extends KeyedCollection<T> {
-  min(): T
-  deleteMax(): void
 }
 
 /**
@@ -425,27 +420,5 @@ export interface Queuelike<T> extends Collection<T> {
 
 export interface Set<T> extends KeyedCollection<T> {
 
-}
-
-/**
- * A vector is a positional collection which can contain multiple elements of
- * the same kind. A vector is characterized by low-cost lookup of elements at a
- * given position, while inserting elements anywhere in the middle is much
- * slower.
- */
-export interface Vector<T> extends Sequence<T> { 
-
-  /**
-   * Allocates the specified amount of free space at the end of the vector for
-   * storing data, without changing its `size()`.
-   */
-  allocate?(amount: number): void;
-
-  replace(pos: number, newElement: T): void;
-
-  /**
-   * @experimental
-   */
-  setSize(size: number): void;
 }
 

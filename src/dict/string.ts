@@ -1,15 +1,53 @@
 
-import { Pair, Dict } from "../../interfaces"
+import { Pair, Dict, Cursor, CollectionRange } from "../interfaces"
+
+class ObjectCursor<V> implements Cursor<[string, V]> {
+  
+  constructor(public _dict: StringDict<V>, public key: string) {
+
+  }
+
+  get value() {
+    return [this.key, this._dict._values[this.key]];
+  }
+
+  set value(newValue: [string, V]) {
+    this._dict._values[this.key] = newValue[1];
+  }
+
+}
+
+class ObjectRange<V> implements CollectionRange<[string, V]> {
+
+  constructor(public _dict: StringDict<V>) {
+
+  }
+
+  get size() {
+    return this._dict.size;
+  }
+
+  values() {
+    return this._dict[Symbol.iterator]();
+  }
+
+  *[Symbol.iterator]() {
+    for (const key of Object.keys(this._dict._values)) {
+      yield new ObjectCursor<V>(this._dict, key);
+    }
+  }
+
+}
 
 export class StringDict<V> implements Dict<string, V> {
 
   _values: { [key: string]: V } = Object.create(null)
 
   add([key, val]: Pair<string, V>) {
-    this.addPair(key, val)
+    return this.emplace(key, val)
   }
 
-  size() {
+  get size() {
     return Object.keys(this._values).length
   }
 
@@ -17,10 +55,12 @@ export class StringDict<V> implements Dict<string, V> {
     return this.hasKey(pair[0])
   }
 
-  addPair(key: string, value: V) {
-    if (this._values[key] !== undefined)
-      throw new Error(`key ${key} already taken`)
-    this._values[key] = value
+  emplace(key: string, value: V): [boolean, Cursor<[string, V]>] {
+    if (this._values[key] !== undefined) {
+      return [false, new ObjectCursor<V>(this, key)];
+    }
+    this._values[key] = value;
+    return [true, new ObjectCursor<V>(this, key)];
   }
 
   hasValue(val: V) {
@@ -43,23 +83,30 @@ export class StringDict<V> implements Dict<string, V> {
     return this._values[key] !== undefined
   }
 
-  *iterator(): Iterator<Pair<string, V>> {
-    for (const key of Object.keys(this._values))
+  *[Symbol.iterator](): IterableIterator<[string, V]> {
+    for (const key of Object.keys(this._values)) {
       yield [key, this._values[key]]
-  }
-
-  [Symbol.iterator]() {
-    return this.iterator()
+    }
   }
 
   delete(pair: Pair<string, V>) {
-    this.deleteKey(pair[0])
+    if (!Object.prototype.hasOwnProperty.call(this._values, pair[0])) {
+      return true;
+    }
+    delete this._values[pair[0]];
+    return false;
   }
 
   deleteKey(key: string) {
-    if (this._values[key] === undefined)
-      throw new Error(`key ${key} not found`)
-    delete this._values[key]
+    if (!Object.prototype.hasOwnProperty.call(this._values, key)) {
+      return 0;
+    }
+    delete this._values[key];
+    return 1;
+  }
+
+  findKey(key: string) {
+    return new ObjectCursor<V>(this, key);
   }
 
   deleteValue(value: V) {
@@ -68,6 +115,25 @@ export class StringDict<V> implements Dict<string, V> {
       if (value === otherValue)
         delete this._values[key]
     }
+  }
+
+  deleteAt(cursor: ObjectCursor<V>) {
+    delete this._values[cursor.key]
+  }
+
+  deleteAll(element: [string, V]) {
+    let count = 0;
+    for (const key of Object.keys(this._values)) {
+      if (key === element[0] && this._values[key] === element[1]) {
+        delete this._values[key];
+        count++;
+      }
+    }
+    return count;
+  }
+
+  toRange() {
+    return new ObjectRange<V>(this);
   }
 
   clear() {

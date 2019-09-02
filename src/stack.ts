@@ -1,27 +1,18 @@
 
 import { Queuelike } from "./interfaces"
 
-import find from "./find"
-import SLList from "./list/single"
-//import Vector from "./vector"
+import SingleLinkedList from "./list/single"
 
-export class Stack<T> extends SLList<T> implements Queuelike<T> {
+export class Stack<T> extends SingleLinkedList<T> implements Queuelike<T> {
 
-  add(el: T) {
-    this.prepend(el);
+  peek() {
+    return this.first();
   }
 
-  delete(el: T) {
-    const match = find(this, el);
-    if (match !== null) {
-      this.deleteAt(match);
-    }
-  }
-
-  dequeue() {
-    const first = this.begin();
-    this.deleteAt(first);
-    return first.value;
+  pop() {
+    const cursor = this.at(0);
+    this.deleteAt(cursor);
+    return cursor.value;
   }
 
 }

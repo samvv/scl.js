@@ -1,5 +1,4 @@
-
-import { Structure, Sequence, Cursor, View } from "./interfaces"
+import { Cursor, CollectionRange } from "./interfaces"
 import * as XXH from "xxhashjs"
 
 // TODO optimize
@@ -18,7 +17,7 @@ export function liftKeyed(proc: Function, path: string[]): Function {
   if (path.length === 0) {
     return proc;
   } else {
-    return (...args) => proc(...args.map(arg => get(arg, path)));
+    return (...args: any[]) => proc(...args.map(arg => get(arg, path)));
   }
 }
 
@@ -31,66 +30,60 @@ export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => numb
     return 0;
   }
 }
-export abstract class ViewBase<T> implements View<T> {
 
-  abstract reverse(): View<T>;
-  
-  abstract [Symbol.iterator](): Iterator<T>;
+export abstract class RangeBase<T> implements CollectionRange<T> {
 
-  filter(pred: (el: T) => boolean) {
-    return new FilteredView<T>(this, pred);
-  }
+  abstract reverse(): CollectionRange<T>;
 
-  map<R>(proc: (el: T) => R) {
-    return new MappedView<T, R>(this, proc);
+  abstract readonly size: number;
+
+  abstract values(): IterableIterator<T>;
+
+  abstract [Symbol.iterator](): IterableIterator<Cursor<T>>;
+
+  filter(pred: (el: Cursor<T>) => boolean): CollectionRange<T> {
+    return new FilteredRange<T>(this, pred);
   }
 
 }
 
-export class MappedView<T, R> extends ViewBase<R> {
+export class FilteredRange<T> extends RangeBase<T> {
 
-  constructor(public _view: View<T>, public _proc: (el: T) => R) {
+  constructor(public _range: CollectionRange<T>, public _pred: (el: Cursor<T>) => boolean) {
     super();
   }
 
-  reverse() {
-    return new MappedView<T, R>(this._view.reverse(), this._proc);
+  get size() {
+    return this._range.size;
   }
 
-  *[Symbol.iterator]() {
-    const proc = this._proc;
-    for (const val of this._view) {
-      yield proc(val);
+  *values() {
+    for (const cursor of this._range) {
+      if (this._pred(cursor)) {
+        yield cursor.value;
+      }
     }
   }
 
-}
-
-export class FilteredView<T> extends ViewBase<T> {
-
-  constructor(public _view: View<T>, public _pred: (el: T) => boolean) {
-    super();
-  }
-
   reverse() {
-    return new FilteredView<T>(this._view.reverse(), this._pred);
+    return new FilteredRange<T>(this._range.reverse!(), this._pred);
   }
 
   *[Symbol.iterator]() {
-    const pred = this._pred;
-    for (const value of this._view) {
-      if (pred(value))
-        yield value;
+    for (const cursor of this._range) {
+      if (this._pred(cursor)) {
+        yield cursor;
+      }
     }
   }
 
 }
 
 export interface Newable<T> {
-  new(...args): T;
+  new(...args: any[]): T;
 }
 
-export function find<T>(pos: Cursor<T>, val: T, eq: (a: T, b: T) => boolean = equal) {
+export function find<T>(pos: Cursor<T> | null, val: T, eq: (a: T, b: T) => boolean = equal) {
   while (true) {
     if (pos === null) {
       return null;
@@ -98,72 +91,21 @@ export function find<T>(pos: Cursor<T>, val: T, eq: (a: T, b: T) => boolean = eq
     if (eq(pos.value, val)) {
       return pos;
     }
-    pos = pos.next();
-  }
-}
-
-export function makeAppender<T>(Cont: Newable<Sequence<T>>) {
-  return class extends Cont implements Structure<T> {
-    add(el: T) {
-      return this.append(el);
-    }
-  }
-}
-
-export function makePrepender<T>(Cont: Newable<Sequence<T>>) {
-  return class extends Cont implements Structure<T> {
-    add(el: T) {
-      return this.prepend(el);
-    }
-  }
-}
-
-export function filterView<T>(view: View<T>, pred: (el: T) => boolean): View<T> {
-  return new class implements View<T> {
-    reverse() {
-      return filterView(view.reverse(), pred);
-    }
-    *cursors() {
-
-    }
-    *[Symbol.iterator]() {
-      for (const val of view) {
-        if (pred(val)) 
-          yield val;
-      }
-    }
-  }
-}
-
-export function mapView<T,R>(view: View<T>, proc: (el: T) => R): View<R> {
-  return new class implements View<R> {
-    reverse() {
-      return mapView(view.reverse(), proc);
-    }
-    *[Symbol.iterator]() {
-      for (const val of view) {
-        yield proc(val);
-      }
-    }
+    pos = pos.next!();
   }
 }
 
 export function isObject(val: any) {
   return typeof val === 'object' 
-    && val !== null 
-    && typeof val.length === 'undefined';
+      && val !== null 
+      && !isArray(val);
 }
 
 export function isArray(val: any) {
-  return typeof val === 'object' 
-    && val !== null 
-    && typeof val.length !== 'undefined';
+  return Object.prototype.toString.call(val) === '[object Array]';
 }
 
 export function lesser(a: any, b: any) {
-  //if (a === undefined && b !== undefined) {
-    //return true;
-  //}
   if (typeof a === 'number' && typeof b === 'number') {
     return a < b;
   } else if (typeof a === 'string' && typeof b === 'string') {
@@ -178,6 +120,7 @@ export function lesser(a: any, b: any) {
     let foundLesser = false;
     for (let i = 0; i < a.length; ++i) {
       if (lesser(a[i], b[i])) {
+        // FIXME is this correct?
         foundLesser = true;
       } else if (lesser(b[i], a[i])) {
         return false;
@@ -209,7 +152,7 @@ export function lesser(a: any, b: any) {
   }
 }
 
-export function equal(a: any, b: any) {
+export function equal(a: any, b: any): boolean {
   if (typeof a === 'number' && typeof b === 'number') {
     return a === b;
   }
@@ -220,8 +163,9 @@ export function equal(a: any, b: any) {
     if (a.length !== b.length) 
       return false;
     for (let i = 0; i < a.length; ++i) {
-      if (!equal(a[i], b[i]))
+      if (!equal(a[i], b[i])) {
         return false;
+      }
     }
     return true;
   }
@@ -233,10 +177,12 @@ export function equal(a: any, b: any) {
       if (typeof b[key] === 'undefined') {
         return false;
       }
-      if (!equal(a[key], b[key]))
+      if (!equal(a[key], b[key])) {
         return false;
+      }
     }
     return true;
   }
+  return false;
 }
 

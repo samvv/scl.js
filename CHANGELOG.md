@@ -3,6 +3,24 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v2.0.0
+
+ - Renamed the `Container` concept to `Collection`
+ - A `View` is now a `CollectionRange`
+ - Renamed some interfaces to clearer names
+ - `deleteAll` and `delete` are now required methods of `Collection`
+ - Added `Collection.toRange()` as a replacement for `Collection.begin()` and `Collection.end()`
+ - Added and implemented `Queuelike.peek()` for all relevant collections
+ - Renamed `Queuelike.dequeue()` to `Queuelike.pop()`
+ - `Collection.size` is now a property to match built-in collections
+ - `delete` and `deleteAll` now return information about the deletion that took place
+ - Removed `Vector`, `MinHeap` and `MaxHeap` as implementable interfaces
+ - Added `View.size` property
+ - Created a new build system
+ - Introduced strict mode and fixed all TypeScript errors
+ - Fixed some bugs and API inconsistencies
+ - Updated all dependencies to migitate security risks
+
 ### v1.0.2
 
  - Added more tests

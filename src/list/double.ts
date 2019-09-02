@@ -1,24 +1,18 @@
 
-import { List, Cursor } from "../interfaces"
-import { emptyIterator } from "../util"
+import { List, Cursor, CollectionRange } from "../interfaces"
+import { RangeBase } from "../util"
 
 class Node<T> implements Cursor<T> {
 
-  constructor(public value: T, public _prevNode: Node<T> = null, public _nextNode: Node<T> = null) {
+  constructor(public value: T, public _prevNode: Node<T> | null = null, public _nextNode: Node<T> | null = null) {
 
   }
 
-  [Symbol.iterator]() {
-    let node: Node<T> = this;
-    return {
-      next() {
-        if (node === null) {
-          return <IteratorResult<T>>{ done: true };
-        }
-        const out = { done: false, value: node.value };
-        node = node._nextNode;
-        return out;
-      }
+  *[Symbol.iterator](): IterableIterator<T> {
+    let node: Node<T> | null = this;
+    while (node !== null) {
+      yield node.value;
+      node = node._nextNode;
     }
   }
 
@@ -32,11 +26,58 @@ class Node<T> implements Cursor<T> {
 
 }
 
-export { Node as Cursor };
+class NodeRange<T> extends RangeBase<T> implements CollectionRange<T> {
+
+  constructor(public _startNode: Node<T> | null, public _endNode: Node<T> | null, public readonly reversed: boolean) {
+    super();
+  }
+
+  *values() {
+    let node = this._startNode;
+    while (node !== null) {
+      yield node.value;
+      if (node === this._endNode) {
+        break;
+      }
+      node = this.reversed ? node._prevNode : node._nextNode;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    let node = this._startNode;
+    while (node !== null) {
+      yield node;
+      if (node === this._endNode) {
+        break;
+      }
+      node = this.reversed ? node._prevNode : node._nextNode;
+    }
+  }
+
+  reverse() {
+    return new NodeRange(this._endNode, this._startNode, !this.reversed);
+  }
+
+  get size(): number {
+    let count = 0;
+    let node = this._startNode;
+    while (node !== null) {
+      count++;
+      if (node === this._endNode) {
+        break;
+      }
+      node = node._nextNode;
+    }
+    return count;
+  }
+
+}
+
+export { Node as DoubleLinkedListCursor, NodeRange as DoubleLinkedListRange };
 
 export class DoubleLinkedList<T> implements List<T> {
   
-  constructor(public _first: Node<T> = null, public _last: Node<T> = null, public _size = 0) {
+  constructor(public _firstNode: Node<T> | null = null, public _lastNode: Node<T> | null = null, public _size = 0) {
 
   }
 
@@ -53,15 +94,21 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   first() {
-    if (this._first === null)
-      throw new Error(`container is empty`)
-    return this._first.value
+    if (this._firstNode === null) {
+      throw new Error(`Cannot get first element: collection is empty.`)
+    }
+    return this._firstNode.value
   }
 
   last() {
-    if (this._first === null)
-      throw new Error(`container is empty`)
-    return this._last.value;
+    if (this._lastNode === null) {
+      throw new Error(`Cannot get last element: collection is empty.`)
+    }
+    return this._lastNode.value;
+  }
+
+  add(element: T): [boolean, Cursor<T>] {
+    return [true, this.append(element)];
   }
 
   insertAfter(pos: Node<T>, el: T) {
@@ -77,72 +124,62 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   prepend(el: T) {
-    const newNode = new Node<T>(el, null, this._first);
-    this._first = newNode;
-    if (this._last === null) {
-      this._last = newNode;
+    const newNode = new Node<T>(el, null, this._firstNode);
+    this._firstNode = newNode;
+    if (this._lastNode === null) {
+      this._lastNode = newNode;
     }
     ++this._size;
     return newNode;
   }
 
   append(el: T) {
-    const newNode = new Node<T>(el, this._last, null);
-    if (this._first === null) {
-      this._first = newNode
+    const newNode = new Node<T>(el, this._lastNode, null);
+    if (this._firstNode === null) {
+      this._firstNode = newNode
     } else {
-      this._last._nextNode = newNode
+      this._lastNode!._nextNode = newNode
     }
-    this._last = newNode;
+    this._lastNode = newNode;
     ++this._size;
     return newNode;
   }
 
-  //count(el: T) {
-    //let i = 0;
-    //let res = 0
-    //let node = this._first
-    //while (node !== null) {
-      //if (node.value === el)
-        //++res
-      //node = node.next
-    //}
-    //return res
-  //}
-
-  size() {
+  get size() {
     return this._size;
   }
 
   has(el: T) {
-    let node = this._first
+    let node = this._firstNode
     while (node !== null)
       if (node.value === el)
         return true
     return false
   }
 
-  *[Symbol.iterator](): Iterator<T> {
-    if (this._first === null)
-      return;
-    yield* this._first;
-  }
-
-  begin() {
-    return this._first;
-  }
-
-  end() {
-    return this._last;
-  }
-
-  at(count: number) {
-    let node = this._first;
-    while (count > 0) {
+  *[Symbol.iterator](): IterableIterator<T> {
+    let node = this._firstNode;
+    while (node !== null) {
+      yield node.value
       node = node._nextNode;
-      --count;
+    }
+  }
+
+  toRange() {
+    return new NodeRange<T>(this._firstNode, this._lastNode, false);
+  }
+
+  at(position: number) {
+    let node = this._firstNode!;
+    while (position > 0) {
+      node = node._nextNode!;
+      --position;
     }
     return node;
+  }
+
+  getAt(position: number) {
+    return this.at(position).value;
   }
 
   deleteAt(pos: Node<T>) {
@@ -153,31 +190,47 @@ export class DoubleLinkedList<T> implements List<T> {
       pos._nextNode._prevNode = pos._prevNode;
     }
     --this._size;
-    if (pos === this._first) {
-      this._first = pos._nextNode;
+    if (pos === this._firstNode) {
+      this._firstNode = pos._nextNode;
     }
-    if (pos === this._last) {
-      this._last = pos._prevNode;
+    if (pos === this._lastNode) {
+      this._lastNode = pos._prevNode;
     }
   }
 
-  //deleteAll(el: T) {
-    //const it = this[Symbol.iterator]();
-    //let pos;
-    //while (!(pos = it.next()).done) {
-      //this.deleteAt(pos);
-    //}
-  //}
+  delete(el: T): boolean {
+    let node = this._firstNode;
+    while (node !== null) {
+      if (node.value === el) {
+        this.deleteAt(node);
+        return true;
+      }
+    }
+    return false;
+  }
 
-  rest() {
-    if (this._first === null)
+  deleteAll(el: T) {
+    let count = 0;
+    let node = this._firstNode;
+    while (node !== null) {
+      if (node.value === el) {
+        this.deleteAt(node);
+        count++;
+      }
+    }
+    return count;
+  }
+
+  rest(): List<T> {
+    if (this._firstNode === null) {
       throw new Error(`list is empty`)
-    return new DoubleLinkedList(this._first._nextNode, this._last, this._size-1);
+    }
+    return new DoubleLinkedList<T>(this._firstNode._nextNode, this._lastNode, this._size-1);
   }
 
   clear() {
-    this._first = null;
-    this._last = null;
+    this._firstNode = null;
+    this._lastNode = null;
     this._size = 0;
   }
 

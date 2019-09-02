@@ -3,17 +3,10 @@ import { expect } from "chai"
 
 import AVL from "../avl"
 
-function* inorder(node) {
-  if (node===null) return;
-  yield* inorder(node.left);
-  yield node.value;
-  yield* inorder(node.right);
-}
-
 describe('an AVL-tree', () => {
 
   it('can insert elements', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -23,7 +16,7 @@ describe('an AVL-tree', () => {
   });
 
   it('can store multiple equal keys', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -35,7 +28,7 @@ describe('an AVL-tree', () => {
   })
 
   it('can delete elements', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
@@ -55,42 +48,44 @@ describe('an AVL-tree', () => {
   });
 
   it('can find the lower bound', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
     t1.add(3);
     t1.add(4);
-    const pos = t1.lower(2);
-    expect(pos.value).to.equal(3);
+    const pos = t1.lowerKey(2);
+    expect(pos).to.be.ok;
+    expect(pos!.value).to.equal(3);
   });
 
   it('can find the upper bound', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
     t1.add(3);
     t1.add(4);
-    const pos1 = t1.upper(4);
-    expect(pos1.value).to.equal(3);
-    const pos2 = t1.upper(2);
-    expect(pos2.value).to.equal(1);
+    const pos1 = t1.upperKey(4);
+    expect(pos1).to.be.ok;
+    expect(pos1!.value).to.equal(3);
+    const pos2 = t1.upperKey(2);
+    expect(pos2).to.be.ok;
+    expect(pos2!.value).to.equal(1);
   });
 
   it('can reverse-iterate over elements', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(5);
     t1.add(2);
     t1.add(3);
     t1.add(4);
-    const pos = t1.end();
-    expect([...pos.reverse()]).to.deep.equal([5,4,3,2,1]);
+    expect([...t1.toRange().reverse().values()]).to.deep.equal([5,4,3,2,1]);
   });
 
   it('can traverse an equal range', () => {
-    const t1 = new AVL((a, b) => a < b);
+    const t1 = new AVL<number>((a, b) => a < b);
     t1.add(1);
     t1.add(2);
     t1.add(3);
@@ -98,8 +93,8 @@ describe('an AVL-tree', () => {
     t1.add(3);
     t1.add(4);
     t1.add(5);
-    expect([...t1.equal(7)]).to.deep.equal([]);
-    expect([...t1.equal(3)]).to.deep.equal([3,3,3]);
+    expect([...t1.equalKeys(7).values()]).to.deep.equal([]);
+    expect([...t1.equalKeys(3).values()]).to.deep.equal([3,3,3]);
   });
 
 

@@ -1,57 +1,41 @@
 
-import { UnorderedContainer } from "../../interfaces"
+import { Collection } from "../interfaces"
 import { expect } from "chai"
+import { test } from "./_helpers"
 
-export function addUnorderedTests(create: () => UnorderedContainer<any>) {
-  
-  it('can add elements and report them added', () => {
-    const c = create()
+test('Container.has() correctly reports added elements as being present', (coll: Collection<string>) => {
+  expect(coll.has('a')).to.be.false;
+  coll.add('a');
+  expect(coll.has('a')).to.be.true;
+  expect(coll.has('b')).to.be.false;
+  coll.add('b');
+  expect(coll.has('b')).to.be.true;
+  expect(coll.has('d')).to.be.false;
+  coll.add('d');
+  expect(coll.has('d')).to.be.true;
+})
 
-    expect(c.has('a')).to.be.false
-    c.add('a')
-    expect(c.has('a')).to.be.true
+test('Coontainer.delete() successfully removes elements', (coll: Collection<string>) => {
+  coll.add('a');
+  coll.add('b');
+  coll.add('d');
+  expect(coll.has('a')).to.be.true;
+  coll.delete('a');
+  expect(coll.has('a')).to.be.false;
+  expect(coll.has('b')).to.be.true;
+  coll.delete('b');
+  expect(coll.has('b')).to.be.false;
+  expect(coll.has('d')).to.be.true;
+  coll.delete('d');
+  expect(coll.has('d')).to.be.false;
+});
 
-    expect(c.has('b')).to.be.false
-    c.add('b')
-    expect(c.has('b')).to.be.true
-
-    expect(c.has('d')).to.be.false
-    c.add('d')
-    expect(c.has('d')).to.be.true
-
-  })
-
-  it('can remove elements', () => {
-
-    const c = create()
-    c.add('a')
-    c.add('b')
-    c.add('d')
-
-    expect(c.has('a')).to.be.true
-    c.delete('a')
-    expect(c.has('a')).to.be.false
-
-    expect(c.has('b')).to.be.true
-    c.delete('b')
-    expect(c.has('b')).to.be.false
-
-    expect(c.has('d')).to.be.true
-    c.delete('d')
-    expect(c.has('d')).to.be.false
-  })
-
-  it('reports the correct size', () => {
-    const c = create()
-    expect(c.size()).to.equal(0)
-    c.add('a')
-    expect(c.size()).to.equal(1)
-    c.add('b')
-    expect(c.size()).to.equal(2)
-    c.add('c')
-  })
-
-}
-
-export default addUnorderedTests
+test('reports the correct size', (coll: Collection<string>) => {
+  expect(coll.size).to.equal(0);
+  coll.add('a');
+  expect(coll.size).to.equal(1);
+  coll.add('b');
+  expect(coll.size).to.equal(2);
+  coll.add('coll');
+})
 

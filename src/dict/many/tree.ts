@@ -1,23 +1,25 @@
 
 import MultiTreeDict from "../multi/tree"
-import { lesser } from "../../util"
+import { Cursor } from "../../interfaces"
+import { lesser, equal } from "../../util"
 
 export class TreeDict<K, V> extends MultiTreeDict<K, V> {
 
   constructor(
-      lessThan: (a: K, b: K) => boolean = lesser
-    , valuesEqual = (a, b) => a === b) {
-    super(lessThan, valuesEqual);
+      keyLessThan: (a: K, b: K) => boolean = lesser
+    , valuesEqual: (a: V, b: V) => boolean = equal
+  ) {
+    super(keyLessThan, valuesEqual);
   }
 
-  add(p: [K, V]) {
-    for (const node of this._nodesWithKey(p[0])) {
-      if (this.isEqual(p, node.value)) {
-        node.value = p;
+  add(pair: [K, V]): [boolean, Cursor<[K, V]>] {
+    for (const node of this.equalKeys(pair[0])) {
+      if (this.valuesEqual(pair[1], node.value[1])) {
+        node.value = pair;
         return [false, node];
       }
     }
-    return super.add(p);
+    return super.add(pair) as [boolean, Cursor<[K, V]>];
   }
 
 }

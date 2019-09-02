@@ -1,27 +1,27 @@
 
-import { Structure } from "../interfaces"
-import { liftLesser, lesser, ViewBase } from "../util"
+import { KeyedCollection, Cursor, CollectionRange } from "../interfaces"
+import { liftLesser, lesser } from "../util"
 
-class Node<T> {
+class Node<T> implements Cursor<T> {
 
   balance: number = 0;
-  left: Node<T> = null;
-  right: Node<T> = null;
+  left: Node<T> | null = null;
+  right: Node<T> | null=  null;
   data?: any;
 
-  constructor(public value: T, public parent: Node<T> = null) {
+  constructor(public value: T, public parent: Node<T> | null = null) {
 
   }
 
   *[Symbol.iterator]() {
-    let node: Node<T> = this;
+    let node: Node<T> | null = this;
     do {
       yield node.value;
       node = node.next();
     } while (node !== null);
   }
 
-  next(): Node<T> {
+  next(): Node<T> | null {
     if (this.right !== null) {
       let node = this.right;
       while (node.left !== null) node = node.left;
@@ -35,7 +35,7 @@ class Node<T> {
     return node.parent;
   }
 
-  prev(): Node<T> {
+  prev(): Node<T> | null {
     if (this.left !== null) { 
       let node = this.left;
       while (node.right !== null) node = node.right;
@@ -78,7 +78,7 @@ class RNode<T> {
   }
 
   *[Symbol.iterator]() {
-    let node: Node<T> = this._node;
+    let node: Node<T> | null = this._node;
     do {
       yield node.value;
       node = node.prev();
@@ -91,32 +91,45 @@ class RNode<T> {
 
 }
 
-class NodeRange<T> extends ViewBase<T> {
+class NodeRange<T> implements CollectionRange<T> {
 
-  constructor(public min: Node<T>, public max: Node<T>, public _reversed = false) {
-    super();
+  constructor(public min: Node<T> | null, public max: Node<T> | null, public _reversed = false) {
+    
   }
 
-  reverse() {
+  reverse(): CollectionRange<T> {
     return new NodeRange<T>(this.min, this.max, !this._reversed);
+  }
+
+  get size() {
+    // FIXME can be optimised
+    return [...this].length;
+  }
+
+  *values() {
+    for (const node of this) {
+      yield node.value;
+    }
   }
 
   *[Symbol.iterator]() {
     if (!this._reversed) {
-      let node: Node<T> = this.min, max = this.max;
+      let node = this.min, max = this.max;
       while (node !== null) {
-        yield node.value;
-        if (node === max)
+        yield node;
+        if (node === max){
           break;
+        }
         node = node.next();
       }
     } else {
-      let node: Node<T> = this.max, min = this.min;
+      let node = this.max, min = this.min;
       while (node !== null) {
-        yield node.value;
-        node = node.prev();
-        if (node === min)
+        yield node;
+        if (node === min) {
           break;
+        }
+        node = node.prev();
       }
     }
   }
@@ -124,7 +137,7 @@ class NodeRange<T> extends ViewBase<T> {
 }
 
 function rotateLeft<T>(node: Node<T>) {
-  var rightNode = node.right;
+  let rightNode = node.right!;
   node.right    = rightNode.left;
 
   if (rightNode.left) rightNode.left.parent = node;
@@ -155,7 +168,7 @@ function rotateLeft<T>(node: Node<T>) {
 
 
 function rotateRight<T>(node: Node<T>) {
-  var leftNode = node.left;
+  let leftNode = node.left!;
   node.left = leftNode.right;
   if (node.left) node.left.parent = node;
 
@@ -184,32 +197,37 @@ function rotateRight<T>(node: Node<T>) {
   return leftNode;
 }
 
-export class AVLTree<T, K = T> implements Structure<T, K> {
+type AddHint<T> = [boolean, Node<T> | null, number?];
+
+export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
+
+  _comparator: (a: K, b: K) => number;
 
   constructor(
         public lessThan: (a: K, b: K) => boolean = lesser
-      , public _getKey: (val: T) => K = val => val
+      , public _getKey: (val: T) => K = val => val as any
       , public isEqual: (a: T, b: T) => boolean = (a, b) => a === b
       , public _allowDuplicates = true) {
     this._comparator = liftLesser(lessThan);
   }
 
   _size = 0;
-  _root: Node<T> = null;
+  _root: Node<T> | null = null;
 
   clear() {
     this._root = null;
     this._size = 0;
   }
 
-  size () {
+  get size() {
     return this._size;
   }
 
-  addHint (key: K) {
-    
+  getAddHint(value: T): AddHint<T> {
+
     const compare = this._comparator
-        , getKey = this._getKey;
+        , getKey = this._getKey
+        , key = getKey(value); 
     let node    = this._root
       , parent  = null
       , cmp;
@@ -231,11 +249,11 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
       }
     }
 
-    return [true, cmp, parent];
+    return [true, parent, cmp];
   }
 
-  add (value: T, hint?) {
-    if (!this._root) {
+  add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
+    if (this._root === null) {
       this._root = new Node<T>(value);
       this._size++;
       return [true, this._root];
@@ -243,22 +261,22 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
 
     const getKey = this._getKey;
     if (hint === undefined) {
-      hint = this.addHint(getKey(value));
+      hint = this.getAddHint(value);
     }
 
-    if (!hint[0]) {
-      return hint[1];
+    if (hint[0] === false) {
+      return hint as [boolean, Node<T>];
     }
 
-    let parent = hint[2], cmp = hint[1];
+    let parent = hint[1], cmp = hint[2]!;
     
     const compare = this._comparator;
-    var newNode = new Node<T>(value, parent);
-    var newRoot;
-    if (cmp <= 0) parent.left  = newNode;
-    else         parent.right = newNode;
+    let newNode = new Node<T>(value, parent);
+    let newRoot;
+    if (cmp <= 0) parent!.left  = newNode;
+    else          parent!.right = newNode;
 
-    while (parent) {
+    while (parent !== null) {
       cmp = compare(getKey(parent.value), getKey(value));
       if (cmp < 0) parent.balance -= 1;
       else         parent.balance += 1;
@@ -266,16 +284,16 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
       if        (parent.balance === 0) break;
       else if   (parent.balance < -1) {
         // inlined
-        //var newRoot = rightBalance(parent);
-        if (parent.right.balance === 1) rotateRight(parent.right);
+        //let newRoot = rightBalance(parent);
+        if (parent.right!.balance === 1) rotateRight(parent.right!);
         newRoot = rotateLeft(parent);
 
         if (parent === this._root) this._root = newRoot;
         break;
       } else if (parent.balance > 1) {
         // inlined
-        // var newRoot = leftBalance(parent);
-        if (parent.left.balance === -1) rotateLeft(parent.left);
+        // let newRoot = leftBalance(parent);
+        if (parent.left!.balance === -1) rotateLeft(parent.left!);
         newRoot = rotateRight(parent);
 
         if (parent === this._root) this._root = newRoot;
@@ -288,40 +306,46 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
     return [true, newNode];
   }
 
-  has (val: T) {
-    return this.find(val) !== null;
+  has(element: T): boolean {
+    for (const node of this.equalKeys(this._getKey(element))) {
+      if (this.isEqual(node.value, element)) {
+        return true;
+      }
+    }
+    return false;
   }
 
-
-  hasKey(key: K) {
+  hasKey(key: K): boolean {
     return this.findKey(key) !== null;
   }
 
-  find (val: T): Node<T> {
-    let node = this._root;
-    const compare = this._comparator
-        , getKey = this._getKey
-    , key = getKey(val);
-    const locateEqual = (node: Node<T>) => {
-      if (node === null)
-        return null;
-      if (this.isEqual(node.value, val))
-        return node;
-      return locateEqual(node.left) || locateEqual(node.right);
-    }
-    while (node !== null) {
-      const cmp = compare(getKey(node.value), key);
-      if (cmp > 0)   node = node.left;
-      else if (cmp < 0) node = node.right;
-      else return locateEqual(node);
-    }
-    return null;
-  }
+  // find(val: T): Node<T> | null {
+    // let node = this._root;
+    // const compare = this._comparator
+    //     , getKey = this._getKey
+    // , key = getKey(val);
+    // const locateEqual = (node: Node<T> | null): Node<T> | null => {
+    //   if (node === null) {
+    //     return null;
+    //   }
+    //   if (this.isEqual(node.value, val)) {
+    //     return node;
+    //   }
+    //   return locateEqual(node.left) || locateEqual(node.right);
+    // }
+    // while (node !== null) {
+    //   const cmp = compare(getKey(node.value), key);
+    //   if      (cmp > 0) node = node.left;
+    //   else if (cmp < 0) node = node.right;
+    //   else return       locateEqual(node);
+    // }
+    // return null;
+  // }
 
   /**
    * Always returns the topmost node that satisfies the given constraints.
    */
-  findKey (key: K): Node<T> {
+  findKey(key: K): Node<T> | null {
     let node = this._root;
     const compare = this._comparator;
     const getKey = this._getKey;
@@ -334,18 +358,16 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
     return null;
   }
 
-  _findMin (key: K, node = this.findKey(key)) {
+  _findMin (key: K, node = this.findKey(key)): Node<T> | null {
     if (node === null)
       return null;
     const cmp = this._comparator(key, this._getKey(node.value));
-    if (cmp < 0)
-      return this._findMin(key, node.left);
-    if (cmp > 0)
-      return this._findMin(key, node.right);
+    if (cmp < 0) return this._findMin(key, node.left);
+    if (cmp > 0) return this._findMin(key, node.right);
     return this._findMin(key, node.left) || node;
   }
 
-  _findMax (key: K, node = this.findKey(key)) {
+  _findMax (key: K, node = this.findKey(key)): Node<T> | null {
     if (node === null)
       return null;
     const cmp = this._comparator(key, this._getKey(node.value));
@@ -380,12 +402,7 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
     return new NodeRange<T>(min, max);
   }
 
-  equal(val: T) {
-    return this.equalKeys(this._getKey(val)).filter(oth => this.isEqual(oth, val));
-  }
-
-  lower(key: K): Node<T> {
-
+  lowerKey(key: K): Node<T> | null {
     const compare = this._comparator;
     const getKey = this._getKey;
     let node = this._root;
@@ -397,15 +414,14 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
         break;
       }
     }
-    if (node !== null && compare(getKey(node.value), key) === 0) {
+    if (node !== null && compare(getKey(node.value), key) === 0 && node.right !== null) {
       node = node.right;
       while (node.left !== null) node = node.left;
     }
     return node;
   }
 
-  upper(key: K): Node<T> {
-
+  upperKey(key: K): Node<T> | null {
     const compare = this._comparator;
     const getKey = this._getKey;
     let node = this._root;
@@ -427,14 +443,18 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
     return node;
   }
 
-  begin(): Node<T> {
+  toRange() {
+    return new NodeRange(this.begin(), this.end());
+  }
+
+  begin(): Node<T> | null {
     if (this._root === null) return null;
     let node = this._root;
     while (node.left !== null) node = node.left;
     return node;
   }
 
-  end(): Node<T> {
+  end(): Node<T> | null {
     if (this._root === null) return null;
     let node = this._root;
     while (node.right !== null) node = node.right;
@@ -442,13 +462,14 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
   }
 
   *[Symbol.iterator]() {
-    if (this._size === 0) {
-      return;
+    // TODO issue #12
+    if (this._root === null) return;
+    for (const value of this.begin()![Symbol.iterator]()) {
+      yield value;
     }
-    yield* this.begin();
   }
 
-  deleteKey (key: K) {
+  deleteKey(key: K) {
     let deleteCount = 0, nodes = this._nodesWithKey(key);
     for (const node of nodes) {
       this.deleteAt(node);
@@ -457,7 +478,7 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
     return deleteCount;
   }
 
-  delete (value: T) {
+  deleteAll(value: T) {
     let deleteCount = 0, nodes = this._nodesWithKey(this._getKey(value));
     for (const node of nodes) {
       if (this.isEqual(node.value, value)) {
@@ -468,9 +489,23 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
     return deleteCount;
   }
 
-  deleteAt(node) {
-    var returnValue = node.value;
-    var max, min;
+  *getNodes(): any {
+    // TODO issue #12
+  }
+
+  delete(el: T): boolean {
+    for (const node of this.equalKeys(this._getKey(el))) {
+      if (this.isEqual(node.value, el)) {
+        this.deleteAt(node);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  deleteAt(node: Node<T>) {
+    let returnValue = node.value;
+    let max, min;
 
     if (node.left) {
       max = node.left;
@@ -506,26 +541,26 @@ export class AVLTree<T, K = T> implements Structure<T, K> {
       node = min;
     }
 
-    var parent = node.parent;
-    var pp     = node;
-    var newRoot;
+    let parent = node.parent;
+    let pp     = node;
+    let newRoot;
 
     while (parent) {
       if (parent.left === pp) parent.balance -= 1;
       else                    parent.balance += 1;
 
-      if        (parent.balance < -1) {
+      if (parent.balance < -1) {
         // inlined
-        //var newRoot = rightBalance(parent);
-        if (parent.right.balance === 1) rotateRight(parent.right);
+        //let newRoot = rightBalance(parent);
+        if (parent.right!.balance === 1) rotateRight(parent.right!);
         newRoot = rotateLeft(parent);
 
         if (parent === this._root) this._root = newRoot;
         parent = newRoot;
       } else if (parent.balance > 1) {
         // inlined
-        // var newRoot = leftBalance(parent);
-        if (parent.left.balance === -1) rotateLeft(parent.left);
+        // let newRoot = leftBalance(parent);
+        if (parent.left!.balance === -1) rotateLeft(parent.left!);
         newRoot = rotateRight(parent);
 
         if (parent === this._root) this._root = newRoot;

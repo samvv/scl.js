@@ -1,13 +1,13 @@
 
-import { Structure, Cursor } from "../interfaces"
-import List, { Cursor as ListCursor } from "../list/double"
-import { ViewBase } from "../util"
+import { KeyedCollection, CollectionRange, Cursor, List } from "../interfaces"
+import DoubleLinkedList, { DoubleLinkedListRange, DoubleLinkedListCursor } from "../list/double"
+import { RangeBase } from "../util"
 
-export type Bucket<T> = List<T>;
+export type Bucket<T> = DoubleLinkedList<T>;
 
-class HashCursor<T> implements Cursor<T> {
+export class HashCursor<T> implements Cursor<T> {
 
-  constructor(public _bucketIndex: number, public _bucketPos: ListCursor<T>) {
+  constructor(public _bucket: Bucket<T>, public _bucketPos: DoubleLinkedListCursor<T>) {
 
   }
 
@@ -21,32 +21,65 @@ class HashCursor<T> implements Cursor<T> {
 
 }
 
-export { HashCursor as Cursor };
+class EmptyRange<T> implements CollectionRange<T> {
+  filter(pred: (el: Cursor<T>) => boolean) { return this; }
+  reverse() { return this; }
+  get size() { return 0; }
+  *values(): IterableIterator<T> {  }
+  *[Symbol.iterator](): IterableIterator<Cursor<T>> {  }
+}
 
-class BucketView<T, K> extends ViewBase<T> {
+class BucketRange<T> extends RangeBase<T> implements CollectionRange<T> {
 
-  constructor(public _hash: Hash<T, K>, public _key: K, public _bucket: Bucket<T>, public _reversed = false) {
-    super();   
+  constructor(public _bucket: Bucket<T>, public _range: DoubleLinkedListRange<T>) {
+    super();
   }
 
   reverse() {
-    return new BucketView<T, K>(this._hash, this._key, this._bucket, !this._reversed);
+    return new BucketRange(this._bucket, this._range.reverse());
+  }
+
+  get size() {
+    return this._range.size;
+  }
+
+  values() {
+    return this._range.values();
   }
 
   *[Symbol.iterator]() {
-    if (this._bucket === null)
-      return;
-    const getKey = this._hash.getKey;
-    if (this._reversed) {
-      for (const val of this._bucket) {
-        if (this._hash.keysEqual(getKey(val), this._key)) {
-          yield val;
+    for (const cursor of this._range) {
+      yield new HashCursor<T>(this._bucket, cursor);
+    }
+  }
+
+}
+
+class HashRange<T, K> implements CollectionRange<T> {
+
+  constructor(public _hash: Hash<T, K>) {
+
+  }
+
+  get size() {
+    return this._hash.size;
+  }
+
+  *values() {
+    for (const bucket of this._hash._array) {
+      if (bucket !== undefined) {
+        for (const element of bucket) {
+          yield element;
         }
       }
-    } else {
-      for (const val of this._bucket) {
-        if (this._hash.keysEqual(getKey(val), this._key)) {
-          yield val;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    for (const bucket of this._hash._array) {
+      if (bucket !== undefined) {
+        for (const cursor of bucket.toRange()) {
+          yield new HashCursor(bucket, cursor);
         }
       }
     }
@@ -54,12 +87,12 @@ class BucketView<T, K> extends ViewBase<T> {
 
 }
 
-export class Hash<T, K = T> implements Structure<T, K> {
+export class Hash<T, K = T> implements KeyedCollection<T, K> {
   
   _array: Bucket<T>[];
   _size = 0;
 
-  _getConflict(bucket: Bucket<T>, val: T): ListCursor<T> {
+  _getConflict(bucket: Bucket<T>, value: T): DoubleLinkedListCursor<T> | null {
     return null;
   }
 
@@ -67,12 +100,12 @@ export class Hash<T, K = T> implements Structure<T, K> {
         public getHash: (el: K) => number
       , public keysEqual: (a: K, b: K) => boolean
       , public valuesEqual: (a: T, b: T) => boolean
-      , public getKey = val => val
+      , public getKey: (val: T) => K = (val: T) => val as any
       , size = 100) {
     this._array = new Array(size);
   }
 
-  size() {
+  get size() {
     return this._size;
   }
 
@@ -81,136 +114,169 @@ export class Hash<T, K = T> implements Structure<T, K> {
   }
 
   equalKeys(key: K) {
-    const h = this.getHash(key);
-    const i = h % this._array.length;
-    return new BucketView<T, K>(this, key, this._array[i] === undefined ? null : this._array[i]);
+    const bucket = this._getBucket(key);
+    if (bucket === null) {
+      return new EmptyRange<T>();
+    }
+    return bucket.toRange()
+      .filter((cursor: Cursor<T>) => this.keysEqual(this.getKey(cursor.value), key));
   }
 
-  add(val: T): [boolean, HashCursor<T>] {
-    const h = this.getHash(this.getKey(val));
+  add(element: T): [boolean, HashCursor<T>] {
+    const h = this.getHash(this.getKey(element));
     const i = h % this._array.length;
-    if (this._array[i] === undefined) {
-      this._array[i] = new List<T>();
-    }
-    const bucket = this._array[i];
-    const conflict = this._getConflict(bucket, val);
+    let bucket = this._array[i] === undefined
+      ? this._array[i] = new DoubleLinkedList<T>()
+      : this._array[i];
+    const conflict = this._getConflict(bucket, element);
     if (conflict !== null) {
-      return [false, new HashCursor<T>(i, conflict)]; 
+      return [false, new HashCursor<T>(bucket, conflict)]; 
     }
-    const bucketPos = bucket.append(val);
+    const bucketPos = bucket.append(element);
     ++this._size;
-    return [true, new HashCursor<T>(i, bucketPos)];
+    return [true, new HashCursor<T>(bucket, bucketPos)];
   }
 
-  deleteAt(pos: HashCursor<T>) {
-    this._array[pos._bucketIndex].deleteAt(pos._bucketPos);
+  deleteAt(cursor: HashCursor<T>) {
+    cursor._bucket.deleteAt(cursor._bucketPos);
     --this._size;
   }
 
-  findKey(key: K): HashCursor<T> {
-    const h = this.getHash(key);
-    const i = h % this._array.length;
-    if (this._array[i] === undefined) {
+  findKey(key: K): HashCursor<T> | null {
+    const bucket = this._getBucket(key);
+    if (bucket === null) {
       return null;
     }
-    let curr = this._array[i].begin();
-    const getKey = this.getKey;
-    while (curr !== null) {
-      if (this.keysEqual(getKey(curr.value), key)) { 
-        return new HashCursor<T>(i, curr);
+    for (const cursor of bucket.toRange()) {
+      if (this.keysEqual(this.getKey(cursor.value), key)) { 
+        return new HashCursor<T>(bucket, cursor);
       }
-      curr =  curr.next();
     } 
     return null;
   }
 
-  find(val: T): HashCursor<T> {
-    const getKey = this.getKey;
-    const key = getKey(val);
-    const h = this.getHash(key);
-    const i = h % this._array.length;
-    if (this._array[i] === undefined) {
+  find(value: T): HashCursor<T> | null {
+    const key = this.getKey(value);
+    const bucket = this._getBucket(key);
+    if (bucket === null) {
       return null;
     }
-    let curr = this._array[i].begin();
-    while (curr !== null) {
-      if (this.keysEqual(getKey(curr.value), key) && this.valuesEqual(curr.value, val)) { 
-        return new HashCursor<T>(i, curr);
+    for (const cursor of bucket.toRange()) {
+      if (this.keysEqual(this.getKey(cursor.value), key) && this.valuesEqual(cursor.value, value)) { 
+        return new HashCursor<T>(bucket, cursor);
       }
-      curr =  curr.next();
-    } 
+    }
     return null;
   }
 
-  has(val: T) {
-    return this.find(val) !== null;
+  has(element: T): boolean {
+    for (const cursor of this.equalKeys(this.getKey(element))) {
+      if (this.valuesEqual(cursor.value, element)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   hasKey(key: K) {
     return this.findKey(key) !== null;
   }
 
-  deleteKey(key: K) {
-    const getKey = this.getKey;
+  _getBucket(key: K): Bucket<T> | null {
     const h = this.getHash(key);
     const i = h % this._array.length;
-    if (this._array[i] === undefined) {
+    const bucket = this._array[i];
+    if (bucket === undefined) {
       return null;
     }
-    let curr = this._array[i].begin(), deleted = 0;
-    while (curr !== null) {
-      if (this.keysEqual(getKey(curr.value), key)) { 
-        // inlined from deleteAt
-        this._array[i].deleteAt(curr);
-        ++deleted;
+    return bucket;
+  }
+
+  deleteKey(key: K) {
+    const bucket = this._getBucket(key);
+    if (bucket === null) {
+      return 0;
+    }
+    let deleted = 0;
+    for (const cursor of bucket.toRange()) {
+      if (this.keysEqual(this.getKey(cursor.value), key)) { 
+        bucket.deleteAt(cursor);
         --this._size;
+        ++deleted;
       }
-      curr =  curr.next();
-    } 
+    }
     return deleted;
   }
 
+  toRange() {
+    return new HashRange<T, K>(this);
+  }
+
   delete(el: T) {
-    const pos = this.find(this.getKey(el));
-    if (pos !== null) {
-      this.deleteAt(pos);
+    const pos = this.find(el);
+    if (pos === null) {
+      return false;
     }
+    this.deleteAt(pos);
+    return true;
+  }
+
+  *[Symbol.iterator]() {
+    for (let i = 0; i < this._array.length; i++) {
+      const bucket = this._array[i];
+      if (bucket !== undefined) {
+        for (const el of bucket) {
+          yield el;
+        }
+      }
+    }
+  }
+
+  deleteAll(element: T) {
+    const key = this.getKey(element);
+    const h = this.getHash(key);
+    const i = h % this._array.length;
+    if (this._array[i] === undefined) {
+      return 0;
+    }
+    let deleted = 0;
+    for (const cursor of this._array[i].toRange()) {
+      if (this.keysEqual(this.getKey(cursor.value), key)) { 
+        this._array[i].deleteAt(cursor);
+        --this._size;
+        ++deleted;
+      }
+    }
+    return deleted;
   }
 
 }
 
-export class SingleElementHash<T, K = T> extends Hash<T, K> {
+export class SingleValueHash<T, K = T> extends Hash<T, K> {
 
   _getConflict(bucket: Bucket<T>, val: T) {
-    const getKey = this.getKey;
-    const key = getKey(val);
-    let curr = bucket.begin();
-    while (true) {
-      if (curr === null)
-        return null;
-      if (this.keysEqual(getKey(curr.value), key) && this.valuesEqual(curr.value[1], val[1]))
-        return curr;
-      curr = curr.next();
+    const key = this.getKey(val);
+    for (const cursor of bucket.toRange()) {
+      if (this.keysEqual(this.getKey(cursor.value), key) && this.valuesEqual(cursor.value, val)) {
+        return cursor;
+      }
     }
+    return null;
   }
 
 }
 
 export class SingleKeyHash<T, K = T> extends Hash<T, K> {
 
-  _getConflict(bucket: Bucket<T>, val: T) {
-    const getKey = this.getKey;
-    let curr = bucket.begin();
-    while (true) {
-      if (curr === null) {
-        return null;
+  _getConflict(bucket: Bucket<T>, value: T) {
+    const key = this.getKey(value);
+    for (const cursor of bucket.toRange()) {
+      if (this.keysEqual(this.getKey(cursor.value), key)) {
+        cursor.value = value;
+        return cursor; 
       }
-      if (this.keysEqual(getKey(curr.value), getKey(val))) {
-        curr.value = val;
-        return curr; 
-      }
-      curr = curr.next();
     }
+    return null;
   }
 
 }

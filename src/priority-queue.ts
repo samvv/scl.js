@@ -1,32 +1,34 @@
 
-import { Queuelike } from "../interfaces"
+import { Queuelike, Cursor } from "./interfaces"
 import Heap from "./heap"
+import { lesser } from "./util"
+import { VectorCursor } from "./vector"
 
 export class PriorityQueue<T> implements Queuelike<T> {
  
   _heap: Heap<T>
 
-  constructor(compare: (a: T, b: T) => boolean) {
-    this._heap = new Heap<T>(compare)
+  constructor(elements: Iterable<T> = [], compare: (a: T, b: T) => boolean = lesser) {
+    this._heap = new Heap<T>(elements, compare)
   }
 
-  size() {
-    return this._heap.size()
-  }
-
-  count(val: T) {
-    let res = 0
-    for (const el of this._heap)
-      if (el === val)
-        ++res
-    return res
+  get size() {
+    return this._heap.size
   }
 
   deleteAll(el: T) {
-    this._heap.deleteAll(el)
+    return this._heap.deleteAll(el)
   }
 
-  dequeue() {
+  deleteAt(cursor: VectorCursor<T>) {
+    this._heap.deleteAt(cursor);
+  }
+
+  peek() {
+    return this._heap.min();
+  }
+
+  pop() {
     const min = this._heap.min()
     this._heap.deleteMin()
     return min
@@ -37,23 +39,24 @@ export class PriorityQueue<T> implements Queuelike<T> {
   }
 
   add(el: T) {
-    this._heap.add(el)
+    return this._heap.add(el)
   }
 
   delete(el: T) {
-    this._heap.delete(el)
+    return this._heap.delete(el)
   }
 
-  [Symbol.iterator]() {
-    return this.iterator()
-  }
-
-  *iterator() {
+  *[Symbol.iterator]() {
+    // FIXME can be optimised? 
     const h = this._heap.clone()
-    while (h.size() > 0) {
+    while (h.size > 0) {
       yield h.min()
       h.deleteMin()
     }
+  }
+
+  toRange() {
+    return this._heap.toRange();
   }
 
   clear() {

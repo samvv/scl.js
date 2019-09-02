@@ -1,28 +1,22 @@
 
-import { Queuelike } from "./interfaces"
+import { Queuelike, Cursor } from "./interfaces"
 
-import find from "./find"
-import List from "./list/single"
+import DoubleLinkedList from "./list/double"
 
-export class Queue<T> extends List<T> implements Queuelike<T> {
+export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
 
-  dequeue() {
-    const first = this.begin();
-    if (first === null)
-      throw new RangeError(`queue is empty`);
-    this.deleteAt(first);
-    return first.value;
+  peek() {
+    return this.first();
   }
 
-  delete(el: T) {
-    const match = find(this, el);
-    if (match !== null) {
-      this.deleteAt(match);
-    }
+  pop() {
+    const cursor = this.at(0);
+    this.deleteAt(cursor);
+    return cursor.value;
   }
 
-  add(el: T) {
-    return this.append(el);
+  add(el: T): [boolean, Cursor<T>] {
+    return [true, this.append(el)];
   }
 
 }

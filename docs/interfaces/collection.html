@@ -38,8 +38,6 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -103,6 +101,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/binaryminheap.html" class="tsd-signature-type">BinaryMinHeap</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -140,7 +144,7 @@
 					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L60">interfaces.d.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L60">interfaces.d.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -157,15 +161,15 @@
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="___iterator" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> __@iterator</h3>
+					<h3>__@iterator</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">__@iterator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">__@iterator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L46">interfaces.d.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L46">interfaces.d.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -174,9 +178,9 @@
 								</div>
 								<p>The order by which the elements are traversed depends on the kind of collection.
 									For unordered collections, the iteration order is unspecified and may even differ
-								between two iterators on the same collection.</p>
+								between two iterations on the same collection.</p>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -190,7 +194,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L29">interfaces.d.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L29">interfaces.d.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -231,7 +235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L66">interfaces.d.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L66">interfaces.d.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -254,7 +258,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L73">interfaces.d.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L73">interfaces.d.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -274,13 +278,13 @@
 					<a name="delete" class="tsd-anchor"></a>
 					<h3>delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L84">interfaces.d.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L86">interfaces.d.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -295,7 +299,8 @@
 									<h5>el: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p><code>true</code> if the element was found, <code>false</code> otherwise.</p>
 						</li>
 					</ul>
 				</section>
@@ -303,13 +308,13 @@
 					<a name="deleteall" class="tsd-anchor"></a>
 					<h3>delete<wbr>All</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L90">interfaces.d.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L94">interfaces.d.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,7 +329,8 @@
 									<h5>el: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							<p>The amount of elements that was removed.</p>
 						</li>
 					</ul>
 				</section>
@@ -338,7 +344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L78">interfaces.d.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L78">interfaces.d.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -366,7 +372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L13">interfaces.d.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L13">interfaces.d.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -395,7 +401,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L37">interfaces.d.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L37">interfaces.d.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -427,7 +433,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L51">interfaces.d.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L51">interfaces.d.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -450,7 +456,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f546b4b/src/interfaces.d.ts#L95">interfaces.d.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/interfaces.d.ts#L99">interfaces.d.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -474,9 +480,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="bag.html" class="tsd-kind-icon">Bag</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
@@ -522,54 +525,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="cursor.html" class="tsd-kind-icon">Cursor</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="dict.html" class="tsd-kind-icon">Dict</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="grid.html" class="tsd-kind-icon">Grid</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="keyedcollection.html" class="tsd-kind-icon">Keyed<wbr>Collection</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="list.html" class="tsd-kind-icon">List</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="maxheap.html" class="tsd-kind-icon">Max<wbr>Heap</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="minheap.html" class="tsd-kind-icon">Min<wbr>Heap</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="queuelike.html" class="tsd-kind-icon">Queuelike</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="sequence.html" class="tsd-kind-icon">Sequence</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="set.html" class="tsd-kind-icon">Set</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="vector.html" class="tsd-kind-icon">Vector</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#vec2" class="tsd-kind-icon">Vec2</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

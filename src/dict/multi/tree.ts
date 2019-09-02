@@ -1,22 +1,30 @@
 
 import AVL from "../../avl"
 import { lesser } from "../../util"
+import { MultiDict } from "../../interfaces"
 
-export class TreeMultiDict<K, V> extends AVL<[K, V], K> {
+export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V> {
+
+  valuesEqual: (a: V, b: V) => boolean;
 
   constructor(
-      lessThan: (a: K, b: K) => boolean = lesser
-    , valuesEqual: (a: V, b: V) => boolean = (a, b) => a === b) {
+      keyLessThan: (a: K, b: K) => boolean = lesser
+    , valuesEqual: (a: V, b: V) => boolean = (a, b) => a === b
+  ) {
+    const keysEqual = (a: K, b: K) => !keyLessThan(a, b) && !keyLessThan(b, a);
     super(
-      lessThan
-    , pair => pair[0]
-    , (a, b) => !lessThan(a[0], b[0]) && !lessThan(b[0], a[0]) && valuesEqual(a[1], b[1])
-    , true
+      /* keyLessThan */ keyLessThan
+    , /* getKey */ pair => pair[0]
+    , /* elementsEqual */ (a, b) => keysEqual(a[0], b[0]) && valuesEqual(a[1], b[1])
+    , /* allowDuplicates */ true
     );
+    this.valuesEqual = valuesEqual;
   }
 
-  getValues(key: K) {
-    return this.equalKeys(key).map(pair => pair[1]);
+  *getValues(key: K) {
+    for (const cursor of this.equalKeys(key)) {
+      yield cursor.value[1];
+    }
   }
 
   emplace(key: K, val: V) {

@@ -1,19 +1,23 @@
 
 import { Dict } from "../interfaces"
 import { SingleKeyHash } from "../hash"
-import { hash, equal, find } from "../util"
+import { hash, equal } from "../util"
 
-export class HashDict<K, V> extends SingleKeyHash<[K, V], K> {
+function strictEqual(a: any, b: any): boolean {
+  return a === b;
+}
+
+export class HashDict<K, V> extends SingleKeyHash<[K, V], K> implements Dict<K, V> {
 
   constructor(
         getHash: (k: K) => number = hash
       , keysEqual: (a: K, b: K) => boolean = equal
-      , valuesEqual: (a, b) => boolean = (a, b) => a === b
+      , valuesEqual: (a: V, b: V) => boolean = strictEqual
       , size?: number) {
     super(
         getHash
       , keysEqual
-      , valuesEqual
+      , (a, b) => valuesEqual(a[1], b[1])
       , pair => pair[0]
       , size
     );

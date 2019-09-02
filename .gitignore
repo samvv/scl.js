@@ -3,5 +3,4 @@ node_modules/
 .coveralls.yml
 .nyc_output/
 scl-*.tgz
-*.js
-*.js.map
+dist/
