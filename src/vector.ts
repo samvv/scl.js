@@ -183,15 +183,18 @@ export class Vector<T> implements Sequence<T> {
     return false;
   }
 
-  replace(position: number, element: T) {
-    if (position < 0 || position >= this._size) {
-      throw new RangeError(`Could not replace element: index ${position} out of bounds.`);
+  replace(index: number, element: T) {
+    if (index < 0 || index >= this._size) {
+      throw new RangeError(`Could not replace element: index ${index} out of bounds.`);
     }
-    this._elements[position] = element;
+    this._elements[index] = element;
   }
 
-  getAt(pos: number) {
-    return this._elements[pos]
+  getAt(index: number) {
+    if (index < 0 || index >= this._size) {
+      throw new RangeError(`Could not replace element: index ${index} out of bounds.`);
+    }
+    return this._elements[index];
   }
 
   shrinkFit() {
@@ -285,7 +288,8 @@ export class Vector<T> implements Sequence<T> {
   delete(el: T): boolean {
     for (let i = 0; i < this._size; i++) {
       if (el === this._elements[i]) {
-        this._elements.copyWithin(i, i+1, this._size)
+        this._elements.copyWithin(i, i+1, this._size);
+        this._size--;
         return true;
       }
     }
@@ -306,7 +310,7 @@ export class Vector<T> implements Sequence<T> {
     let count = 0;
     for (let i = 0; i < this._size; i++) {
       if (element !== this._elements[i]) {
-        this._elements[k++] = element;
+        this._elements[k++] = this._elements[i];
       } else {
         count++;
       }

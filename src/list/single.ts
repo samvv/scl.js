@@ -6,6 +6,9 @@ interface Node<T> {
   value: T;
 }
 
+/**
+ * @ignore
+ */
 export class SingleLinkedListCursor<T> implements Cursor<T> {
 
   constructor(public _list: SingleLinkedList<T>, public _node: Node<T>) {
@@ -45,6 +48,9 @@ export class SingleLinkedListCursor<T> implements Cursor<T> {
 
 }
 
+/**
+ * @ignore
+ */
 export class SingleLinkedListRange<T> implements CollectionRange<T> {
 
  constructor(public _list: SingleLinkedList<T>, public _startNode: Node<T> | null, public _endNode: Node<T> | null, public _reversed: boolean) {
@@ -158,18 +164,15 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   insertBefore(pos: SingleLinkedListCursor<T>, el: T) {
+    const newNode = { next: pos._node, value: el };
     if (pos._node === this._firstNode) {
-      return this.prepend(el)
+      this._firstNode = newNode;
     } else {
       const prev = this._findPrev(pos._node)!;
-      const newNode = { next: pos._node, value: el };
-      if (prev.next === null) {
-        this._lastNode = newNode;
-      }
       prev.next = newNode;
-      ++this._size;
-      return new SingleLinkedListCursor<T>(this, newNode);
     }
+    ++this._size;
+    return new SingleLinkedListCursor<T>(this, newNode);
   }
 
   insertAfter(pos: SingleLinkedListCursor<T>, el: T) {
@@ -204,17 +207,6 @@ export class SingleLinkedList<T> implements List<T> {
     }
     ++this._size;
     return new SingleLinkedListCursor<T>(this, newNode);
-  }
-
-  count(el: T) {
-    let res = 0
-    let node = this._firstNode
-    while (node !== null) {
-      if (node.value === el)
-        ++res
-      node = node.next
-    }
-    return res
   }
 
   get size() {
@@ -273,15 +265,16 @@ export class SingleLinkedList<T> implements List<T> {
     let prev = null;
     while (node !== null) {
       if (node.value === element) {
-        const next = node.next
+        const next = node.next;
         if (prev === null) {
-          this._firstNode = null;
+          this._firstNode = next;
         } else {
           prev.next = node.next;
         }
         if (next === null) {
-          this._lastNode = null;
+          this._lastNode = prev;
         }
+        this._size--;
         return true;
       }
       prev = node;
@@ -296,19 +289,25 @@ export class SingleLinkedList<T> implements List<T> {
     let prev = null;
     while (node !== null) {
       if (node.value === el) {
-        const next = node.next
-        if (prev === null) {
-          this._firstNode = null;
-        } else {
-          prev.next = node.next;
+        node = node.next;
+        this._size--;
+        while (node !== null && node.value === el) {
+          this._size--;
+          node = node.next;
         }
-        if (next === null) {
-          this._lastNode = null;
+        if (prev === null) {
+          this._firstNode = node;
+        } else {
+          prev.next= node;
+        }
+        if (node === null) {
+          this._lastNode = prev;
         }
         count++;
+      } else {
+        prev = node;
+        node = node.next;
       }
-      prev = node;
-      node = node.next;
     }
     return count;
   }

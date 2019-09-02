@@ -205,6 +205,9 @@ export { Node as DoubleLinkedListCursor, NodeRange as DoubleLinkedListRange };
     let node = this._firstNode!;
     while (position > 0) {
       node = node._nextNode!;
+      if (node === null) {
+        throw new RangeError(`Cannot get element at position ${position}: index out of bounds.`)
+      }
       --position;
     }
     return node;
@@ -237,6 +240,7 @@ export { Node as DoubleLinkedListCursor, NodeRange as DoubleLinkedListRange };
         this.deleteAt(node);
         return true;
       }
+      node = node._nextNode;
     }
     return false;
   }
@@ -249,13 +253,14 @@ export { Node as DoubleLinkedListCursor, NodeRange as DoubleLinkedListRange };
         this.deleteAt(node);
         count++;
       }
+      node = node._nextNode;
     }
     return count;
   }
 
   rest(): List<T> {
     if (this._firstNode === null) {
-      throw new Error(`list is empty`)
+      throw new Error(`Cannot get rest of list: collection is empty`)
     }
     return new DoubleLinkedList<T>(this._firstNode._nextNode, this._lastNode, this._size-1);
   }

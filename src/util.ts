@@ -1,9 +1,20 @@
+
+/// <reference types="./external" />
+
 import { Cursor, CollectionRange } from "./interfaces"
 import * as XXH from "xxhashjs"
 
 // TODO optimize
 export function hash(val: any) {
   return XXH.h32(JSON.stringify(val), 0xABCD).toNumber();
+}
+
+export class EmptyRange<T> implements CollectionRange<T> {
+  filter(pred: (el: Cursor<T>) => boolean) { return this; }
+  reverse() { return this; }
+  get size() { return 0; }
+  *values(): IterableIterator<T> {  }
+  *[Symbol.iterator](): IterableIterator<Cursor<T>> {  }
 }
 
 export function get(val: any, path: any[]) {

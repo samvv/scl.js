@@ -29,10 +29,10 @@ export class HashDict<K, V> extends SingleKeyHash<[K, V], K> implements Dict<K, 
 
   getValue(key: K) {
     const match = this.findKey(key);
-    if (match !== null) {
-      return match.value[1];
+    if (match === null) {
+      throw new Error(`Cannot retrieve value: provided key does not exist.`);
     }
-    return null;
+    return match.value[1];
   }
 
 }

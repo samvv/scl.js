@@ -48,27 +48,15 @@ test('Sequence.append() returns a working cursor', (seq: Sequence<string>) => {
   expect(p!.value).to.equal('b')
 })
 
-test('Sequence.insertAfter() returns a working cursor', (seq: Sequence<string>) => {
-  const pos = seq.append('a');
-  seq.append('c');
-  const newPos = seq.insertAfter(pos, 'b')
-  expect(newPos).to.be.ok
-  expect(newPos.value).to.equal('b')
-  const prev = newPos.prev!()
-  expect(prev).to.be.ok
-  expect(prev!.value).to.equal('a')
-  const next = newPos.next!()
-  expect(next).to.be.ok
-  expect(next!.value).to.equal('c')
-})
-
 test('Sequence.insertBefore() inserts elements before a given position', (seq: Sequence<string>) => {
   seq.append('a');
   seq.append('b');
   seq.append('c');
+  expect(seq.size).to.equal(3);
   const pos = seq.at(1);
   expect(pos.value).to.equal('b');
   seq.insertBefore(pos, 'd');
+  expect(seq.size).to.equal(4);
   expect([...seq]).to.deep.equal(['a', 'd', 'b', 'c']);
 })
 
@@ -89,7 +77,9 @@ test('Sequence.insertBefore() returns a working cursor', (seq: Sequence<string>)
 test('Sequence.insertBefore() returns a working cursor even when inserting at the beginning', (seq: Sequence<string>) => {
   const pos = seq.append('b');
   seq.append('c');
+  expect(seq.size).to.equal(2);
   const newPos = seq.insertBefore(pos, 'a');
+  expect(seq.size).to.equal(3);
   expect(newPos).to.be.ok;
   expect(newPos.value).to.equal('a');
   const p = newPos.prev!();
@@ -99,17 +89,35 @@ test('Sequence.insertBefore() returns a working cursor even when inserting at th
   expect(n!.value).to.equal('b');
 })
 
-test('Sequence.insertAfter() returns a working cursor even when inserting at the end', (seq: Sequence<string>) => {
-  seq.append('a');
-  const pos = seq.append('b');
-  const newPos = seq.insertAfter(pos, 'c')
+test('Sequence.insertAfter() returns a working cursor', (seq: Sequence<string>) => {
+  const pos = seq.append('a');
+  seq.append('c');
+  const newPos = seq.insertAfter(pos, 'b')
   expect(newPos).to.be.ok
-  expect(newPos.value).to.equal('c')
+  expect(newPos.value).to.equal('b')
   const prev = newPos.prev!()
   expect(prev).to.be.ok
-  expect(prev!.value).to.equal('b')
+  expect(prev!.value).to.equal('a')
   const next = newPos.next!()
-  expect(next).to.be.null
+  expect(next).to.be.ok
+  expect(next!.value).to.equal('c')
+})
+
+test('Sequence.insertAfter() returns a working cursor even when inserting at the end', (seq: Sequence<string>) => {
+
+  seq.append('a');
+  const pos = seq.append('b');
+  expect(seq.size).to.equal(2);
+
+  const newPos = seq.insertAfter(pos, 'c');
+  expect(seq.size).to.equal(3);
+  expect(newPos).to.be.ok;
+  expect(newPos.value).to.equal('c');
+  const prev = newPos.prev!();
+  expect(prev).to.be.ok;
+  expect(prev!.value).to.equal('b');
+  const next = newPos.next!();
+  expect(next).to.be.null;
 })
 
 test('Sequence.insertAfter() inserts elements after a given position', (seq: Sequence<string>) => {
@@ -174,6 +182,32 @@ test('Sequence.toRange().values() generates the elements of the full sequence', 
   seq.append('c');
   seq.append('d');
   expect([...seq.toRange().values()]).to.deep.equal(['a','b','c','d']);
+});
+
+test('Sequence.toRange().size returns the correct size', (seq: Sequence<string>) => {
+  expect(seq.toRange().size).to.equal(0);
+  seq.add('a');
+  expect(seq.toRange().size).to.equal(1);
+  seq.add('b');
+  expect(seq.toRange().size).to.equal(2);
+  seq.add('c');
+  expect(seq.toRange().size).to.equal(3);
+});
+
+test('Sequence.getAt() returns the element at the i-th position', (seq: Sequence<string>) => {
+  seq.append('a');
+  seq.append('b');
+  seq.append('c');
+  expect(seq.getAt(0)).to.equal('a');
+  expect(seq.getAt(1)).to.equal('b');
+  expect(seq.getAt(2)).to.equal('c');
+});
+
+test('Sequence.getAt() throws a range error when the index is out of bounds;', (seq: Sequence<string>) => {
+  seq.append('a');
+  seq.append('b');
+  seq.append('c');
+  expect(() => seq.getAt(3)).to.throw(RangeError);
 });
 
 test('Sequence.at().next() correcly traverses the elements of the container', (seq: Sequence<string>) => {
@@ -249,6 +283,58 @@ test('Sequence.deleteAt() deletes the correct element even at the end', (seq: Se
   seq.deleteAt(pos);
   expect([...seq]).to.deep.equal(['a', 'b', 'c']);
 });
+
+test('Sequence.delete() deletes the first occurrence of the given element', (seq: Sequence<string>) => {
+  seq.append('a');
+  seq.append('b');
+  seq.append('c');
+  seq.append('d');
+  expect(seq.size).to.equal(4);
+  seq.delete('b');
+  expect(seq.size).to.equal(3);
+  expect([...seq]).to.deep.equal(['a', 'c', 'd']);
+});
+
+test('Sequence.delete() can delete an element at the beginning of the collection', (seq: Sequence<string>) => {
+  seq.append('a');
+  seq.append('b');
+  seq.append('c');
+  seq.append('d');
+  expect(seq.size).to.equal(4);
+  seq.delete('a');
+  expect(seq.size).to.equal(3);
+  expect(seq.first()).to.equal('b');
+  expect([...seq]).to.deep.equal(['b', 'c', 'd']);
+});
+
+test('Sequence.delete() can delete an element at the end of the collection', (seq: Sequence<string>) => {
+  seq.append('a');
+  seq.append('b');
+  seq.append('c');
+  seq.append('d');
+  expect(seq.size).to.equal(4);
+  seq.delete('d');
+  expect(seq.size).to.equal(3);
+  expect(seq.last()).to.equal('c');
+  expect([...seq]).to.deep.equal(['a', 'b', 'c']);
+});
+
+test('Sequence.deleteAll() deletes all occurrences of the given element', (seq: Sequence<string>) => {
+  seq.append('a');
+  seq.append('b');
+  seq.append('a');
+  seq.append('a');
+  seq.append('c');
+  seq.append('d');
+  seq.append('a');
+  expect(seq.size).to.equal(7);
+  seq.deleteAll('a');
+  expect(seq.first()).to.equal('b');
+  expect(seq.last()).to.equal('d');
+  expect(seq.size).to.equal(3);
+  expect([...seq]).to.deep.equal(['b', 'c', 'd']);
+});
+
 
 test('Sequence.clear() clears the collection', (seq: Sequence<string>) => {
   seq.append('a')

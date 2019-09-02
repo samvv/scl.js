@@ -1,7 +1,7 @@
 
 import { KeyedCollection, CollectionRange, Cursor, List } from "../interfaces"
 import DoubleLinkedList, { DoubleLinkedListRange, DoubleLinkedListCursor } from "../list/double"
-import { RangeBase } from "../util"
+import { RangeBase, EmptyRange } from "../util"
 
 /**
  * @ignore
@@ -23,40 +23,6 @@ export class HashCursor<T> implements Cursor<T> {
 
   set value(newVal: T) {
     this._bucketPos.value = newVal;
-  }
-
-}
-
-class EmptyRange<T> implements CollectionRange<T> {
-  filter(pred: (el: Cursor<T>) => boolean) { return this; }
-  reverse() { return this; }
-  get size() { return 0; }
-  *values(): IterableIterator<T> {  }
-  *[Symbol.iterator](): IterableIterator<Cursor<T>> {  }
-}
-
-class BucketRange<T> extends RangeBase<T> implements CollectionRange<T> {
-
-  constructor(public _bucket: Bucket<T>, public _range: DoubleLinkedListRange<T>) {
-    super();
-  }
-
-  reverse() {
-    return new BucketRange(this._bucket, this._range.reverse());
-  }
-
-  get size() {
-    return this._range.size;
-  }
-
-  values() {
-    return this._range.values();
-  }
-
-  *[Symbol.iterator]() {
-    for (const cursor of this._range) {
-      yield new HashCursor<T>(this._bucket, cursor);
-    }
   }
 
 }
@@ -129,7 +95,7 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
   constructor(
         public getHash: (el: K) => number
       , public keysEqual: (a: K, b: K) => boolean
-      , public valuesEqual: (a: T, b: T) => boolean
+      , public isEqual: (a: T, b: T) => boolean
       , public getKey: (val: T) => K = (val: T) => val as any
       , size = 100) {
     this._array = new Array(size);
@@ -141,6 +107,7 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
 
   clear() {
     this._array.splice(0, this._array.length);
+    this._size = 0;
   }
 
   equalKeys(key: K) {
@@ -185,23 +152,9 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
     return null;
   }
 
-  find(value: T): HashCursor<T> | null {
-    const key = this.getKey(value);
-    const bucket = this._getBucket(key);
-    if (bucket === null) {
-      return null;
-    }
-    for (const cursor of bucket.toRange()) {
-      if (this.keysEqual(this.getKey(cursor.value), key) && this.valuesEqual(cursor.value, value)) { 
-        return new HashCursor<T>(bucket, cursor);
-      }
-    }
-    return null;
-  }
-
   has(element: T): boolean {
     for (const cursor of this.equalKeys(this.getKey(element))) {
-      if (this.valuesEqual(cursor.value, element)) {
+      if (this.isEqual(cursor.value, element)) {
         return true;
       }
     }
@@ -246,11 +199,11 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
   }
 
   delete(el: T) {
-    const pos = this.find(el);
-    if (pos === null) {
+    const cursor = this.findKey(this.getKey(el));
+    if (cursor === null || !this.isEqual(el, cursor.value)) {
       return false;
     }
-    this.deleteAt(pos);
+    this.deleteAt(cursor);
     return true;
   }
 
@@ -290,7 +243,7 @@ export class SingleValueHash<T, K = T> extends Hash<T, K> {
   _getConflict(bucket: Bucket<T>, val: T) {
     const key = this.getKey(val);
     for (const cursor of bucket.toRange()) {
-      if (this.keysEqual(this.getKey(cursor.value), key) && this.valuesEqual(cursor.value, val)) {
+      if (this.keysEqual(this.getKey(cursor.value), key) && this.isEqual(cursor.value, val)) {
         return cursor;
       }
     }

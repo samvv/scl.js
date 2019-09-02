@@ -72,13 +72,13 @@ const TEST_FILES = [
   {
     name: 'DoubleLinkedList',
     file: '../list/double',
-    implements: ['Sequence', 'Collection'],
+    implements: ['Sequence', 'List', 'Collection'],
     create: () => new DoubleLinkedList<any>(),
   },
   {
     name: 'SingleLinkedList',
     file: "../list/single",
-    implements: ['Sequence', 'Collection'],
+    implements: ['Sequence', 'List', 'Collection'],
     create: () => new SingleLinkedList<any>(),
   },
   {
