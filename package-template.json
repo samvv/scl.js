@@ -12,7 +12,7 @@
   },
   "homepage": "https://samvv.github.io/scl.js",
   "scripts": {
-    "test": "echo 'You should checkout the repository if you want to run tests for this package.'; exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "data",
@@ -32,8 +32,9 @@
   "author": "Sam Vervaeck",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
-    "core-js": "^3.2.1",
     "xxhashjs": "^0.2.2"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
   }
 }

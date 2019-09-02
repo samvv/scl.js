@@ -3,8 +3,6 @@
   "private": true,
   "description": "The workspace for developing scl.js.",
   "devDependencies": {
-    "@babel/runtime": "^7.5.5",
-    "core-js": "^3.2.1",
     "xxhashjs": "^0.2.2",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",

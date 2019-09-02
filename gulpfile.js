@@ -16,7 +16,7 @@ function buildSrc() {
     .pipe(proj());
   return merge([
     tsResult.js
-      .pipe(babel({ presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: '3' }]] }))
+      .pipe(babel({ presets: [['@babel/env', { useBuiltIns: false, exclude: ['@babel/plugin-transform-regenerator'] }]] }))
       .pipe(sourcemaps.write({ includeContent: false, sourceRoot: '../' }))
       .pipe(gulp.dest('./dist')),
     tsResult.dts
