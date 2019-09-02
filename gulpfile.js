@@ -4,25 +4,38 @@ const ts = require('gulp-typescript')
 const mocha = require('gulp-mocha')
 const babel = require('gulp-babel')
 const sourcemaps = require('gulp-sourcemaps')
+const rename = require('gulp-rename')
 const del = require('del')
+const merge = require('merge2')
 
-const proj = ts.createProject('tsconfig.json')
+const proj = ts.createProject('tsconfig.json', { declaration: true })
 
 function buildSrc() {
-  return proj.src()
+  const tsResult = proj.src()
     .pipe(sourcemaps.init())
-      .pipe(proj())
+    .pipe(proj());
+  return merge([
+    tsResult.js
       .pipe(babel({ presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: '3' }]] }))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./dist'))
+      .pipe(sourcemaps.write({ includeContent: false, sourceRoot: '../' }))
+      .pipe(gulp.dest('./dist')),
+    tsResult.dts
+      .pipe(gulp.dest('./dist'))
+  ])
+}
+
+function copyDts() {
+  return gulp.src('src/**/*.d.ts')
+    .pipe(gulp.dest('dist/'))
 }
 
 function copyPackageJson() {
-  return gulp.src('package.json')
+  return gulp.src('package-template.json')
+    .pipe(rename({ basename: 'package' }))
     .pipe(gulp.dest('./dist'))
 }
 
-const build = gulp.parallel(copyPackageJson, buildSrc)
+const build = gulp.parallel(copyPackageJson, copyDts, buildSrc)
 
 function watch() {
   gulp.watch('src/**/*.ts', buildSrc)
@@ -35,7 +48,7 @@ function clean() {
 
 function test() {
   return gulp.src('dist/test/**/*.js')
-    .pipe(mocha({ require: ['source-map-support/register'] }))
+    .pipe(mocha({ require: ['source-map-support/register'], reporter: 'min' }))
 }
 
 module.exports = {

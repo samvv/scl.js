@@ -42,7 +42,10 @@ export class VectorCursor<T> {
 
 }
 
-class VectorRange<T> implements CollectionRange<T> {
+/**
+ * @ignore
+ */
+export class VectorRange<T> implements CollectionRange<T> {
 
   constructor(public _vector: Vector<T>, public _min: number, public _max: number, public _reversed: boolean) {
     

@@ -1,0 +1,39 @@
+{
+  "name": "scl",
+  "version": "2.0.0-alpha",
+  "main": "index.js",
+  "description": "A curated set of essential algorithms and data structures for JavaScript.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samvv/scl.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samvv/scl.js/issues"
+  },
+  "homepage": "https://samvv.github.io/scl.js",
+  "scripts": {
+    "test": "echo 'You should checkout the repository if you want to run tests for this package.'; exit 1"
+  },
+  "keywords": [
+    "data",
+    "algorithm",
+    "data-structure",
+    "library",
+    "typescript",
+    "collection",
+    "priority-queue",
+    "avl-tree",
+    "hash-map",
+    "hash-set",
+    "dictionary",
+    "map",
+    "set"
+  ],
+  "author": "Sam Vervaeck",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "core-js": "^3.2.1",
+    "xxhashjs": "^0.2.2"
+  }
+}
