@@ -24,18 +24,17 @@ function buildSrc() {
   ])
 }
 
-function copyDts() {
-  return gulp.src('src/**/*.d.ts')
+function copyAuxFiles() {
+  return gulp.src(['package-template.json', 'README.md', 'LICENSE.txt', 'src/**/*.d.ts'])
+    .pipe(rename(function (path) {
+      if (path.basename === 'package-template') {
+        path.basename = 'package'
+      }
+    }))
     .pipe(gulp.dest('dist/'))
 }
 
-function copyPackageJson() {
-  return gulp.src('package-template.json')
-    .pipe(rename({ basename: 'package' }))
-    .pipe(gulp.dest('./dist'))
-}
-
-const build = gulp.parallel(copyPackageJson, copyDts, buildSrc)
+const build = gulp.parallel(copyAuxFiles, buildSrc)
 
 function watch() {
   gulp.watch('src/**/*.ts', buildSrc)
