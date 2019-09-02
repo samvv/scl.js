@@ -4,81 +4,70 @@
 This is a curated, open-source project of common JavaScript collections with
 full support for TypeScript. Initially started as a side-project to abstract
 away some common patterns in other projects, this library grows to become 
-a full standard library for JavaScript and friends.
+a full standard library of efficient algorithms.
 
 :point_up: We could use a helping hand. If you think you're up for it,
 [open an issue](https://github.com/samvv/scl.js/issues/new).
 
+## Examples
+
+Using the priority queue to sort some tasks on importance:
+
 ```ts
-import TreeDict from "scl/dict/multi/tree"
+import PriorityQueue from "scl/priority-queue"
 
-const d = new TreeDict();
-d.emplace(1, 'uno');
-d.emplace(2, 'dos');
-d.emplace(1, 'one');
-d.emplace(2, 'two');
-d.emplace(2, 'duo');
+interface Task {
+ priority: number
+ description: string
+}
 
-console.log(d.getValues(1)); // will output ['one', 'uno']
+const tasks = new PriorityQueue<Task>((a, b) => a.priority < b.priority)
+
+q.add({ description: 'Do the dishes.', priority: 5 })
+q.add({ description: 'Buy food.', priority: 1 })
+q.add({ description: 'Play some games.', priority: 52 })
+q.add({ description: 'Go for a walk.', priority: 10 })
+q.add({ description: 'Program like crazy.', priority: 20 })
+
+const firstTask = q.pop()
+assert.strictEqual(firstTask.description, 'Buy food.')
+const secondTask = q.peek() // do not remove the task
+assert.strictEqual(secondTask.description, 'Do the dishes.')
+assert.strictEqual(q.size, 4)
+```
+
+Storing many different translations in the same dictionary:
+
+```ts
+import TreeMultiDict from "scl/dict/multi/tree"
+
+const d = new TreeMultiDict<number, string>()
+d.emplace(1, 'uno')
+d.emplace(2, 'dos')
+d.emplace(1, 'one')
+d.emplace(2, 'two')
+d.emplace(2, 'duo')
+
+console.log([...d.getValues(1)]); // will output ['one', 'uno']
 
 console.log(d.hasKey(3)); // outputs false
 
-const pos = d.emplace(3, 'tres');
+const [added, pos] = d.emplace(3, 'tres')
 
-console.log([...d]) // outputs [1, 2, 3] in order
+console.log(d.size) // outputs 6
 
 d.deleteAt(pos)
 
-console.log([...d]) // outputs [1, 2] in order
-
+console.log(d.hasKey(3)); // outputs false
 ```
 
-### Implementations
+## Documentation
 
-A :heavy_check_mark: indicates that the implementation has been completed. On the other hand, a
-missing :heavy_check_mark: means that implementation is stil pending or only
-partially completed.
+All collections are documented using [TypeDoc](https://typedoc.org), and 
+[the latest documentation is available here](https://samvv/github.io/scl.js/).
 
-#### Unordered Containers
-
-|                    | Name               | Add       | Remove    | Member    |
-|--------------------|--------------------|-----------|-----------|-----------|
-| :heavy_check_mark: | set/tree           | O(log(n)) | O(log(n)) | O(log(n)) |
-| :heavy_check_mark: | set/hash           | O(1)      | O(1)      | O(1)      |
-| :heavy_check_mark: | dict/tree          | O(log(n)) | O(log(n)) | O(log(n)) |
-| :heavy_check_mark: | dict/hash          | O(1)      | O(1)      | O(1)      |
-| :heavy_check_mark: | dict/many/tree     | O(log(n)) | O(log(n)) | O(log(n)) |
-| :heavy_check_mark: | dict/many/hash     | O(1)      | O(1)      | O(1)      |
-| :heavy_check_mark: | dict/multi/tree    | O(log(n)) | O(log(n)) | O(log(n)) |
-| :heavy_check_mark: | dict/multi/hash    | O(1)      | O(1)      | O(1)      |
-| :heavy_check_mark: | queue              | O(1)      | O(1)      | O(n)      |
-| :heavy_check_mark: | stack              | O(1)      | O(1)      | O(n)      |
-| :heavy_check_mark: | priority-queue     | O(log(n)) | O(log(n)) | O(n)      |
-
-
-#### Ordered Containers
-
-|                    | Name               | Memory  | Insert  | Append  | Prepend | Member | At   | Next | Prev |
-|--------------------|--------------------|---------|---------|---------|---------|--------|------|------|------|
-| :heavy_check_mark: | vector             | O(n)    | O(n)    | O(n)    | O(n)    | O(n)   | O(1) | O(1) | O(1) |
-| :heavy_check_mark: | list/single        | O(n)    | O(1)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
-| :heavy_check_mark: | list/double        | O(2n)   | O(1)    | O(1)    | O(1)    | O(n)   | O(n) | O(1) | O(1) |
-
-#### Queue-like structures
-
-|                    | Name           | Enqueue   | Dequeue    | Reschedule   |
-|--------------------|----------------|-----------|------------|--------------|
-| :heavy_check_mark: | stack          | O(1)      | O(1)       | n.a.         |
-| :heavy_check_mark: | queue          | O(1)      | O(1)       | n.a.         |
-| :heavy_check_mark: | priority-queue | O(log(n)) | O(1)       | O(log(n))    |
-
-#### Special structures
-
-|                    | Name     | Insert    | Delete    | Successor | Predecessor |
-|--------------------|----------|-----------|-----------|-----------|-------------|
-| :heavy_check_mark: | AVL tree | O(log(n)) | O(log(n)) | O(log(n)) | O(log(n))   | 
-
-Consult the [API docs](http://samvv.github.io/project/sync-collections) for more information on how to use them.
+If you've found a mistake in the documentation or something is not quite clear,
+don't hesitate to [open an issue](https://github.com/samvv/scl.js/issues/).
 
 ## Support
 
