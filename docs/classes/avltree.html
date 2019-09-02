@@ -62,14 +62,74 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>An AVL tree is a kind of binary tree that balances itself according a
+							specific set of rules whenever a node is inserted or deleted. As a
+							consequence, lookup, insertion and deletion are guaranteed to be in
+						<code>O(log(n))</code>.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> AVL <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/avl"</span></code></pre>
+					<p>The following table summarises the worst-case time complexity of the most
+						commonly used properies of this class. For more information, see the
+					documentation of the respective property.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Property name</th>
+								<th>Worst case</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td><a href="avltree.html#add">add()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="avltree.html#clear">clear()</a></td>
+								<td><code>O(1)</code></td>
+							</tr>
+							<tr>
+								<td><a href="avltree.html#equalkeys">equalKeys()</a></td>
+								<td><code>O(n)</code></td>
+							</tr>
+							<tr>
+								<td><a href="avltree.html#delete">delete()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="avltree.html#deleteall">deleteAll()</a></td>
+								<td><code>O(n)</code></td>
+							</tr>
+							<tr>
+								<td><a href="avltree.html#deleteat">deleteAt()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="avltree.html#size">size</a></td>
+								<td><code>O(1)</code></td>
+							</tr>
+					</tbody></table>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of element in the collection.</p>
+							</div>
+						</div>
 					</li>
 					<li>
 						<h4>K</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of the element&#39;s key.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -106,18 +166,6 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#_allowduplicates" class="tsd-kind-icon">_allow<wbr>Duplicates</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#_comparator" class="tsd-kind-icon">_comparator</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#_getkey" class="tsd-kind-icon">_get<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#_root" class="tsd-kind-icon">_root</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#_size" class="tsd-kind-icon">_size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="avltree.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="avltree.html#size" class="tsd-kind-icon">size</a></li>
@@ -127,9 +175,6 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#_findmax" class="tsd-kind-icon">_find<wbr>Max</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#_findmin" class="tsd-kind-icon">_find<wbr>Min</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#_nodeswithkey" class="tsd-kind-icon">_nodes<wbr>With<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#begin" class="tsd-kind-icon">begin</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#clear" class="tsd-kind-icon">clear</a></li>
@@ -141,7 +186,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#findkey" class="tsd-kind-icon">find<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#getnodes" class="tsd-kind-icon">get<wbr>Nodes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#has" class="tsd-kind-icon">has</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="avltree.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a></li>
@@ -158,13 +202,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new AVLTree<span class="tsd-signature-symbol">(</span>lessThan<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, _getKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, isEqual<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, _allowDuplicates<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="avltree.html" class="tsd-signature-type">AVLTree</a></li>
+						<li class="tsd-signature tsd-kind-icon">new AVLTree<span class="tsd-signature-symbol">(</span>lessThan<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, getKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, isEqual<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, _allowDuplicates<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="avltree.html" class="tsd-signature-type">AVLTree</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L204">avl/index.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L237">avl/index.ts:237</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -194,7 +238,7 @@
 									</ul>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _getKey: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;val &#x3D;&gt; val as any</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> getKey: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;val &#x3D;&gt; val as any</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal">
@@ -248,172 +292,6 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_allowduplicates" class="tsd-anchor"></a>
-					<h3>_allow<wbr>Duplicates</h3>
-					<div class="tsd-signature tsd-kind-icon">_allow<wbr>Duplicates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L210">avl/index.ts:210</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_comparator" class="tsd-anchor"></a>
-					<h3>_comparator</h3>
-					<div class="tsd-signature tsd-kind-icon">_comparator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L204">avl/index.ts:204</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>a: <span class="tsd-signature-type">K</span></h5>
-											</li>
-											<li>
-												<h5>b: <span class="tsd-signature-type">K</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_getkey" class="tsd-anchor"></a>
-					<h3>_get<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">_get<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L208">avl/index.ts:208</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>val: <span class="tsd-signature-type">T</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_root" class="tsd-anchor"></a>
-					<h3>_root</h3>
-					<div class="tsd-signature tsd-kind-icon">_root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L215">avl/index.ts:215</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_size" class="tsd-anchor"></a>
-					<h3>_size</h3>
-					<div class="tsd-signature tsd-kind-icon">_size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L214">avl/index.ts:214</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="isequal" class="tsd-anchor"></a>
-					<h3>is<wbr>Equal</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L209">avl/index.ts:209</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>a: <span class="tsd-signature-type">T</span></h5>
-											</li>
-											<li>
-												<h5>b: <span class="tsd-signature-type">T</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="lessthan" class="tsd-anchor"></a>
-					<h3>less<wbr>Than</h3>
-					<div class="tsd-signature tsd-kind-icon">less<wbr>Than<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L207">avl/index.ts:207</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>a: <span class="tsd-signature-type">K</span></h5>
-											</li>
-											<li>
-												<h5>b: <span class="tsd-signature-type">K</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="size" class="tsd-anchor"></a>
@@ -425,7 +303,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L222">avl/index.ts:222</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L258">avl/index.ts:258</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -446,91 +324,10 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L464">avl/index.ts:464</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L482">avl/index.ts:482</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="_findmax" class="tsd-anchor"></a>
-					<h3>_find<wbr>Max</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">_find<wbr>Max<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, node<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L370">avl/index.ts:370</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">K</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> node: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;this.findKey(key)</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="_findmin" class="tsd-anchor"></a>
-					<h3>_find<wbr>Min</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">_find<wbr>Min<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, node<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L361">avl/index.ts:361</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">K</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> node: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;this.findKey(key)</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="_nodeswithkey" class="tsd-anchor"></a>
-					<h3>_nodes<wbr>With<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">_nodes<wbr>With<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L381">avl/index.ts:381</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">K</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -544,9 +341,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L255">avl/index.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L294">avl/index.ts:294</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This operation takes <code>O(log(n))</code> time.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -570,7 +372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L450">avl/index.ts:450</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L468">avl/index.ts:468</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
@@ -591,9 +393,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L217">avl/index.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L253">avl/index.ts:253</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method always runs in <code>O(1)</code> time.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -602,20 +409,26 @@
 					<a name="delete" class="tsd-anchor"></a>
 					<h3>delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L496">avl/index.ts:496</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L526">avl/index.ts:526</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method takes at most <code>O(log(n))</code> time, where <code>n</code> is the amount of
+									elements in the collection.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>el: <span class="tsd-signature-type">T</span></h5>
+									<h5>element: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -633,9 +446,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#deleteall">deleteAll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L481">avl/index.ts:481</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L510">avl/index.ts:510</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This operation generally takes <code>O(log(n))</code> time, unless multiple entries
+										with the same key are allowed. In that case, the complexity can grow to
+									<code>O(n)</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -656,9 +476,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L506">avl/index.ts:506</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L540">avl/index.ts:540</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes <code>O(log(n))</code> time, and is slightly faster than deleting the element
+									by key due to the fact that a search for the node has already been done.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -680,9 +506,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#deletekey">deleteKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L472">avl/index.ts:472</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L495">avl/index.ts:495</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This operation generally takes <code>O(log(n))</code> time, unless multiple entries
+										with the same key are allowed. In that case, the complexity can grow to
+									<code>O(n)</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -703,7 +536,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L457">avl/index.ts:457</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L475">avl/index.ts:475</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
@@ -724,9 +557,15 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#equalkeys">equalKeys</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L398">avl/index.ts:398</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L416">avl/index.ts:416</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This methods generally returns in <code>O(log(n))</code> time, but this might become <code>O(n)</code> in
+									the case where multiple elements with the same key are allowed.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -748,18 +587,24 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#findkey">findKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L348">avl/index.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L373">avl/index.ts:373</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Always returns the topmost node that satisfies the given constraints.</p>
+									<p>This method always returns the topmost node that contains the given key,
+										which means that calling <a href="../interfaces/cursor.html#next">next()</a> on the result will
+									always return a node with the same key if there is any.</p>
 								</div>
+								<p>This method takes <code>O(log(n))</code> time.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The key so search for.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
@@ -780,7 +625,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#getaddhint">getAddHint</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L226">avl/index.ts:226</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L262">avl/index.ts:262</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -790,23 +635,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AddHint</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getnodes" class="tsd-anchor"></a>
-					<h3>get<wbr>Nodes</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Nodes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L492">avl/index.ts:492</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -821,7 +649,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L309">avl/index.ts:309</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L348">avl/index.ts:348</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -845,9 +673,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#haskey">hasKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L318">avl/index.ts:318</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L360">avl/index.ts:360</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method takes <code>O(log(n))</code> time.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -869,7 +702,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#lowerkey">lowerKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L405">avl/index.ts:405</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L423">avl/index.ts:423</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -896,7 +729,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L446">avl/index.ts:446</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L464">avl/index.ts:464</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -914,7 +747,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#upperkey">upperKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/avl/index.ts#L424">avl/index.ts:424</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L442">avl/index.ts:442</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -950,41 +783,11 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="avltree.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#_allowduplicates" class="tsd-kind-icon">_allow<wbr>Duplicates</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#_comparator" class="tsd-kind-icon">_comparator</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#_getkey" class="tsd-kind-icon">_get<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#_root" class="tsd-kind-icon">_root</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#_size" class="tsd-kind-icon">_size</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="avltree.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a>
-							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="avltree.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="avltree.html#___iterator" class="tsd-kind-icon">__@iterator</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="avltree.html#_findmax" class="tsd-kind-icon">_find<wbr>Max</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="avltree.html#_findmin" class="tsd-kind-icon">_find<wbr>Min</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="avltree.html#_nodeswithkey" class="tsd-kind-icon">_nodes<wbr>With<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="avltree.html#add" class="tsd-kind-icon">add</a>
@@ -1018,9 +821,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="avltree.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="avltree.html#getnodes" class="tsd-kind-icon">get<wbr>Nodes</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="avltree.html#has" class="tsd-kind-icon">has</a>

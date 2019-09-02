@@ -37,6 +37,9 @@ abstract class HeapBase<T> {
 
 }
 
+/**
+ * @ignore
+ */
 export class BinaryMinHeap<T> extends HeapBase<T> implements Collection<T> {
 
   constructor(public init?: Iterable<T>, public compare: (a: T, b: T) => boolean = lesser) {

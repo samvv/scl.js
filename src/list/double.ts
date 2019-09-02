@@ -75,9 +75,41 @@ class NodeRange<T> extends RangeBase<T> implements CollectionRange<T> {
 
 export { Node as DoubleLinkedListCursor, NodeRange as DoubleLinkedListRange };
 
-export class DoubleLinkedList<T> implements List<T> {
+/**
+ * A doubly-linked list, which is sometimes faster than a singly-linked list
+ * but consumes a bit more memory.
+ *
+ * The following table summarises the time complexity of the most commonly used
+ * properties.
+ *
+ * | Property name                                        | Worst-case |
+ * |------------------------------------------------------|------------|
+ * | {@link DoubleLinkedList.append append()}             | O(1)       |
+ * | {@link DoubleLinkedList.at at()}                     | O(n)       |
+ * | {@link DoubleLinkedList.insertAfter insertAfter()}   | O(1)       |
+ * | {@link DoubleLinkedList.insertBefore insertBefore()} | O(1)       |
+ * | {@link DoubleLinkedList.deleteAt deleteAt()}         | O(1)       |
+ * | {@link DoubleLinkedList.prepend prepend()}           | O(1)       |
+ * | {@link DoubleLinkedList.size size}                   | O(1)       |
+ *
+ * @see [[SingleLinkedList]]
+ *
+ * @typeparam T The type of element in this collection.
+ */export class DoubleLinkedList<T> implements List<T> {
   
-  constructor(public _firstNode: Node<T> | null = null, public _lastNode: Node<T> | null = null, public _size = 0) {
+  constructor(
+    /**
+     * @ignore
+     */
+    public _firstNode: Node<T> | null = null, 
+    /**
+     * @ignore
+     */
+    public _lastNode: Node<T> | null = null, 
+    /**
+     * @ignore
+     */
+    public _size = 0) {
 
   }
 

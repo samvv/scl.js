@@ -62,11 +62,58 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A <em>LIFO queue</em>, where the last element to be pushed into the queue is the
+						first element to be popped out of it.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> Stack <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/stack"</span></code></pre>
+					<p>Pushing and popping an element are both in <code>O(1)</code>.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Property name</th>
+								<th>Worst-case</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td><a href="stack.html#add">add()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="stack.html#peek">peek()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="stack.html#pop">pop()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="stack.html#size">size</a></td>
+								<td>O(1)</td>
+							</tr>
+					</tbody></table>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="queue.html">Queue</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="priorityqueue.html">PriorityQueue</a></p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of element in this queue.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -101,14 +148,6 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#_firstnode" class="tsd-kind-icon">_first<wbr>Node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#_lastnode" class="tsd-kind-icon">_last<wbr>Node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#_size" class="tsd-kind-icon">_size</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#size" class="tsd-kind-icon">size</a></li>
@@ -118,7 +157,6 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#_findprev" class="tsd-kind-icon">_find<wbr>Prev</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#append" class="tsd-kind-icon">append</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="stack.html#at" class="tsd-kind-icon">at</a></li>
@@ -149,18 +187,21 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Stack<span class="tsd-signature-symbol">(</span>_firstNode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, _lastNode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, _size<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stack.html" class="tsd-signature-type">Stack</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Stack<span class="tsd-signature-symbol">(</span>init<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, _firstNode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, _lastNode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, _size<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stack.html" class="tsd-signature-type">Stack</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L88">list/single.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L112">list/single.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> init: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _firstNode: <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></h5>
 								</li>
@@ -177,42 +218,6 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="_firstnode" class="tsd-anchor"></a>
-					<h3>_first<wbr>Node</h3>
-					<div class="tsd-signature tsd-kind-icon">_first<wbr>Node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#_firstnode">_firstNode</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L90">list/single.ts:90</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="_lastnode" class="tsd-anchor"></a>
-					<h3>_last<wbr>Node</h3>
-					<div class="tsd-signature tsd-kind-icon">_last<wbr>Node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#_lastnode">_lastNode</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L90">list/single.ts:90</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="_size" class="tsd-anchor"></a>
-					<h3>_size</h3>
-					<div class="tsd-signature tsd-kind-icon">_size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#_size">_size</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L90">list/single.ts:90</a></li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 					<a name="size" class="tsd-anchor"></a>
@@ -225,7 +230,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#size">size</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L184">list/single.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L220">list/single.ts:220</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -247,37 +252,10 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#___iterator">__@iterator</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L197">list/single.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L233">list/single.ts:233</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="_findprev" class="tsd-anchor"></a>
-					<h3>_find<wbr>Prev</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">_find<wbr>Prev<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#_findprev">_findPrev</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L94">list/single.ts:94</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>node: <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
-							</h4>
 						</li>
 					</ul>
 				</section>
@@ -292,7 +270,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L102">list/single.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L138">list/single.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -317,7 +295,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#append">append</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#append">append</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L159">list/single.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L195">list/single.ts:195</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -342,7 +320,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#at">at</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#at">at</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L205">list/single.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L241">list/single.ts:241</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -367,7 +345,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#clear">clear</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L291">list/single.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L327">list/single.ts:327</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -385,7 +363,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#count">count</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L173">list/single.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L209">list/single.ts:209</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -410,7 +388,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#delete">delete</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L235">list/single.ts:235</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L271">list/single.ts:271</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -435,7 +413,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#deleteall">deleteAll</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#deleteall">deleteAll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L257">list/single.ts:257</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L293">list/single.ts:293</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -459,7 +437,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#deleteat">deleteAt</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L221">list/single.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L257">list/single.ts:257</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -484,7 +462,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#first">first</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#first">first</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L110">list/single.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L146">list/single.ts:146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -503,7 +481,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#getat">getAt</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#getat">getAt</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L106">list/single.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L142">list/single.ts:142</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -528,7 +506,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#has">has</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L188">list/single.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L224">list/single.ts:224</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -552,7 +530,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#insertafter">insertAfter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L139">list/single.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L175">list/single.ts:175</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -579,7 +557,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#insertbefore">insertBefore</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L124">list/single.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L160">list/single.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -607,7 +585,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#last">last</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#last">last</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L117">list/single.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L153">list/single.ts:153</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -625,7 +603,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#peek">peek</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/stack.ts#L8">stack.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/stack.ts#L30">stack.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -643,7 +621,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#pop">pop</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/stack.ts#L12">stack.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/stack.ts#L34">stack.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -662,7 +640,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#prepend">prepend</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#prepend">prepend</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L149">list/single.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L185">list/single.ts:185</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -687,7 +665,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#rest">rest</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#rest">rest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L284">list/single.ts:284</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L320">list/single.ts:320</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -706,7 +684,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#torange">toRange</a></p>
 								<p>Inherited from <a href="singlelinkedlist.html">SingleLinkedList</a>.<a href="singlelinkedlist.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/single.ts#L280">list/single.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/single.ts#L316">list/single.ts:316</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="singlelinkedlistrange.html" class="tsd-signature-type">SingleLinkedListRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -733,23 +711,11 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
 								<a href="stack.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="stack.html#_firstnode" class="tsd-kind-icon">_first<wbr>Node</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="stack.html#_lastnode" class="tsd-kind-icon">_last<wbr>Node</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="stack.html#_size" class="tsd-kind-icon">_size</a>
-							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="stack.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="stack.html#___iterator" class="tsd-kind-icon">__@iterator</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="stack.html#_findprev" class="tsd-kind-icon">_find<wbr>Prev</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="stack.html#add" class="tsd-kind-icon">add</a>

@@ -46,8 +46,8 @@ export class SingleLinkedListCursor<T> implements Cursor<T> {
 }
 
 export class SingleLinkedListRange<T> implements CollectionRange<T> {
-  
-  constructor(public _list: SingleLinkedList<T>, public _startNode: Node<T> | null, public _endNode: Node<T> | null, public _reversed: boolean) {
+
+ constructor(public _list: SingleLinkedList<T>, public _startNode: Node<T> | null, public _endNode: Node<T> | null, public _reversed: boolean) {
 
   }
   
@@ -85,12 +85,48 @@ export class SingleLinkedListRange<T> implements CollectionRange<T> {
 
 }
 
+/**
+ * A singly-linked list, which is sometimes slower than a doubly-linked list
+ * but consumes less memory.
+ *
+ * The following table summarises the time complexity of the most commonly used
+ * properties.
+ *
+ * | Property name                                        | Worst-case |
+ * |------------------------------------------------------|------------|
+ * | {@link SingleLinkedList.append append()}             | O(1)       |
+ * | {@link SingleLinkedList.insertAfter insertAfter()}   | O(1)       |
+ * | {@link SingleLinkedList.insertBefore insertBefore()} | O(n)       |
+ * | {@link SingleLinkedList.deleteAt deleteAt()}         | O(n)       |
+ * | {@link SingleLinkedList.prepend prepend()}           | O(1)       |
+ * | {@link SingleLinkedList.size size}                   | O(1)       |
+ *
+ * Some remarks:
+ *
+ *  - Deleting at the beginning of a singly-linked list is guaranteed to be in `O(1)`.
+ *
+ * @see [[DoubleLinkedList]]
+ *
+ * @typeparam T The type of element in this collection.
+ */
 export class SingleLinkedList<T> implements List<T> {
 
-  constructor(public _firstNode: Node<T> | null = null, public _lastNode: Node<T> | null = null, public _size = 0) {
-
+  constructor(
+    init?: Iterable<T>,
+    /** @ignore */ public _firstNode: Node<T> | null = null, 
+    /** @ignore */ public _lastNode: Node<T> | null = null,
+    /** @ignore */ public _size = 0
+  ) {
+    if (init !== undefined) {
+      for (const el of init) {
+        this.append(el);
+      }
+    }
   }
 
+  /**
+   * @ignore
+   */
   _findPrev(node: Node<T>) {
     let prev = this._firstNode;
     while (prev !== null && prev.next !== node) {
@@ -285,7 +321,7 @@ export class SingleLinkedList<T> implements List<T> {
     if (this._firstNode === null) {
       throw new Error(`Could not get rest of list: list is empty.`)
     }
-    return new SingleLinkedList<T>(this._firstNode.next, this._lastNode, this._size-1)
+    return new SingleLinkedList<T>([], this._firstNode.next, this._lastNode, this._size-1)
   }
 
   clear() {

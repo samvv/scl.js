@@ -6,6 +6,7 @@ This document keeps track of any changes made to the software.
 ### v2.0.0
 
  - Renamed the `Container` concept to `Collection`
+ - Multi-index collection composition is temporarily removed
  - A `View` is now a `CollectionRange`
  - Renamed some interfaces to clearer names
  - `deleteAll` and `delete` are now required methods of `Collection`
@@ -20,6 +21,7 @@ This document keeps track of any changes made to the software.
  - Introduced strict mode and fixed all TypeScript errors
  - Fixed some bugs and API inconsistencies
  - Updated all dependencies to migitate security risks
+ - Fixed all TypeScript errors
 
 ### v1.0.2
 

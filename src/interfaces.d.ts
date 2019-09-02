@@ -174,7 +174,7 @@ export interface KeyedCollection<T, K = T> extends Collection<T> {
   /**
    * Checks whether there a pair in this collection that has the given key. 
    *
-   * In some cases, this might be faster than accessing {@link CollectionRange.size} of {@link KeyedCollection.equal equal()}. In others,
+   * In some cases, this might be faster than accessing {@link CollectionRange.size} of {@link KeyedCollection.equalKeys equalKeys()}. In others,
    * it will be equivalent to it.
    */
   hasKey(key: K): boolean

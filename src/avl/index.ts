@@ -2,7 +2,10 @@
 import { KeyedCollection, Cursor, CollectionRange } from "../interfaces"
 import { liftLesser, lesser } from "../util"
 
-class Node<T> implements Cursor<T> {
+/**
+ * @ignore
+ */
+export class Node<T> implements Cursor<T> {
 
   balance: number = 0;
   left: Node<T> | null = null;
@@ -91,7 +94,10 @@ class RNode<T> {
 
 }
 
-class NodeRange<T> implements CollectionRange<T> {
+/**
+ * @ignore
+ */
+export class NodeRange<T> implements CollectionRange<T> {
 
   constructor(public min: Node<T> | null, public max: Node<T> | null, public _reversed = false) {
     
@@ -199,21 +205,51 @@ function rotateRight<T>(node: Node<T>) {
 
 type AddHint<T> = [boolean, Node<T> | null, number?];
 
+/**
+ * An AVL tree is a kind of binary tree that balances itself according a
+ * specific set of rules whenever a node is inserted or deleted. As a
+ * consequence, lookup, insertion and deletion are guaranteed to be in
+ * `O(log(n))`.
+ *
+ * ```ts
+ * import AVL from "scl/avl"
+ * ```
+ *
+ * The following table summarises the worst-case time complexity of the most
+ * commonly used properies of this class. For more information, see the
+ * documentation of the respective property.
+ *
+ * | Property name                         | Worst case   |
+ * |---------------------------------------|--------------|
+ * | {@link AVLTree.add add()}             | `O(log(n))`  |
+ * | {@link AVLTree.clear clear()}         | `O(1)`       |
+ * | {@link AVLTree.equalKeys equalKeys()} | `O(n)`       |
+ * | {@link AVLTree.delete delete()}       | `O(log(n))`  |
+ * | {@link AVLTree.deleteAll deleteAll()} | `O(n)`       |
+ * | {@link AVLTree.deleteAt deleteAt()}   | `O(log(n))`  |
+ * | {@link AVLTree.size size}             | `O(1)`  |
+ * 
+ * @typeparam T The type of element in the collection.
+ * @typeparam K The type of the element's key.
+ */
 export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
 
-  _comparator: (a: K, b: K) => number;
+  protected _comparator: (a: K, b: K) => number;
 
   constructor(
-        public lessThan: (a: K, b: K) => boolean = lesser
-      , public _getKey: (val: T) => K = val => val as any
-      , public isEqual: (a: T, b: T) => boolean = (a, b) => a === b
-      , public _allowDuplicates = true) {
+        protected lessThan: (a: K, b: K) => boolean = lesser
+      , protected getKey: (val: T) => K = val => val as any
+      , protected isEqual: (a: T, b: T) => boolean = (a, b) => a === b
+      , protected _allowDuplicates = true) {
     this._comparator = liftLesser(lessThan);
   }
+  
+  protected _size = 0;
+  protected _root: Node<T> | null = null;
 
-  _size = 0;
-  _root: Node<T> | null = null;
-
+  /**
+   * This method always runs in `O(1)` time.
+   */
   clear() {
     this._root = null;
     this._size = 0;
@@ -226,7 +262,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
   getAddHint(value: T): AddHint<T> {
 
     const compare = this._comparator
-        , getKey = this._getKey
+        , getKey = this.getKey
         , key = getKey(value); 
     let node    = this._root
       , parent  = null
@@ -252,6 +288,9 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return [true, parent, cmp];
   }
 
+  /**
+   * This operation takes `O(log(n))` time.
+   */
   add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
     if (this._root === null) {
       this._root = new Node<T>(value);
@@ -259,7 +298,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
       return [true, this._root];
     }
 
-    const getKey = this._getKey;
+    const getKey = this.getKey;
     if (hint === undefined) {
       hint = this.getAddHint(value);
     }
@@ -307,7 +346,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
   }
 
   has(element: T): boolean {
-    for (const node of this.equalKeys(this._getKey(element))) {
+    for (const node of this.equalKeys(this.getKey(element))) {
       if (this.isEqual(node.value, element)) {
         return true;
       }
@@ -315,40 +354,26 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return false;
   }
 
+  /**
+   * This method takes `O(log(n))` time.
+   */
   hasKey(key: K): boolean {
     return this.findKey(key) !== null;
   }
 
-  // find(val: T): Node<T> | null {
-    // let node = this._root;
-    // const compare = this._comparator
-    //     , getKey = this._getKey
-    // , key = getKey(val);
-    // const locateEqual = (node: Node<T> | null): Node<T> | null => {
-    //   if (node === null) {
-    //     return null;
-    //   }
-    //   if (this.isEqual(node.value, val)) {
-    //     return node;
-    //   }
-    //   return locateEqual(node.left) || locateEqual(node.right);
-    // }
-    // while (node !== null) {
-    //   const cmp = compare(getKey(node.value), key);
-    //   if      (cmp > 0) node = node.left;
-    //   else if (cmp < 0) node = node.right;
-    //   else return       locateEqual(node);
-    // }
-    // return null;
-  // }
-
   /**
-   * Always returns the topmost node that satisfies the given constraints.
+   * This method always returns the topmost node that contains the given key,
+   * which means that calling {@link Cursor.next next()} on the result will
+   * always return a node with the same key if there is any.
+   *
+   * This method takes `O(log(n))` time.
+   *
+   * @param key The key so search for.
    */
   findKey(key: K): Node<T> | null {
     let node = this._root;
     const compare = this._comparator;
-    const getKey = this._getKey;
+    const getKey = this.getKey;
     while (node !== null) {
       const cmp = compare(key, getKey(node.value));
       if (cmp < 0)   node = node.left;
@@ -357,20 +382,26 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     }
     return null;
   }
-
-  _findMin (key: K, node = this.findKey(key)): Node<T> | null {
+  
+  /**
+   * @ignore
+   */
+  _findMin(key: K, node = this.findKey(key)): Node<T> | null {
     if (node === null)
       return null;
-    const cmp = this._comparator(key, this._getKey(node.value));
+    const cmp = this._comparator(key, this.getKey(node.value));
     if (cmp < 0) return this._findMin(key, node.left);
     if (cmp > 0) return this._findMin(key, node.right);
     return this._findMin(key, node.left) || node;
   }
 
-  _findMax (key: K, node = this.findKey(key)): Node<T> | null {
+  /**
+   * @ignore
+   */
+  _findMax(key: K, node = this.findKey(key)): Node<T> | null {
     if (node === null)
       return null;
-    const cmp = this._comparator(key, this._getKey(node.value));
+    const cmp = this._comparator(key, this.getKey(node.value));
     if (cmp < 0)
       return this._findMax(key, node.left);
     if (cmp > 0)
@@ -378,23 +409,10 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return this._findMax(key, node.right) || node;
   }
 
-  _nodesWithKey(key: K): Node<T>[] {
-
-    let top = this.findKey(key)
-        , min = this._findMin(key, top)
-        , max = this._findMax(key, top);
-
-    let out = [], node = min;
-    while (node !== null) {
-      out.push(node);
-      if (node === max)
-        break;
-      node = node.next();
-    }
-
-    return out;
-  }
-
+  /**
+   * This methods generally returns in `O(log(n))` time, but this might become `O(n)` in
+   * the case where multiple elements with the same key are allowed.
+   */
   equalKeys(key: K): NodeRange<T> {
     const top = this.findKey(key)
         , min = this._findMin(key, top)
@@ -404,7 +422,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
 
   lowerKey(key: K): Node<T> | null {
     const compare = this._comparator;
-    const getKey = this._getKey;
+    const getKey = this.getKey;
     let node = this._root;
     while (node !== null && compare(getKey(node.value), key) > 0) {
       if (node.left !== null) {
@@ -423,7 +441,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
 
   upperKey(key: K): Node<T> | null {
     const compare = this._comparator;
-    const getKey = this._getKey;
+    const getKey = this.getKey;
     let node = this._root;
     while (node !== null && compare(getKey(node.value), key) < 0) {
       if (node.right !== null) {
@@ -469,8 +487,14 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     }
   }
 
-  deleteKey(key: K) {
-    let deleteCount = 0, nodes = this._nodesWithKey(key);
+  /**
+   * This operation generally takes `O(log(n))` time, unless multiple entries
+   * with the same key are allowed. In that case, the complexity can grow to
+   * `O(n)`.
+   */
+  deleteKey(key: K): number {
+    let deleteCount = 0;
+    const nodes = this.equalKeys(key);
     for (const node of nodes) {
       this.deleteAt(node);
       ++deleteCount;
@@ -478,8 +502,14 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return deleteCount;
   }
 
-  deleteAll(value: T) {
-    let deleteCount = 0, nodes = this._nodesWithKey(this._getKey(value));
+  /**
+   * This operation generally takes `O(log(n))` time, unless multiple entries
+   * with the same key are allowed. In that case, the complexity can grow to
+   * `O(n)`.
+   */
+  deleteAll(value: T): number {
+    let deleteCount = 0;
+    const nodes = this.equalKeys(this.getKey(value));
     for (const node of nodes) {
       if (this.isEqual(node.value, value)) {
         this.deleteAt(node);
@@ -489,13 +519,13 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return deleteCount;
   }
 
-  *getNodes(): any {
-    // TODO issue #12
-  }
-
-  delete(el: T): boolean {
-    for (const node of this.equalKeys(this._getKey(el))) {
-      if (this.isEqual(node.value, el)) {
+  /**
+   * This method takes at most `O(log(n))` time, where `n` is the amount of
+   * elements in the collection.
+   */
+  delete(element: T): boolean {
+    for (const node of this.equalKeys(this.getKey(element))) {
+      if (this.isEqual(node.value, element)) {
         this.deleteAt(node);
         return true;
       }
@@ -503,6 +533,10 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return false;
   }
 
+  /**
+   * Takes `O(log(n))` time, and is slightly faster than deleting the element
+   * by key due to the fact that a search for the node has already been done.
+   */
   deleteAt(node: Node<T>) {
     let returnValue = node.value;
     let max, min;

@@ -76,6 +76,60 @@
   collection.add(<span class="hljs-number">4</span>)
   collection.add(<span class="hljs-number">5</span>)
 }</code></pre>
+				<p>The following table lists what kind of collections are available and how they
+				relate to one another:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Container</th>
+							<th>Type</th>
+							<th>Unique</th>
+							<th>Order</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>Bag</td>
+							<td>T</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>Set</td>
+							<td>T</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>Sequence</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Queuelike</td>
+							<td>T</td>
+							<td>No</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>Dict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>ManyDict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>Depends*</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>MultiDict</td>
+							<td>Pair&lt;K, V&gt;</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+				</tbody></table>
 				<p>If you found a problem with the documentation, you can open an issue on
 					<a href="https://github.com/samvv/scl.js/issues">GitHub</a>. If you like this library,
 					don&#39;t forget to star <a href="https://github.com/samvv/scl.js">the repository</a> and
@@ -96,19 +150,10 @@
 						<a href="classes/avltree.html" class="tsd-kind-icon">AVLTree</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/binaryminheap.html" class="tsd-kind-icon">Binary<wbr>Min<wbr>Heap</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/filteredrange.html" class="tsd-kind-icon">Filtered<wbr>Range</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/hash.html" class="tsd-kind-icon">Hash</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/hashcursor.html" class="tsd-kind-icon">Hash<wbr>Cursor</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
@@ -158,9 +203,6 @@
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/vector.html" class="tsd-kind-icon">Vector</a>
 					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/vectorcursor.html" class="tsd-kind-icon">Vector<wbr>Cursor</a>
-					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/bag.html" class="tsd-kind-icon">Bag</a>
 					</li>
@@ -202,9 +244,6 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/set.html" class="tsd-kind-icon">Set</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#bucket" class="tsd-kind-icon">Bucket</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#pair" class="tsd-kind-icon">Pair</a>

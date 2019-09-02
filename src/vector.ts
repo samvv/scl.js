@@ -1,6 +1,9 @@
 
 import { Collection, Sequence, CollectionRange, Cursor } from "./interfaces"
 
+/**
+ * @ignore
+ */
 export class VectorCursor<T> {
 
   get value() {
@@ -100,16 +103,54 @@ const DEFAULT_ALLOC_STEP = 0xff
 /**
  * A vector is a sequence with fast member access by sequence number.
  *
+ * ```
+ * import Vector from "scl/vector"
+ * ```
+ *
  * Inserting elements anywhere else than at the end is very slow and should be
- * avoided. When inserting at any position, the vector may need to re-allocate
- * to provide enough room for the new element.
+ * avoided. When inserting, the vector may need to re-allocate to provide
+ * enough room for the new element.
+ *
+ * The following table summarises the time complexity of the most commonly used
+ * properties.
+ *
+ * | Property name                              | Worst-case |
+ * |--------------------------------------------|------------|
+ * | {@link Vector.append append()}             | O(n)       |
+ * | {@link Vector.at at()}                     | O(1)       |
+ * | {@link Vector.insertAfter insertAfter()}   | O(n)       |
+ * | {@link Vector.insertBefore insertBefore()} | O(n)       |
+ * | {@link Vector.deleteAt deleteAt()}         | O(n)       |
+ * | {@link Vector.prepend prepend()}           | O(n)       |
+ * | {@link Vector.size size}                   | O(1)       |
+ * 
+ * @see [[DoubleLinkedList]]
+ * @see [[SingleLinkedList]]
+ *
+ * @typeparam T The type of element in the collection.
  */
 export class Vector<T> implements Sequence<T> {
 
+  /**
+   * @ignore
+   */
   _elements: T[];
+  /**
+   * @ignore
+   */
   _size: number;
 
-  constructor(init?: Iterable<T>, public _allocStep = DEFAULT_ALLOC_STEP) {
+  /**
+   * Construct a new vector, optionally filled with the given elements.
+   *
+   * ```ts
+   *  const v1 = new Vector([1, 2, 3, 4, 5])
+   *  assert.strictEqual(v.size, 5)
+   * ```
+   *
+   * @param init Any iterable, of which the elements will be copied to this vector.
+   */
+  constructor(init?: Iterable<T>, /** @ignore */ public _allocStep = DEFAULT_ALLOC_STEP) {
     if (init !== undefined) {
       this._elements = [...init];
       this._size = this._elements.length;

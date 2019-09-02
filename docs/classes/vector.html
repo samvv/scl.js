@@ -67,9 +67,55 @@
 					<div class="lead">
 						<p>A vector is a sequence with fast member access by sequence number.</p>
 					</div>
-					<p>Inserting elements anywhere else than at the end is very slow and should be
-						avoided. When inserting at any position, the vector may need to re-allocate
-					to provide enough room for the new element.</p>
+					<pre><code><span class="hljs-keyword">import</span> Vector <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/vector"</span></code></pre><p>Inserting elements anywhere else than at the end is very slow and should be
+						avoided. When inserting, the vector may need to re-allocate to provide
+					enough room for the new element.</p>
+					<p>The following table summarises the time complexity of the most commonly used
+					properties.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Property name</th>
+								<th>Worst-case</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td><a href="vector.html#append">append()</a></td>
+								<td>O(n)</td>
+							</tr>
+							<tr>
+								<td><a href="vector.html#at">at()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="vector.html#insertafter">insertAfter()</a></td>
+								<td>O(n)</td>
+							</tr>
+							<tr>
+								<td><a href="vector.html#insertbefore">insertBefore()</a></td>
+								<td>O(n)</td>
+							</tr>
+							<tr>
+								<td><a href="vector.html#deleteat">deleteAt()</a></td>
+								<td>O(n)</td>
+							</tr>
+							<tr>
+								<td><a href="vector.html#prepend">prepend()</a></td>
+								<td>O(n)</td>
+							</tr>
+							<tr>
+								<td><a href="vector.html#size">size</a></td>
+								<td>O(1)</td>
+							</tr>
+					</tbody></table>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="doublelinkedlist.html">DoubleLinkedList</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="singlelinkedlist.html">SingleLinkedList</a></p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -77,6 +123,11 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of element in the collection.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -102,14 +153,6 @@
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="vector.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vector.html#_allocstep" class="tsd-kind-icon">_alloc<wbr>Step</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vector.html#_elements" class="tsd-kind-icon">_elements</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vector.html#_size" class="tsd-kind-icon">_size</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -160,13 +203,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L110">vector.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L141">vector.ts:141</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Construct a new vector, optionally filled with the given elements.</p>
+								</div>
+								<pre><code class="language-ts"> <span class="hljs-keyword">const</span> v1 = <span class="hljs-keyword">new</span> Vector([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])
+ assert.strictEqual(v.size, <span class="hljs-number">5</span>)</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> init: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Any iterable, of which the elements will be copied to this vector.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _allocStep: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;DEFAULT_ALLOC_STEP</span></h5>
@@ -175,39 +230,6 @@
 							<h4 class="tsd-returns-title">Returns <a href="vector.html" class="tsd-signature-type">Vector</a></h4>
 						</li>
 					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_allocstep" class="tsd-anchor"></a>
-					<h3>_alloc<wbr>Step</h3>
-					<div class="tsd-signature tsd-kind-icon">_alloc<wbr>Step<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L112">vector.ts:112</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_elements" class="tsd-anchor"></a>
-					<h3>_elements</h3>
-					<div class="tsd-signature tsd-kind-icon">_elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L109">vector.ts:109</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_size" class="tsd-anchor"></a>
-					<h3>_size</h3>
-					<div class="tsd-signature tsd-kind-icon">_size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L110">vector.ts:110</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -222,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L160">vector.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L201">vector.ts:201</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -243,7 +265,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L225">vector.ts:225</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L266">vector.ts:266</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -260,7 +282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L233">vector.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L274">vector.ts:274</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -283,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L126">vector.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L167">vector.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -306,14 +328,14 @@
 					<a name="append" class="tsd-anchor"></a>
 					<h3>append</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">append<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">append<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#append">append</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L216">vector.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L257">vector.ts:257</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -322,7 +344,7 @@
 									<h5>el: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -330,14 +352,14 @@
 					<a name="at" class="tsd-anchor"></a>
 					<h3>at</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#at">at</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L237">vector.ts:237</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L278">vector.ts:278</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -346,7 +368,7 @@
 									<h5>position: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -361,7 +383,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L277">vector.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L318">vector.ts:318</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -379,7 +401,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#clone">clone</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L282">vector.ts:282</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L323">vector.ts:323</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="vector.html" class="tsd-signature-type">Vector</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -397,7 +419,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L244">vector.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L285">vector.ts:285</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -421,7 +443,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#deleteall">deleteAll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L263">vector.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L304">vector.ts:304</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -438,19 +460,19 @@
 					<a name="deleteat" class="tsd-anchor"></a>
 					<h3>delete<wbr>At</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L259">vector.ts:259</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L300">vector.ts:300</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>pos: <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -467,7 +489,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L254">vector.ts:254</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L295">vector.ts:295</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -491,7 +513,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#first">first</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L188">vector.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L229">vector.ts:229</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -509,7 +531,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#getat">getAt</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L152">vector.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L193">vector.ts:193</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -533,7 +555,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L136">vector.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L177">vector.ts:177</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -550,25 +572,25 @@
 					<a name="insertafter" class="tsd-anchor"></a>
 					<h3>insert<wbr>After</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">insert<wbr>After<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">insert<wbr>After<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L164">vector.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L205">vector.ts:205</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>pos: <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>element: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -576,25 +598,25 @@
 					<a name="insertbefore" class="tsd-anchor"></a>
 					<h3>insert<wbr>Before</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">insert<wbr>Before<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">insert<wbr>Before<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L174">vector.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L215">vector.ts:215</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>pos: <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>element: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -609,7 +631,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#last">last</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L195">vector.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L236">vector.ts:236</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -620,14 +642,14 @@
 					<a name="prepend" class="tsd-anchor"></a>
 					<h3>prepend</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">prepend<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">prepend<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#prepend">prepend</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L206">vector.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L247">vector.ts:247</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -636,7 +658,7 @@
 									<h5>el: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="vectorcursor.html" class="tsd-signature-type">VectorCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -650,7 +672,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L145">vector.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L186">vector.ts:186</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -676,7 +698,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L156">vector.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L197">vector.ts:197</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -693,7 +715,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L184">vector.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L225">vector.ts:225</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -720,7 +742,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sequence.html">Sequence</a>.<a href="../interfaces/sequence.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/vector.ts#L202">vector.ts:202</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/vector.ts#L243">vector.ts:243</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -746,15 +768,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="vector.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="vector.html#_allocstep" class="tsd-kind-icon">_alloc<wbr>Step</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="vector.html#_elements" class="tsd-kind-icon">_elements</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="vector.html#_size" class="tsd-kind-icon">_size</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="vector.html#size" class="tsd-kind-icon">size</a>

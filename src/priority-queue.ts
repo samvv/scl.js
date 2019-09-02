@@ -4,12 +4,38 @@ import Heap from "./heap"
 import { lesser } from "./util"
 import { VectorCursor } from "./vector"
 
+/**
+ * A queue that pops element based on their given priority.
+ *
+ * ```ts
+ * import PriorityQueue from "scl/priority-queue"
+ * ```
+ *
+ * The queue will return elements with a lower priority first. If you want the
+ * reverse, simply invert the function that is used to compare two elements.
+ *
+ * The following table summarises the time complexity of the most commonly used
+ * properties.
+ *
+ * | Property name                         | Worst-case |
+ * |---------------------------------------|------------|
+ * | {@link PriorityQueue.add add()}       | O(log(n))  |
+ * | {@link PriorityQueue.peek peek()}     | O(1)       |
+ * | {@link PriorityQueue.pop pop()}       | O(log(n))  |
+ * | {@link PriorityQueue.size size}       | O(1)       |
+ *
+ * @see [[Queue]]
+ * @see [[Stack]]
+ */
 export class PriorityQueue<T> implements Queuelike<T> {
- 
+
+  /** 
+   * @ignore
+   */
   _heap: Heap<T>
 
-  constructor(elements: Iterable<T> = [], compare: (a: T, b: T) => boolean = lesser) {
-    this._heap = new Heap<T>(elements, compare)
+  constructor(compare: (a: T, b: T) => boolean = lesser) {
+    this._heap = new Heap<T>([], compare)
   }
 
   get size() {

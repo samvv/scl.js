@@ -62,14 +62,35 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A hash is a low-level collection upon which more complex collections may be
+						built, such as a <a href="../interfaces/dict.html">dictionary</a>.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> Hash <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/hash"</span></code></pre>
+					<p>All methods in this collection, given that a proper hashing function is set
+					up, are in <code>O(1)</code>.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of elements in the collection.</p>
+							</div>
+						</div>
 					</li>
 					<li>
 						<h4>K</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of the element&#39;s key.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -111,8 +132,6 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hash.html#_array" class="tsd-kind-icon">_array</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hash.html#_size" class="tsd-kind-icon">_size</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hash.html#gethash" class="tsd-kind-icon">get<wbr>Hash</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hash.html#getkey" class="tsd-kind-icon">get<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hash.html#keysequal" class="tsd-kind-icon">keys<wbr>Equal</a></li>
@@ -129,8 +148,6 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hash.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hash.html#_getbucket" class="tsd-kind-icon">_get<wbr>Bucket</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hash.html#_getconflict" class="tsd-kind-icon">_get<wbr>Conflict</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hash.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hash.html#clear" class="tsd-kind-icon">clear</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hash.html#delete" class="tsd-kind-icon">delete</a></li>
@@ -160,7 +177,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L97">hash/index.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L127">hash/index.ts:127</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -267,32 +284,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_array" class="tsd-anchor"></a>
-					<h3>_array</h3>
-					<div class="tsd-signature tsd-kind-icon">_array<span class="tsd-signature-symbol">:</span> <a href="../globals.html#bucket" class="tsd-signature-type">Bucket</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L92">hash/index.ts:92</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_size" class="tsd-anchor"></a>
-					<h3>_size</h3>
-					<div class="tsd-signature tsd-kind-icon">_size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L93">hash/index.ts:93</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="gethash" class="tsd-anchor"></a>
 					<h3>get<wbr>Hash</h3>
 					<div class="tsd-signature tsd-kind-icon">get<wbr>Hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L100">hash/index.ts:100</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L130">hash/index.ts:130</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -323,7 +320,7 @@
 					<div class="tsd-signature tsd-kind-icon">get<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L103">hash/index.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L133">hash/index.ts:133</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -354,7 +351,7 @@
 					<div class="tsd-signature tsd-kind-icon">keys<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L101">hash/index.ts:101</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L131">hash/index.ts:131</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -388,7 +385,7 @@
 					<div class="tsd-signature tsd-kind-icon">values<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L102">hash/index.ts:102</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L132">hash/index.ts:132</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -429,7 +426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L108">hash/index.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L138">hash/index.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -450,7 +447,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L224">hash/index.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L257">hash/index.ts:257</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -458,71 +455,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="_getbucket" class="tsd-anchor"></a>
-					<h3>_get<wbr>Bucket</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">_get<wbr>Bucket<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#bucket" class="tsd-signature-type">Bucket</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L185">hash/index.ts:185</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">K</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../globals.html#bucket" class="tsd-signature-type">Bucket</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="_getconflict" class="tsd-anchor"></a>
-					<h3>_get<wbr>Conflict</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">_get<wbr>Conflict<span class="tsd-signature-symbol">(</span>bucket<span class="tsd-signature-symbol">: </span><a href="../globals.html#bucket" class="tsd-signature-type">Bucket</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DoubleLinkedListCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L95">hash/index.ts:95</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>bucket: <a href="../globals.html#bucket" class="tsd-signature-type">Bucket</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DoubleLinkedListCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="add" class="tsd-anchor"></a>
 					<h3>add</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L125">hash/index.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L155">hash/index.ts:155</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -531,7 +473,7 @@
 									<h5>element: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -546,7 +488,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L112">hash/index.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L142">hash/index.ts:142</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -564,7 +506,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L215">hash/index.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L248">hash/index.ts:248</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -588,7 +530,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#deleteall">deleteAll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L235">hash/index.ts:235</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L268">hash/index.ts:268</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -605,19 +547,19 @@
 					<a name="deleteat" class="tsd-anchor"></a>
 					<h3>delete<wbr>At</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>cursor<span class="tsd-signature-symbol">: </span><a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>cursor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L140">hash/index.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L170">hash/index.ts:170</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>cursor: <a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>cursor: <span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -635,7 +577,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#deletekey">deleteKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L195">hash/index.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L228">hash/index.ts:228</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -659,7 +601,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#equalkeys">equalKeys</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L116">hash/index.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L146">hash/index.ts:146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -676,13 +618,13 @@
 					<a name="find" class="tsd-anchor"></a>
 					<h3>find</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">find<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+						<li class="tsd-signature tsd-kind-icon">find<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L158">hash/index.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L188">hash/index.ts:188</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -691,7 +633,7 @@
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">null</span>
 							</h4>
@@ -702,14 +644,14 @@
 					<a name="findkey" class="tsd-anchor"></a>
 					<h3>find<wbr>Key</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">find<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#findkey">findKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L145">hash/index.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L175">hash/index.ts:175</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -718,7 +660,7 @@
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="hashcursor.html" class="tsd-signature-type">HashCursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">null</span>
 							</h4>
@@ -736,7 +678,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L172">hash/index.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L202">hash/index.ts:202</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -760,7 +702,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#haskey">hasKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L181">hash/index.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L211">hash/index.ts:211</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -784,7 +726,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/hash/index.ts#L211">hash/index.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L244">hash/index.ts:244</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HashRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -812,12 +754,6 @@
 								<a href="hash.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="hash.html#_array" class="tsd-kind-icon">_array</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="hash.html#_size" class="tsd-kind-icon">_size</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="hash.html#gethash" class="tsd-kind-icon">get<wbr>Hash</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -834,12 +770,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="hash.html#___iterator" class="tsd-kind-icon">__@iterator</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="hash.html#_getbucket" class="tsd-kind-icon">_get<wbr>Bucket</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="hash.html#_getconflict" class="tsd-kind-icon">_get<wbr>Conflict</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="hash.html#add" class="tsd-kind-icon">add</a>

@@ -62,11 +62,60 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A <em>FIFO queue</em>, where the first element pushed into the collection is also
+						the first to be popped out of it.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> Queue <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/queue"</span></code></pre>
+					<p>Pushing and popping an element are both in <code>O(1)</code>.</p>
+					<p>The following table summarises the time complexity of the most commonly used
+					properties.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Property name</th>
+								<th>Worst-case</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td><a href="queue.html#add">add()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="queue.html#peek">peek()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="queue.html#pop">pop()</a></td>
+								<td>O(1)</td>
+							</tr>
+							<tr>
+								<td><a href="queue.html#size">size</a></td>
+								<td>O(1)</td>
+							</tr>
+					</tbody></table>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="stack.html">Stack</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="priorityqueue.html">PriorityQueue</a></p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of element in this queue.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -98,14 +147,6 @@
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="queue.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-inherited">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="queue.html#_firstnode" class="tsd-kind-icon">_first<wbr>Node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="queue.html#_lastnode" class="tsd-kind-icon">_last<wbr>Node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="queue.html#_size" class="tsd-kind-icon">_size</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
@@ -154,7 +195,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L78">list/double.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L98">list/double.ts:98</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -175,42 +216,6 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="_firstnode" class="tsd-anchor"></a>
-					<h3>_first<wbr>Node</h3>
-					<div class="tsd-signature tsd-kind-icon">_first<wbr>Node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#_firstnode">_firstNode</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L80">list/double.ts:80</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="_lastnode" class="tsd-anchor"></a>
-					<h3>_last<wbr>Node</h3>
-					<div class="tsd-signature tsd-kind-icon">_last<wbr>Node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#_lastnode">_lastNode</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L80">list/double.ts:80</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="_size" class="tsd-anchor"></a>
-					<h3>_size</h3>
-					<div class="tsd-signature tsd-kind-icon">_size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#_size">_size</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L80">list/double.ts:80</a></li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 					<a name="size" class="tsd-anchor"></a>
@@ -223,7 +228,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#size">size</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L148">list/double.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L180">list/double.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -245,7 +250,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#___iterator">__@iterator</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L160">list/double.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L192">list/double.ts:192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -263,9 +268,14 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/queue.ts#L18">queue.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/queue.ts#L52">queue.ts:52</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method&#39;s time complexity is in <code>O(1)</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -288,7 +298,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#append">append</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#append">append</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L136">list/double.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L168">list/double.ts:168</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -313,7 +323,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#at">at</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#at">at</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L172">list/double.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L204">list/double.ts:204</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -338,7 +348,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#clear">clear</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L231">list/double.ts:231</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L263">list/double.ts:263</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -357,7 +367,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#delete">delete</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L201">list/double.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L233">list/double.ts:233</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -382,7 +392,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#deleteall">deleteAll</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#deleteall">deleteAll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L212">list/double.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L244">list/double.ts:244</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -406,7 +416,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#deleteat">deleteAt</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L185">list/double.ts:185</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L217">list/double.ts:217</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -431,7 +441,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#first">first</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#first">first</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L96">list/double.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L128">list/double.ts:128</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -450,7 +460,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#getat">getAt</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#getat">getAt</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L181">list/double.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L213">list/double.ts:213</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -475,7 +485,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#has">has</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L152">list/double.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L184">list/double.ts:184</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -499,7 +509,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#insertafter">insertAfter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L114">list/double.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L146">list/double.ts:146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -526,7 +536,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#insertbefore">insertBefore</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L84">list/double.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L116">list/double.ts:116</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -554,7 +564,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#last">last</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#last">last</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L103">list/double.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L135">list/double.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -572,9 +582,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#peek">peek</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/queue.ts#L8">queue.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/queue.ts#L36">queue.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method&#39;s time complexity is in <code>O(1)</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
 						</li>
 					</ul>
@@ -590,9 +605,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#pop">pop</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/queue.ts#L12">queue.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/queue.ts#L43">queue.ts:43</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method&#39;s time complexity is in <code>O(1)</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
 						</li>
 					</ul>
@@ -609,7 +629,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#prepend">prepend</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#prepend">prepend</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L126">list/double.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L158">list/double.ts:158</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -634,7 +654,7 @@
 								<p>Implementation of <a href="../interfaces/list.html">List</a>.<a href="../interfaces/list.html#rest">rest</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#rest">rest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L224">list/double.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L256">list/double.ts:256</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -653,7 +673,7 @@
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#torange">toRange</a></p>
 								<p>Inherited from <a href="doublelinkedlist.html">DoubleLinkedList</a>.<a href="doublelinkedlist.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/c24e1eb/src/list/double.ts#L168">list/double.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/list/double.ts#L200">list/double.ts:200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -679,15 +699,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
 								<a href="queue.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="queue.html#_firstnode" class="tsd-kind-icon">_first<wbr>Node</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="queue.html#_lastnode" class="tsd-kind-icon">_last<wbr>Node</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="queue.html#_size" class="tsd-kind-icon">_size</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="queue.html#size" class="tsd-kind-icon">size</a>

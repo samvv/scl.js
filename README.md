@@ -33,51 +33,6 @@ console.log([...d]) // outputs [1, 2] in order
 
 ```
 
-## Overview
-
-### Container composition
-
-**scl** comes with a powerful system for composing mupltiple indexes on the same
-data structure into one big structure. This is called 'collection composition',
-and the following example demonstrates its use.
-
-```ts
-import scl from "scl"
-
-const fastMemberCheck = scl()
-  .list()
-  .hash()
-  .build();
-
-fastMemberCheck.append(1);
-const pos = fastMemberCheck.prepend(2);
-fastMemberCheck.insertBefore(pos, 3);
-fastMemberCheck.insertAfter(pos, 4);
-
-console.log(fastMemberCheck.has(1)); // outputs true
-console.log(fastMemberCheck.has(6)); // outputs false
-
-console.log([...fastMemberCheck]); // outputs [3,2,4,1] in order
-
-```
-
-### Interfaces
-
-**scl** provides some interfaces which you can use as a template to define your
-own custom collections, which in turn allows you to make use of one of the
-various algoritms that come shipped with this library. Documentation for these
-interfaces is pending.
-
-| Container        | Type                  | Unique | Order     |
-|------------------|-----------------------|--------|-----------|
-| Bag              | T                     | No     | No        |
-| Set              | T                     | Yes    | No        |
-| List             | T                     | No     | Yes       |
-| Vector           | T                     | No     | Yes       |
-| Queuelike        | T                     | No     | Yes       |
-| Dict             | Pair&lt;K, V&gt;      | Yes    | No        |
-| MultiDict        | Pair&lt;K, V&gt;      | No     | No        |
-
 ### Implementations
 
 A :heavy_check_mark: indicates that the implementation has been completed. On the other hand, a
@@ -99,6 +54,7 @@ partially completed.
 | :heavy_check_mark: | queue              | O(1)      | O(1)      | O(n)      |
 | :heavy_check_mark: | stack              | O(1)      | O(1)      | O(n)      |
 | :heavy_check_mark: | priority-queue     | O(log(n)) | O(log(n)) | O(n)      |
+
 
 #### Ordered Containers
 
@@ -125,12 +81,6 @@ partially completed.
 Consult the [API docs](http://samvv.github.io/project/sync-collections) for more information on how to use them.
 
 ## Support
-
-You might also be interested in knowing [how this library's iterators
-work](http://github.com/samvv/scl.js/wiki/Iterators).
-
-Need to go asynchronous? Check out our [asynchronous
-collections](https://github.com/samvv/typescript-async-collections) library.
 
 Found an issue? A certain mistake? Need a certain kind of collection? [File an
 issue](https://github.com/samvv/scl.js/issues) or [send me a

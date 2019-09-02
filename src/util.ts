@@ -47,6 +47,9 @@ export abstract class RangeBase<T> implements CollectionRange<T> {
 
 }
 
+/**
+ * @ignore
+ */
 export class FilteredRange<T> extends RangeBase<T> {
 
   constructor(public _range: CollectionRange<T>, public _pred: (el: Cursor<T>) => boolean) {

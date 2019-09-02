@@ -26,6 +26,19 @@ function fill(collection: Collection<number>) {
 }
 ```
 
+The following table lists what kind of collections are available and how they
+relate to one another:
+
+| Container        | Type                  | Unique    | Order     |
+|------------------|-----------------------|-----------|-----------|
+| Bag              | T                     | No        | No        |
+| Set              | T                     | Yes       | No        |
+| Sequence         | T                     | No        | Yes       |
+| Queuelike        | T                     | No        | Yes       |
+| Dict             | Pair&lt;K, V&gt;      | Yes       | No        |
+| ManyDict         | Pair&lt;K, V&gt;      | Depends\* | No        |
+| MultiDict        | Pair&lt;K, V&gt;      | No        | No        |
+
 If you found a problem with the documentation, you can open an issue on
 [GitHub](https://github.com/samvv/scl.js/issues). If you like this library,
 don't forget to star [the repository](https://github.com/samvv/scl.js) and

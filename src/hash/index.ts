@@ -3,8 +3,14 @@ import { KeyedCollection, CollectionRange, Cursor, List } from "../interfaces"
 import DoubleLinkedList, { DoubleLinkedListRange, DoubleLinkedListCursor } from "../list/double"
 import { RangeBase } from "../util"
 
+/**
+ * @ignore
+ */
 export type Bucket<T> = DoubleLinkedList<T>;
 
+/**
+ * @ignore
+ */
 export class HashCursor<T> implements Cursor<T> {
 
   constructor(public _bucket: Bucket<T>, public _bucketPos: DoubleLinkedListCursor<T>) {
@@ -87,11 +93,35 @@ class HashRange<T, K> implements CollectionRange<T> {
 
 }
 
+/**
+ * A hash is a low-level collection upon which more complex collections may be
+ * built, such as a {@link Dict dictionary}.
+ *
+ * ```ts
+ * import Hash from "scl/hash"
+ * ```
+ *
+ * All methods in this collection, given that a proper hashing function is set
+ * up, are in `O(1)`.
+ *
+ * @typeparam T The type of elements in the collection.
+ * @typeparam K The type of the element's key.
+ */
 export class Hash<T, K = T> implements KeyedCollection<T, K> {
-  
+
+  /**
+   * @ignore
+   */
   _array: Bucket<T>[];
+
+  /**
+   * @ignore
+   */
   _size = 0;
 
+  /**
+   * @ignore
+   */
   _getConflict(bucket: Bucket<T>, value: T): DoubleLinkedListCursor<T> | null {
     return null;
   }
@@ -182,6 +212,9 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
     return this.findKey(key) !== null;
   }
 
+  /**
+   * @ignore
+   */
   _getBucket(key: K): Bucket<T> | null {
     const h = this.getHash(key);
     const i = h % this._array.length;
