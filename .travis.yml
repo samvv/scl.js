@@ -3,7 +3,6 @@ node_js:
 - '12'
 - '10'
 - '8'
-- '6'
 script:
 - gulp test
 after_success: 'npm run coveralls'
