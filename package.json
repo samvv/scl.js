@@ -30,7 +30,7 @@
   },
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "prepare": "gulp",
+    "build": "gulp",
     "test": "nyc mocha 'src/test/**/*.ts' --reporter min --require ts-node/register --require source-map-support/register",
     "build-docs": "typedoc src/ --exclude src/test/ --out docs --listInvalidSymbolLinks --includeDeclarations --excludeExternals --excludeNotExported --excludeExternals --excludeProtected --mode file --name 'Standard Collections Library for JavaScript' --readme readme-docs.md"
   },
