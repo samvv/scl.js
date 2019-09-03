@@ -64,7 +64,7 @@ console.log(d.hasKey(3)); // outputs false
 ## Documentation
 
 All collections are documented using [TypeDoc](https://typedoc.org), and 
-[the latest documentation is available here](https://samvv/github.io/scl.js/).
+[the latest documentation is available here](https://samvv.github.io/scl.js/).
 
 If you've found a mistake in the documentation or something is not quite clear,
 don't hesitate to [open an issue](https://github.com/samvv/scl.js/issues/).
