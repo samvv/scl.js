@@ -1,18 +1,19 @@
 
 import { Collection } from "../interfaces"
+import { expect } from "chai"
 
-import TreeMultiDict from "../dict/multi/tree"
-import HashMultiDict from "../dict/multi/hash"
-import TreeManyDict from "../dict/many/tree"
-import HashManyDict from "../dict/many/hash"
-import TreeDict from "../dict/tree"
-import HashDict from "../dict/hash"
-import Queue from "../queue"
-import Stack from "../stack"
-import PriorityQueue from "../priority-queue"
-import SingleLinkedList from "../list/single"
-import DoubleLinkedList from "../list/double"
-import Vector from "../vector"
+// import TreeMultiDict from "../dict/multi/tree"
+// import HashMultiDict from "../dict/multi/hash"
+// import TreeManyDict from "../dict/many/tree"
+// import HashManyDict from "../dict/many/hash"
+// import TreeDict from "../dict/tree"
+// import HashDict from "../dict/hash"
+// import Queue from "../queue"
+// import Stack from "../stack"
+// import PriorityQueue from "../priority-queue"
+// import SingleLinkedList from "../list/single"
+// import DoubleLinkedList from "../list/double"
+// import Vector from "../vector"
 
 const TEST_FILES = [
   {
@@ -79,6 +80,17 @@ const TEST_FILES = [
 
 interface TestOptions {
   args?: Array<any>;
+}
+
+for (const testFile of TEST_FILES) {
+  describe(testFile.name + '.from()', () => {
+    it('successfully creates a collection with the given elements', () => {
+      const coll = require(testFile.file).default.from([[1, 2], [2, 3]]);
+      expect(coll.size).to.equal(2);
+      expect([...coll]).to.deep.include([1, 2]);
+      expect([...coll]).to.deep.include([2, 3]);
+    });
+  });
 }
 
 function parseTestName(name: string): [string, string, string] {
