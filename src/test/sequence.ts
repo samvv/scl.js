@@ -345,3 +345,12 @@ test('Sequence.clear() clears the collection', (seq: Sequence<string>) => {
   expect([...seq]).to.deep.equal([])
 })
 
+test('Sequence.clone() makes a shallow clone of the collection', (seq: Sequence<string>) => {
+  seq.append('a')
+  seq.append('b')
+  seq.append('c')
+  const seq2 = seq.clone!();
+  expect(seq2.size).to.equal(3);
+  expect([...seq2]).to.deep.equal(['a', 'b', 'c']);
+})
+

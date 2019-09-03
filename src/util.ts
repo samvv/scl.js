@@ -4,11 +4,23 @@
 import { Cursor, CollectionRange } from "./interfaces"
 import * as XXH from "xxhashjs"
 
+/**
+ * @ignore
+ */
+export function isIterable<T = any>(value: any): value is Iterable<T> {
+  return typeof value === 'object' 
+      && value !== null
+      && typeof value[Symbol.iterator] === 'function';
+}
+
 // TODO optimize
 export function hash(val: any) {
   return XXH.h32(JSON.stringify(val), 0xABCD).toNumber();
 }
 
+/**
+ * @ignore
+ */
 export class EmptyRange<T> implements CollectionRange<T> {
   filter(pred: (el: Cursor<T>) => boolean) { return this; }
   reverse() { return this; }
@@ -93,28 +105,37 @@ export class FilteredRange<T> extends RangeBase<T> {
 
 }
 
+/**
+ * @ignore
+ */
 export interface Newable<T> {
   new(...args: any[]): T;
 }
 
-export function find<T>(pos: Cursor<T> | null, val: T, eq: (a: T, b: T) => boolean = equal) {
-  while (true) {
-    if (pos === null) {
-      return null;
-    }
-    if (eq(pos.value, val)) {
-      return pos;
-    }
-    pos = pos.next!();
-  }
-}
+// export function find<T>(pos: Cursor<T> | null, val: T, eq: (a: T, b: T) => boolean = equal) {
+//   while (true) {
+//     if (pos === null) {
+//       return null;
+//     }
+//     if (eq(pos.value, val)) {
+//       return pos;
+//     }
+//     pos = pos.next!();
+//   }
+// }
 
+/** 
+ * @ignore
+ */
 export function isObject(val: any) {
   return typeof val === 'object' 
       && val !== null 
       && !isArray(val);
 }
 
+/**
+ * @ignore
+ */
 export function isArray(val: any) {
   return Object.prototype.toString.call(val) === '[object Array]';
 }

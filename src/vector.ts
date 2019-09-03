@@ -1,5 +1,6 @@
 
 import { Collection, Sequence, CollectionRange, Cursor } from "./interfaces"
+import { isIterable } from "./util"
 
 /**
  * @ignore
@@ -101,7 +102,32 @@ function copy<T>(
   }
 }
 
-const DEFAULT_ALLOC_STEP = 0xff
+const DEFAULT_INIT_SIZE = 1024;
+const DEFAULT_ALLOC_STEP = 255;
+
+/**
+ * Options to be passed to the constructor of [[Vector]].
+ *
+ * You don't have to specify these values, as the vector implementation will 
+ * attempt to load sane defaults.
+ *
+ * @see [[Vector.constructor]]
+ */
+export interface VectorOptions<T> {
+  /**
+   * An iterable that will be consumed to fill the vector.
+   */
+  elements?: Iterable<T>;
+  /**
+   * This value specifies how much capacity the vector should _at least_ have.
+   */
+  capacity?: number;
+  /**
+   * When the vector overflows, this option determines how big the vector will
+   * become.
+   */
+  allocStep?: number;
+}
 
 /**
  * A vector is a sequence with fast member access by sequence number.
@@ -144,6 +170,11 @@ export class Vector<T> implements Sequence<T> {
   _size: number;
 
   /**
+   * @ignore 
+   */
+  _allocStep: number;
+
+  /**
    * Construct a new vector, optionally filled with the given elements.
    *
    * ```ts
@@ -151,16 +182,31 @@ export class Vector<T> implements Sequence<T> {
    *  assert.strictEqual(v.size, 5)
    * ```
    *
-   * @param init Any iterable, of which the elements will be copied to this vector.
+   * @param opts Any iterable, of which the elements will be copied to this vector.
    */
-  constructor(init?: Iterable<T>, /** @ignore */ public _allocStep = DEFAULT_ALLOC_STEP) {
-    if (init !== undefined) {
-      this._elements = [...init];
+  constructor(opts: Iterable<T> | VectorOptions<T> = {}) {
+    if (isIterable(opts)) {
+      opts = { elements: opts };
+    }
+    const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_INIT_SIZE;
+    this._allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_ALLOC_STEP;
+    if (opts.elements !== undefined) {
+      this._elements = [...opts.elements];
       this._size = this._elements.length;
+      this._elements.length += Math.max(this._elements.length, capacity);
     } else {
-      this._elements = new Array(_allocStep);
+      this._elements = new Array(capacity);
       this._size = 0;
     }
+  }
+
+  /**
+   * Get how much elements this vector can hold before it needs to re-allocate.
+   *
+   * @see [[Vector.size]]
+   */
+  get capacity() {
+    return this._elements.length;
   }
 
   /**
@@ -204,6 +250,11 @@ export class Vector<T> implements Sequence<T> {
     this._elements.length = this._size;
   } 
 
+  /**
+   * Get how many elements are actually in the container.
+   *
+   * @see [[Vector.capacity]]
+   */
   get size() {
     return this._size;
   }

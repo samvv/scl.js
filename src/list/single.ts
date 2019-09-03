@@ -95,6 +95,10 @@ export class SingleLinkedListRange<T> implements CollectionRange<T> {
  * A singly-linked list, which is sometimes slower than a doubly-linked list
  * but consumes less memory.
  *
+ * ```ts
+ * import SingleLinkedList from "scl/list/single"
+ * ```
+ *
  * The following table summarises the time complexity of the most commonly used
  * properties.
  *
@@ -112,19 +116,20 @@ export class SingleLinkedListRange<T> implements CollectionRange<T> {
  *  - Deleting at the beginning of a singly-linked list is guaranteed to be in `O(1)`.
  *
  * @see [[DoubleLinkedList]]
+ * @see [[Vector]]
  *
  * @typeparam T The type of element in this collection.
  */
 export class SingleLinkedList<T> implements List<T> {
 
   constructor(
-    init?: Iterable<T>,
+    elements?: Iterable<T>,
     /** @ignore */ public _firstNode: Node<T> | null = null, 
     /** @ignore */ public _lastNode: Node<T> | null = null,
     /** @ignore */ public _size = 0
   ) {
-    if (init !== undefined) {
-      for (const el of init) {
+    if (elements !== undefined) {
+      for (const el of elements) {
         this.append(el);
       }
     }
@@ -321,6 +326,10 @@ export class SingleLinkedList<T> implements List<T> {
       throw new Error(`Could not get rest of list: list is empty.`)
     }
     return new SingleLinkedList<T>([], this._firstNode.next, this._lastNode, this._size-1)
+  }
+
+  clone() {
+    return new SingleLinkedList<T>(this);
   }
 
   clear() {

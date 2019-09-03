@@ -19,78 +19,78 @@ const TEST_FILES = [
     name: 'TreeMultiDict',
     file: '../dict/multi/tree',
     implements: ['MultiDict', 'DictLike', 'KeyedCollection', 'Collection'],
-    create: () => new TreeMultiDict<any, any>(),
+    create: (...args: any[]) => new TreeMultiDict<any, any>(...args),
   },
   {
     name: 'HashMultiDict',
     file: '../dict/multi/hash',
     implements: ['MultiDict', 'DictLike', 'KeyedCollection', 'Collection'],
-    create: () => new HashMultiDict<any, any>(),
+    create: (...args: any[]) => new HashMultiDict<any, any>(...args),
   },
   {
     name: 'TreeManyDict',
     file: '../dict/many/tree',
     implements: ['ManyDict', 'DictLike', 'KeyedCollection', 'Collection'],
-    create: () => new TreeManyDict<any, any>(),
+    create: (...args: any[]) => new TreeManyDict<any, any>(...args),
   },
   {
     name: 'HashManyDict',
     file: '../dict/many/hash',
     implements: ['ManyDict', 'DictLike', 'KeyedCollection', 'Collection'],
-    create: () => new HashManyDict<any, any>(),
+    create: (...args: any[]) => new HashManyDict<any, any>(...args),
   },
   {
     name: 'TreeDict',
     file: '../dict/tree',
     implements: ['Dict', 'DictLike', 'KeyedCollection', 'Collection'],
-    create: () => new TreeDict<any, any>(),
+    create: (...args: any[]) => new TreeDict<any, any>(...args),
   },
   {
     name: 'HashDict',
     file: '../dict/hash',
     implements: ['Dict', 'DictLike', 'KeyedCollection', 'Collection'],
-    create: () => new HashDict<any, any>(),
+    create: (...args: any[]) => new HashDict<any, any>(...args),
   },
   {
     name: 'Queue',
     file: '../queue',
     implements: ['Queuelike', 'Collection'],
-    create: () => new Queue<any>(),
+    create: (...args: any[]) => new Queue<any>(...args),
   },
   {
     name: 'Stack',
     file: '../stack',
     implements: ['Queuelike', 'Collection'],
-    create: () => new Stack<any>(),
+    create: (...args: any[]) => new Stack<any>(...args),
   },
   {
     name: 'PriorityQueue',
     file: '../priority-queue',
     implements: ['Queuelike', 'Collection'],
-    create: () => new PriorityQueue<any>(),
+    create: (...args: any[]) => new PriorityQueue<any>(...args),
   },
   {
     name: 'DoubleLinkedList',
     file: '../list/double',
     implements: ['Sequence', 'List', 'Collection'],
-    create: () => new DoubleLinkedList<any>(),
+    create: (...args: any[]) => new DoubleLinkedList<any>(...args),
   },
   {
     name: 'SingleLinkedList',
     file: "../list/single",
     implements: ['Sequence', 'List', 'Collection'],
-    create: () => new SingleLinkedList<any>(),
+    create: (...args: any[]) => new SingleLinkedList<any>(...args),
   },
   {
     name: 'Vector',
     file: '../vector',
     implements: ['Sequence', 'Collection'],
-    create: () => new Vector<any>(),
+    create: (...args: any[]) => new Vector<any>(...args),
   },
 ]
 
 interface TestOptions {
-
+  args?: Array<any>;
 }
 
 function parseTestName(name: string): [string, string, string] {
@@ -117,7 +117,8 @@ export function test<C extends Collection<any>>(name: string, callback: (collect
     if (testFile.name === className || testFile.implements.some(intfName => intfName === className)) {
       describe(testFile.name + methodName, () => {
         it(description, () => {
-          callback(testFile.create() as any);
+          const args = (opts && opts.args) || [];
+          callback(testFile.create(...args) as any);
         })
       })
     }
