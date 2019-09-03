@@ -39,9 +39,58 @@ class ObjectRange<V> implements CollectionRange<[string, V]> {
 
 }
 
+/**
+ * A string-based dictionary is a specialised dictionary where all keys are
+ * strings. When two items are added with the same key, the second item will
+ * override the first.
+ *
+ * ```ts
+ * import StringDict from "scl/dict/string"
+ * ```
+ *
+ * All operations in the dictionary are in `O(1)`.
+ */
 export class StringDict<V> implements Dict<string, V> {
 
-  _values: { [key: string]: V } = Object.create(null)
+  /**
+   * @ignore
+   */
+  constructor(
+    /** @ignore */ public _values: { [key: string]: V }
+  ) {
+
+  }
+
+  /**
+   * Creates a new [[StringDict]] filled with elements from the given iterable.
+   *
+   * ```ts
+   * const d = StringDict.from<number>([
+   *   ['one', 1],
+   *   ['two', 2]
+   * ])
+   * ```
+   */
+  static from<V>(iterable: Iterable<[string, V]>) {
+    const values = Object.create(null);
+    for (const [key, value] of iterable) {
+      values[key] = value;
+    }
+    return new StringDict<V>(values);
+  }
+
+  /**
+   * Creates an empty [[StringDict]], ready to be used.
+   *
+   * ```ts
+   * const d = StringDict.empty<number>()
+   * d.emplace('one', 1)
+   * d.emplace('two', 2)
+   * ```
+   */
+  static empty<V>() {
+    return new StringDict<V>(Object.create(null));
+  }
 
   add([key, val]: Pair<string, V>) {
     return this.emplace(key, val)
@@ -91,10 +140,10 @@ export class StringDict<V> implements Dict<string, V> {
 
   delete(pair: Pair<string, V>) {
     if (!Object.prototype.hasOwnProperty.call(this._values, pair[0])) {
-      return true;
+      return false;
     }
     delete this._values[pair[0]];
-    return false;
+    return true;
   }
 
   deleteKey(key: string) {
@@ -138,6 +187,10 @@ export class StringDict<V> implements Dict<string, V> {
 
   clear() {
     this._values = Object.create(null)
+  }
+
+  clone() {
+    return new StringDict<V>(Object.assign(Object.create(null), this._values));
   }
 
 }

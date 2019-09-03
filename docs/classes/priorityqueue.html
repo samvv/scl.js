@@ -133,9 +133,9 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="priorityqueue.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="priorityqueue.html#_heap" class="tsd-kind-icon">_heap</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -150,6 +150,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#clear" class="tsd-kind-icon">clear</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#clone" class="tsd-kind-icon">clone</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#delete" class="tsd-kind-icon">delete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
@@ -157,56 +158,24 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#peek" class="tsd-kind-icon">peek</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#pop" class="tsd-kind-icon">pop</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="priorityqueue.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="priorityqueue.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="priorityqueue.html#from" class="tsd-kind-icon">from</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Priority<wbr>Queue<span class="tsd-signature-symbol">(</span>compare<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L35">priority-queue.ts:35</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> compare: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;lesser</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>a: <span class="tsd-signature-type">T</span></h5>
-														</li>
-														<li>
-															<h5>b: <span class="tsd-signature-type">T</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a></h4>
-						</li>
-					</ul>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="_heap" class="tsd-anchor"></a>
+					<h3>_heap</h3>
+					<div class="tsd-signature tsd-kind-icon">_heap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Heap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L37">priority-queue.ts:37</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -221,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L41">priority-queue.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L52">priority-queue.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -242,7 +211,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L75">priority-queue.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L86">priority-queue.ts:86</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -259,7 +228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L67">priority-queue.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L78">priority-queue.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -283,10 +252,28 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L88">priority-queue.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L99">priority-queue.ts:99</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="clone" class="tsd-anchor"></a>
+					<h3>clone</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#clone">clone</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L103">priority-queue.ts:103</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -301,7 +288,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L71">priority-queue.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L82">priority-queue.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -325,7 +312,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#deleteall">deleteAll</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L45">priority-queue.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L56">priority-queue.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -348,7 +335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L49">priority-queue.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L60">priority-queue.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -372,7 +359,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L63">priority-queue.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L74">priority-queue.ts:74</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -396,7 +383,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#peek">peek</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L53">priority-queue.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L64">priority-queue.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -414,7 +401,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#pop">pop</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L57">priority-queue.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L68">priority-queue.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -432,10 +419,76 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/queuelike.html">Queuelike</a>.<a href="../interfaces/queuelike.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/priority-queue.ts#L84">priority-queue.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L95">priority-queue.ts:95</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">VectorRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="empty" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">empty&lt;T&gt;<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="../globals.html#priorityqueueoptions" class="tsd-signature-type">PriorityQueueOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L48">priority-queue.ts:48</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../globals.html#priorityqueueoptions" class="tsd-signature-type">PriorityQueueOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="from" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from&lt;T&gt;<span class="tsd-signature-symbol">(</span>iterable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, opts<span class="tsd-signature-symbol">?: </span><a href="../globals.html#priorityqueueoptions" class="tsd-signature-type">PriorityQueueOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/priority-queue.ts#L44">priority-queue.ts:44</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new priority queue filled with the given elements.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iterable: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../globals.html#priorityqueueoptions" class="tsd-signature-type">PriorityQueueOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="priorityqueue.html" class="tsd-signature-type">PriorityQueue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -451,13 +504,25 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmanydict.html" class="tsd-kind-icon">Hash<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmultidict.html" class="tsd-kind-icon">Hash<wbr>Multi<wbr>Dict</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="priorityqueue.html" class="tsd-kind-icon">Priority<wbr>Queue</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="priorityqueue.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="priorityqueue.html#_heap" class="tsd-kind-icon">_heap</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="priorityqueue.html#size" class="tsd-kind-icon">size</a>
@@ -470,6 +535,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="priorityqueue.html#clear" class="tsd-kind-icon">clear</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="priorityqueue.html#clone" class="tsd-kind-icon">clone</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="priorityqueue.html#delete" class="tsd-kind-icon">delete</a>
@@ -492,10 +560,121 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="priorityqueue.html#torange" class="tsd-kind-icon">to<wbr>Range</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="priorityqueue.html#empty" class="tsd-kind-icon">empty</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="priorityqueue.html#from" class="tsd-kind-icon">from</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="queue.html" class="tsd-kind-icon">Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="rangebase.html" class="tsd-kind-icon">Range<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="singlelinkedlist.html" class="tsd-kind-icon">Single<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stack.html" class="tsd-kind-icon">Stack</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stringdict.html" class="tsd-kind-icon">String<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treedict.html" class="tsd-kind-icon">Tree<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemanydict.html" class="tsd-kind-icon">Tree<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/bag.html" class="tsd-kind-icon">Bag</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/cursor.html" class="tsd-kind-icon">Cursor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dict.html" class="tsd-kind-icon">Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/grid.html" class="tsd-kind-icon">Grid</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/list.html" class="tsd-kind-icon">List</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/sequence.html" class="tsd-kind-icon">Sequence</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/set.html" class="tsd-kind-icon">Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/treedictoptions.html" class="tsd-kind-icon">Tree<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/vectoroptions.html" class="tsd-kind-icon">Vector<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#priorityqueueoptions" class="tsd-kind-icon">Priority<wbr>Queue<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#vec2" class="tsd-kind-icon">Vec2</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#hash" class="tsd-kind-icon">hash</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#lesser" class="tsd-kind-icon">lesser</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#liftkeyed" class="tsd-kind-icon">lift<wbr>Keyed</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#liftlesser" class="tsd-kind-icon">lift<wbr>Lesser</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

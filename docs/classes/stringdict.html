@@ -62,6 +62,17 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A string-based dictionary is a specialised dictionary where all keys are
+							strings. When two items are added with the same key, the second item will
+						override the first.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> StringDict <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/dict/string"</span></code></pre>
+					<p>All operations in the dictionary are in <code>O(1)</code>.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
@@ -89,12 +100,6 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stringdict.html#_values" class="tsd-kind-icon">_values</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="stringdict.html#size" class="tsd-kind-icon">size</a></li>
@@ -106,6 +111,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#clear" class="tsd-kind-icon">clear</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#clone" class="tsd-kind-icon">clone</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#delete" class="tsd-kind-icon">delete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
@@ -118,29 +124,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#hasvalue" class="tsd-kind-icon">has<wbr>Value</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stringdict.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="stringdict.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="stringdict.html#from" class="tsd-kind-icon">from</a></li>
 							</ul>
 						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_values" class="tsd-anchor"></a>
-					<h3>_values</h3>
-					<div class="tsd-signature tsd-kind-icon">_values<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;Object.create(null)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L44">dict/string.ts:44</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">V</span></h5>
-							</li>
-						</ul>
 					</div>
 				</section>
 			</section>
@@ -156,7 +143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L50">dict/string.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L99">dict/string.ts:99</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -177,7 +164,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#___iterator">__@iterator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L86">dict/string.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L135">dict/string.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -194,7 +181,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L46">dict/string.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L95">dict/string.ts:95</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -218,10 +205,28 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L139">dict/string.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L188">dict/string.ts:188</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="clone" class="tsd-anchor"></a>
+					<h3>clone</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stringdict.html" class="tsd-signature-type">StringDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#clone">clone</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L192">dict/string.ts:192</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="stringdict.html" class="tsd-signature-type">StringDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -235,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L92">dict/string.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L141">dict/string.ts:141</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -258,7 +263,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L124">dict/string.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L173">dict/string.ts:173</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -281,7 +286,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L120">dict/string.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L169">dict/string.ts:169</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -304,7 +309,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L100">dict/string.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L149">dict/string.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -330,7 +335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L112">dict/string.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L161">dict/string.ts:161</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -353,7 +358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L58">dict/string.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L107">dict/string.ts:107</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -379,7 +384,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L108">dict/string.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L157">dict/string.ts:157</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -402,7 +407,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L75">dict/string.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L124">dict/string.ts:124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -425,7 +430,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L54">dict/string.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L103">dict/string.ts:103</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -448,7 +453,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L82">dict/string.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L131">dict/string.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -471,7 +476,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L66">dict/string.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L115">dict/string.ts:115</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -495,10 +500,79 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#torange">toRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/string.ts#L135">dict/string.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L184">dict/string.ts:184</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ObjectRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="empty" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">empty&lt;V&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stringdict.html" class="tsd-signature-type">StringDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L91">dict/string.ts:91</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an empty <a href="stringdict.html">StringDict</a>, ready to be used.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = StringDict.empty&lt;<span class="hljs-built_in">number</span>&gt;()
+d.emplace(<span class="hljs-string">'one'</span>, <span class="hljs-number">1</span>)
+d.emplace(<span class="hljs-string">'two'</span>, <span class="hljs-number">2</span>)</code></pre>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="stringdict.html" class="tsd-signature-type">StringDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="from" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from&lt;V&gt;<span class="tsd-signature-symbol">(</span>iterable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stringdict.html" class="tsd-signature-type">StringDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/string.ts#L74">dict/string.ts:74</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new <a href="stringdict.html">StringDict</a> filled with elements from the given iterable.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = StringDict.from&lt;<span class="hljs-built_in">number</span>&gt;([
+  [<span class="hljs-string">'one'</span>, <span class="hljs-number">1</span>],
+  [<span class="hljs-string">'two'</span>, <span class="hljs-number">2</span>]
+])</code></pre>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iterable: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="stringdict.html" class="tsd-signature-type">StringDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -514,14 +588,38 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmanydict.html" class="tsd-kind-icon">Hash<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmultidict.html" class="tsd-kind-icon">Hash<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="priorityqueue.html" class="tsd-kind-icon">Priority<wbr>Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="queue.html" class="tsd-kind-icon">Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="rangebase.html" class="tsd-kind-icon">Range<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="singlelinkedlist.html" class="tsd-kind-icon">Single<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stack.html" class="tsd-kind-icon">Stack</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="stringdict.html" class="tsd-kind-icon">String<wbr>Dict</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="stringdict.html#_values" class="tsd-kind-icon">_values</a>
-							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="stringdict.html#size" class="tsd-kind-icon">size</a>
 							</li>
@@ -533,6 +631,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="stringdict.html#clear" class="tsd-kind-icon">clear</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="stringdict.html#clone" class="tsd-kind-icon">clone</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="stringdict.html#delete" class="tsd-kind-icon">delete</a>
@@ -570,10 +671,106 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="stringdict.html#torange" class="tsd-kind-icon">to<wbr>Range</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="stringdict.html#empty" class="tsd-kind-icon">empty</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="stringdict.html#from" class="tsd-kind-icon">from</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treedict.html" class="tsd-kind-icon">Tree<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemanydict.html" class="tsd-kind-icon">Tree<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/bag.html" class="tsd-kind-icon">Bag</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/cursor.html" class="tsd-kind-icon">Cursor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dict.html" class="tsd-kind-icon">Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/grid.html" class="tsd-kind-icon">Grid</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/list.html" class="tsd-kind-icon">List</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/sequence.html" class="tsd-kind-icon">Sequence</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/set.html" class="tsd-kind-icon">Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/treedictoptions.html" class="tsd-kind-icon">Tree<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/vectoroptions.html" class="tsd-kind-icon">Vector<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#priorityqueueoptions" class="tsd-kind-icon">Priority<wbr>Queue<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#vec2" class="tsd-kind-icon">Vec2</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#hash" class="tsd-kind-icon">hash</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#lesser" class="tsd-kind-icon">lesser</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#liftkeyed" class="tsd-kind-icon">lift<wbr>Keyed</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#liftlesser" class="tsd-kind-icon">lift<wbr>Lesser</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

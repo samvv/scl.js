@@ -1,24 +1,28 @@
 
 import AVL from "../../avl"
-import { lesser } from "../../util"
+import { lesser, equal } from "../../util"
 import { MultiDict } from "../../interfaces"
+import { TreeDictOptions } from "../tree"
 
 export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V> {
 
-  valuesEqual: (a: V, b: V) => boolean;
-
-  constructor(
-      keyLessThan: (a: K, b: K) => boolean = lesser
-    , valuesEqual: (a: V, b: V) => boolean = (a, b) => a === b
-  ) {
-    const keysEqual = (a: K, b: K) => !keyLessThan(a, b) && !keyLessThan(b, a);
-    super(
-      /* keyLessThan */ keyLessThan
-    , /* getKey */ pair => pair[0]
-    , /* elementsEqual */ (a, b) => keysEqual(a[0], b[0]) && valuesEqual(a[1], b[1])
-    , /* allowDuplicates */ true
+  static empty<K, V>(opts: TreeDictOptions<K, V> = {}) {
+    const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
+    return new TreeMultiDict<K, V>(
+      opts.compare !== undefined ? opts.compare : lesser
+    , pair => pair[0]
+    , (a, b) => valuesEqual(a[1], b[1])
+    , true
     );
-    this.valuesEqual = valuesEqual;
+  }
+
+  static from<K, V>(iterable: Iterable<[K, V]>, opts?: TreeDictOptions<K, V>) {
+    // FIXME might be able to optimise this
+    const dict = TreeMultiDict.empty(opts);
+    for (const element of iterable) {
+      dict.add(element);
+    }
+    return dict;
   }
 
   *getValues(key: K) {
@@ -29,6 +33,15 @@ export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, 
 
   emplace(key: K, val: V) {
     return this.add([key, val]);
+  }
+
+  clone() {
+    return new TreeMultiDict<K, V>(
+      this.lessThan
+    , pair => pair[0]
+    , this.elementsEqual
+    , true
+    );
   }
 
 }

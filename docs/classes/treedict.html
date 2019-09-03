@@ -55,27 +55,104 @@
 					<a href="treedict.html">TreeDict</a>
 				</li>
 			</ul>
-			<h1>Class TreeDict&lt;K, V, K, V&gt;</h1>
+			<h1>Class TreeDict&lt;K, V&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A tree-based dictionary that only allows one item with the same key.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> TreeDict <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/dict/tree"</span></code></pre>
+					<p>The following table summarises the worst-case time complexity of the most
+						commonly used properies of this class. For more information, see the
+					documentation of the respective property.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Property name</th>
+								<th>Worst case</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td><a href="treedict.html#add">add()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#clear">clear()</a></td>
+								<td><code>O(1)</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#equalkeys">equalKeys()</a></td>
+								<td><code>O(n)</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#delete">delete()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#deleteall">deleteAll()</a></td>
+								<td><code>O(n)</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#deleteat">deleteAt()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#size">size</a></td>
+								<td><code>O(1)</code></td>
+							</tr>
+					</tbody></table>
+					<p>When a new entry is added with a key that is already taken, the dictionary
+					will replace the corresponding entry with the new one.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = TreeDict.empty&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>)
+assert.strictEqual(d.getValue(<span class="hljs-number">2</span>), <span class="hljs-string">'foo'</span>)
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'bar'</span>)
+assert.strictEqual(d.getValue(<span class="hljs-number">2</span>), <span class="hljs-string">'bar'</span>)</code></pre>
+					<p>If you need to throw an error when a key is already taken, simply use
+					<a href="treedict.html#has">has()</a>.</p>
+					<p>The items in a tree-based dictionary are guaranteed to be sorted on their
+					keys.</p>
+					<pre><code class="language-ts">d.emplace(<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>)
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>)
+d.emplace(<span class="hljs-number">3</span>, <span class="hljs-string">'three'</span>)
+assert.deepEqual([...d], [[<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>], [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>], [<span class="hljs-number">3</span>, <span class="hljs-string">'three'</span>]])</code></pre>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="hashdict.html">HashDict</a> for a fast, unordered version of this collection.</p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="treemanydict.html">TreeManyDict</a> when you need to store multiple items with the same key but still want uniqueness.</p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="treemultidict.html">TreeMultiDict</a> when you need to store multiple items.</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>K</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of key of a given entry.</p>
+							</div>
+						</div>
 					</li>
 					<li>
 						<h4>V</h4>
-					</li>
-					<li>
-						<h4>K</h4>
-					</li>
-					<li>
-						<h4>V</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of value associated with the given key.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -83,10 +160,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span>
-					</li>
-					<li>
-						<a href="avltree.html" class="tsd-signature-type">AVLTree</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">AVLTree</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">TreeDict</span>
@@ -98,186 +172,63 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/keyedcollection.html" class="tsd-signature-type">KeyedCollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li><a href="../interfaces/multidict.html" class="tsd-signature-type">MultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li><a href="../interfaces/keyedcollection.html" class="tsd-signature-type">KeyedCollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../interfaces/indexedcollection.html" class="tsd-signature-type">IndexedCollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="treedict.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-inherited">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a></li>
-							</ul>
-						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#size" class="tsd-kind-icon">size</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="treedict.html#add" class="tsd-kind-icon">add</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#begin" class="tsd-kind-icon">begin</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#clear" class="tsd-kind-icon">clear</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#delete" class="tsd-kind-icon">delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#emplace" class="tsd-kind-icon">emplace</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#end" class="tsd-kind-icon">end</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#begin" class="tsd-kind-icon">begin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#clear" class="tsd-kind-icon">clear</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="treedict.html#clone" class="tsd-kind-icon">clone</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="treedict.html#emplace" class="tsd-kind-icon">emplace</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#end" class="tsd-kind-icon">end</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="treedict.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#getvalues" class="tsd-kind-icon">get<wbr>Values</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#has" class="tsd-kind-icon">has</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="treedict.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#has" class="tsd-kind-icon">has</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treedict.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="treedict.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="treedict.html#from" class="tsd-kind-icon">from</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Tree<wbr>Dict<span class="tsd-signature-symbol">(</span>keyLessThan<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, valuesEqual<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treedict.html" class="tsd-signature-type">TreeDict</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="treemultidict.html">TreeMultiDict</a>.<a href="treemultidict.html#constructor">constructor</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/many/tree.ts#L6">dict/many/tree.ts:6</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> keyLessThan: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;lesser</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>a: <span class="tsd-signature-type">K</span></h5>
-														</li>
-														<li>
-															<h5>b: <span class="tsd-signature-type">K</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> valuesEqual: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;equal</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>a: <span class="tsd-signature-type">V</span></h5>
-														</li>
-														<li>
-															<h5>b: <span class="tsd-signature-type">V</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="treedict.html" class="tsd-signature-type">TreeDict</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="valuesequal" class="tsd-anchor"></a>
-					<h3>values<wbr>Equal</h3>
-					<div class="tsd-signature tsd-kind-icon">values<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="treemultidict.html">TreeMultiDict</a>.<a href="treemultidict.html#valuesequal">valuesEqual</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/multi/tree.ts#L8">dict/multi/tree.ts:8</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>a: <span class="tsd-signature-type">V</span></h5>
-											</li>
-											<li>
-												<h5>b: <span class="tsd-signature-type">V</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 					<a name="size" class="tsd-anchor"></a>
 					<h3>size</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#size">size</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#size">size</a></p>
+								<p>Inherited from AVLTree.size</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L258">avl/index.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L237">avl/index.ts:237</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -287,20 +238,19 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="___iterator" class="tsd-anchor"></a>
 					<h3>__@iterator</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">__@iterator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#___iterator">__@iterator</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#___iterator">__@iterator</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#___iterator">__@iterator</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#___iterator">__@iterator</a></p>
+								<p>Inherited from AVLTree.[Symbol.iterator]</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L482">avl/index.ts:482</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L461">avl/index.ts:461</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -311,39 +261,38 @@
 					<a name="add" class="tsd-anchor"></a>
 					<h3>add</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>pair<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#add">add</a></p>
+								<p>Overrides AVLTree.add</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/many/tree.ts#L15">dict/many/tree.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/tree.ts#L114">dict/tree.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pair: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+									<h5>p: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="begin" class="tsd-anchor"></a>
 					<h3>begin</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">begin<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#begin">begin</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#begin">begin</a></p>
+								<p>Inherited from AVLTree.begin</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L468">avl/index.ts:468</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L447">avl/index.ts:447</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
@@ -353,20 +302,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="clear" class="tsd-anchor"></a>
 					<h3>clear</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">clear<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#clear">clear</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#clear">clear</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#clear">clear</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#clear">clear</a></p>
+								<p>Inherited from AVLTree.clear</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L253">avl/index.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L232">avl/index.ts:232</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -378,20 +326,37 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="clone" class="tsd-anchor"></a>
+					<h3>clone</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treedict.html" class="tsd-signature-type">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#clone">clone</a></p>
+								<p>Overrides AVLTree.clone</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/tree.ts#L130">dict/tree.ts:130</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="treedict.html" class="tsd-signature-type">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="delete" class="tsd-anchor"></a>
 					<h3>delete</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#delete">delete</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#delete">delete</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#delete">delete</a></p>
+								<p>Inherited from AVLTree.delete</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L526">avl/index.ts:526</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L505">avl/index.ts:505</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -410,20 +375,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="deleteall" class="tsd-anchor"></a>
 					<h3>delete<wbr>All</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#deleteall">deleteAll</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#deleteall">deleteAll</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#deleteall">deleteAll</a></p>
+								<p>Inherited from AVLTree.deleteAll</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L510">avl/index.ts:510</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L489">avl/index.ts:489</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -443,19 +406,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="deleteat" class="tsd-anchor"></a>
 					<h3>delete<wbr>At</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#deleteat">deleteAt</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#deleteat">deleteAt</a></p>
+								<p>Inherited from AVLTree.deleteAt</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L540">avl/index.ts:540</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L519">avl/index.ts:519</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -474,20 +436,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="deletekey" class="tsd-anchor"></a>
 					<h3>delete<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">delete<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#deletekey">deleteKey</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#deletekey">deleteKey</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#deletekey">deleteKey</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#deletekey">deleteKey</a></p>
+								<p>Inherited from AVLTree.deleteKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L495">avl/index.ts:495</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L474">avl/index.ts:474</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -507,19 +468,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="emplace" class="tsd-anchor"></a>
 					<h3>emplace</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">emplace<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#emplace">emplace</a></p>
-								<p>Inherited from <a href="treemultidict.html">TreeMultiDict</a>.<a href="treemultidict.html#emplace">emplace</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/multi/tree.ts#L30">dict/multi/tree.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/tree.ts#L110">dict/tree.ts:110</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -535,19 +494,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="end" class="tsd-anchor"></a>
 					<h3>end</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">end<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#end">end</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#end">end</a></p>
+								<p>Inherited from AVLTree.end</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L475">avl/index.ts:475</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L454">avl/index.ts:454</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
@@ -557,20 +515,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="equalkeys" class="tsd-anchor"></a>
 					<h3>equal<wbr>Keys</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">equal<wbr>Keys<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#equalkeys">equalKeys</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#equalkeys">equalKeys</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#equalkeys">equalKeys</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#equalkeys">equalKeys</a></p>
+								<p>Inherited from AVLTree.equalKeys</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L416">avl/index.ts:416</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L395">avl/index.ts:395</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -589,20 +546,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="findkey" class="tsd-anchor"></a>
 					<h3>find<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">find<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#findkey">findKey</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#findkey">findKey</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#findkey">findKey</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#findkey">findKey</a></p>
+								<p>Inherited from AVLTree.findKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L373">avl/index.ts:373</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L352">avl/index.ts:352</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -629,20 +585,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getaddhint" class="tsd-anchor"></a>
 					<h3>get<wbr>Add<wbr>Hint</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Add<wbr>Hint<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AddHint</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#getaddhint">getAddHint</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#getaddhint">getAddHint</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#getaddhint">getAddHint</a></p>
+								<p>Inherited from AVLTree.getAddHint</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L262">avl/index.ts:262</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L241">avl/index.ts:241</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -659,13 +613,13 @@
 					<a name="getvalue" class="tsd-anchor"></a>
 					<h3>get<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/tree.ts#L32">dict/tree.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/tree.ts#L122">dict/tree.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -674,52 +628,22 @@
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">V</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">V</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="getvalues" class="tsd-anchor"></a>
-					<h3>get<wbr>Values</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Values<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#getvalues">getValues</a></p>
-								<p>Inherited from <a href="treemultidict.html">TreeMultiDict</a>.<a href="treemultidict.html#getvalues">getValues</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/multi/tree.ts#L24">dict/multi/tree.ts:24</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">K</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="has" class="tsd-anchor"></a>
 					<h3>has</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">has<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#has">has</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#has">has</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#has">has</a></p>
+								<p>Inherited from AVLTree.has</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L348">avl/index.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L327">avl/index.ts:327</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -732,20 +656,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="haskey" class="tsd-anchor"></a>
 					<h3>has<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">has<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#haskey">hasKey</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#haskey">hasKey</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#haskey">hasKey</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#haskey">hasKey</a></p>
+								<p>Inherited from AVLTree.hasKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L360">avl/index.ts:360</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L339">avl/index.ts:339</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -763,20 +686,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="lowerkey" class="tsd-anchor"></a>
 					<h3>lower<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">lower<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#lowerkey">lowerKey</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#lowerkey">lowerKey</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#lowerkey">lowerKey</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#lowerkey">lowerKey</a></p>
+								<p>Inherited from AVLTree.lowerKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L423">avl/index.ts:423</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L402">avl/index.ts:402</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -792,40 +714,38 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="torange" class="tsd-anchor"></a>
 					<h3>to<wbr>Range</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>Range<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#torange">toRange</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#torange">toRange</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#torange">toRange</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#torange">toRange</a></p>
+								<p>Inherited from AVLTree.toRange</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L464">avl/index.ts:464</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L443">avl/index.ts:443</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="upperkey" class="tsd-anchor"></a>
 					<h3>upper<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">upper<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/keyedcollection.html">KeyedCollection</a>.<a href="../interfaces/keyedcollection.html#upperkey">upperKey</a></p>
-								<p>Inherited from <a href="avltree.html">AVLTree</a>.<a href="avltree.html#upperkey">upperKey</a></p>
-								<p>Overrides <a href="avltree.html">AVLTree</a>.<a href="avltree.html#upperkey">upperKey</a></p>
+								<p>Implementation of <a href="../interfaces/indexedcollection.html">IndexedCollection</a>.<a href="../interfaces/indexedcollection.html#upperkey">upperKey</a></p>
+								<p>Inherited from AVLTree.upperKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/avl/index.ts#L442">avl/index.ts:442</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L421">avl/index.ts:421</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -838,6 +758,73 @@
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">null</span>
 							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="empty" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">empty&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treedict.html" class="tsd-signature-type">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/tree.ts#L90">dict/tree.ts:90</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>K</h4>
+								</li>
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="treedict.html" class="tsd-signature-type">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="from" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>iterable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>, opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treedict.html" class="tsd-signature-type">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/tree.ts#L100">dict/tree.ts:100</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>K</h4>
+								</li>
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iterable: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="treedict.html" class="tsd-signature-type">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -853,84 +840,201 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmanydict.html" class="tsd-kind-icon">Hash<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmultidict.html" class="tsd-kind-icon">Hash<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="priorityqueue.html" class="tsd-kind-icon">Priority<wbr>Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="queue.html" class="tsd-kind-icon">Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="rangebase.html" class="tsd-kind-icon">Range<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="singlelinkedlist.html" class="tsd-kind-icon">Single<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stack.html" class="tsd-kind-icon">Stack</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stringdict.html" class="tsd-kind-icon">String<wbr>Dict</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="treedict.html" class="tsd-kind-icon">Tree<wbr>Dict</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="treedict.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="treedict.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#size" class="tsd-kind-icon">size</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#___iterator" class="tsd-kind-icon">__@iterator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="treedict.html#add" class="tsd-kind-icon">add</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#begin" class="tsd-kind-icon">begin</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#clear" class="tsd-kind-icon">clear</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="treedict.html#delete" class="tsd-kind-icon">delete</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="treedict.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="treedict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="treedict.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="treedict.html#clone" class="tsd-kind-icon">clone</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="treedict.html#delete" class="tsd-kind-icon">delete</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="treedict.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="treedict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="treedict.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="treedict.html#emplace" class="tsd-kind-icon">emplace</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#end" class="tsd-kind-icon">end</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="treedict.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="treedict.html#getvalues" class="tsd-kind-icon">get<wbr>Values</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="treedict.html#has" class="tsd-kind-icon">has</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#haskey" class="tsd-kind-icon">has<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#torange" class="tsd-kind-icon">to<wbr>Range</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treedict.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="treedict.html#empty" class="tsd-kind-icon">empty</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="treedict.html#from" class="tsd-kind-icon">from</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemanydict.html" class="tsd-kind-icon">Tree<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/bag.html" class="tsd-kind-icon">Bag</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/cursor.html" class="tsd-kind-icon">Cursor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dict.html" class="tsd-kind-icon">Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/grid.html" class="tsd-kind-icon">Grid</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/list.html" class="tsd-kind-icon">List</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/sequence.html" class="tsd-kind-icon">Sequence</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/set.html" class="tsd-kind-icon">Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/treedictoptions.html" class="tsd-kind-icon">Tree<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/vectoroptions.html" class="tsd-kind-icon">Vector<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#priorityqueueoptions" class="tsd-kind-icon">Priority<wbr>Queue<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#vec2" class="tsd-kind-icon">Vec2</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#hash" class="tsd-kind-icon">hash</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#lesser" class="tsd-kind-icon">lesser</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#liftkeyed" class="tsd-kind-icon">lift<wbr>Keyed</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#liftlesser" class="tsd-kind-icon">lift<wbr>Lesser</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

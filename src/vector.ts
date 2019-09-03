@@ -161,43 +161,55 @@ export interface VectorOptions<T> {
 export class Vector<T> implements Sequence<T> {
 
   /**
-   * @ignore
-   */
-  _elements: T[];
-  /**
-   * @ignore
-   */
-  _size: number;
-
-  /**
-   * @ignore 
-   */
-  _allocStep: number;
-
-  /**
-   * Construct a new vector, optionally filled with the given elements.
+   * Construct a new vector filled with the given elements.
    *
    * ```ts
-   *  const v1 = new Vector([1, 2, 3, 4, 5])
+   *  const v1 = Vector.from([1, 2, 3, 4, 5])
    *  assert.strictEqual(v.size, 5)
    * ```
    *
-   * @param opts Any iterable, of which the elements will be copied to this vector.
+   * @param iter Any iterable, of which the elements will be copied to this vector.
+   * @param opts Additional options to customize the newly created vector.
    */
-  constructor(opts: Iterable<T> | VectorOptions<T> = {}) {
-    if (isIterable(opts)) {
-      opts = { elements: opts };
-    }
+  static from<T>(iter: Iterable<T>, opts: VectorOptions<T> = {}) {
     const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_INIT_SIZE;
-    this._allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_ALLOC_STEP;
-    if (opts.elements !== undefined) {
-      this._elements = [...opts.elements];
-      this._size = this._elements.length;
-      this._elements.length += Math.max(this._elements.length, capacity);
-    } else {
-      this._elements = new Array(capacity);
-      this._size = 0;
-    }
+    const allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_ALLOC_STEP;
+    const elements = [...iter];
+    const size = elements.length;
+    elements.length = Math.max(size, capacity);
+    return new Vector<T>(elements, size, allocStep);
+  }
+
+  /**
+   * Create an empty vector.
+   *
+   * ```ts
+   * const v = Vector.empty({ capacity: 1000 })
+   * for (let i = 0; i < 1000; i++) {
+   *   v.append(i);
+   * }
+   * assert.strictEqual(v.capacity, v.size)
+   * ```
+   */
+  static empty<T>(opts: VectorOptions<T> = {}) {
+    const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_INIT_SIZE;
+    const allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_ALLOC_STEP;
+    return new Vector<T>(new Array(capacity), 0, allocStep)
+  }
+
+  /**
+   * Short-hand for creating a vector with the given capacity.
+   */
+  static withCapacity<T>(capacity: number) {
+    return Vector.empty<T>({ capacity });
+  }
+
+  constructor(
+      /** @ignore */ public _elements: T[]
+    , /** @ignore */ public _size: number
+    , /** @ignore */ public _allocStep: number
+  ) {
+
   }
 
   /**
@@ -221,7 +233,6 @@ export class Vector<T> implements Sequence<T> {
     copy(this._elements, newElements, 0, this._size);
     this._elements = newElements;
   }
-
 
   has(element: T) {
     for (let i = 0; i < this._size; i++) {
@@ -379,7 +390,7 @@ export class Vector<T> implements Sequence<T> {
   }
 
   clone() {
-    return new Vector<T>(this);
+    return new Vector<T>(this._elements.slice(), this._size, this._allocStep);
   }
 
 }

@@ -1,8 +1,10 @@
 
-import { Queuelike, Cursor } from "./interfaces"
-import Heap from "./heap"
-import { lesser } from "./util"
+import { Queuelike } from "./interfaces"
+import Heap, { HeapOptions } from "./heap"
+
 import { VectorCursor } from "./vector"
+
+export type PriorityQueueOptions<T> = HeapOptions<T>;
 
 /**
  * A queue that pops element based on their given priority.
@@ -30,12 +32,21 @@ import { VectorCursor } from "./vector"
 export class PriorityQueue<T> implements Queuelike<T> {
 
   /** 
-   * @ignore
+   * @ignore 
    */
-  _heap: Heap<T>
+  constructor(public _heap: Heap<T>) {
+  
+  }
 
-  constructor(compare: (a: T, b: T) => boolean = lesser) {
-    this._heap = new Heap<T>([], compare)
+  /**
+   * Creates a new priority queue filled with the given elements.
+   */
+  static from<T>(iterable: Iterable<T>, opts: PriorityQueueOptions<T> = {}) {
+    return new PriorityQueue<T>(Heap.from<T>(iterable, opts));
+  }
+
+  static empty<T>(opts: PriorityQueueOptions<T> = {}) {
+    return new PriorityQueue<T>(Heap.empty<T>(opts));
   }
 
   get size() {
@@ -87,6 +98,10 @@ export class PriorityQueue<T> implements Queuelike<T> {
 
   clear() {
     this._heap.clear()
+  }
+
+  clone() {
+    return new PriorityQueue(this._heap.clone());
   }
 
 }

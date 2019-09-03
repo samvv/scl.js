@@ -1,7 +1,7 @@
 
-import { KeyedCollection, CollectionRange, Cursor, List } from "../interfaces"
+import { IndexedCollection, CollectionRange, Cursor } from "../interfaces"
 import DoubleLinkedList, { DoubleLinkedListRange, DoubleLinkedListCursor } from "../list/double"
-import { RangeBase, EmptyRange } from "../util"
+import { RangeBase, EmptyRange, equal, hash } from "../util"
 
 /**
  * @ignore
@@ -59,21 +59,13 @@ class HashRange<T, K> implements CollectionRange<T> {
 
 }
 
+
+const DEFAULT_BUCKET_COUNT = 255;
+
 /**
- * A hash is a low-level collection upon which more complex collections may be
- * built, such as a {@link Dict dictionary}.
- *
- * ```ts
- * import Hash from "scl/hash"
- * ```
- *
- * All methods in this collection, given that a proper hashing function is set
- * up, are in `O(1)`.
- *
- * @typeparam T The type of elements in the collection.
- * @typeparam K The type of the element's key.
+ * @ignore
  */
-export class Hash<T, K = T> implements KeyedCollection<T, K> {
+export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
 
   /**
    * @ignore
@@ -88,18 +80,19 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
   /**
    * @ignore
    */
-  _getConflict(bucket: Bucket<T>, value: T): DoubleLinkedListCursor<T> | null {
-    return null;
+  constructor(
+        /** @ignore */ public getHash: (el: K) => number
+      , /** @ignore */ public keysEqual: (a: K, b: K) => boolean
+      , /** @ignore */ public elementsEqual: (a: T, b: T) => boolean
+      , /** @ignore */ public getKey: (val: T) => K = (val: T) => val as any
+      , capacity = DEFAULT_BUCKET_COUNT) {
+    this._array = new Array(capacity);
   }
 
-  constructor(
-        public getHash: (el: K) => number
-      , public keysEqual: (a: K, b: K) => boolean
-      , public isEqual: (a: T, b: T) => boolean
-      , public getKey: (val: T) => K = (val: T) => val as any
-      , size = 100) {
-    this._array = new Array(size);
-  }
+  /**
+   * @ignore
+   */
+  abstract _getConflict(bucket: Bucket<T>, element: T): DoubleLinkedListCursor<T> | null;
 
   get size() {
     return this._size;
@@ -154,7 +147,7 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
 
   has(element: T): boolean {
     for (const cursor of this.equalKeys(this.getKey(element))) {
-      if (this.isEqual(cursor.value, element)) {
+      if (this.elementsEqual(cursor.value, element)) {
         return true;
       }
     }
@@ -200,7 +193,7 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
 
   delete(el: T) {
     const cursor = this.findKey(this.getKey(el));
-    if (cursor === null || !this.isEqual(el, cursor.value)) {
+    if (cursor === null || !this.elementsEqual(el, cursor.value)) {
       return false;
     }
     this.deleteAt(cursor);
@@ -236,34 +229,7 @@ export class Hash<T, K = T> implements KeyedCollection<T, K> {
     return deleted;
   }
 
-}
-
-export class SingleValueHash<T, K = T> extends Hash<T, K> {
-
-  _getConflict(bucket: Bucket<T>, val: T) {
-    const key = this.getKey(val);
-    for (const cursor of bucket.toRange()) {
-      if (this.keysEqual(this.getKey(cursor.value), key) && this.isEqual(cursor.value, val)) {
-        return cursor;
-      }
-    }
-    return null;
-  }
-
-}
-
-export class SingleKeyHash<T, K = T> extends Hash<T, K> {
-
-  _getConflict(bucket: Bucket<T>, value: T) {
-    const key = this.getKey(value);
-    for (const cursor of bucket.toRange()) {
-      if (this.keysEqual(this.getKey(cursor.value), key)) {
-        cursor.value = value;
-        return cursor; 
-      }
-    }
-    return null;
-  }
+  abstract clone(): Hash<T, K>;
 
 }
 

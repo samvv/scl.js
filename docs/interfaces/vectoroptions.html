@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Standard Collections Library for JavaScript</title>
+	<title>VectorOptions | Standard Collections Library for JavaScript</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">Standard Collections Library for JavaScript</a>
+					<a href="../index.html" class="title">Standard Collections Library for JavaScript</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -49,222 +49,263 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="vectoroptions.html">VectorOptions</a>
 				</li>
 			</ul>
-			<h1> Standard Collections Library for JavaScript</h1>
+			<h1>Interface VectorOptions&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<p>Welcome to the documentation of the Standard Collections Library for JavaScript.</p>
-				<p>This package is available on <a href="https://npmjs.com/package/scl">NPM</a>:</p>
-				<pre><code>npm <span class="hljs-selector-tag">i</span> scl</code></pre><p>Use the links on the right to browse through the provided collections. Each
-				collection describes how you should import it.</p>
-				<p>This module also exports some generics you can use to define functions that
-					work on a specific category of collections. For example, to have a function
-				that fills any kind of collection with numbers, you could do the following:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Collection } <span class="hljs-keyword">from</span> <span class="hljs-string">"scl"</span>
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fill</span>(<span class="hljs-params">collection: Collection&lt;<span class="hljs-built_in">number</span>&gt;</span>) </span>{
-  collection.add(<span class="hljs-number">1</span>)
-  collection.add(<span class="hljs-number">2</span>)
-  collection.add(<span class="hljs-number">3</span>)
-  collection.add(<span class="hljs-number">4</span>)
-  collection.add(<span class="hljs-number">5</span>)
-}</code></pre>
-				<p>The following table lists what kind of collections are available and how they
-				relate to one another:</p>
-				<table>
-					<thead>
-						<tr>
-							<th>Container</th>
-							<th>Type</th>
-							<th>Unique</th>
-							<th>Order</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td>Bag</td>
-							<td>T</td>
-							<td>No</td>
-							<td>No</td>
-						</tr>
-						<tr>
-							<td>Set</td>
-							<td>T</td>
-							<td>Yes</td>
-							<td>No</td>
-						</tr>
-						<tr>
-							<td>Sequence</td>
-							<td>T</td>
-							<td>No</td>
-							<td>Yes</td>
-						</tr>
-						<tr>
-							<td>Queuelike</td>
-							<td>T</td>
-							<td>No</td>
-							<td>Yes</td>
-						</tr>
-						<tr>
-							<td>Dict</td>
-							<td>Pair&lt;K, V&gt;</td>
-							<td>Yes</td>
-							<td>No</td>
-						</tr>
-						<tr>
-							<td>ManyDict</td>
-							<td>Pair&lt;K, V&gt;</td>
-							<td>Depends*</td>
-							<td>No</td>
-						</tr>
-						<tr>
-							<td>MultiDict</td>
-							<td>Pair&lt;K, V&gt;</td>
-							<td>No</td>
-							<td>No</td>
-						</tr>
-				</tbody></table>
-				<p>If you found a problem with the documentation, you can open an issue on
-					<a href="https://github.com/samvv/scl.js/issues">GitHub</a>. If you like this library,
-					don&#39;t forget to star <a href="https://github.com/samvv/scl.js">the repository</a> and
-				leave a thank-you note somewhere in your project.  </p>
-			</div>
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Options to be passed to the constructor of <a href="../classes/vector.html">Vector</a>.</p>
+					</div>
+					<p>You don&#39;t have to specify these values, as the vector implementation will
+					attempt to load sane defaults.</p>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="../classes/vector.html#constructor">Vector.constructor</a></p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">VectorOptions</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="heapoptions.html" class="tsd-signature-type">HeapOptions</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="vectoroptions.html#allocstep" class="tsd-kind-icon">alloc<wbr>Step</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="vectoroptions.html#capacity" class="tsd-kind-icon">capacity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="vectoroptions.html#elements" class="tsd-kind-icon">elements</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="allocstep" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alloc<wbr>Step</h3>
+					<div class="tsd-signature tsd-kind-icon">alloc<wbr>Step<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/vector.ts#L129">vector.ts:129</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When the vector overflows, this option determines how big the vector will
+							become.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="capacity" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> capacity</h3>
+					<div class="tsd-signature tsd-kind-icon">capacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/vector.ts#L124">vector.ts:124</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This value specifies how much capacity the vector should <em>at least</em> have.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="elements" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> elements</h3>
+					<div class="tsd-signature tsd-kind-icon">elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/vector.ts#L120">vector.ts:120</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An iterable that will be consumed to fill the vector.</p>
+						</div>
+					</div>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
+						<a href="../classes/doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
+						<a href="../classes/hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/hashmanydict.html" class="tsd-kind-icon">Hash<wbr>Many<wbr>Dict</a>
+						<a href="../classes/hashmanydict.html" class="tsd-kind-icon">Hash<wbr>Many<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/hashmultidict.html" class="tsd-kind-icon">Hash<wbr>Multi<wbr>Dict</a>
+						<a href="../classes/hashmultidict.html" class="tsd-kind-icon">Hash<wbr>Multi<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/priorityqueue.html" class="tsd-kind-icon">Priority<wbr>Queue</a>
+						<a href="../classes/priorityqueue.html" class="tsd-kind-icon">Priority<wbr>Queue</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/queue.html" class="tsd-kind-icon">Queue</a>
+						<a href="../classes/queue.html" class="tsd-kind-icon">Queue</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/rangebase.html" class="tsd-kind-icon">Range<wbr>Base</a>
+						<a href="../classes/rangebase.html" class="tsd-kind-icon">Range<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/singlelinkedlist.html" class="tsd-kind-icon">Single<wbr>Linked<wbr>List</a>
+						<a href="../classes/singlelinkedlist.html" class="tsd-kind-icon">Single<wbr>Linked<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/stack.html" class="tsd-kind-icon">Stack</a>
+						<a href="../classes/stack.html" class="tsd-kind-icon">Stack</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/stringdict.html" class="tsd-kind-icon">String<wbr>Dict</a>
+						<a href="../classes/stringdict.html" class="tsd-kind-icon">String<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/treedict.html" class="tsd-kind-icon">Tree<wbr>Dict</a>
+						<a href="../classes/treedict.html" class="tsd-kind-icon">Tree<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/treemanydict.html" class="tsd-kind-icon">Tree<wbr>Many<wbr>Dict</a>
+						<a href="../classes/treemanydict.html" class="tsd-kind-icon">Tree<wbr>Many<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
+						<a href="../classes/treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/vector.html" class="tsd-kind-icon">Vector</a>
+						<a href="../classes/vector.html" class="tsd-kind-icon">Vector</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/bag.html" class="tsd-kind-icon">Bag</a>
+						<a href="bag.html" class="tsd-kind-icon">Bag</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/collection.html" class="tsd-kind-icon">Collection</a>
+						<a href="collection.html" class="tsd-kind-icon">Collection</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
+						<a href="collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/cursor.html" class="tsd-kind-icon">Cursor</a>
+						<a href="cursor.html" class="tsd-kind-icon">Cursor</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/dict.html" class="tsd-kind-icon">Dict</a>
+						<a href="dict.html" class="tsd-kind-icon">Dict</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
+						<a href="dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/grid.html" class="tsd-kind-icon">Grid</a>
+						<a href="grid.html" class="tsd-kind-icon">Grid</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
+						<a href="hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
+						<a href="heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
+						<a href="indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/list.html" class="tsd-kind-icon">List</a>
+						<a href="list.html" class="tsd-kind-icon">List</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
+						<a href="multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
+						<a href="queuelike.html" class="tsd-kind-icon">Queuelike</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/sequence.html" class="tsd-kind-icon">Sequence</a>
+						<a href="sequence.html" class="tsd-kind-icon">Sequence</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/set.html" class="tsd-kind-icon">Set</a>
+						<a href="set.html" class="tsd-kind-icon">Set</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/treedictoptions.html" class="tsd-kind-icon">Tree<wbr>Dict<wbr>Options</a>
+						<a href="treedictoptions.html" class="tsd-kind-icon">Tree<wbr>Dict<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/vectoroptions.html" class="tsd-kind-icon">Vector<wbr>Options</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="vectoroptions.html" class="tsd-kind-icon">Vector<wbr>Options</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="vectoroptions.html#allocstep" class="tsd-kind-icon">alloc<wbr>Step</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="vectoroptions.html#capacity" class="tsd-kind-icon">capacity</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="vectoroptions.html#elements" class="tsd-kind-icon">elements</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#pair" class="tsd-kind-icon">Pair</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#priorityqueueoptions" class="tsd-kind-icon">Priority<wbr>Queue<wbr>Options</a>
+						<a href="../globals.html#priorityqueueoptions" class="tsd-kind-icon">Priority<wbr>Queue<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#vec2" class="tsd-kind-icon">Vec2</a>
+						<a href="../globals.html#vec2" class="tsd-kind-icon">Vec2</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#equal" class="tsd-kind-icon">equal</a>
+						<a href="../globals.html#equal" class="tsd-kind-icon">equal</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#get" class="tsd-kind-icon">get</a>
+						<a href="../globals.html#get" class="tsd-kind-icon">get</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#hash" class="tsd-kind-icon">hash</a>
+						<a href="../globals.html#hash" class="tsd-kind-icon">hash</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#lesser" class="tsd-kind-icon">lesser</a>
+						<a href="../globals.html#lesser" class="tsd-kind-icon">lesser</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#liftkeyed" class="tsd-kind-icon">lift<wbr>Keyed</a>
+						<a href="../globals.html#liftkeyed" class="tsd-kind-icon">lift<wbr>Keyed</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#liftlesser" class="tsd-kind-icon">lift<wbr>Lesser</a>
+						<a href="../globals.html#liftlesser" class="tsd-kind-icon">lift<wbr>Lesser</a>
 					</li>
 				</ul>
 			</nav>
@@ -335,7 +376,7 @@
 	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

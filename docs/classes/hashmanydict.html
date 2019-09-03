@@ -62,14 +62,46 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A hash-based dictionary that can store multile items with the same key, but
+						only if the values differ.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> HashManyDict <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/dict/many/hash"</span></code></pre>
+					<p>Most methods in this collection, given that a proper hashing function is set
+						up, are in <code>Θ(1 + n/k)</code>. If you&#39;re out of luck, this characteristic can grow
+					to <code>O(n)</code>.</p>
+					<p>When a new entry is added with a key and a value that is already taken, the
+					dictionary will replace the corresponding entry with the new one.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = HashManyDict.empty&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// ok</span>
+assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="hljs-string">'foo'</span>)
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'bar'</span>) <span class="hljs-comment">// ok</span>
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// ok; replaced</span>
+<span class="hljs-keyword">const</span> values = [...d.getValues(<span class="hljs-number">1</span>)]
+assert.deepInclude(value, [<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>])
+assert.deepInclude(value, [<span class="hljs-number">1</span>, <span class="hljs-string">'bar'</span>])</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>K</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of key of a given entry.</p>
+							</div>
+						</div>
 					</li>
 					<li>
 						<h4>V</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of value associated with the given key.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -77,7 +109,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="singlevaluehash.html" class="tsd-signature-type">SingleValueHash</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">Hash</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">HashManyDict</span>
@@ -89,7 +121,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/keyedcollection.html" class="tsd-signature-type">KeyedCollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../interfaces/indexedcollection.html" class="tsd-signature-type">IndexedCollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
 					<li><a href="../interfaces/multidict.html" class="tsd-signature-type">MultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
@@ -97,21 +129,6 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="hashmanydict.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-inherited">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#gethash" class="tsd-kind-icon">get<wbr>Hash</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#getkey" class="tsd-kind-icon">get<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#keysequal" class="tsd-kind-icon">keys<wbr>Equal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a></li>
-							</ul>
-						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
@@ -122,256 +139,25 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="hashmanydict.html#_getconflict" class="tsd-kind-icon">_get<wbr>Conflict</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="hashmanydict.html#_getconflict" class="tsd-kind-icon">_get<wbr>Conflict</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="hashmanydict.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#clear" class="tsd-kind-icon">clear</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="hashmanydict.html#clone" class="tsd-kind-icon">clone</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#delete" class="tsd-kind-icon">delete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hashmanydict.html#emplace" class="tsd-kind-icon">emplace</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#find" class="tsd-kind-icon">find</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="hashmanydict.html#getvalues" class="tsd-kind-icon">get<wbr>Values</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#has" class="tsd-kind-icon">has</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashmanydict.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="hashmanydict.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="hashmanydict.html#from" class="tsd-kind-icon">from</a></li>
 							</ul>
 						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Hash<wbr>Many<wbr>Dict<span class="tsd-signature-symbol">(</span>getHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, keysEqual<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, valuesEqual<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, size<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="hash.html">Hash</a>.<a href="hash.html#constructor">constructor</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/many/hash.ts#L6">dict/many/hash.ts:6</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> getHash: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;hash</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>k<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>k: <span class="tsd-signature-type">K</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> keysEqual: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;equal</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>a: <span class="tsd-signature-type">K</span></h5>
-														</li>
-														<li>
-															<h5>b: <span class="tsd-signature-type">K</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> valuesEqual: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;equal</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>a: <span class="tsd-signature-type">V</span></h5>
-														</li>
-														<li>
-															<h5>b: <span class="tsd-signature-type">V</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> size: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="gethash" class="tsd-anchor"></a>
-					<h3>get<wbr>Hash</h3>
-					<div class="tsd-signature tsd-kind-icon">get<wbr>Hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#gethash">getHash</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L130">hash/index.ts:130</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>el: <span class="tsd-signature-type">K</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="getkey" class="tsd-anchor"></a>
-					<h3>get<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">get<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#getkey">getKey</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L133">hash/index.ts:133</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>val: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="keysequal" class="tsd-anchor"></a>
-					<h3>keys<wbr>Equal</h3>
-					<div class="tsd-signature tsd-kind-icon">keys<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#keysequal">keysEqual</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L131">hash/index.ts:131</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>a: <span class="tsd-signature-type">K</span></h5>
-											</li>
-											<li>
-												<h5>b: <span class="tsd-signature-type">K</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="valuesequal" class="tsd-anchor"></a>
-					<h3>values<wbr>Equal</h3>
-					<div class="tsd-signature tsd-kind-icon">values<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#valuesequal">valuesEqual</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L132">hash/index.ts:132</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>a: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
-											</li>
-											<li>
-												<h5>b: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</div>
 				</section>
 			</section>
@@ -386,9 +172,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#size">size</a></p>
+								<p>Inherited from Hash.size</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L138">hash/index.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L97">hash/index.ts:97</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -408,28 +194,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#___iterator">__@iterator</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#___iterator">__@iterator</a></p>
+								<p>Inherited from Hash.[Symbol.iterator]</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L257">hash/index.ts:257</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L203">hash/index.ts:203</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="_getconflict" class="tsd-anchor"></a>
 					<h3>_get<wbr>Conflict</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">_get<wbr>Conflict<span class="tsd-signature-symbol">(</span>bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Bucket</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>, val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">_get<wbr>Conflict<span class="tsd-signature-symbol">(</span>bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Bucket</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>, val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="singlevaluehash.html">SingleValueHash</a>.<a href="singlevaluehash.html#_getconflict">_getConflict</a></p>
 								<p>Overrides Hash._getConflict</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L290">hash/index.ts:290</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L38">dict/many/hash.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -443,7 +228,7 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span>
 								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+								<span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
 							</h4>
 						</li>
 					</ul>
@@ -457,9 +242,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="hash.html">Hash</a>.<a href="hash.html#add">add</a></p>
+								<p>Overrides Hash.add</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/many/hash.ts#L32">dict/many/hash.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L77">dict/many/hash.ts:77</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -482,12 +267,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#clear">clear</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#clear">clear</a></p>
+								<p>Inherited from Hash.clear</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L142">hash/index.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L101">hash/index.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="clone" class="tsd-anchor"></a>
+					<h3>clone</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#clone">clone</a></p>
+								<p>Overrides Hash.clone</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L85">dict/many/hash.ts:85</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -501,9 +305,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#delete">delete</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#delete">delete</a></p>
+								<p>Inherited from Hash.delete</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L248">hash/index.ts:248</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L194">hash/index.ts:194</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -526,9 +330,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#deleteall">deleteAll</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#deleteall">deleteAll</a></p>
+								<p>Inherited from Hash.deleteAll</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L268">hash/index.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L214">hash/index.ts:214</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -550,9 +354,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#deleteat">deleteAt</a></p>
+								<p>Inherited from Hash.deleteAt</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L170">hash/index.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L130">hash/index.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -575,9 +379,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#deletekey">deleteKey</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#deletekey">deleteKey</a></p>
+								<p>Inherited from Hash.deleteKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L228">hash/index.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L174">hash/index.ts:174</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -601,7 +405,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#emplace">emplace</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/many/hash.ts#L22">dict/many/hash.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L67">dict/many/hash.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -627,9 +431,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#equalkeys">equalKeys</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#equalkeys">equalKeys</a></p>
+								<p>Inherited from Hash.equalKeys</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L146">hash/index.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L106">hash/index.ts:106</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -643,33 +447,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="find" class="tsd-anchor"></a>
-					<h3>find</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">find<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#find">find</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L188">hash/index.ts:188</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HashCursor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="findkey" class="tsd-anchor"></a>
 					<h3>find<wbr>Key</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -679,9 +456,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#findkey">findKey</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#findkey">findKey</a></p>
+								<p>Inherited from Hash.findKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L175">hash/index.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L135">hash/index.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -708,7 +485,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#getvalues">getValues</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/dict/many/hash.ts#L26">dict/many/hash.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L71">dict/many/hash.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -731,9 +508,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#has">has</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#has">has</a></p>
+								<p>Inherited from Hash.has</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L202">hash/index.ts:202</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L148">hash/index.ts:148</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -756,9 +533,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#haskey">hasKey</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#haskey">hasKey</a></p>
+								<p>Inherited from Hash.hasKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L211">hash/index.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L157">hash/index.ts:157</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -781,12 +558,79 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#torange">toRange</a></p>
-								<p>Inherited from <a href="hash.html">Hash</a>.<a href="hash.html#torange">toRange</a></p>
+								<p>Inherited from Hash.toRange</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/133970e/src/hash/index.ts#L244">hash/index.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L190">hash/index.ts:190</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HashRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="empty" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">empty&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L47">dict/many/hash.ts:47</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>K</h4>
+								</li>
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="from" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>iterable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>, opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/many/hash.ts#L59">dict/many/hash.ts:59</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>K</h4>
+								</li>
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iterable: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="hashmanydict.html" class="tsd-signature-type">HashManyDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -802,33 +646,24 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="hashmanydict.html" class="tsd-kind-icon">Hash<wbr>Many<wbr>Dict</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="hashmanydict.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="hashmanydict.html#gethash" class="tsd-kind-icon">get<wbr>Hash</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="hashmanydict.html#getkey" class="tsd-kind-icon">get<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="hashmanydict.html#keysequal" class="tsd-kind-icon">keys<wbr>Equal</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="hashmanydict.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a>
-							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashmanydict.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashmanydict.html#___iterator" class="tsd-kind-icon">__@iterator</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="hashmanydict.html#_getconflict" class="tsd-kind-icon">_get<wbr>Conflict</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
@@ -836,6 +671,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashmanydict.html#clear" class="tsd-kind-icon">clear</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="hashmanydict.html#clone" class="tsd-kind-icon">clone</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashmanydict.html#delete" class="tsd-kind-icon">delete</a>
@@ -856,9 +694,6 @@
 								<a href="hashmanydict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="hashmanydict.html#find" class="tsd-kind-icon">find</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashmanydict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -873,10 +708,127 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashmanydict.html#torange" class="tsd-kind-icon">to<wbr>Range</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="hashmanydict.html#empty" class="tsd-kind-icon">empty</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="hashmanydict.html#from" class="tsd-kind-icon">from</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="hashmultidict.html" class="tsd-kind-icon">Hash<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="priorityqueue.html" class="tsd-kind-icon">Priority<wbr>Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="queue.html" class="tsd-kind-icon">Queue</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="rangebase.html" class="tsd-kind-icon">Range<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="singlelinkedlist.html" class="tsd-kind-icon">Single<wbr>Linked<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stack.html" class="tsd-kind-icon">Stack</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="stringdict.html" class="tsd-kind-icon">String<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treedict.html" class="tsd-kind-icon">Tree<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemanydict.html" class="tsd-kind-icon">Tree<wbr>Many<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/bag.html" class="tsd-kind-icon">Bag</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/cursor.html" class="tsd-kind-icon">Cursor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dict.html" class="tsd-kind-icon">Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/dictlike.html" class="tsd-kind-icon">Dict<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/grid.html" class="tsd-kind-icon">Grid</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/list.html" class="tsd-kind-icon">List</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/multidict.html" class="tsd-kind-icon">Multi<wbr>Dict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/queuelike.html" class="tsd-kind-icon">Queuelike</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/sequence.html" class="tsd-kind-icon">Sequence</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/set.html" class="tsd-kind-icon">Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/treedictoptions.html" class="tsd-kind-icon">Tree<wbr>Dict<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/vectoroptions.html" class="tsd-kind-icon">Vector<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#pair" class="tsd-kind-icon">Pair</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#priorityqueueoptions" class="tsd-kind-icon">Priority<wbr>Queue<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#vec2" class="tsd-kind-icon">Vec2</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#hash" class="tsd-kind-icon">hash</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#lesser" class="tsd-kind-icon">lesser</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#liftkeyed" class="tsd-kind-icon">lift<wbr>Keyed</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#liftlesser" class="tsd-kind-icon">lift<wbr>Lesser</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

@@ -1,6 +1,12 @@
 
 /**
- * Represents a non-hiercarchical holder of data values.
+ * Base interface for any data structure that contains multiple elements.
+ *
+ * In general, an implementation of a collection (such as [[DoubleLinkedList]]
+ * or a [[PriorityQueue]]) will contain static member functions that can be used
+ * to create a new instance of the collection. For example,
+ * [[DoubleLinkedList.from]] will create a new linked list filled with elements
+ * of the given iterable.
  *
  * @typeparam T The type of element in the collection.
  */
@@ -66,11 +72,9 @@ export interface Collection<T> {
   clear(): void
 
   /**
-   * Copies all elements in the collection to a new one.
-   *
-   * @experimental
+   * Copies all elements in the collection to a new one of the same kind.
    */
-  clone?(): Collection<T>
+  clone(): Collection<T>
 
   /**
    * Remove the element pointed to by the iterator result from this collection.
@@ -169,12 +173,12 @@ export interface Sequence<T> extends Collection<T> {
  * Represents a collection that uses some part of the element to optimise
  * certain operations.
  */
-export interface KeyedCollection<T, K = T> extends Collection<T> {
+export interface IndexedCollection<T, K = T> extends Collection<T> {
 
   /**
    * Checks whether there a pair in this collection that has the given key. 
    *
-   * In some cases, this might be faster than accessing {@link CollectionRange.size} of {@link KeyedCollection.equalKeys equalKeys()}. In others,
+   * In some cases, this might be faster than accessing {@link CollectionRange.size} of {@link IndexedCollection.equalKeys equalKeys()}. In others,
    * it will be equivalent to it.
    */
   hasKey(key: K): boolean
@@ -294,7 +298,7 @@ export interface CollectionRange<T> {
  * elements, but contrary to a set it can hold multiple values of the same
  * kind.
  */
-export interface Bag<T> extends KeyedCollection<T> {
+export interface Bag<T> extends IndexedCollection<T> {
 
 }
 
@@ -307,7 +311,7 @@ export type Pair<K, V> = [K, V]
 /**
  * Base interface for `Dict` and `MultiDict`.
  */
-export interface DictLike<K, V> extends KeyedCollection<[K, V], K> {
+export interface DictLike<K, V> extends IndexedCollection<[K, V], K> {
 
   /**
    * Creates a new pair and inserts it in the underlying collection.
@@ -418,7 +422,7 @@ export interface Queuelike<T> extends Collection<T> {
   pop(): T | undefined
 }
 
-export interface Set<T> extends KeyedCollection<T> {
+export interface Set<T> extends IndexedCollection<T> {
 
 }
 

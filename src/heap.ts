@@ -1,14 +1,15 @@
 
 import { Collection, Cursor } from "./interfaces"
 import { lesser } from "./util"
-import Vector, { VectorCursor } from "./vector"
+import Vector, { VectorCursor, VectorOptions } from "./vector"
 
+/**
+ * @ignore
+ */
 abstract class HeapBase<T> {
-  
-  protected _vector: Vector<T>;
 
-  constructor(init?: Iterable<T>) {
-    this._vector = new Vector<T>(init);
+  constructor(public _vector: Vector<T>, public compare: (a: T, b: T) => boolean) {
+
   }
 
   get size() {
@@ -37,17 +38,27 @@ abstract class HeapBase<T> {
 
 }
 
+export interface HeapOptions<T> extends VectorOptions<T> { 
+  compare?: (a: T, b: T) => boolean;
+}
+
 /**
  * @ignore
  */
 export class BinaryMinHeap<T> extends HeapBase<T> implements Collection<T> {
 
-  constructor(public init?: Iterable<T>, public compare: (a: T, b: T) => boolean = lesser) {
-    super(init);
+  static from<T>(elements: Iterable<T>, opts: HeapOptions<T> = {}) {
+    const lessThan = opts.compare !== undefined ? opts.compare : lesser;
+    return new BinaryMinHeap(Vector.from<T>(elements, opts), lessThan);
+  }
+
+  static empty<T>(opts: HeapOptions<T> = {}) {
+    const lessThan = opts.compare !== undefined ? opts.compare : lesser;
+    return new BinaryMinHeap(Vector.empty(opts), lessThan);
   }
 
   clone(): BinaryMinHeap<T> {
-    return new BinaryMinHeap<T>(this, this.compare)
+    return new BinaryMinHeap<T>(this._vector.clone(), this.compare)
   }
 
   min() {

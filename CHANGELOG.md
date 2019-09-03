@@ -6,9 +6,10 @@ This document keeps track of any changes made to the software.
 ### v2.0.0
 
  - Renamed the `Container` concept to `Collection`
+ - `new Collection()` is now `Collection.from()` or `Collection.empty()`
  - Multi-index collection composition is temporarily removed
+ - `Structure` is now `IndexedCollection`
  - A `View` is now a `CollectionRange`
- - Renamed some interfaces to clearer names
  - `deleteAll` and `delete` are now required methods of `Collection`
  - Added `Collection.toRange()` as a replacement for `Collection.begin()` and `Collection.end()`
  - Added and implemented `Queuelike.peek()` for all relevant collections

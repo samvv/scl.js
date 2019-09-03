@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CollectionRange | Standard Collections Library for JavaScript</title>
+	<title>HashDictOptions | Standard Collections Library for JavaScript</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="collectionrange.html">CollectionRange</a>
+					<a href="hashdictoptions.html">HashDictOptions</a>
 				</li>
 			</ul>
-			<h1>Interface CollectionRange&lt;T&gt;</h1>
+			<h1>Interface HashDictOptions&lt;K, V&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -65,18 +65,37 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A range is a well-defined sequence of elements that are part of a collection.</p>
+						<p>Options passed to a hash-like dictionary in order to configure its behaviour.</p>
 					</div>
-					<p>Traversing a range that is being mutated results is undefined behavior (with
-						some exceptions). To be safe, you need to manually make a copy of the
-					elements in the range before adding or removing elements.</p>
+					<p>The following example demonstrates a dictionary with a capacity of 1024 and
+					a hashing function that simply returns the integer itself.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = HashDict.empty&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;({
+  capacity: <span class="hljs-number">1024</span>,
+  hash: <span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> key,
+  keysEqual: <span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> key === key,
+  valuesEqual: <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === value
+})</code></pre>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="../classes/hashdict.html">HashDict</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="../classes/hashmanydict.html">HashManyDict</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="../classes/hashmultidict.html">HashMultiDict</a></p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>T</h4>
+						<h4>K</h4>
+					</li>
+					<li>
+						<h4>V</h4>
 					</li>
 				</ul>
 			</section>
@@ -84,14 +103,8 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CollectionRange</span>
+						<span class="target">HashDictOptions</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/rangebase.html" class="tsd-signature-type">RangeBase</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -101,16 +114,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="collectionrange.html#size" class="tsd-kind-icon">size</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="collectionrange.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="collectionrange.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="collectionrange.html#reverse" class="tsd-kind-icon">reverse</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="collectionrange.html#values" class="tsd-kind-icon">values</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#capacity" class="tsd-kind-icon">capacity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#hash" class="tsd-kind-icon">hash</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#keysequal" class="tsd-kind-icon">keys<wbr>Equal</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,146 +126,71 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="size" class="tsd-anchor"></a>
-					<h3>size</h3>
-					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="capacity" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> capacity</h3>
+					<div class="tsd-signature tsd-kind-icon">capacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/interfaces.d.ts#L273">interfaces.d.ts:273</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L57">dict/hash.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Get how many elements are in this range.</p>
+							<p>The initial capacity of the underling vector that will store the buckets.</p>
 						</div>
-						<p>⚠️ This might be an expensive operation, so make sure to cache it if you need
-						frequent access to it.</p>
 					</div>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="___iterator" class="tsd-anchor"></a>
-					<h3>__@iterator</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">__@iterator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><a href="cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/interfaces.d.ts#L280">interfaces.d.ts:280</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Return an iterator that provides cursors to inspect or delete the given element.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="cursor.html">Cursor</a></p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><a href="cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="hash" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> hash</h3>
+					<div class="tsd-signature tsd-kind-icon">hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L32">dict/hash.ts:32</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The hashing function that will be used to map entries to a certain bucket.</p>
+						</div>
+						<p>If omitted, the <a href="hashdictoptions.html#hash">built-in hash function</a> will be used.</p>
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="filter" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> filter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">(</span>pred<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="collectionrange.html" class="tsd-signature-type">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/interfaces.d.ts#L292">interfaces.d.ts:292</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Filters this range using the given predicate. Iterating over the newly
-										returned range will cause all cursors that did not match the predicate to
-									be omitted.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>pred: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><a href="cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>el: <a href="cursor.html" class="tsd-signature-type">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="collectionrange.html" class="tsd-signature-type">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="keysequal" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> keys<wbr>Equal</h3>
+					<div class="tsd-signature tsd-kind-icon">keys<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L42">dict/hash.ts:42</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A predicate for determining when two keys are equal.</p>
+						</div>
+						<p>Two keys may produce the same hash result, but that does not necessarily
+						mean that they are equal. This function resolves any conflicts.</p>
+						<p>If omitted, the <a href="../globals.html#equal">built-in equality function</a> will be used.</p>
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="reverse" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> reverse</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">reverse<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="collectionrange.html" class="tsd-signature-type">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/interfaces.d.ts#L265">interfaces.d.ts:265</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Reverse the order of the elements that would be generated with the
-									iterator.</p>
-								</div>
-								<p>Reversing a range is only possible when the order of the elements is
-								well-defined, such as the elements in a tree dictionary.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="collectionrange.html" class="tsd-signature-type">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="values" class="tsd-anchor"></a>
-					<h3>values</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">values<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/interfaces.d.ts#L285">interfaces.d.ts:285</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get an iterator that sequences the elements contained in this range.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="valuesequal" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> values<wbr>Equal</h3>
+					<div class="tsd-signature tsd-kind-icon">values<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L52">dict/hash.ts:52</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A predicate determining when two elements are equal.</p>
+						</div>
+						<p>This function is only called after is has been determined that the keys
+						are equal, so you may safely skip the equality check for the keys.</p>
+						<p>If omitted, the <a href="../globals.html#equal">built-in equality function</a> will be used.</p>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -320,30 +252,9 @@
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="collection.html" class="tsd-kind-icon">Collection</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="collectionrange.html" class="tsd-kind-icon">Collection<wbr>Range</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="collectionrange.html#size" class="tsd-kind-icon">size</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="collectionrange.html#___iterator" class="tsd-kind-icon">__@iterator</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="collectionrange.html#filter" class="tsd-kind-icon">filter</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="collectionrange.html#reverse" class="tsd-kind-icon">reverse</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="collectionrange.html#values" class="tsd-kind-icon">values</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="cursor.html" class="tsd-kind-icon">Cursor</a>
 					</li>
@@ -356,9 +267,27 @@
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="grid.html" class="tsd-kind-icon">Grid</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
 						<a href="hashdictoptions.html" class="tsd-kind-icon">Hash<wbr>Dict<wbr>Options</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="hashdictoptions.html#capacity" class="tsd-kind-icon">capacity</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="hashdictoptions.html#hash" class="tsd-kind-icon">hash</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="hashdictoptions.html#keysequal" class="tsd-kind-icon">keys<wbr>Equal</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="hashdictoptions.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="heapoptions.html" class="tsd-kind-icon">Heap<wbr>Options</a>
 					</li>

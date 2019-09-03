@@ -1,5 +1,5 @@
 
-import { KeyedCollection, Cursor, CollectionRange } from "../interfaces"
+import { IndexedCollection, Cursor, CollectionRange } from "../interfaces"
 import { liftLesser, lesser } from "../util"
 
 /**
@@ -206,41 +206,20 @@ function rotateRight<T>(node: Node<T>) {
 type AddHint<T> = [boolean, Node<T> | null, number?];
 
 /**
- * An AVL tree is a kind of binary tree that balances itself according a
- * specific set of rules whenever a node is inserted or deleted. As a
- * consequence, lookup, insertion and deletion are guaranteed to be in
- * `O(log(n))`.
- *
- * ```ts
- * import AVL from "scl/avl"
- * ```
- *
- * The following table summarises the worst-case time complexity of the most
- * commonly used properies of this class. For more information, see the
- * documentation of the respective property.
- *
- * | Property name                         | Worst case   |
- * |---------------------------------------|--------------|
- * | {@link AVLTree.add add()}             | `O(log(n))`  |
- * | {@link AVLTree.clear clear()}         | `O(1)`       |
- * | {@link AVLTree.equalKeys equalKeys()} | `O(n)`       |
- * | {@link AVLTree.delete delete()}       | `O(log(n))`  |
- * | {@link AVLTree.deleteAll deleteAll()} | `O(n)`       |
- * | {@link AVLTree.deleteAt deleteAt()}   | `O(log(n))`  |
- * | {@link AVLTree.size size}             | `O(1)`  |
- * 
- * @typeparam T The type of element in the collection.
- * @typeparam K The type of the element's key.
+ * @ignore
  */
-export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
+export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
   protected _comparator: (a: K, b: K) => number;
 
+  /** 
+   * @ignore
+   */
   constructor(
-        protected lessThan: (a: K, b: K) => boolean = lesser
-      , protected getKey: (val: T) => K = val => val as any
-      , protected isEqual: (a: T, b: T) => boolean = (a, b) => a === b
-      , protected _allowDuplicates = true) {
+        /** @ignore */ protected lessThan: (a: K, b: K) => boolean = lesser
+      , /** @ignore */ protected getKey: (val: T) => K = val => val as any
+      , /** @ignore */ protected elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
+      , /** @ignore */ protected _allowDuplicates = true) {
     this._comparator = liftLesser(lessThan);
   }
   
@@ -347,7 +326,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
 
   has(element: T): boolean {
     for (const node of this.equalKeys(this.getKey(element))) {
-      if (this.isEqual(node.value, element)) {
+      if (this.elementsEqual(node.value, element)) {
         return true;
       }
     }
@@ -511,7 +490,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     let deleteCount = 0;
     const nodes = this.equalKeys(this.getKey(value));
     for (const node of nodes) {
-      if (this.isEqual(node.value, value)) {
+      if (this.elementsEqual(node.value, value)) {
         this.deleteAt(node);
         ++deleteCount;
       }
@@ -525,7 +504,7 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
    */
   delete(element: T): boolean {
     for (const node of this.equalKeys(this.getKey(element))) {
-      if (this.isEqual(node.value, element)) {
+      if (this.elementsEqual(node.value, element)) {
         this.deleteAt(node);
         return true;
       }
@@ -618,6 +597,27 @@ export class AVLTree<T, K = T> implements KeyedCollection<T, K> {
     return returnValue;
   }
 
+  clone() {
+    return new AVLTree<T, K>(
+      this.lessThan
+    , this.getKey
+    , this.elementsEqual
+    , this._allowDuplicates
+    )
+  }
+
+}
+
+/**
+ * @ignore
+ */
+export interface AVLTreeConstructor<T, K> {
+  new(
+    lessThan: (a: K, b: K) => boolean
+  , getKey: (val: T) => K
+  , elementsEqual: (a: T, b: T) => boolean
+  , allowDuplicates: boolean
+  ): AVLTree<T, K>;
 }
 
 export default AVLTree;

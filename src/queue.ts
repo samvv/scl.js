@@ -30,6 +30,18 @@ import DoubleLinkedList from "./list/double"
  */
 export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
 
+  static from<T>(iterable: Iterable<T>) {
+    const queue = new Queue<T>();
+    for (const element of iterable) {
+      queue.add(element);
+    }
+    return queue;
+  }
+
+  static empty<T>() {
+    return new Queue<T>();
+  }
+
   /**
    * This method's time complexity is in `O(1)`.
    */
