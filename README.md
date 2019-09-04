@@ -21,7 +21,9 @@ interface Task {
  description: string
 }
 
-const tasks = new PriorityQueue<Task>((a, b) => a.priority < b.priority)
+const tasks = new PriorityQueue<Task>({
+  compare: (a, b) => a.priority < b.priority
+})
 
 q.add({ description: 'Do the dishes.', priority: 5 })
 q.add({ description: 'Buy food.', priority: 1 })
