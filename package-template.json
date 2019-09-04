@@ -1,6 +1,6 @@
 {
   "name": "scl",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0",
   "main": "index.js",
   "description": "A curated set of essential algorithms and data structures for JavaScript.",
   "repository": {
