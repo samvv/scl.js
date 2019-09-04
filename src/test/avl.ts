@@ -81,7 +81,7 @@ describe('an AVL-tree', () => {
     t1.add(2);
     t1.add(3);
     t1.add(4);
-    expect([...t1.toRange().reverse().values()]).to.deep.equal([5,4,3,2,1]);
+    expect([...t1.toRange().reverse()]).to.deep.equal([5,4,3,2,1]);
   });
 
   it('can traverse an equal range', () => {
@@ -93,8 +93,8 @@ describe('an AVL-tree', () => {
     t1.add(3);
     t1.add(4);
     t1.add(5);
-    expect([...t1.equalKeys(7).values()]).to.deep.equal([]);
-    expect([...t1.equalKeys(3).values()]).to.deep.equal([3,3,3]);
+    expect([...t1.equalKeys(7)]).to.deep.equal([]);
+    expect([...t1.equalKeys(3)]).to.deep.equal([3,3,3]);
   });
 
 

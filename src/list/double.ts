@@ -1,19 +1,11 @@
 
 import { List, Cursor, CollectionRange } from "../interfaces"
-import { RangeBase } from "../util"
+import { RangeBase, CursorBase } from "../util"
 
-class Node<T> implements Cursor<T> {
+class Node<T> extends CursorBase<T> {
 
   constructor(public value: T, public _prevNode: Node<T> | null = null, public _nextNode: Node<T> | null = null) {
-
-  }
-
-  *[Symbol.iterator](): IterableIterator<T> {
-    let node: Node<T> | null = this;
-    while (node !== null) {
-      yield node.value;
-      node = node._nextNode;
-    }
+    super();
   }
 
   next() {
@@ -26,13 +18,13 @@ class Node<T> implements Cursor<T> {
 
 }
 
-class NodeRange<T> extends RangeBase<T> implements CollectionRange<T> {
+class NodeRange<T> extends RangeBase<T> {
 
-  constructor(public _startNode: Node<T> | null, public _endNode: Node<T> | null, public readonly reversed: boolean) {
+  constructor(protected _startNode: Node<T> | null, protected _endNode: Node<T> | null, public readonly reversed: boolean) {
     super();
   }
 
-  *values() {
+  *[Symbol.iterator]() {
     let node = this._startNode;
     while (node !== null) {
       yield node.value;
@@ -43,7 +35,7 @@ class NodeRange<T> extends RangeBase<T> implements CollectionRange<T> {
     }
   }
 
-  *[Symbol.iterator]() {
+  *getCursors() {
     let node = this._startNode;
     while (node !== null) {
       yield node;

@@ -9,9 +9,9 @@ test('Vector.slice() can take slices', (v: Vector<number>) => {
   v.append(3);
   v.append(4);
   const s1 = v.slice(1, 3);
-  expect([...s1.values()]).to.deep.equal([2,3]);
+  expect([...s1]).to.deep.equal([2,3]);
   const s2 = v.slice(0,0);
-  expect([...s2.values()]).to.deep.equal([]);
+  expect([...s2]).to.deep.equal([]);
 });
 
 test('Vector.slice() can take slices of slices', (v: Vector<number>) => {
@@ -20,7 +20,7 @@ test('Vector.slice() can take slices of slices', (v: Vector<number>) => {
   v.append(3);
   v.append(4);
   const s1 = v.slice(1, 3).slice(1, 2);
-  expect([...s1.values()]).to.deep.equal([3]);
+  expect([...s1]).to.deep.equal([3]);
 });
 
 test('Vector.insertBefore() allocates more storage if required', (v: Vector<number>) => {

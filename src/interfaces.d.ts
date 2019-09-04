@@ -224,11 +224,16 @@ export interface Cursor<T> {
   value: T;
 
   /**
-   * Generates the sequence of all subsequent elements as defined by the order of the collection.
-   *
-   * If the collection does not specify an order, this method will not exist.
+   * Generate all elements from this cursor till the end of the
+   * collection.
    */
-  [Symbol.iterator]?(): IterableIterator<T>;
+  nextAll?(): IterableIterator<Cursor<T>>;
+
+  /**
+   * Generate all elements from this cursor till the beginning of the
+   * collection.
+   */
+  prevAll?(): IterableIterator<Cursor<T>>;
 
   /**
    * Get a reference to the cursor that is immediately after this one.
@@ -256,15 +261,6 @@ export interface Cursor<T> {
 export interface CollectionRange<T> {
 
   /**
-   * Reverse the order of the elements that would be generated with the
-   * iterator.
-   *
-   * Reversing a range is only possible when the order of the elements is
-   * well-defined, such as the elements in a tree dictionary.
-   */
-  reverse?(): CollectionRange<T>;
-
-  /**
    * Get how many elements are in this range.
    *
    * ⚠️ This might be an expensive operation, so make sure to cache it if you need
@@ -273,16 +269,16 @@ export interface CollectionRange<T> {
   readonly size: number;
 
   /**
+   * Get an iterator that sequences the elements contained in this range.
+   */
+  [Symbol.iterator](): IterableIterator<T>;
+
+  /**
    * Return an iterator that provides cursors to inspect or delete the given element. 
    *
    * @see  {@link Cursor}
    */
-  [Symbol.iterator](): IterableIterator<Cursor<T>>;
-
-  /**
-   * Get an iterator that sequences the elements contained in this range.
-   */
-  values(): IterableIterator<T>;
+  getCursors(): IterableIterator<Cursor<T>>;
   
   /**
    * Filters this range using the given predicate. Iterating over the newly
@@ -290,6 +286,22 @@ export interface CollectionRange<T> {
    * be omitted.
    */
   filter?(pred: (el: Cursor<T>) => boolean): CollectionRange<T>;
+
+  /**
+   * Indicates whether this range will traverse its elements in reverse order.
+   *
+   * @see [[reverse]]
+   */
+  readonly reversed?: boolean;
+
+  /**
+   * Reverse the order of the elements that would be generated with the
+   * iterator.
+   *
+   * Reversing a range is only possible when the order of the elements is
+   * well-defined, such as the elements in a list or a tree-based dictionary.
+   */
+  reverse?(): CollectionRange<T>;
 
 }
 

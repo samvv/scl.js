@@ -1,27 +1,18 @@
 
 import { IndexedCollection, Cursor, CollectionRange } from "../interfaces"
-import { liftLesser, lesser } from "../util"
+import { liftLesser, lesser, RangeBase, CursorBase } from "../util"
 
 /**
  * @ignore
  */
-export class Node<T> implements Cursor<T> {
+export class Node<T> extends CursorBase<T> {
 
   balance: number = 0;
   left: Node<T> | null = null;
   right: Node<T> | null=  null;
-  data?: any;
 
   constructor(public value: T, public parent: Node<T> | null = null) {
-
-  }
-
-  *[Symbol.iterator]() {
-    let node: Node<T> | null = this;
-    do {
-      yield node.value;
-      node = node.next();
-    } while (node !== null);
+    super();
   }
 
   next(): Node<T> | null {
@@ -52,59 +43,19 @@ export class Node<T> implements Cursor<T> {
     return node.parent;
   }
 
-  reverse() {
-    return new RNode<T>(this);
-  }
-
-}
-
-class RNode<T> {
-
-  get value() {
-    return this._node.value;
-  }
-
-  set value(newVal: T) {
-    this._node.value = newVal;
-  }
-
-  constructor(public _node: Node<T>) {
-
-  }
-
-  next() {
-    return this._node.prev();
-  }
-
-  prev() {
-    return this._node.next();
-  }
-
-  *[Symbol.iterator]() {
-    let node: Node<T> | null = this._node;
-    do {
-      yield node.value;
-      node = node.prev();
-    } while (node !== null);
-  }
-
-  reverse() {
-    return this._node;
-  }
-
 }
 
 /**
  * @ignore
  */
-export class NodeRange<T> implements CollectionRange<T> {
+export class NodeRange<T> extends RangeBase<T> {
 
-  constructor(public min: Node<T> | null, public max: Node<T> | null, public _reversed = false) {
-    
+  constructor(public min: Node<T> | null, public max: Node<T> | null, public readonly reversed = false) {
+    super();
   }
 
-  reverse(): CollectionRange<T> {
-    return new NodeRange<T>(this.min, this.max, !this._reversed);
+  reverse() {
+    return new NodeRange<T>(this.min, this.max, !this.reversed);
   }
 
   get size() {
@@ -112,14 +63,14 @@ export class NodeRange<T> implements CollectionRange<T> {
     return [...this].length;
   }
 
-  *values() {
-    for (const node of this) {
+  *[Symbol.iterator]() {
+    for (const node of this.getCursors()) {
       yield node.value;
     }
   }
 
-  *[Symbol.iterator]() {
-    if (!this._reversed) {
+  *getCursors() {
+    if (!this.reversed) {
       let node = this.min, max = this.max;
       while (node !== null) {
         yield node;
@@ -325,7 +276,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   }
 
   has(element: T): boolean {
-    for (const node of this.equalKeys(this.getKey(element))) {
+    for (const node of this.equalKeys(this.getKey(element)).getCursors()) {
       if (this.elementsEqual(node.value, element)) {
         return true;
       }
@@ -460,8 +411,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
   *[Symbol.iterator]() {
     // TODO issue #12
-    if (this._root === null) return;
-    for (const value of this.begin()![Symbol.iterator]()) {
+    for (const value of this.toRange()) {
       yield value;
     }
   }
@@ -473,8 +423,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    */
   deleteKey(key: K): number {
     let deleteCount = 0;
-    const nodes = this.equalKeys(key);
-    for (const node of nodes) {
+    for (const node of this.equalKeys(key).getCursors()) {
       this.deleteAt(node);
       ++deleteCount;
     }
@@ -488,8 +437,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    */
   deleteAll(value: T): number {
     let deleteCount = 0;
-    const nodes = this.equalKeys(this.getKey(value));
-    for (const node of nodes) {
+    for (const node of  this.equalKeys(this.getKey(value)).getCursors()) {
       if (this.elementsEqual(node.value, value)) {
         this.deleteAt(node);
         ++deleteCount;
@@ -503,7 +451,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * elements in the collection.
    */
   delete(element: T): boolean {
-    for (const node of this.equalKeys(this.getKey(element))) {
+    for (const node of this.equalKeys(this.getKey(element)).getCursors()) {
       if (this.elementsEqual(node.value, element)) {
         this.deleteAt(node);
         return true;

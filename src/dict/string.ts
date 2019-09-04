@@ -1,10 +1,11 @@
 
 import { Pair, Dict, Cursor, CollectionRange } from "../interfaces"
+import { RangeBase, CursorBase } from "../util"
 
-class ObjectCursor<V> implements Cursor<[string, V]> {
+class ObjectCursor<V> extends CursorBase<[string, V]> {
   
   constructor(public _dict: StringDict<V>, public key: string) {
-
+    super();
   }
 
   get value() {
@@ -17,21 +18,21 @@ class ObjectCursor<V> implements Cursor<[string, V]> {
 
 }
 
-class ObjectRange<V> implements CollectionRange<[string, V]> {
+class ObjectRange<V> extends RangeBase<[string, V]> {
 
   constructor(public _dict: StringDict<V>) {
-
+    super();
   }
 
   get size() {
     return this._dict.size;
   }
 
-  values() {
+  [Symbol.iterator]() {
     return this._dict[Symbol.iterator]();
   }
 
-  *[Symbol.iterator]() {
+  *getCursors() {
     for (const key of Object.keys(this._dict._values)) {
       yield new ObjectCursor<V>(this._dict, key);
     }

@@ -156,7 +156,7 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
    */
   _getConflict(bucket: Bucket<[K, V]>, value: [K, V]) {
     const key = this.getKey(value);
-    for (const cursor of bucket.toRange()) {
+    for (const cursor of bucket.toRange().getCursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) {
         cursor.value = value;
         return cursor; 

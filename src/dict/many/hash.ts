@@ -36,7 +36,7 @@ import { hash, equal, isIterable } from "../../util"
 export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, V> {
 
   _getConflict(bucket: Bucket<[K, V]>, val: [K, V]) {
-    for (const cursor of bucket.toRange()) {
+    for (const cursor of bucket.toRange().getCursors()) {
       if (this.elementsEqual(cursor.value, val)) {
         return cursor;
       }
@@ -110,8 +110,8 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
   }
 
   *getValues(key: K): IterableIterator<V> {
-    for (const cursor of this.equalKeys(key)) {
-      yield cursor.value[1];
+    for (const value of this.equalKeys(key)) {
+      yield value[1];
     }
   }
 

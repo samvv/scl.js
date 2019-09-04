@@ -1,7 +1,7 @@
 
 import { IndexedCollection, CollectionRange, Cursor } from "../interfaces"
-import DoubleLinkedList, { DoubleLinkedListRange, DoubleLinkedListCursor } from "../list/double"
-import { RangeBase, EmptyRange, equal, hash } from "../util"
+import DoubleLinkedList, { DoubleLinkedListCursor } from "../list/double"
+import { RangeBase, EmptyRange } from "../util"
 
 /**
  * @ignore
@@ -27,17 +27,19 @@ export class HashCursor<T> implements Cursor<T> {
 
 }
 
-class HashRange<T, K> implements CollectionRange<T> {
+const DEFAULT_BUCKET_COUNT = 255;
 
-  constructor(public _hash: Hash<T, K>) {
+class HashRange<T, K> extends RangeBase<T> {
 
+  constructor(protected _hash: Hash<T, K>) {
+    super();
   }
 
   get size() {
     return this._hash.size;
   }
 
-  *values() {
+  *[Symbol.iterator]() {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
         for (const element of bucket) {
@@ -47,10 +49,10 @@ class HashRange<T, K> implements CollectionRange<T> {
     }
   }
 
-  *[Symbol.iterator]() {
+  *getCursors() {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
-        for (const cursor of bucket.toRange()) {
+        for (const cursor of bucket.toRange().getCursors()) {
           yield new HashCursor(bucket, cursor);
         }
       }
@@ -58,9 +60,6 @@ class HashRange<T, K> implements CollectionRange<T> {
   }
 
 }
-
-
-const DEFAULT_BUCKET_COUNT = 255;
 
 /**
  * @ignore
@@ -85,7 +84,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       , /** @ignore */ public keysEqual: (a: K, b: K) => boolean
       , /** @ignore */ public elementsEqual: (a: T, b: T) => boolean
       , /** @ignore */ public getKey: (val: T) => K = (val: T) => val as any
-      , capacity = DEFAULT_BUCKET_COUNT) {
+    , capacity = DEFAULT_BUCKET_COUNT) {
     this._array = new Array(capacity);
   }
 
@@ -134,7 +133,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     if (bucket === null) {
       return null;
     }
-    for (const cursor of bucket.toRange()) {
+    for (const cursor of bucket.toRange().getCursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) { 
         return new HashCursor<T>(bucket, cursor);
       }
@@ -143,7 +142,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
   }
 
   has(element: T): boolean {
-    for (const cursor of this.equalKeys(this.getKey(element))) {
+    for (const cursor of this.equalKeys(this.getKey(element)).getCursors()) {
       if (this.elementsEqual(cursor.value, element)) {
         return true;
       }
@@ -174,7 +173,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       return 0;
     }
     let deleted = 0;
-    for (const cursor of bucket.toRange()) {
+    for (const cursor of bucket.toRange().getCursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) { 
         bucket.deleteAt(cursor);
         --this._size;
@@ -182,6 +181,10 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       }
     }
     return deleted;
+  }
+
+  [Symbol.iterator]() {
+    return this.toRange()[Symbol.iterator]();
   }
 
   toRange() {
@@ -197,17 +200,6 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     return true;
   }
 
-  *[Symbol.iterator]() {
-    for (let i = 0; i < this._array.length; i++) {
-      const bucket = this._array[i];
-      if (bucket !== undefined) {
-        for (const el of bucket) {
-          yield el;
-        }
-      }
-    }
-  }
-
   deleteAll(element: T) {
     const key = this.getKey(element);
     const h = this.getHash(key);
@@ -216,7 +208,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       return 0;
     }
     let deleted = 0;
-    for (const cursor of this._array[i].toRange()) {
+    for (const cursor of this._array[i].toRange().getCursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) { 
         this._array[i].deleteAt(cursor);
         --this._size;

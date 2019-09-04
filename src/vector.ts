@@ -1,12 +1,12 @@
 
-import { Sequence, CollectionRange, Cursor } from "./interfaces"
+import { Sequence } from "./interfaces"
 import { DEFAULT_VECTOR_CAPACITY, DEFAULT_VECTOR_ALLOC_STEP } from "./constants"
-import { isIterable } from "./util"
+import { isIterable, CursorBase, RangeBase } from "./util"
 
 /**
  * @ignore
  */
-export class VectorCursor<T> {
+export class VectorCursor<T> extends CursorBase<T> {
 
   get value() {
     return this.vector._elements[this._index]; 
@@ -17,7 +17,7 @@ export class VectorCursor<T> {
   }
 
   constructor(public vector: Vector<T>, public _index: number) {
-    
+    super();
   }
 
   *[Symbol.iterator]() {
@@ -47,10 +47,10 @@ export class VectorCursor<T> {
 /**
  * @ignore
  */
-export class VectorRange<T> implements CollectionRange<T> {
+export class VectorRange<T> extends RangeBase<T> {
 
-  constructor(public _vector: Vector<T>, public _min: number, public _max: number, public _reversed: boolean) {
-    
+  constructor(public _vector: Vector<T>, public _min: number, public _max: number, public readonly reversed: boolean) {
+    super();
   }
 
   get size() {
@@ -58,23 +58,23 @@ export class VectorRange<T> implements CollectionRange<T> {
   }
 
   slice(a: number, b: number) {
-    return new VectorRange<T>(this._vector, this._min + a, this._min + b, this._reversed);
+    return new VectorRange<T>(this._vector, this._min + a, this._min + b, this.reversed);
   }
 
-  *values() {
-    if (this._reversed) {
-      for (let i = this._max; i >= this._min; i--) {
+  *[Symbol.iterator]() {
+    if (!this.reversed) {
+      for (let i = this._min; i < this._max; ++i) {
         yield this._vector._elements[i];
       }
     } else {
-      for (let i = this._min; i < this._max; ++i) {
+      for (let i = this._max; i >= this._min; i--) {
         yield this._vector._elements[i];
       }
     }
   }
 
-  *[Symbol.iterator]() {
-    if (this._reversed) {
+  *getCursors() {
+    if (this.reversed) {
       for (let i = this._max; i >= this._min; i--) {
         yield new VectorCursor<T>(this._vector, i);
       }
@@ -86,7 +86,7 @@ export class VectorRange<T> implements CollectionRange<T> {
   }
 
   reverse() {
-    return new VectorRange<T>(this._vector, this._min, this._max, !this._reversed);
+    return new VectorRange<T>(this._vector, this._min, this._max, !this.reversed);
   }
 
 }
@@ -361,7 +361,7 @@ export class Vector<T> implements Sequence<T> {
     }
   }
 
-  add(el: T): [boolean, Cursor<T>] {
+  add(el: T): [boolean, VectorCursor<T>] {
     return [true, this.append(el)];
   }
 

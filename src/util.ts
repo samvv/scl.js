@@ -37,13 +37,17 @@ export function omit<O extends object, K extends keyof O>(obj: O, ...keys: K[]):
  * @ignore
  */
 export class EmptyRange<T> implements CollectionRange<T> {
-  filter(pred: (el: Cursor<T>) => boolean) { return this; }
-  reverse() { return this; }
+  constructor(public readonly reversed = false) { }
+  filter(pred: (element: Cursor<T>) => boolean) { return this; }
+  reverse() { return new EmptyRange<T>(!this.reversed); }
   get size() { return 0; }
-  *values(): IterableIterator<T> {  }
-  *[Symbol.iterator](): IterableIterator<Cursor<T>> {  }
+  *getCursors(): IterableIterator<Cursor<T>> {  }
+  *[Symbol.iterator](): IterableIterator<T> {  }
 }
 
+/**
+ * @ignore
+ */
 export function get(val: any, path: any[]) {
   for (const chunk of path) {
     val = val[chunk];
@@ -51,6 +55,9 @@ export function get(val: any, path: any[]) {
   return val;
 }
 
+/**
+ * @ignore
+ */
 export function liftKeyed(proc: Function, path: string[]): Function {
   if (path.length === 0) {
     return proc;
@@ -59,25 +66,70 @@ export function liftKeyed(proc: Function, path: string[]): Function {
   }
 }
 
+/**
+ * @ignore
+ */
 export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => number {
   return function (a, b) {
-    if (lt(a, b))
+    if (lt(a, b)) {
       return -1;
-    if (lt(b, a))
+    }
+    if (lt(b, a)) {
       return 1;
+    }
     return 0;
   }
 }
 
+/**
+ * Abstract base class for implementing new cursors for a specific type of
+ * collection.
+ *
+ * ```ts
+ * class MyCursor<T> extends CursorBase<T> {
+ *   // ...
+ * }
+ * ```
+ */
+export abstract class CursorBase<T> implements Cursor<T> {
+
+  abstract value: T;
+
+  *nextAll(): IterableIterator<Cursor<T>> {
+    let cursor: Cursor<T> | null = this;
+    do {
+      yield cursor;
+      cursor = cursor.next!();
+    } while (cursor !== null);
+  }
+
+  *prevAll(): IterableIterator<Cursor<T>> {
+    let cursor: Cursor<T> | null = this;
+    do {
+      yield cursor;
+      cursor = cursor.prev!();
+    } while (cursor !== null);
+  }
+
+}
+
+/**
+ * Abstract base class for implementing new ranges on a specific type of
+ * collection. 
+ *
+ * ```ts
+ * class MyRange<T> extends RangeBase<T> {
+ *   // ...
+ * }
+ * ```
+ */
 export abstract class RangeBase<T> implements CollectionRange<T> {
 
-  abstract reverse(): CollectionRange<T>;
+  abstract getCursors(): IterableIterator<Cursor<T>>;
 
   abstract readonly size: number;
 
-  abstract values(): IterableIterator<T>;
-
-  abstract [Symbol.iterator](): IterableIterator<Cursor<T>>;
+  abstract [Symbol.iterator](): IterableIterator<T>;
 
   filter(pred: (el: Cursor<T>) => boolean): CollectionRange<T> {
     return new FilteredRange<T>(this, pred);
@@ -98,10 +150,10 @@ export class FilteredRange<T> extends RangeBase<T> {
     return this._range.size;
   }
 
-  *values() {
-    for (const cursor of this._range) {
+  *getCursors() {
+    for (const cursor of this._range.getCursors()) {
       if (this._pred(cursor)) {
-        yield cursor.value;
+        yield cursor;
       }
     }
   }
@@ -111,9 +163,9 @@ export class FilteredRange<T> extends RangeBase<T> {
   }
 
   *[Symbol.iterator]() {
-    for (const cursor of this._range) {
+    for (const cursor of this._range.getCursors()) {
       if (this._pred(cursor)) {
-        yield cursor;
+        yield cursor.value;
       }
     }
   }
@@ -126,18 +178,6 @@ export class FilteredRange<T> extends RangeBase<T> {
 export interface Newable<T> {
   new(...args: any[]): T;
 }
-
-// export function find<T>(pos: Cursor<T> | null, val: T, eq: (a: T, b: T) => boolean = equal) {
-//   while (true) {
-//     if (pos === null) {
-//       return null;
-//     }
-//     if (eq(pos.value, val)) {
-//       return pos;
-//     }
-//     pos = pos.next!();
-//   }
-// }
 
 /** 
  * @ignore

@@ -32,12 +32,12 @@ test('Collection.size is correctly updated when deleting elements', (coll: Colle
   expect(coll.size).to.equal(0);
 })
 
-test('Collection.toRange().values() generates the elements of the full colluence', (coll: Collection<string>) => {
+test('Collection.toRange() generates the elements of the full colluence', (coll: Collection<string>) => {
   coll.add('a');
   coll.add('b');
   coll.add('c');
   coll.add('d');
-  const elements = [...coll.toRange().values()];
+  const elements = [...coll.toRange()];
   expect(elements).to.have.lengthOf(4);
   expect(elements).to.include('a');
   expect(elements).to.include('b');

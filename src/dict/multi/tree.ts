@@ -119,8 +119,8 @@ export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, 
   }
 
   *getValues(key: K) {
-    for (const cursor of this.equalKeys(key)) {
-      yield cursor.value[1];
+    for (const value of this.equalKeys(key)) {
+      yield value[1];
     }
   }
 

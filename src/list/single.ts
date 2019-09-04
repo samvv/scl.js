@@ -1,5 +1,6 @@
 
-import { List, Cursor, CollectionRange } from "../interfaces"
+import { List } from "../interfaces"
+import { CursorBase, RangeBase } from "../util"
 
 interface Node<T> {
   next: Node<T> | null;
@@ -9,18 +10,10 @@ interface Node<T> {
 /**
  * @ignore
  */
-export class SingleLinkedListCursor<T> implements Cursor<T> {
+export class SingleLinkedListCursor<T> extends CursorBase<T> {
 
-  constructor(public _list: SingleLinkedList<T>, public _node: Node<T>) {
-    
-  }
-
-  *[Symbol.iterator](): IterableIterator<T> {
-    let node: Node<T> | null = this._node;
-    do {
-      yield node.value;
-      node = node.next;
-    } while (node !== null);
+  constructor(protected _list: SingleLinkedList<T>, public _node: Node<T>) {
+    super();
   }
 
   get value() {
@@ -51,13 +44,16 @@ export class SingleLinkedListCursor<T> implements Cursor<T> {
 /**
  * @ignore
  */
-export class SingleLinkedListRange<T> implements CollectionRange<T> {
+export class SingleLinkedListRange<T> extends RangeBase<T> {
 
- constructor(public _list: SingleLinkedList<T>, public _startNode: Node<T> | null, public _endNode: Node<T> | null, public _reversed: boolean) {
-
+ constructor(protected _list: SingleLinkedList<T>, protected _startNode: Node<T> | null, protected _endNode: Node<T> | null, public readonly reversed: boolean) {
+    super();
   }
   
   get size() {
+    if (this._startNode === this._list._firstNode && this._endNode === this._list._lastNode) {
+      return this._list.size;
+    }
     let count = 0;
     let node = this._startNode;
     while (node !== null) {
@@ -70,31 +66,54 @@ export class SingleLinkedListRange<T> implements CollectionRange<T> {
     return count;
   }
 
-  *values() {
-    let node = this._startNode;
-    while (node !== null) {
-      yield node.value;
-      node = node.next;
-    }
+  reverse() {
+    return new SingleLinkedListRange<T>(this._list, this._startNode, this._endNode, !this.reversed);
   }
 
   *[Symbol.iterator]() {
-    let node = this._startNode;
-    while (node !== null) {
-      yield new SingleLinkedListCursor<T>(this._list, node);
-      if (node === this._endNode) {
-        break;
+    if (!this.reversed) {
+      let node = this._startNode;
+      while (node !== null) {
+        yield node.value;
+        if (node === this._endNode) {
+          break;
+        }
+        node = node.next;
       }
-      node = node.next;
+    } else {
+      let node = this._endNode;
+      while (node !== null) {
+        yield node.value;
+        if (node === this._startNode) {
+          break;
+        }
+        node = this._list._findPrev(node);
+      }
     }
   }
 
-}
+  *getCursors() {
+    if (!this.reversed) {
+      let node = this._startNode;
+      while (node !== null) {
+        yield new SingleLinkedListCursor<T>(this._list, node);
+        if (node === this._endNode) {
+          break;
+        }
+        node = node.next;
+      }
+    } else {
+      let node = this._endNode;
+      while (node !== null) {
+        yield new SingleLinkedListCursor<T>(this._list, node);
+        if (node === this._startNode) {
+          break;
+        }
+        node = this._list._findPrev(node);
+      }
+    }
+  }
 
-interface LinkedListOptions<T> {
-  firstNode: Node<T>;
-  lastNode: Node<T>;
-  size: number;
 }
 
 /**
@@ -176,7 +195,7 @@ export class SingleLinkedList<T> implements List<T> {
     return prev;
   }
 
-  add(element: T): [boolean, Cursor<T>] {
+  add(element: T): [boolean, SingleLinkedListCursor<T>] {
     return [true, this.prepend(element)];
   }
 
@@ -232,7 +251,6 @@ export class SingleLinkedList<T> implements List<T> {
 
   append(el: T) {
     const newNode = { next: null, value: el }
-    let prev = this._lastNode;
     if (this._lastNode === null) {
       this._firstNode = newNode
       this._lastNode = newNode;
