@@ -226,12 +226,16 @@ export interface Cursor<T> {
   /**
    * Generate all elements from this cursor till the end of the
    * collection.
+   *
+   * If the collection does not specify an order, this method will not exist.
    */
   nextAll?(): IterableIterator<Cursor<T>>;
 
   /**
    * Generate all elements from this cursor till the beginning of the
    * collection.
+   *
+   * If the collection does not specify an order, this method will not exist.
    */
   prevAll?(): IterableIterator<Cursor<T>>;
 
