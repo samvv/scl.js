@@ -6,6 +6,10 @@ full support for TypeScript. Initially started as a side-project to abstract
 away some common patterns in other projects, this library grows to become 
 a full standard library of efficient algorithms.
 
+```
+npm i scl
+```
+
 :point_up: We could use a helping hand. If you think you're up for it,
 [open an issue](https://github.com/samvv/scl.js/issues/new).
 
