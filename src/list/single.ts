@@ -92,7 +92,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
     }
   }
 
-  *getCursors() {
+  *cursors() {
     if (!this.reversed) {
       let node = this._startNode;
       while (node !== null) {
@@ -393,4 +393,3 @@ export class SingleLinkedList<T> implements List<T> {
 }
 
 export default SingleLinkedList
-

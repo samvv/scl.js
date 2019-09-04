@@ -49,10 +49,10 @@ class HashRange<T, K> extends RangeBase<T> {
     }
   }
 
-  *getCursors() {
+  *cursors() {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
-        for (const cursor of bucket.toRange().getCursors()) {
+        for (const cursor of bucket.toRange().cursors()) {
           yield new HashCursor(bucket, cursor);
         }
       }
@@ -133,7 +133,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     if (bucket === null) {
       return null;
     }
-    for (const cursor of bucket.toRange().getCursors()) {
+    for (const cursor of bucket.toRange().cursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) { 
         return new HashCursor<T>(bucket, cursor);
       }
@@ -142,7 +142,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
   }
 
   has(element: T): boolean {
-    for (const cursor of this.equalKeys(this.getKey(element)).getCursors()) {
+    for (const cursor of this.equalKeys(this.getKey(element)).cursors()) {
       if (this.elementsEqual(cursor.value, element)) {
         return true;
       }
@@ -173,7 +173,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       return 0;
     }
     let deleted = 0;
-    for (const cursor of bucket.toRange().getCursors()) {
+    for (const cursor of bucket.toRange().cursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) { 
         bucket.deleteAt(cursor);
         --this._size;
@@ -208,7 +208,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       return 0;
     }
     let deleted = 0;
-    for (const cursor of this._array[i].toRange().getCursors()) {
+    for (const cursor of this._array[i].toRange().cursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) { 
         this._array[i].deleteAt(cursor);
         --this._size;
@@ -223,4 +223,3 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
 }
 
 export default Hash;
-

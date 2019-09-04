@@ -121,7 +121,7 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
   }
 
   add(pair: [K, V]): [boolean, Cursor<[K, V]>] {
-    for (const node of this.equalKeys(pair[0]).getCursors()) {
+    for (const node of this.equalKeys(pair[0]).cursors()) {
       if (this.elementsEqual(pair, node.value)) {
         node.value = pair;
         return [false, node];
@@ -151,4 +151,3 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
 }
 
 export default TreeManyDict;
-

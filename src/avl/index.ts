@@ -64,12 +64,12 @@ export class NodeRange<T> extends RangeBase<T> {
   }
 
   *[Symbol.iterator]() {
-    for (const node of this.getCursors()) {
+    for (const node of this.cursors()) {
       yield node.value;
     }
   }
 
-  *getCursors() {
+  *cursors() {
     if (!this.reversed) {
       let node = this.min, max = this.max;
       while (node !== null) {
@@ -276,7 +276,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   }
 
   has(element: T): boolean {
-    for (const node of this.equalKeys(this.getKey(element)).getCursors()) {
+    for (const node of this.equalKeys(this.getKey(element)).cursors()) {
       if (this.elementsEqual(node.value, element)) {
         return true;
       }
@@ -423,7 +423,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    */
   deleteKey(key: K): number {
     let deleteCount = 0;
-    for (const node of this.equalKeys(key).getCursors()) {
+    for (const node of this.equalKeys(key).cursors()) {
       this.deleteAt(node);
       ++deleteCount;
     }
@@ -437,7 +437,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    */
   deleteAll(value: T): number {
     let deleteCount = 0;
-    for (const node of  this.equalKeys(this.getKey(value)).getCursors()) {
+    for (const node of  this.equalKeys(this.getKey(value)).cursors()) {
       if (this.elementsEqual(node.value, value)) {
         this.deleteAt(node);
         ++deleteCount;
@@ -451,7 +451,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * elements in the collection.
    */
   delete(element: T): boolean {
-    for (const node of this.equalKeys(this.getKey(element)).getCursors()) {
+    for (const node of this.equalKeys(this.getKey(element)).cursors()) {
       if (this.elementsEqual(node.value, element)) {
         this.deleteAt(node);
         return true;
@@ -569,4 +569,3 @@ export interface AVLTreeConstructor<T, K> {
 }
 
 export default AVLTree;
-

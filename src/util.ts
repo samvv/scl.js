@@ -41,7 +41,7 @@ export class EmptyRange<T> implements CollectionRange<T> {
   filter(pred: (element: Cursor<T>) => boolean) { return this; }
   reverse() { return new EmptyRange<T>(!this.reversed); }
   get size() { return 0; }
-  *getCursors(): IterableIterator<Cursor<T>> {  }
+  *cursors(): IterableIterator<Cursor<T>> {  }
   *[Symbol.iterator](): IterableIterator<T> {  }
 }
 
@@ -125,7 +125,7 @@ export abstract class CursorBase<T> implements Cursor<T> {
  */
 export abstract class RangeBase<T> implements CollectionRange<T> {
 
-  abstract getCursors(): IterableIterator<Cursor<T>>;
+  abstract cursors(): IterableIterator<Cursor<T>>;
 
   abstract readonly size: number;
 
@@ -150,8 +150,8 @@ export class FilteredRange<T> extends RangeBase<T> {
     return this._range.size;
   }
 
-  *getCursors() {
-    for (const cursor of this._range.getCursors()) {
+  *cursors() {
+    for (const cursor of this._range.cursors()) {
       if (this._pred(cursor)) {
         yield cursor;
       }
@@ -163,7 +163,7 @@ export class FilteredRange<T> extends RangeBase<T> {
   }
 
   *[Symbol.iterator]() {
-    for (const cursor of this._range.getCursors()) {
+    for (const cursor of this._range.cursors()) {
       if (this._pred(cursor)) {
         yield cursor.value;
       }
@@ -275,4 +275,3 @@ export function equal(a: any, b: any): boolean {
   }
   return false;
 }
-

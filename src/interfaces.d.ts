@@ -278,8 +278,8 @@ export interface CollectionRange<T> {
    *
    * @see  {@link Cursor}
    */
-  getCursors(): IterableIterator<Cursor<T>>;
-  
+  cursors(): IterableIterator<Cursor<T>>;
+
   /**
    * Filters this range using the given predicate. Iterating over the newly
    * returned range will cause all cursors that did not match the predicate to
@@ -437,4 +437,3 @@ export interface Queuelike<T> extends Collection<T> {
 export interface Set<T> extends IndexedCollection<T> {
 
 }
-

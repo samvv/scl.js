@@ -32,7 +32,7 @@ class ObjectRange<V> extends RangeBase<[string, V]> {
     return this._dict[Symbol.iterator]();
   }
 
-  *getCursors() {
+  *cursors() {
     for (const key of Object.keys(this._dict._values)) {
       yield new ObjectCursor<V>(this._dict, key);
     }
@@ -187,4 +187,3 @@ export class StringDict<V> implements Dict<string, V> {
 }
 
 export default StringDict
-

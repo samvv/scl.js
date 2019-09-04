@@ -73,7 +73,7 @@ export class VectorRange<T> extends RangeBase<T> {
     }
   }
 
-  *getCursors() {
+  *cursors() {
     if (this.reversed) {
       for (let i = this._max; i >= this._min; i--) {
         yield new VectorCursor<T>(this._vector, i);
@@ -428,4 +428,3 @@ export class Vector<T> implements Sequence<T> {
 }
 
 export default Vector
-

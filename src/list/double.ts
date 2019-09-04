@@ -35,7 +35,7 @@ class NodeRange<T> extends RangeBase<T> {
     }
   }
 
-  *getCursors() {
+  *cursors() {
     let node = this._startNode;
     while (node !== null) {
       yield node;
@@ -316,4 +316,3 @@ export class DoubleLinkedList<T> implements List<T> {
 }
 
 export default DoubleLinkedList
-
