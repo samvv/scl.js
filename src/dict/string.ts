@@ -40,12 +40,21 @@ class ObjectRange<V> implements CollectionRange<[string, V]> {
 }
 
 /**
- * A string-based dictionary is a specialised dictionary where all keys are
- * strings. When two items are added with the same key, the second item will
- * override the first.
+ * A hash-based dictionary for strings, which wraps a native JavaScript object
+ * to provide very fast lookup, insertion and deletion.
  *
  * ```ts
  * import StringDict from "scl/dict/string"
+ * ```
+ *
+ * When two items are added with the same key, the second item will
+ * override the first.
+ *
+ * ```ts
+ * const d = new StringDict<number>()
+ * d.add(1, 'one') // ok
+ * d.add(1, 'two') // ok; replaced
+ * assert.strictEqual(d.getValue(1), 'two')
  * ```
  *
  * All operations in the dictionary are in `O(1)`.
@@ -55,41 +64,32 @@ export class StringDict<V> implements Dict<string, V> {
   /**
    * @ignore
    */
-  constructor(
-    /** @ignore */ public _values: { [key: string]: V }
-  ) {
+  _values = Object.create(null);
 
-  }
+  protected _size = 0;
 
   /**
-   * Creates a new [[StringDict]] filled with elements from the given iterable.
+   * Construct a new string-based dictionary.
    *
    * ```ts
-   * const d = StringDict.from<number>([
+   * const d = new StringDict<number>()
+   * ```
+   *
+   * You can also constrcut this dictionary from any iterable, like so:
+   *
+   * ```ts
+   * const d = new StringDict([
    *   ['one', 1],
    *   ['two', 2]
    * ])
    * ```
    */
-  static from<V>(iterable: Iterable<[string, V]>) {
-    const values = Object.create(null);
-    for (const [key, value] of iterable) {
-      values[key] = value;
+  constructor(iterable?: Iterable<[string, V]>) {
+    if (iterable !== undefined) {
+      for (const element of iterable) {
+        this.add(element);
+      }
     }
-    return new StringDict<V>(values);
-  }
-
-  /**
-   * Creates an empty [[StringDict]], ready to be used.
-   *
-   * ```ts
-   * const d = StringDict.empty<number>()
-   * d.emplace('one', 1)
-   * d.emplace('two', 2)
-   * ```
-   */
-  static empty<V>() {
-    return new StringDict<V>(Object.create(null));
   }
 
   add([key, val]: Pair<string, V>) {
@@ -97,11 +97,13 @@ export class StringDict<V> implements Dict<string, V> {
   }
 
   get size() {
-    return Object.keys(this._values).length
+    return this._size;
   }
 
-  has(pair: Pair<string, V>) {
-    return this.hasKey(pair[0])
+  has(element: Pair<string, V>) {
+    const value = this._values[element[0]];
+    return value !== undefined
+        && element[1] === value;
   }
 
   emplace(key: string, value: V): [boolean, Cursor<[string, V]>] {
@@ -109,16 +111,8 @@ export class StringDict<V> implements Dict<string, V> {
       return [false, new ObjectCursor<V>(this, key)];
     }
     this._values[key] = value;
+    this._size++;
     return [true, new ObjectCursor<V>(this, key)];
-  }
-
-  hasValue(val: V) {
-    for (const key of Object.keys(this._values)) {
-      const otherVal = this._values[key]
-      if (otherVal === val)
-        return true
-    }
-    return false
   }
 
   getValue(key: string) {
@@ -143,6 +137,7 @@ export class StringDict<V> implements Dict<string, V> {
       return false;
     }
     delete this._values[pair[0]];
+    this._size--;
     return true;
   }
 
@@ -151,6 +146,7 @@ export class StringDict<V> implements Dict<string, V> {
       return 0;
     }
     delete this._values[key];
+    this._size--;
     return 1;
   }
 
@@ -158,16 +154,9 @@ export class StringDict<V> implements Dict<string, V> {
     return new ObjectCursor<V>(this, key);
   }
 
-  deleteValue(value: V) {
-    for (const key of Object.keys(this._values)) {
-      const otherValue = this._values[key]
-      if (value === otherValue)
-        delete this._values[key]
-    }
-  }
-
   deleteAt(cursor: ObjectCursor<V>) {
-    delete this._values[cursor.key]
+    delete this._values[cursor.key];
+    this._size--;
   }
 
   deleteAll(element: [string, V]) {
@@ -178,6 +167,7 @@ export class StringDict<V> implements Dict<string, V> {
         count++;
       }
     }
+    this._size -= count;
     return count;
   }
 
