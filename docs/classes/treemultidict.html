@@ -62,14 +62,104 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A tree-based dictionary that can store multile items with the same key, but
+						only if the values differ.</p>
+					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> TreeMultiDict <span class="hljs-keyword">from</span> <span class="hljs-string">"scl/dict/many/tree"</span></code></pre>
+					<p>The following table summarises the worst-case time complexity of the most
+						commonly used properies of this class. For more information, see the
+					documentation of the respective property.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Property name</th>
+								<th>Worst case</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td><a href="treedict.html#add">add()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#clear">clear()</a></td>
+								<td><code>O(1)</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#equalkeys">equalKeys()</a></td>
+								<td><code>O(n)</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#delete">delete()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#deleteall">deleteAll()</a></td>
+								<td><code>O(n)</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#deleteat">deleteAt()</a></td>
+								<td><code>O(log(n))</code></td>
+							</tr>
+							<tr>
+								<td><a href="treedict.html#size">size</a></td>
+								<td><code>O(1)</code></td>
+							</tr>
+					</tbody></table>
+					<p>When a new entry is added with a key and value that is already taken, the
+					dictionary will replace the corresponding entry with the new one.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> TreeMultiDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// ok</span>
+assert.strictEqual(d.getValues(<span class="hljs-number">1</span>), <span class="hljs-string">'foo'</span>)
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'bar'</span>) <span class="hljs-comment">// ok</span>
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// ok</span>
+<span class="hljs-keyword">const</span> values = [...d.getValues(<span class="hljs-number">1</span>)]
+assert.lengthOf(values, <span class="hljs-number">3</span>)
+assert.deepInclude(value, [<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>]) <span class="hljs-comment">// appears two times</span>
+assert.deepInclude(value, [<span class="hljs-number">1</span>, <span class="hljs-string">'bar'</span>])</code></pre>
+					<p>If you need to throw an error when a key is already taken, simply use
+					<a href="treedict.html#has">has()</a>.</p>
+					<p>The items in a tree-based dictionary are guaranteed to be sorted on their
+						keys. This is not true for values with the same, which generally appear in
+					the order by which they were inserted.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> TreeMultiDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
+d.emplace(<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>)
+d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>)
+d.emplace(<span class="hljs-number">3</span>, <span class="hljs-string">'three'</span>)
+assert.deepEqual([...d], [[<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>], [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>], [<span class="hljs-number">3</span>, <span class="hljs-string">'three'</span>]])</code></pre>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="hashmultidict.html">HashMultiDict</a> for a fast, unordered version of this collection.</p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="treedict.html">TreeDict</a> when you need your keys to be unique.</p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="treemanydict.html">TreeManyDict</a> when you want the values to be unique but not the keys.</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>K</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of key of a given entry.</p>
+							</div>
+						</div>
 					</li>
 					<li>
 						<h4>V</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of value associated with the given key.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -97,6 +187,12 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="treemultidict.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
@@ -126,11 +222,57 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treemultidict.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treemultidict.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="treemultidict.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="treemultidict.html#empty" class="tsd-kind-icon">empty</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="treemultidict.html#from" class="tsd-kind-icon">from</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Tree<wbr>Multi<wbr>Dict<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides AVLTree.__constructor</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/multi/tree.ts#L68">dict/multi/tree.ts:68</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Construct a new tree-based dictionary.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> TreeMultiDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()</code></pre>
+								<p>Similar to JavaScript&#39;s built-in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">map type</a>, the constructor accepts a
+									list of key-value pairs that will immediately be added to the resulting
+								dictionary.</p>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> TreeMultiDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;([
+  [<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>],
+  [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>]
+])</code></pre>
+								<p>The dictionary can be tweaked by providing a <a href="../interfaces/treedictoptions.html">TreeDictOptions</a>-object,
+									which allows to configure things like the default compare function and
+								value equality.</p>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> TreeMultiDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;({
+  compare: <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &lt; b,
+  valuesEqual: <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a === b,
+  elements: [[<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>], [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>]]
+})</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
@@ -146,7 +288,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AVLTree.size</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L237">avl/index.ts:237</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L237">avl/index.ts:237</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -168,7 +310,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#___iterator">__@iterator</a></p>
 								<p>Inherited from AVLTree.[Symbol.iterator]</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L461">avl/index.ts:461</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L461">avl/index.ts:461</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -186,7 +328,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AVLTree.add</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L273">avl/index.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L273">avl/index.ts:273</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -218,7 +360,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AVLTree.begin</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L447">avl/index.ts:447</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L447">avl/index.ts:447</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
@@ -240,7 +382,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#clear">clear</a></p>
 								<p>Inherited from AVLTree.clear</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L232">avl/index.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L232">avl/index.ts:232</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -264,7 +406,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#clone">clone</a></p>
 								<p>Overrides AVLTree.clone</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/multi/tree.ts#L38">dict/multi/tree.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/multi/tree.ts#L131">dict/multi/tree.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -283,7 +425,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#delete">delete</a></p>
 								<p>Inherited from AVLTree.delete</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L505">avl/index.ts:505</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L505">avl/index.ts:505</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,7 +456,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#deleteall">deleteAll</a></p>
 								<p>Inherited from AVLTree.deleteAll</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L489">avl/index.ts:489</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L489">avl/index.ts:489</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,7 +487,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AVLTree.deleteAt</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L519">avl/index.ts:519</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L519">avl/index.ts:519</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -376,7 +518,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#deletekey">deleteKey</a></p>
 								<p>Inherited from AVLTree.deleteKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L474">avl/index.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L474">avl/index.ts:474</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,7 +549,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#emplace">emplace</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/multi/tree.ts#L34">dict/multi/tree.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/multi/tree.ts#L127">dict/multi/tree.ts:127</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -434,7 +576,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AVLTree.end</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L454">avl/index.ts:454</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L454">avl/index.ts:454</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
@@ -456,7 +598,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#equalkeys">equalKeys</a></p>
 								<p>Inherited from AVLTree.equalKeys</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L395">avl/index.ts:395</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L395">avl/index.ts:395</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -487,7 +629,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#findkey">findKey</a></p>
 								<p>Inherited from AVLTree.findKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L352">avl/index.ts:352</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L352">avl/index.ts:352</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -526,7 +668,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#getaddhint">getAddHint</a></p>
 								<p>Inherited from AVLTree.getAddHint</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L241">avl/index.ts:241</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L241">avl/index.ts:241</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -550,7 +692,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#getvalues">getValues</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/multi/tree.ts#L28">dict/multi/tree.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/multi/tree.ts#L121">dict/multi/tree.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -575,7 +717,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#has">has</a></p>
 								<p>Inherited from AVLTree.has</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L327">avl/index.ts:327</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L327">avl/index.ts:327</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -600,7 +742,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#haskey">hasKey</a></p>
 								<p>Inherited from AVLTree.hasKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L339">avl/index.ts:339</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L339">avl/index.ts:339</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -630,7 +772,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#lowerkey">lowerKey</a></p>
 								<p>Inherited from AVLTree.lowerKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L402">avl/index.ts:402</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L402">avl/index.ts:402</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -658,7 +800,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#torange">toRange</a></p>
 								<p>Inherited from AVLTree.toRange</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L443">avl/index.ts:443</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L443">avl/index.ts:443</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -677,7 +819,7 @@
 								<p>Implementation of <a href="../interfaces/multidict.html">MultiDict</a>.<a href="../interfaces/multidict.html#upperkey">upperKey</a></p>
 								<p>Inherited from AVLTree.upperKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/avl/index.ts#L421">avl/index.ts:421</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/avl/index.ts#L421">avl/index.ts:421</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -690,73 +832,6 @@
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">null</span>
 							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="empty" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">empty&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/multi/tree.ts#L9">dict/multi/tree.ts:9</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>K</h4>
-								</li>
-								<li>
-									<h4>V</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="from" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">from&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>iterable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>, opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/multi/tree.ts#L19">dict/multi/tree.ts:19</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>K</h4>
-								</li>
-								<li>
-									<h4>V</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>iterable: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <a href="../interfaces/treedictoptions.html" class="tsd-signature-type">TreeDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="treemultidict.html" class="tsd-signature-type">TreeMultiDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -813,6 +888,9 @@
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="treemultidict.html" class="tsd-kind-icon">Tree<wbr>Multi<wbr>Dict</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="treemultidict.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="treemultidict.html#size" class="tsd-kind-icon">size</a>
 							</li>
@@ -875,12 +953,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="treemultidict.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="treemultidict.html#empty" class="tsd-kind-icon">empty</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="treemultidict.html#from" class="tsd-kind-icon">from</a>
 							</li>
 						</ul>
 					</li>

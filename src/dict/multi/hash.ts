@@ -1,6 +1,6 @@
 
 import { Hash, Bucket } from "../../hash"
-import { hash, equal } from "../../util"
+import { hash, equal, isIterable } from "../../util"
 import { HashDictOptions } from "../hash"
 
 /**
@@ -18,7 +18,7 @@ import { HashDictOptions } from "../hash"
  * items will be stored next to each other.
  *
  * ```ts
- * const d = HashMultiDict.empty<number, string>()
+ * const d = new HashMultiDict<number, string>()
  * d.emplace(1, 'foo') // ok
  * assert.strictEqual(d.getValue(1), 'foo')
  * d.emplace(1, 'bar') // ok
@@ -29,28 +29,69 @@ import { HashDictOptions } from "../hash"
  */
 export class HashMultiDict<K, V> extends Hash<[K, V], K> {
 
-  _getConflict(bucket: Bucket<[K, V]>, element: [K, V]) {
+  protected valuesEqual: (a: V, b: V) => boolean;
+
+  protected _getConflict(bucket: Bucket<[K, V]>, element: [K, V]) {
     return null;
   }
 
-  static empty<K, V>(opts: HashDictOptions<K, V> = {}) {
-    const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
-    const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : equal;
-    return new HashMultiDict<K, V>(
+  /**
+   * Construct a new hash-based dictionary.
+   *
+   * ```ts
+   * const d = new HashMultiDict<number, string>()
+   * ```
+   *
+   * Similar to JavaScript's built-in [map type][1], the constructor accepts a
+   * list of key-value pairs that will immediately be added to the resulting
+   * dictionary.
+   *
+   * ```ts
+   * const d = new HashMultiDict<number, string>([
+   *   [1, 'one'], 
+   *   [2, 'two']
+   * ])
+   * ```
+   *
+   * The dictionary can be tweaked by providing a [[HashDictOptions]]-object,
+   * which allows to configure things like the default hashing function and
+   * value equality.
+   *
+   * ```ts
+   * const d = new HashMultiDict<number, string>({
+   *   hash: num => num,
+   *   keysEqual: (a, b) => a === b,
+   *   valuesEqual: (a, b) => a === b,
+   *   elements: [[1, 'one'], [2, 'two']]
+   * })
+   * ```
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+   */
+  constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
+    if (isIterable(opts)) {
+      super(hash, equal, (a, b) => equal(a[1], b[1]), pair => pair[0]);
+      for  (const element of opts) {
+        this.add(element);
+      }
+      this.valuesEqual = equal;
+    } else {
+      const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
+      const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : equal;
+      super(
         opts.hash !== undefined ? opts.hash : hash
       , keysEqual
       , (a, b) => valuesEqual(a[1], b[1])
       , pair => pair[0]
       , opts.capacity
-    );
-  }
-
-  static from<K, V>(iterable: Iterable<[K, V]>, opts: HashDictOptions<K, V> = {}) {
-    const dict = HashMultiDict.empty<K, V>(opts);
-    for (const element of iterable) {
-      dict.add(element);
+      )
+      if (opts.elements !== undefined) {
+        for  (const element of opts.elements) {
+          this.add(element);
+        }
+      }
+      this.valuesEqual = valuesEqual;
     }
-    return dict;
   }
 
   emplace(key: K, val: V) {
@@ -64,17 +105,13 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
   }
 
   clone() {
-    const cloned = new HashMultiDict<K, V>(
-        this.getHash
-      , this.keysEqual
-      , this.elementsEqual
-      , this.getKey
-      , this._array.length
-    );
-    for (const element of this) {
-      cloned.add(element);
-    }
-    return cloned;
+    return new HashMultiDict<K, V>({
+        hash: this.getHash
+      , keysEqual: this.keysEqual
+      , valuesEqual: this.valuesEqual
+      , capacity: this._array.length
+      , elements: this
+    });
   }
 
 }

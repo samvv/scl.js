@@ -1,8 +1,9 @@
 
 import { Queuelike } from "./interfaces"
 import Heap, { HeapOptions } from "./heap"
-
-import { VectorCursor } from "./vector"
+import { lesser, isIterable, omit } from "./util"
+import { Vector, VectorCursor } from "./vector"
+// import { DEFAULT_VECTOR_CAPACITY, DEFAULT_VECTOR_ALLOC_STEP } from "./constants"
 
 export type PriorityQueueOptions<T> = HeapOptions<T>;
 
@@ -22,6 +23,7 @@ export type PriorityQueueOptions<T> = HeapOptions<T>;
  * | Property name                         | Worst-case |
  * |---------------------------------------|------------|
  * | {@link PriorityQueue.add add()}       | O(log(n))  |
+ * | {@link PriorityQueue.pop deleteAt()}  | O(log(n))  |
  * | {@link PriorityQueue.peek peek()}     | O(1)       |
  * | {@link PriorityQueue.pop pop()}       | O(log(n))  |
  * | {@link PriorityQueue.size size}       | O(1)       |
@@ -31,34 +33,58 @@ export type PriorityQueueOptions<T> = HeapOptions<T>;
  */
 export class PriorityQueue<T> implements Queuelike<T> {
 
-  /** 
-   * @ignore 
-   */
-  constructor(public _heap: Heap<T>) {
-  
-  }
+  protected _heap: Heap<T>;
 
   /**
-   * Creates a new priority queue filled with the given elements.
+   * Construct a new prioriry queue.
+   *
+   * ```ts
+   * const q = new PriorityQueue<number>({
+   *   capacity: 1024,
+   *   compare: (a, b) => a < b,
+   *   elements: [1, 2, 3]
+   * })
+   * ```
    */
-  static from<T>(iterable: Iterable<T>, opts: PriorityQueueOptions<T> = {}) {
-    return new PriorityQueue<T>(Heap.from<T>(iterable, opts));
-  }
-
-  static empty<T>(opts: PriorityQueueOptions<T> = {}) {
-    return new PriorityQueue<T>(Heap.empty<T>(opts));
+  constructor(opts: Iterable<T> | HeapOptions<T> = {}) {
+    if (isIterable(opts)) {
+      this._heap = new Heap<T>(new Vector<T>(), lesser);
+      for (const element of opts) {
+        this._heap.add(element);
+      }
+    } else {
+      const lessThan = opts.compare !== undefined ? opts.compare : lesser;
+      const vector = new Vector<T>(omit(opts, 'elements'));
+      this._heap = new Heap<T>(vector, lessThan);
+    }
   }
 
   get size() {
-    return this._heap.size
+    return this._heap.size;
   }
 
-  deleteAll(el: T) {
-    return this._heap.deleteAll(el)
+  has(element: T) {
+    return this._heap._vector.has(element);
+  }
+
+  deleteAtIndex(index: number) {
+    this._heap.deleteAtIndex(index);
+  }
+
+  delete(element: T) {
+    return this._heap.delete(element);
   }
 
   deleteAt(cursor: VectorCursor<T>) {
     this._heap.deleteAt(cursor);
+  }
+
+  deleteAll(element: T) {
+    return this._heap.deleteAll(element);
+  }
+
+  add(element: T) {
+    return this._heap.add(element);
   }
 
   peek() {
@@ -71,37 +97,25 @@ export class PriorityQueue<T> implements Queuelike<T> {
     return min
   }
 
-  has(el: T) {
-    return this._heap.has(el)
-  }
-
-  add(el: T) {
-    return this._heap.add(el)
-  }
-
-  delete(el: T) {
-    return this._heap.delete(el)
-  }
-
   *[Symbol.iterator]() {
-    // FIXME can be optimised? 
+    // FIXME can this be optimised? 
     const h = this._heap.clone()
     while (h.size > 0) {
-      yield h.min()
-      h.deleteMin()
+      yield h.min();
+      h.deleteMin();
     }
   }
 
   toRange() {
-    return this._heap.toRange();
+    return this._heap._vector.toRange();
   }
 
   clear() {
-    this._heap.clear()
+    this._heap._vector.clear();
   }
 
-  clone() {
-    return new PriorityQueue(this._heap.clone());
+  clone(): PriorityQueue<T> {
+    return new PriorityQueue<T>(this._heap.clone());
   }
 
 }

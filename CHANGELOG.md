@@ -6,7 +6,6 @@ This document keeps track of any changes made to the software.
 ### v2.0.0
 
  - Renamed the `Container` concept to `Collection`
- - `new Collection()` is now `Collection.from()` or `Collection.empty()`
  - Multi-index collection composition is temporarily removed
  - `Structure` is now `IndexedCollection`
  - A `View` is now a `CollectionRange`
@@ -18,9 +17,10 @@ This document keeps track of any changes made to the software.
  - `delete` and `deleteAll` now return information about the deletion that took place
  - Removed `Vector`, `MinHeap` and `MaxHeap` as implementable interfaces
  - Added `View.size` property
+ - Constructors can now take an iterator and an options object where applicable
  - Created a new build system
  - Introduced strict mode and fixed all TypeScript errors
- - Fixed some bugs and API inconsistencies
+ - Fixed multiple bugs and API inconsistencies
  - Updated all dependencies to migitate security risks
  - Fixed all TypeScript errors
 

@@ -69,7 +69,7 @@
 					</div>
 					<p>The following example demonstrates a dictionary with a capacity of 1024 and
 					a hashing function that simply returns the integer itself.</p>
-					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = HashDict.empty&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;({
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> HashDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;({
   capacity: <span class="hljs-number">1024</span>,
   hash: <span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> key,
   keysEqual: <span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> key === key,
@@ -115,6 +115,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#capacity" class="tsd-kind-icon">capacity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#elements" class="tsd-kind-icon">elements</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#hash" class="tsd-kind-icon">hash</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#keysequal" class="tsd-kind-icon">keys<wbr>Equal</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hashdictoptions.html#valuesequal" class="tsd-kind-icon">values<wbr>Equal</a></li>
@@ -131,7 +132,7 @@
 					<div class="tsd-signature tsd-kind-icon">capacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L57">dict/hash.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L62">dict/hash.ts:62</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -141,12 +142,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="elements" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> elements</h3>
+					<div class="tsd-signature tsd-kind-icon">elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L30">dict/hash.ts:30</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An iterable that will be consumed to fill the dictionary.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="hash" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> hash</h3>
 					<div class="tsd-signature tsd-kind-icon">hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L32">dict/hash.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L37">dict/hash.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">keys<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L42">dict/hash.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L47">dict/hash.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,7 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">values<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L52">dict/hash.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L57">dict/hash.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -274,6 +290,9 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="hashdictoptions.html#capacity" class="tsd-kind-icon">capacity</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="hashdictoptions.html#elements" class="tsd-kind-icon">elements</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="hashdictoptions.html#hash" class="tsd-kind-icon">hash</a>

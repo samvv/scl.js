@@ -18,6 +18,21 @@ export function hash(val: any) {
   return XXH.h32(JSON.stringify(val), 0xABCD).toNumber();
 }
 
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
+
+/**
+ * @ignore
+ */
+export function omit<O extends object, K extends keyof O>(obj: O, ...keys: K[]): Omit<O, K>  {
+  const out: any = {}; // no need to typecheck
+  for (const key of Object.keys(obj)) {
+    if (keys.indexOf(key as K) === -1) {
+      out[key] = obj[key as K];
+    }
+  }
+  return out;
+}
+
 /**
  * @ignore
  */

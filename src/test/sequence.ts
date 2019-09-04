@@ -3,12 +3,6 @@ import { expect } from "chai"
 import { Sequence } from "../interfaces"
 import { test } from "./_helpers"
 
-test('Sequence.add() returns a cursor to the added element', (seq: Sequence<number>) => {
-  const [added1, pos1] = seq.add(1);
-  expect(added1).to.be.true;
-  expect(pos1.value).to.equal(1);
-});
-
 test('Sequence.prepend() places the element at the beginning of the collection', (seq: Sequence<number>) => {
   seq.prepend(3);
   seq.prepend(2);
@@ -162,11 +156,12 @@ test('Sequence.last() throws an error if the collection is empty', (seq: Sequenc
   expect(() => seq.last()).to.throw(Error);
 })
 
-test('Sequence.size reports the correct size', (seq: Sequence<string>) => {
+test('Sequence.size is correctly updated when using append() and prepend()', (seq: Sequence<string>) => {
   expect(seq.size).to.equal(0);
   seq.append('a');
   expect(seq.size).to.equal(1);
   seq.prepend('b');
+  expect(seq.size).to.equal(2);
   seq.append('c');
   expect(seq.size).to.equal(3);
   const pos = seq.at(1);
@@ -175,24 +170,6 @@ test('Sequence.size reports the correct size', (seq: Sequence<string>) => {
   seq.insertBefore(pos, 'e');
   expect(seq.size).to.equal(5);
 })
-
-test('Sequence.toRange().values() generates the elements of the full sequence', (seq: Sequence<string>) => {
-  seq.append('a');
-  seq.append('b');
-  seq.append('c');
-  seq.append('d');
-  expect([...seq.toRange().values()]).to.deep.equal(['a','b','c','d']);
-});
-
-test('Sequence.toRange().size returns the correct size', (seq: Sequence<string>) => {
-  expect(seq.toRange().size).to.equal(0);
-  seq.add('a');
-  expect(seq.toRange().size).to.equal(1);
-  seq.add('b');
-  expect(seq.toRange().size).to.equal(2);
-  seq.add('c');
-  expect(seq.toRange().size).to.equal(3);
-});
 
 test('Sequence.getAt() returns the element at the i-th position', (seq: Sequence<string>) => {
   seq.append('a');

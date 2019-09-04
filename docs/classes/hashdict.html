@@ -73,7 +73,7 @@
 					to <code>O(n)</code>.</p>
 					<p>When a new entry is added with a key that is already taken, the dictionary
 					will replace the corresponding entry with the new one.</p>
-					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = HashDict.empty&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> HashDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
 d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'foo'</span>)
 assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="hljs-string">'foo'</span>)
 d.emplace(<span class="hljs-number">1</span>, <span class="hljs-string">'bar'</span>)
@@ -125,6 +125,12 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="hashdict.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
@@ -149,11 +155,58 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashdict.html#has" class="tsd-kind-icon">has</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashdict.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="hashdict.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="hashdict.html#empty" class="tsd-kind-icon">empty</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="hashdict.html#from" class="tsd-kind-icon">from</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Hash<wbr>Dict<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashdict.html" class="tsd-signature-type">HashDict</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides Hash.__constructor</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L93">dict/hash.ts:93</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Construct a new hash-based dictionary.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> HashDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()</code></pre>
+								<p>Similar to JavaScript&#39;s built-in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">map type</a>, the constructor accepts a
+									list of key-value pairs that will immediately be added to the resulting
+								dictionary.</p>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> HashDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;([
+  [<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>],
+  [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>]
+])</code></pre>
+								<p>The dictionary can be tweaked by providing a <a href="../interfaces/hashdictoptions.html">HashDictOptions</a>-object,
+									which allows to configure things like the default hashing function and
+								value equality.</p>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = <span class="hljs-keyword">new</span> HashDict&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;({
+  hash: <span class="hljs-function"><span class="hljs-params">num</span> =&gt;</span> num,
+  keysEqual: <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a === b,
+  valuesEqual: <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a === b,
+  elements: [[<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>], [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>]]
+})</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="hashdict.html" class="tsd-signature-type">HashDict</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
@@ -169,7 +222,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 							<aside class="tsd-sources">
 								<p>Inherited from Hash.size</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L97">hash/index.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L94">hash/index.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -191,7 +244,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#___iterator">__@iterator</a></p>
 								<p>Inherited from Hash.[Symbol.iterator]</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L203">hash/index.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L200">hash/index.ts:200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -209,7 +262,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 							<aside class="tsd-sources">
 								<p>Inherited from Hash.add</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L115">hash/index.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L112">hash/index.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -234,7 +287,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#clear">clear</a></p>
 								<p>Inherited from Hash.clear</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L101">hash/index.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L98">hash/index.ts:98</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -253,7 +306,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#clone">clone</a></p>
 								<p>Overrides Hash.clone</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L153">dict/hash.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L180">dict/hash.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="hashdict.html" class="tsd-signature-type">HashDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -272,7 +325,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#delete">delete</a></p>
 								<p>Inherited from Hash.delete</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L194">hash/index.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L191">hash/index.ts:191</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -297,7 +350,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#deleteall">deleteAll</a></p>
 								<p>Inherited from Hash.deleteAll</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L214">hash/index.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L211">hash/index.ts:211</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -321,7 +374,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 							<aside class="tsd-sources">
 								<p>Inherited from Hash.deleteAt</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L130">hash/index.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L127">hash/index.ts:127</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -346,7 +399,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#deletekey">deleteKey</a></p>
 								<p>Inherited from Hash.deleteKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L174">hash/index.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L171">hash/index.ts:171</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -370,7 +423,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#emplace">emplace</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L141">dict/hash.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L168">dict/hash.ts:168</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -398,7 +451,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#equalkeys">equalKeys</a></p>
 								<p>Inherited from Hash.equalKeys</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L106">hash/index.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L103">hash/index.ts:103</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -423,7 +476,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#findkey">findKey</a></p>
 								<p>Inherited from Hash.findKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L135">hash/index.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L132">hash/index.ts:132</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -450,7 +503,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#getvalue">getValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L145">dict/hash.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/dict/hash.ts#L172">dict/hash.ts:172</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -475,7 +528,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#has">has</a></p>
 								<p>Inherited from Hash.has</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L148">hash/index.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L145">hash/index.ts:145</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -500,7 +553,7 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#haskey">hasKey</a></p>
 								<p>Inherited from Hash.hasKey</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L157">hash/index.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L154">hash/index.ts:154</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -525,94 +578,10 @@ assert.strictEqual(d.getValue(<span class="hljs-number">1</span>), <span class="
 								<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#torange">toRange</a></p>
 								<p>Inherited from Hash.toRange</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/hash/index.ts#L190">hash/index.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/b7798ca/src/hash/index.ts#L187">hash/index.ts:187</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HashRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="empty" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">empty&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashdict.html" class="tsd-signature-type">HashDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L97">dict/hash.ts:97</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Create an empty <a href="hashdict.html">HashDict</a>, ready to be populated.</p>
-								</div>
-								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = HashDict.empty&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;()
-d.add(<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>)
-d.add(<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>)</code></pre>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>K</h4>
-								</li>
-								<li>
-									<h4>V</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="hashdict.html" class="tsd-signature-type">HashDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="from" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">from&lt;K, V&gt;<span class="tsd-signature-symbol">(</span>iterable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>, opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hashdict.html" class="tsd-signature-type">HashDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/samvv/scl.js/blob/a2bd645/src/dict/hash.ts#L119">dict/hash.ts:119</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Create a new <a href="hashdict.html">HashDict</a> from the given iterable.</p>
-								</div>
-								<pre><code class="language-ts"><span class="hljs-keyword">const</span> d = HashDict.from&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;([
-  [<span class="hljs-number">1</span>, <span class="hljs-string">'one'</span>],
-  [<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>]
-])</code></pre>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>K</h4>
-								</li>
-								<li>
-									<h4>V</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>iterable: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> opts: <a href="../interfaces/hashdictoptions.html" class="tsd-signature-type">HashDictOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="hashdict.html" class="tsd-signature-type">HashDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -636,6 +605,9 @@ d.add(<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="hashdict.html" class="tsd-kind-icon">Hash<wbr>Dict</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="hashdict.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashdict.html#size" class="tsd-kind-icon">size</a>
 							</li>
@@ -683,12 +655,6 @@ d.add(<span class="hljs-number">2</span>, <span class="hljs-string">'two'</span>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="hashdict.html#torange" class="tsd-kind-icon">to<wbr>Range</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="hashdict.html#empty" class="tsd-kind-icon">empty</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="hashdict.html#from" class="tsd-kind-icon">from</a>
 							</li>
 						</ul>
 					</li>

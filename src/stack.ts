@@ -27,18 +27,6 @@ import SingleLinkedList from "./list/single"
  */
 export class Stack<T> extends SingleLinkedList<T> implements Queuelike<T> {
 
-  static empty<T>() {
-    return new Stack<T>();
-  }
-
-  static from<T>(iterable: Iterable<T>) {
-    const stack = new Stack<T>();
-    for (const element of iterable) {
-      stack.add(element);
-    }
-    return stack;
-  }
-
   peek() {
     return this.first();
   }

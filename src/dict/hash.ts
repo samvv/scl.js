@@ -1,7 +1,7 @@
 
 import { Dict } from "../interfaces"
 import { Hash, Bucket } from "../hash"
-import { hash, equal } from "../util"
+import { hash, equal, isIterable } from "../util"
 
 /**
  * Options passed to a hash-like dictionary in order to configure its behaviour.
@@ -10,7 +10,7 @@ import { hash, equal } from "../util"
  * a hashing function that simply returns the integer itself.
  *
  * ```ts
- * const d = HashDict.empty<number, string>({
+ * const d = new HashDict<number, string>({
  *   capacity: 1024,
  *   hash: key => key,
  *   keysEqual: key => key === key,
@@ -23,6 +23,11 @@ import { hash, equal } from "../util"
  * @see [[HashMultiDict]]
  */
 export interface HashDictOptions<K, V> {
+
+  /**
+   * An iterable that will be consumed to fill the dictionary.
+   */
+  elements?: Iterable<[K, V]>;
 
   /**
    * The hashing function that will be used to map entries to a certain bucket.
@@ -73,7 +78,7 @@ export interface HashDictOptions<K, V> {
  * will replace the corresponding entry with the new one.
  *
  * ```ts
- * const d = HashDict.empty<number, string>()
+ * const d = new HashDict<number, string>()
  * d.emplace(1, 'foo')
  * assert.strictEqual(d.getValue(1), 'foo')
  * d.emplace(1, 'bar')
@@ -85,43 +90,65 @@ export interface HashDictOptions<K, V> {
  */
 export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
 
-  /**
-   * Create an empty [[HashDict]], ready to be populated.
-   *
-   * ```ts
-   * const d = HashDict.empty<number, string>()
-   * d.add(1, 'one')
-   * d.add(2, 'two')
-   * ```
-   */
-  static empty<K, V>(opts: HashDictOptions<K, V> = {}) {
-    const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
-    const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : equal;
-    return new HashDict<K, V>(
-        opts.hash !== undefined ? opts.hash : hash
-      , keysEqual
-      , (a, b) => valuesEqual(a[1], b[1])
-      , pair => pair[0]
-      , opts.capacity !== undefined ? opts.capacity : undefined
-    );
-  }
+  protected valuesEqual: (a: V, b: V) => boolean;
 
   /**
-   * Create a new [[HashDict]] from the given iterable.
+   * Construct a new hash-based dictionary.
    *
    * ```ts
-   * const d = HashDict.from<number, string>([
+   * const d = new HashDict<number, string>()
+   * ```
+   *
+   * Similar to JavaScript's built-in [map type][1], the constructor accepts a
+   * list of key-value pairs that will immediately be added to the resulting
+   * dictionary.
+   *
+   * ```ts
+   * const d = new HashDict<number, string>([
    *   [1, 'one'], 
    *   [2, 'two']
    * ])
    * ```
+   *
+   * The dictionary can be tweaked by providing a [[HashDictOptions]]-object,
+   * which allows to configure things like the default hashing function and
+   * value equality.
+   *
+   * ```ts
+   * const d = new HashDict<number, string>({
+   *   hash: num => num,
+   *   keysEqual: (a, b) => a === b,
+   *   valuesEqual: (a, b) => a === b,
+   *   elements: [[1, 'one'], [2, 'two']]
+   * })
+   * ```
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
    */
-  static from<K, V>(iterable: Iterable<[K, V]>, opts: HashDictOptions<K, V> = {}) {
-    const dict = HashDict.empty<K, V>(opts);
-    for (const element of iterable) {
-      dict.add(element);
+  constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
+    if (isIterable(opts)) {
+      super(hash, equal, (a, b) => equal(a[1], b[1]), pair => pair[0]);
+      for (const element of opts) {
+        this.add(element);
+      }
+      this.valuesEqual = equal;
+    } else {
+      const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
+      const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : equal;
+      super(
+          opts.hash !== undefined ? opts.hash : hash
+        , keysEqual
+        , (a, b) => valuesEqual(a[1], b[1])
+        , pair => pair[0]
+        , opts.capacity !== undefined ? opts.capacity : undefined
+      );
+      if (opts.elements !== undefined) {
+        for (const element of opts.elements) {
+          this.add(element);
+        }
+      }
+      this.valuesEqual = valuesEqual;
     }
-    return dict;
   }
 
   /**
@@ -151,17 +178,13 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
   }
 
   clone() {
-    const cloned = new HashDict<K, V>(
-        this.getHash
-      , this.keysEqual
-      , this.elementsEqual
-      , this.getKey
-      , this._array.length
-    );
-    for (const element of this) {
-      cloned.add(element);
-    }
-    return cloned;
+    return new HashDict<K, V>({
+        hash: this.getHash
+      , keysEqual: this.keysEqual
+      , valuesEqual: this.valuesEqual
+      , capacity: this._array.length
+      , elements: this
+    });
   }
 
 }

@@ -89,10 +89,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     this._array = new Array(capacity);
   }
 
-  /**
-   * @ignore
-   */
-  abstract _getConflict(bucket: Bucket<T>, element: T): DoubleLinkedListCursor<T> | null;
+  protected abstract _getConflict(bucket: Bucket<T>, element: T): DoubleLinkedListCursor<T> | null;
 
   get size() {
     return this._size;

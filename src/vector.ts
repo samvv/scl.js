@@ -1,5 +1,6 @@
 
-import { Collection, Sequence, CollectionRange, Cursor } from "./interfaces"
+import { Sequence, CollectionRange, Cursor } from "./interfaces"
+import { DEFAULT_VECTOR_CAPACITY, DEFAULT_VECTOR_ALLOC_STEP } from "./constants"
 import { isIterable } from "./util"
 
 /**
@@ -102,8 +103,15 @@ function copy<T>(
   }
 }
 
-const DEFAULT_INIT_SIZE = 1024;
-const DEFAULT_ALLOC_STEP = 255;
+/**
+ * @ignore
+ */
+export function createArray<T>(iterable: Iterable<T>, capacity: number) {
+  const elements = [...iterable];
+  const size = elements.length;
+  elements.length = Math.max(size, capacity);
+  return [elements, size] as [T[], number];
+}
 
 /**
  * Options to be passed to the constructor of [[Vector]].
@@ -114,19 +122,23 @@ const DEFAULT_ALLOC_STEP = 255;
  * @see [[Vector.constructor]]
  */
 export interface VectorOptions<T> {
+
   /**
    * An iterable that will be consumed to fill the vector.
    */
   elements?: Iterable<T>;
+
   /**
    * This value specifies how much capacity the vector should _at least_ have.
    */
   capacity?: number;
+
   /**
    * When the vector overflows, this option determines how big the vector will
    * become.
    */
   allocStep?: number;
+
 }
 
 /**
@@ -147,12 +159,21 @@ export interface VectorOptions<T> {
  * |--------------------------------------------|------------|
  * | {@link Vector.append append()}             | O(n)       |
  * | {@link Vector.at at()}                     | O(1)       |
+ * | {@link Vector.at getAt()}                  | O(1)       |
  * | {@link Vector.insertAfter insertAfter()}   | O(n)       |
  * | {@link Vector.insertBefore insertBefore()} | O(n)       |
  * | {@link Vector.deleteAt deleteAt()}         | O(n)       |
  * | {@link Vector.prepend prepend()}           | O(n)       |
  * | {@link Vector.size size}                   | O(1)       |
- * 
+ *
+ * ```ts
+ * const v = new Vector<number>()
+ * v.append(1)
+ * v.append(2)
+ * v.append(3)
+ * assert.strictEqual(v.size, 3)
+ * ```
+ *
  * @see [[DoubleLinkedList]]
  * @see [[SingleLinkedList]]
  *
@@ -161,55 +182,56 @@ export interface VectorOptions<T> {
 export class Vector<T> implements Sequence<T> {
 
   /**
-   * Construct a new vector filled with the given elements.
+   * @ignore
+   */ 
+  _elements: T[];
+
+  /**
+   * @ignore
+   */
+  _size: number;
+
+  /**
+   * @ignore
+   */
+  _allocStep: number;
+
+  /**
+   * Construct a new vector.
    *
    * ```ts
-   *  const v1 = Vector.from([1, 2, 3, 4, 5])
-   *  assert.strictEqual(v.size, 5)
+   * const v1 = new Vector<number>([1, 2, 3, 4, 5])
+   * assert.strictEqual(v.size, 5)
+   * ```
+   *
+   * ```ts
+   * const v2 = new Vector<number>({ capacity: 1024 })
+   * for (let i = 0; i < 1024; i++) {
+   *   v2.append(i)
+   * }
    * ```
    *
    * @param iter Any iterable, of which the elements will be copied to this vector.
    * @param opts Additional options to customize the newly created vector.
    */
-  static from<T>(iter: Iterable<T>, opts: VectorOptions<T> = {}) {
-    const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_INIT_SIZE;
-    const allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_ALLOC_STEP;
-    const elements = [...iter];
-    const size = elements.length;
-    elements.length = Math.max(size, capacity);
-    return new Vector<T>(elements, size, allocStep);
-  }
-
-  /**
-   * Create an empty vector.
-   *
-   * ```ts
-   * const v = Vector.empty({ capacity: 1000 })
-   * for (let i = 0; i < 1000; i++) {
-   *   v.append(i);
-   * }
-   * assert.strictEqual(v.capacity, v.size)
-   * ```
-   */
-  static empty<T>(opts: VectorOptions<T> = {}) {
-    const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_INIT_SIZE;
-    const allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_ALLOC_STEP;
-    return new Vector<T>(new Array(capacity), 0, allocStep)
-  }
-
-  /**
-   * Short-hand for creating a vector with the given capacity.
-   */
-  static withCapacity<T>(capacity: number) {
-    return Vector.empty<T>({ capacity });
-  }
-
-  constructor(
-      /** @ignore */ public _elements: T[]
-    , /** @ignore */ public _size: number
-    , /** @ignore */ public _allocStep: number
-  ) {
-
+  constructor(opts: Iterable<T> | VectorOptions<T> = {}) {
+    if (isIterable(opts)) {
+      const [elements, size] = createArray(opts, DEFAULT_VECTOR_CAPACITY);
+      this._elements = elements;
+      this._size = size;
+      this._allocStep = DEFAULT_VECTOR_ALLOC_STEP;
+    } else {
+      const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_VECTOR_CAPACITY;
+      this._allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_VECTOR_ALLOC_STEP;
+      if (opts.elements !== undefined) {
+        const [elements, size] = createArray(opts.elements, capacity); 
+        this._size = size;
+        this._elements = elements;
+      } else {
+        this._size = 0;
+        this._elements = new Array(capacity);
+      }
+    }
   }
 
   /**
@@ -252,7 +274,7 @@ export class Vector<T> implements Sequence<T> {
 
   getAt(index: number) {
     if (index < 0 || index >= this._size) {
-      throw new RangeError(`Could not replace element: index ${index} out of bounds.`);
+      throw new RangeError(`Could not get element: index ${index} out of bounds.`);
     }
     return this._elements[index];
   }
@@ -366,6 +388,12 @@ export class Vector<T> implements Sequence<T> {
     this._size--;
   }
 
+  swap(a: number, b: number) {
+    const keep = this.getAt(a);
+    this.replace(a, this.getAt(b));
+    this.replace(b, keep);
+  }
+
   deleteAt(pos: VectorCursor<T>) {
     this.deleteAtIndex(pos._index);
   }
@@ -390,7 +418,11 @@ export class Vector<T> implements Sequence<T> {
   }
 
   clone() {
-    return new Vector<T>(this._elements.slice(), this._size, this._allocStep);
+    return new Vector<T>({
+      elements: this, 
+      capacity: this._elements.length,
+      allocStep: this._allocStep
+    });
   }
 
 }

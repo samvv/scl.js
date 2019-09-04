@@ -83,12 +83,14 @@ interface TestOptions {
 }
 
 for (const testFile of TEST_FILES) {
-  describe(testFile.name + '.from()', () => {
+  describe(testFile.name + '()', () => {
     it('successfully creates a collection with the given elements', () => {
-      const coll = require(testFile.file).default.from([[1, 2], [2, 3]]);
+      const ctor = require(testFile.file).default;
+      const coll = new ctor([[1, 2], [2, 3]]);
       expect(coll.size).to.equal(2);
-      expect([...coll]).to.deep.include([1, 2]);
-      expect([...coll]).to.deep.include([2, 3]);
+      const elements =[...coll]; 
+      expect(elements).to.deep.include([1, 2]);
+      expect(elements).to.deep.include([2, 3]);
     });
   });
 }
@@ -118,7 +120,8 @@ export function test<C extends Collection<any>>(name: string, callback: (collect
       describe(testFile.name + methodName, () => {
         it(description, () => {
           const args = (opts && opts.args) || [];
-          callback(require(testFile.file).default.empty(...args) as any);
+          const ctor = require(testFile.file).default;
+          callback(new ctor(...args));
         })
       })
     }
