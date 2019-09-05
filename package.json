@@ -3,12 +3,11 @@
   "private": true,
   "description": "The workspace for developing scl.js.",
   "devDependencies": {
-    "xxhashjs": "^0.2.2",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.1",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.3",
+    "@types/node": "^12.7.4",
     "benchmark": "^2.1.4",
     "chai": "^4.2.0",
     "coveralls": "^3.0.6",
@@ -26,7 +25,8 @@
     "nyc": "^14.1.1",
     "source-map-support": "^0.5.13",
     "ts-node": "^8.3.0",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.2",
+    "xxhashjs": "^0.2.2"
   },
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
