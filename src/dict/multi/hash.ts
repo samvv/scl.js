@@ -1,7 +1,7 @@
 
-import { Hash, Bucket } from "../../hash"
-import { hash, equal, isIterable } from "../../util"
-import { HashDictOptions } from "../hash"
+import { Bucket, Hash } from "../../hash";
+import { equal, hash, isIterable } from "../../util";
+import { HashDictOptions } from "../hash";
 
 /**
  * A hash-based dictionary that can store multiple items with the same key.
@@ -31,10 +31,6 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
 
   protected valuesEqual: (a: V, b: V) => boolean;
 
-  protected _getConflict(bucket: Bucket<[K, V]>, element: [K, V]) {
-    return null;
-  }
-
   /**
    * Construct a new hash-based dictionary.
    *
@@ -48,7 +44,7 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
    *
    * ```ts
    * const d = new HashMultiDict<number, string>([
-   *   [1, 'one'], 
+   *   [1, 'one'],
    *   [2, 'two']
    * ])
    * ```
@@ -70,7 +66,7 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
    */
   constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(hash, equal, (a, b) => equal(a[1], b[1]), pair => pair[0]);
+      super(hash, equal, (a, b) => equal(a[1], b[1]), (pair) => pair[0]);
       for  (const element of opts) {
         this.add(element);
       }
@@ -82,9 +78,9 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
         opts.hash !== undefined ? opts.hash : hash
       , keysEqual
       , (a, b) => valuesEqual(a[1], b[1])
-      , pair => pair[0]
-      , opts.capacity
-      )
+      , (pair) => pair[0]
+      , opts.capacity,
+      );
       if (opts.elements !== undefined) {
         for  (const element of opts.elements) {
           this.add(element);
@@ -94,27 +90,30 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> {
     }
   }
 
-  emplace(key: K, val: V) {
-    return this.add([key, val])
+  public emplace(key: K, val: V) {
+    return this.add([key, val]);
   }
 
-  *getValues(key: K) {
+  public *getValues(key: K) {
     for (const value of this.equalKeys(key)) {
       yield value[1];
     }
   }
 
-  clone() {
+  public clone() {
     return new HashMultiDict<K, V>({
         hash: this.getHash
       , keysEqual: this.keysEqual
       , valuesEqual: this.valuesEqual
       , capacity: this._array.length
-      , elements: this
+      , elements: this,
     });
+  }
+
+  protected _getConflict(bucket: Bucket<[K, V]>, element: [K, V]) {
+    return null;
   }
 
 }
 
 export default HashMultiDict;
-

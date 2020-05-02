@@ -1,16 +1,16 @@
 
 /// <reference types="./external" />
 
-import { Cursor, CollectionRange } from "./interfaces"
-import * as XXH from "xxhashjs"
+import * as XXH from "xxhashjs";
+import { CollectionRange, Cursor } from "./interfaces";
 
 /**
  * @ignore
  */
 export function isIterable<T = any>(value: any): value is Iterable<T> {
-  return typeof value === 'object' 
+  return typeof value === "object"
       && value !== null
-      && typeof value[Symbol.iterator] === 'function';
+      && typeof value[Symbol.iterator] === "function";
 }
 
 // TODO optimize
@@ -18,7 +18,7 @@ export function hash(val: any) {
   return XXH.h32(JSON.stringify(val), 0xABCD).toNumber();
 }
 
-type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 /**
  * @ignore
@@ -38,11 +38,11 @@ export function omit<O extends object, K extends keyof O>(obj: O, ...keys: K[]):
  */
 export class EmptyRange<T> implements CollectionRange<T> {
   constructor(public readonly reversed = false) { }
-  filter(pred: (element: Cursor<T>) => boolean) { return this; }
-  reverse() { return new EmptyRange<T>(!this.reversed); }
+  public filter(pred: (element: Cursor<T>) => boolean) { return this; }
+  public reverse() { return new EmptyRange<T>(!this.reversed); }
   get size() { return 0; }
-  *cursors(): IterableIterator<Cursor<T>> {  }
-  *[Symbol.iterator](): IterableIterator<T> {  }
+  public *cursors(): IterableIterator<Cursor<T>> {  }
+  public *[Symbol.iterator](): IterableIterator<T> {  }
 }
 
 /**
@@ -62,7 +62,7 @@ export function liftKeyed(proc: Function, path: string[]): Function {
   if (path.length === 0) {
     return proc;
   } else {
-    return (...args: any[]) => proc(...args.map(arg => get(arg, path)));
+    return (...args: any[]) => proc(...args.map((arg) => get(arg, path)));
   }
 }
 
@@ -70,7 +70,7 @@ export function liftKeyed(proc: Function, path: string[]): Function {
  * @ignore
  */
 export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => number {
-  return function (a, b) {
+  return function(a, b) {
     if (lt(a, b)) {
       return -1;
     }
@@ -78,7 +78,7 @@ export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => numb
       return 1;
     }
     return 0;
-  }
+  };
 }
 
 /**
@@ -93,9 +93,9 @@ export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => numb
  */
 export abstract class CursorBase<T> implements Cursor<T> {
 
-  abstract value: T;
+  public abstract value: T;
 
-  *nextAll(): IterableIterator<Cursor<T>> {
+  public *nextAll(): IterableIterator<Cursor<T>> {
     let cursor: Cursor<T> | null = this;
     do {
       yield cursor;
@@ -103,7 +103,7 @@ export abstract class CursorBase<T> implements Cursor<T> {
     } while (cursor !== null);
   }
 
-  *prevAll(): IterableIterator<Cursor<T>> {
+  public *prevAll(): IterableIterator<Cursor<T>> {
     let cursor: Cursor<T> | null = this;
     do {
       yield cursor;
@@ -115,7 +115,7 @@ export abstract class CursorBase<T> implements Cursor<T> {
 
 /**
  * Abstract base class for implementing new ranges on a specific type of
- * collection. 
+ * collection.
  *
  * ```ts
  * class MyRange<T> extends RangeBase<T> {
@@ -125,13 +125,13 @@ export abstract class CursorBase<T> implements Cursor<T> {
  */
 export abstract class RangeBase<T> implements CollectionRange<T> {
 
-  abstract cursors(): IterableIterator<Cursor<T>>;
+  public abstract readonly size: number;
 
-  abstract readonly size: number;
+  public abstract cursors(): IterableIterator<Cursor<T>>;
 
-  abstract [Symbol.iterator](): IterableIterator<T>;
+  public abstract [Symbol.iterator](): IterableIterator<T>;
 
-  filter(pred: (el: Cursor<T>) => boolean): CollectionRange<T> {
+  public filter(pred: (el: Cursor<T>) => boolean): CollectionRange<T> {
     return new FilteredRange<T>(this, pred);
   }
 
@@ -150,7 +150,7 @@ export class FilteredRange<T> extends RangeBase<T> {
     return this._range.size;
   }
 
-  *cursors() {
+  public *cursors() {
     for (const cursor of this._range.cursors()) {
       if (this._pred(cursor)) {
         yield cursor;
@@ -158,11 +158,11 @@ export class FilteredRange<T> extends RangeBase<T> {
     }
   }
 
-  reverse() {
+  public reverse() {
     return new FilteredRange<T>(this._range.reverse!(), this._pred);
   }
 
-  *[Symbol.iterator]() {
+  public *[Symbol.iterator]() {
     for (const cursor of this._range.cursors()) {
       if (this._pred(cursor)) {
         yield cursor.value;
@@ -175,16 +175,14 @@ export class FilteredRange<T> extends RangeBase<T> {
 /**
  * @ignore
  */
-export interface Newable<T> {
-  new(...args: any[]): T;
-}
+export type Newable<T> = new(...args: any[]) => T;
 
-/** 
+/**
  * @ignore
  */
 export function isObject(val: any) {
-  return typeof val === 'object' 
-      && val !== null 
+  return typeof val === "object"
+      && val !== null
       && !isArray(val);
 }
 
@@ -192,13 +190,13 @@ export function isObject(val: any) {
  * @ignore
  */
 export function isArray(val: any) {
-  return Object.prototype.toString.call(val) === '[object Array]';
+  return Object.prototype.toString.call(val) === "[object Array]";
 }
 
 export function lesser(a: any, b: any) {
-  if (typeof a === 'number' && typeof b === 'number') {
+  if (typeof a === "number" && typeof b === "number") {
     return a < b;
-  } else if (typeof a === 'string' && typeof b === 'string') {
+  } else if (typeof a === "string" && typeof b === "string") {
     return a < b;
   } else if (isArray(a) && isArray(b)) {
     if (a.length < b.length) {
@@ -220,8 +218,9 @@ export function lesser(a: any, b: any) {
   } else if (isObject(a) && isObject(b)) {
     const ks1 = Object.keys(a).sort();
     const extra = new Set<string>(Object.keys(b));
-    if (ks1.length > Object.keys(b).length) 
+    if (ks1.length > Object.keys(b).length) {
       return false;
+    }
     let foundLesser = false;
     for (const key of ks1) {
       if (b[key] === undefined) {
@@ -243,15 +242,16 @@ export function lesser(a: any, b: any) {
 }
 
 export function equal(a: any, b: any): boolean {
-  if (typeof a === 'number' && typeof b === 'number') {
+  if (typeof a === "number" && typeof b === "number") {
     return a === b;
   }
-  if (typeof a === 'string' && typeof b === 'string') {
+  if (typeof a === "string" && typeof b === "string") {
     return a === b;
   }
   if (isArray(a) && isArray(b)) {
-    if (a.length !== b.length) 
+    if (a.length !== b.length) {
       return false;
+    }
     for (let i = 0; i < a.length; ++i) {
       if (!equal(a[i], b[i])) {
         return false;
@@ -261,10 +261,11 @@ export function equal(a: any, b: any): boolean {
   }
   if (isObject(a) && isObject(b)) {
     const ks1 = Object.keys(a);
-    if (ks1.length !== Object.keys(b).length)
+    if (ks1.length !== Object.keys(b).length) {
       return false;
+    }
     for (const key of ks1) {
-      if (typeof b[key] === 'undefined') {
+      if (typeof b[key] === "undefined") {
         return false;
       }
       if (!equal(a[key], b[key])) {

@@ -1,9 +1,9 @@
 
-import { DictLike, Dict, MultiDict } from "../interfaces"
-import { expect } from "chai"
-import { test } from "./_helpers"
+import { expect } from "chai";
+import { Dict, DictLike, MultiDict } from "../interfaces";
+import { test } from "./_helpers";
 
-test('DictLike.size increases its size when new entries are added', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.size increases its size when new entries are added", dict => {
   expect(dict.size).to.equal(0);
   dict.add([1, 2]);
   expect(dict.size).to.equal(1);
@@ -11,9 +11,9 @@ test('DictLike.size increases its size when new entries are added', (dict: DictL
   expect(dict.size).to.equal(2);
   dict.deleteKey(1);
   expect(dict.size).to.equal(1);
-})
+});
 
-test('DictLike.has() correctly reports whether a pair is there', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.has() correctly reports whether a pair is there", dict => {
   dict.add([1, 2]);
   dict.add([3, 4]);
   expect(dict.has([1, 2])).to.be.true;
@@ -23,7 +23,7 @@ test('DictLike.has() correctly reports whether a pair is there', (dict: DictLike
   expect(dict.has([5, 6])).to.be.false;
 });
 
-test('DictLike.hasKey() correctly reports whether a key is there', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.hasKey() correctly reports whether a key is there", dict => {
   dict.add([1, 2]);
   dict.add([3, 4]);
   expect(dict.hasKey(1)).to.be.true;
@@ -33,7 +33,7 @@ test('DictLike.hasKey() correctly reports whether a key is there', (dict: DictLi
   expect(dict.hasKey(5)).to.be.false;
 });
 
-test('DictLike.clear() clear the entire dictionary', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.clear() clear the entire dictionary", dict => {
   dict.add([1, 2]);
   dict.add([3, 4]);
   dict.add([5, 6]);
@@ -44,7 +44,7 @@ test('DictLike.clear() clear the entire dictionary', (dict: DictLike<number, num
   expect([...dict]).to.deep.equal([]);
 });
 
-test('DictLike.toRange().size returns the correct size', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.toRange().size returns the correct size", dict => {
   expect(dict.size).to.equal(0);
   expect(dict.toRange().size).to.equal(0);
   dict.add([1, 2]);
@@ -55,7 +55,7 @@ test('DictLike.toRange().size returns the correct size', (dict: DictLike<number,
   expect(dict.toRange().size).to.equal(2);
 });
 
-test('DictLike.delete() deletes at most one element', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.delete() deletes at most one element", dict => {
   dict.add([1, 2]);
   dict.add([3, 2]);
   expect(dict.size).to.equal(2);
@@ -64,7 +64,7 @@ test('DictLike.delete() deletes at most one element', (dict: DictLike<number, nu
   expect([...dict]).to.deep.equal([[3, 2]]);
 });
 
-test('DictLike.delete() does not accidentally delete the wrong element', (dict: DictLike<number, number>) => {
+test<DictLike<number, number>>("DictLike.delete() does not accidentally delete the wrong element", dict => {
   dict.add([1, 3]);
   dict.add([2, 3]);
   expect(dict.size).to.equal(2);
@@ -78,8 +78,7 @@ test('DictLike.delete() does not accidentally delete the wrong element', (dict: 
   expect([...dict]).to.deep.include([2, 3]);
 });
 
-
-test('Dict.emplace() replaces the value when keys are the same', (dict: Dict<number, number>) => {
+test<Dict<number, number>>("Dict.emplace() replaces the value when keys are the same", dict => {
   const res1 = dict.emplace(1, 2);
   expect(res1[0]).to.be.true;
   const res2 = dict.emplace(1, 3);
@@ -87,20 +86,20 @@ test('Dict.emplace() replaces the value when keys are the same', (dict: Dict<num
   expect([...dict]).to.deep.equal([[1, 3]]);
 });
 
-test('Dict.add() replaces the value when keys are the same', (dict: Dict<number, number>) => {
+test<Dict<number, number>>("Dict.add() replaces the value when keys are the same", dict => {
   dict.add([1, 2]);
   dict.add([1, 3]);
   expect([...dict]).to.deep.equal([[1, 3]]);
 });
 
-test('Dict.getValue() returns the correct value for a given element', (dict: Dict<number, number>) => {
+test<Dict<number, number>>("Dict.getValue() returns the correct value for a given element", dict => {
   dict.add([1, 2]);
   dict.add([3, 4]);
   expect(dict.getValue(1)).to.equal(2);
   expect(dict.getValue(3)).to.equal(4);
 });
 
-test('Dict.getValue() throws an error if the value is not there', (dict: Dict<number, number>) => {
+test<Dict<number, number>>("Dict.getValue() throws an error if the value is not there", dict => {
   dict.add([1, 2]);
   dict.add([3, 4]);
   expect(() => dict.getValue(5)).to.throw(Error);
@@ -108,7 +107,7 @@ test('Dict.getValue() throws an error if the value is not there', (dict: Dict<nu
   expect(() => dict.getValue(4)).to.throw(Error);
 });
 
-test('ManyDict.add() only allows one element of the same key and value', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("ManyDict.add() only allows one element of the same key and value", dict => {
   const res1 = dict.add([1, 2]);
   expect(res1[0]).to.be.true;
   const res2 = dict.add([1, 2]);
@@ -116,7 +115,7 @@ test('ManyDict.add() only allows one element of the same key and value', (dict: 
   expect([...dict]).to.deep.equal([[1, 2]]);
 });
 
-test('ManyDict.add() replaces pairs of the same key and value', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("ManyDict.add() replaces pairs of the same key and value", dict => {
   const p1: [number, number] = [1, 2];
   dict.add(p1);
   const p2: [number, number] = [1, 2];
@@ -127,7 +126,7 @@ test('ManyDict.add() replaces pairs of the same key and value', (dict: MultiDict
   expect(elements[0]).to.equal(p2);
 });
 
-test('ManyDict.emplace() only allows one element of the same key and value', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("ManyDict.emplace() only allows one element of the same key and value", dict => {
   const res1 = dict.add([1, 2]);
   expect(res1[0]).to.be.true;
   const res2 = dict.add([1, 2]);
@@ -135,7 +134,7 @@ test('ManyDict.emplace() only allows one element of the same key and value', (di
   expect([...dict]).to.deep.equal([[1, 2]]);
 });
 
-test('ManyDict.emplace() replaces pairs of the same key and value', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("ManyDict.emplace() replaces pairs of the same key and value", dict => {
   const res1 = dict.emplace(1, 2);
   const val1 = res1[1].value;
   expect(res1[0]).to.be.true;
@@ -148,7 +147,7 @@ test('ManyDict.emplace() replaces pairs of the same key and value', (dict: Multi
   expect(elements[0]).to.equal(val2);
 });
 
-test('ManyDict.getValues() correctly returns all values for a key', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("ManyDict.getValues() correctly returns all values for a key", dict => {
   dict.add([1, 1]);
   dict.add([1, 3]);
   dict.add([1, 3]);
@@ -158,7 +157,7 @@ test('ManyDict.getValues() correctly returns all values for a key', (dict: Multi
   expect([...dict.getValues(1)].sort((a, b) => a - b)).to.deep.equal([1, 3, 4]);
 });
 
-test('MultiDict.add() allows adding pairs of the same key and value', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("MultiDict.add() allows adding pairs of the same key and value", dict => {
   const res1 = dict.add([1, 2]);
   expect(res1[0]).to.be.true;
   const res2 = dict.add([1, 2]);
@@ -166,7 +165,7 @@ test('MultiDict.add() allows adding pairs of the same key and value', (dict: Mul
   expect([...dict]).to.deep.equal([[1, 2], [1, 2]]);
 });
 
-test('MultiDict.emplace() allows adding pairs of the same key and value', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("MultiDict.emplace() allows adding pairs of the same key and value", dict => {
   const res1 = dict.emplace(1, 2);
   expect(res1[0]).to.be.true;
   const res2 = dict.emplace(1, 2);
@@ -174,7 +173,7 @@ test('MultiDict.emplace() allows adding pairs of the same key and value', (dict:
   expect([...dict]).to.deep.equal([[1, 2], [1, 2]]);
 });
 
-test('MultiDict.getValues() correctly returns all values for a key', (dict: MultiDict<number, number>) => {
+test<MultiDict<number, number>>("MultiDict.getValues() correctly returns all values for a key", dict => {
   dict.add([1, 1]);
   dict.add([1, 3]);
   dict.add([1, 3]);
@@ -183,4 +182,3 @@ test('MultiDict.getValues() correctly returns all values for a key', (dict: Mult
   dict.add([4, 5]);
   expect([...dict.getValues(1)].sort((a, b) => a - b)).to.deep.equal([1, 3, 3, 4]);
 });
-

@@ -4,6 +4,16 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+      "no-shadowed-variable": {
+        "options": {
+          "temporalDeadZone": false
+        }
+      },
+      "max-classes-per-file": false,
+      "variable-name": {
+        "options": ["ban-keywords", "require-const-for-all-caps", "check-format", "allow-leading-underscore", "allow-pascal-case"]
+      }
+    },
     "rulesDirectory": []
 }

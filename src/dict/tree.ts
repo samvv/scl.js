@@ -1,6 +1,6 @@
 
-import AVL, { AVLTreeConstructor } from "../avl"
-import { lesser, equal, isIterable } from "../util"
+import AVL, { AVLTreeConstructor } from "../avl";
+import { equal, isIterable, lesser } from "../util";
 
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.
@@ -40,7 +40,7 @@ export interface TreeDictOptions<K, V> {
 
 /**
  * A tree-based dictionary that only allows one item with the same key.
- * 
+ *
  * ```ts
  * import TreeDict from "scl/dict/tree"
  * ```
@@ -128,7 +128,7 @@ export class TreeDict<K, V> extends AVL<[K, V], K> {
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lesser, pair => pair[0], (a, b) => equal(a[1], b[1]), false);
+      super(lesser, (pair) => pair[0], (a, b) => equal(a[1], b[1]), false);
       for (const element of opts) {
         this.add(element);
       }
@@ -137,19 +137,19 @@ export class TreeDict<K, V> extends AVL<[K, V], K> {
       const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
       super(
         opts.compare !== undefined ? opts.compare : lesser
-      , pair => pair[0]
+      , (pair) => pair[0]
       , (a, b) => valuesEqual(a[1], b[1])
-      , false
+      , false,
       );
       this.valuesEqual = valuesEqual;
     }
   }
 
-  emplace(key: K, val: V) {
+  public emplace(key: K, val: V) {
     return this.add([key, val]);
   }
 
-  add(p: [K, V]) {
+  public add(p: [K, V]) {
     const hint = this.getAddHint(p);
     if (hint[0] === false) {
       hint[1]!.value = p;
@@ -157,7 +157,7 @@ export class TreeDict<K, V> extends AVL<[K, V], K> {
     return super.add(p, hint);
   }
 
-  getValue(key: K) {
+  public getValue(key: K) {
     const match = this.findKey(key);
     if (match === null) {
       throw new Error(`Cannot retrieve value: provided key does not exist.`);
@@ -165,15 +165,14 @@ export class TreeDict<K, V> extends AVL<[K, V], K> {
     return match.value[1];
   }
 
-  clone() {
+  public clone() {
     return new TreeDict<K, V>({
       compare: this.lessThan
     , valuesEqual: this.valuesEqual
-    , elements: this
-    })
+    , elements: this,
+    });
   }
 
 }
 
 export default TreeDict;
-

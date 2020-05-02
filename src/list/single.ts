@@ -1,6 +1,6 @@
 
-import { List } from "../interfaces"
-import { CursorBase, RangeBase } from "../util"
+import { List } from "../interfaces";
+import { CursorBase, RangeBase } from "../util";
 
 interface Node<T> {
   next: Node<T> | null;
@@ -24,7 +24,7 @@ export class SingleLinkedListCursor<T> extends CursorBase<T> {
     this._node.value = newValue;
   }
 
-  prev() {
+  public prev() {
     const prev = this._list._findPrev(this._node);
     if (prev === null) {
       return null;
@@ -32,7 +32,7 @@ export class SingleLinkedListCursor<T> extends CursorBase<T> {
     return new SingleLinkedListCursor<T>(this._list, prev);
   }
 
-  next() {
+  public next() {
     if (this._node.next === null) {
       return null;
     }
@@ -49,7 +49,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
  constructor(protected _list: SingleLinkedList<T>, protected _startNode: Node<T> | null, protected _endNode: Node<T> | null, public readonly reversed: boolean) {
     super();
   }
-  
+
   get size() {
     if (this._startNode === this._list._firstNode && this._endNode === this._list._lastNode) {
       return this._list.size;
@@ -66,11 +66,11 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
     return count;
   }
 
-  reverse() {
+  public reverse() {
     return new SingleLinkedListRange<T>(this._list, this._startNode, this._endNode, !this.reversed);
   }
 
-  *[Symbol.iterator]() {
+  public *[Symbol.iterator]() {
     if (!this.reversed) {
       let node = this._startNode;
       while (node !== null) {
@@ -92,7 +92,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
     }
   }
 
-  *cursors() {
+  public *cursors() {
     if (!this.reversed) {
       let node = this._startNode;
       while (node !== null) {
@@ -150,17 +150,17 @@ export class SingleLinkedList<T> implements List<T> {
   /**
    * @ignore
    */
-  _firstNode: Node<T> | null = null;
+  public _firstNode: Node<T> | null = null;
 
   /**
    * @ignore
    */
-  _lastNode: Node<T> | null = null;
+  public _lastNode: Node<T> | null = null;
 
   /**
    * @ignore
    */
-  _size = 0;
+  public _size = 0;
 
   /**
    * Construct a singly-linked list.
@@ -168,7 +168,7 @@ export class SingleLinkedList<T> implements List<T> {
    * ```ts
    * const l = new SingleLinkedList();
    * ```
-   * 
+   *
    * You can also constrcut a linked list from any iterable, like so:
    *
    * ```ts
@@ -186,7 +186,7 @@ export class SingleLinkedList<T> implements List<T> {
   /**
    * @ignore
    */
-  _findPrev(node: Node<T>) {
+  public _findPrev(node: Node<T>) {
     let prev = this._firstNode;
     while (prev !== null && prev.next !== node) {
       prev = prev.next;
@@ -194,29 +194,29 @@ export class SingleLinkedList<T> implements List<T> {
     return prev;
   }
 
-  add(element: T): [boolean, SingleLinkedListCursor<T>] {
+  public add(element: T): [boolean, SingleLinkedListCursor<T>] {
     return [true, this.prepend(element)];
   }
 
-  getAt(index: number) {
+  public getAt(index: number) {
     return this.at(index).value;
   }
 
-  first() {
+  public first() {
     if (this._firstNode === null) {
-      throw new Error(`Cannot get first element: collection is empty.`)
+      throw new Error(`Cannot get first element: collection is empty.`);
     }
-    return this._firstNode.value
+    return this._firstNode.value;
   }
 
-  last() {
+  public last() {
     if (this._lastNode === null) {
-      throw new Error(`Cannot get last element: collection is empty.`)
+      throw new Error(`Cannot get last element: collection is empty.`);
     }
     return this._lastNode.value;
   }
 
-  insertBefore(pos: SingleLinkedListCursor<T>, el: T) {
+  public insertBefore(pos: SingleLinkedListCursor<T>, el: T) {
     const newNode = { next: pos._node, value: el };
     if (pos._node === this._firstNode) {
       this._firstNode = newNode;
@@ -228,7 +228,7 @@ export class SingleLinkedList<T> implements List<T> {
     return new SingleLinkedListCursor<T>(this, newNode);
   }
 
-  insertAfter(pos: SingleLinkedListCursor<T>, el: T) {
+  public insertAfter(pos: SingleLinkedListCursor<T>, el: T) {
     const newNode = { value: el, next: pos._node.next };
     if (pos._node.next === null) {
       this._lastNode = newNode;
@@ -238,7 +238,7 @@ export class SingleLinkedList<T> implements List<T> {
     return new SingleLinkedListCursor<T>(this, newNode);
   }
 
-  prepend(el: T) {
+  public prepend(el: T) {
     const newNode = { next: this._firstNode, value: el };
     this._firstNode = newNode;
     if (this._lastNode === null) {
@@ -248,10 +248,10 @@ export class SingleLinkedList<T> implements List<T> {
     return new SingleLinkedListCursor<T>(this, newNode);
   }
 
-  append(el: T) {
-    const newNode = { next: null, value: el }
+  public append(el: T) {
+    const newNode = { next: null, value: el };
     if (this._lastNode === null) {
-      this._firstNode = newNode
+      this._firstNode = newNode;
       this._lastNode = newNode;
     } else {
       this._lastNode.next = newNode;
@@ -265,16 +265,18 @@ export class SingleLinkedList<T> implements List<T> {
     return this._size;
   }
 
-  has(el: T) {
-    let node = this._firstNode
-    while (node !== null)
-      if (node.value === el)
-        return true
+  public has(el: T) {
+    const node = this._firstNode;
+    while (node !== null) {
+      if (node.value === el) {
+        return true;
+      }
+    }
 
-    return false
+    return false;
   }
 
-  *[Symbol.iterator](): IterableIterator<T> {
+  public *[Symbol.iterator](): IterableIterator<T> {
     let node = this._firstNode;
     while (node !== null) {
       yield node.value;
@@ -282,23 +284,23 @@ export class SingleLinkedList<T> implements List<T> {
     }
   }
 
-  at(position: number) {
+  public at(position: number) {
     let curr = this._firstNode;
     let i = position;
     while (i > 0) {
       if (curr === null) {
-        throw new RangeError(`Could not get element at i ${position}: index out of bounds.`)
+        throw new RangeError(`Could not get element at i ${position}: index out of bounds.`);
       }
       curr = curr.next;
       --i;
     }
     if (curr === null) {
-      throw new RangeError(`Could not get element at position ${position}: index out of bounds.`)
+      throw new RangeError(`Could not get element at position ${position}: index out of bounds.`);
     }
     return new SingleLinkedListCursor<T>(this, curr);
   }
 
-  deleteAt(pos: SingleLinkedListCursor<T>) {
+  public deleteAt(pos: SingleLinkedListCursor<T>) {
     const prev = this._findPrev(pos._node)
         , next = pos._node.next;
     if (prev === null) {
@@ -312,7 +314,7 @@ export class SingleLinkedList<T> implements List<T> {
     --this._size;
   }
 
-  delete(element: T): boolean {
+  public delete(element: T): boolean {
     let node: Node<T> | null = this._firstNode;
     let prev = null;
     while (node !== null) {
@@ -335,7 +337,7 @@ export class SingleLinkedList<T> implements List<T> {
     return false;
   }
 
-  deleteAll(el: T): number {
+  public deleteAll(el: T): number {
     let count = 0;
     let node: Node<T> | null = this._firstNode;
     let prev = null;
@@ -350,7 +352,7 @@ export class SingleLinkedList<T> implements List<T> {
         if (prev === null) {
           this._firstNode = node;
         } else {
-          prev.next= node;
+          prev.next = node;
         }
         if (node === null) {
           this._lastNode = prev;
@@ -364,26 +366,26 @@ export class SingleLinkedList<T> implements List<T> {
     return count;
   }
 
-  toRange() {
+  public toRange() {
     return new SingleLinkedListRange<T>(this, this._firstNode, this._lastNode, false);
   }
 
-  rest(): List<T> {
+  public rest(): List<T> {
     if (this._firstNode === null) {
-      throw new Error(`Could not get rest of list: list is empty.`)
+      throw new Error(`Could not get rest of list: list is empty.`);
     }
-    const list = new SingleLinkedList<T>()
+    const list = new SingleLinkedList<T>();
     list._firstNode = this._firstNode.next;
     list._lastNode = this._lastNode;
-    list._size = this._size-1;
+    list._size = this._size - 1;
     return list;
   }
 
-  clone() {
+  public clone() {
     return new SingleLinkedList<T>(this);
   }
 
-  clear() {
+  public clear() {
     this._firstNode = null;
     this._lastNode = null;
     this._size = 0;
@@ -391,4 +393,4 @@ export class SingleLinkedList<T> implements List<T> {
 
 }
 
-export default SingleLinkedList
+export default SingleLinkedList;

@@ -1,7 +1,7 @@
 
-import { Dict } from "../interfaces"
-import { Hash, Bucket } from "../hash"
-import { hash, equal, isIterable } from "../util"
+import { Bucket, Hash } from "../hash";
+import { Dict } from "../interfaces";
+import { equal, hash, isIterable } from "../util";
 
 /**
  * Options passed to a hash-like dictionary in order to configure its behaviour.
@@ -38,7 +38,7 @@ export interface HashDictOptions<K, V> {
 
   /**
    * A predicate for determining when two keys are equal.
-   * 
+   *
    * Two keys may produce the same hash result, but that does not necessarily
    * mean that they are equal. This function resolves any conflicts.
    *
@@ -105,7 +105,7 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
    *
    * ```ts
    * const d = new HashDict<number, string>([
-   *   [1, 'one'], 
+   *   [1, 'one'],
    *   [2, 'two']
    * ])
    * ```
@@ -127,7 +127,7 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
    */
   constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(hash, equal, (a, b) => equal(a[1], b[1]), pair => pair[0]);
+      super(hash, equal, (a, b) => equal(a[1], b[1]), (pair) => pair[0]);
       for (const element of opts) {
         this.add(element);
       }
@@ -139,8 +139,8 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
           opts.hash !== undefined ? opts.hash : hash
         , keysEqual
         , (a, b) => valuesEqual(a[1], b[1])
-        , pair => pair[0]
-        , opts.capacity !== undefined ? opts.capacity : undefined
+        , (pair) => pair[0]
+        , opts.capacity !== undefined ? opts.capacity : undefined,
       );
       if (opts.elements !== undefined) {
         for (const element of opts.elements) {
@@ -154,22 +154,22 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
   /**
    * @ignore
    */
-  _getConflict(bucket: Bucket<[K, V]>, value: [K, V]) {
+  public _getConflict(bucket: Bucket<[K, V]>, value: [K, V]) {
     const key = this.getKey(value);
     for (const cursor of bucket.toRange().cursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) {
         cursor.value = value;
-        return cursor; 
+        return cursor;
       }
     }
     return null;
   }
 
-  emplace(key: K, val: V) {
+  public emplace(key: K, val: V) {
     return this.add([key, val]);
   }
 
-  getValue(key: K) {
+  public getValue(key: K) {
     const match = this.findKey(key);
     if (match === null) {
       throw new Error(`Cannot retrieve value: provided key does not exist.`);
@@ -177,13 +177,13 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
     return match.value[1];
   }
 
-  clone() {
+  public clone() {
     return new HashDict<K, V>({
         hash: this.getHash
       , keysEqual: this.keysEqual
       , valuesEqual: this.valuesEqual
       , capacity: this._array.length
-      , elements: this
+      , elements: this,
     });
   }
 

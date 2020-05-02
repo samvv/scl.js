@@ -1,20 +1,20 @@
 
-import Vector from "../vector"
-import { expect } from "chai"
-import { test } from "./_helpers"
+import { expect } from "chai";
+import Vector from "../vector";
+import { test } from "./_helpers";
 
-test('Vector.slice() can take slices', (v: Vector<number>) => {
+test("Vector.slice() can take slices", (v: Vector<number>) => {
   v.append(1);
   v.append(2);
   v.append(3);
   v.append(4);
   const s1 = v.slice(1, 3);
-  expect([...s1]).to.deep.equal([2,3]);
-  const s2 = v.slice(0,0);
+  expect([...s1]).to.deep.equal([2, 3]);
+  const s2 = v.slice(0, 0);
   expect([...s2]).to.deep.equal([]);
 });
 
-test('Vector.slice() can take slices of slices', (v: Vector<number>) => {
+test("Vector.slice() can take slices of slices", (v: Vector<number>) => {
   v.append(1);
   v.append(2);
   v.append(3);
@@ -23,7 +23,7 @@ test('Vector.slice() can take slices of slices', (v: Vector<number>) => {
   expect([...s1]).to.deep.equal([3]);
 });
 
-test('Vector.insertBefore() allocates more storage if required', (v: Vector<number>) => {
+test("Vector.insertBefore() allocates more storage if required", (v: Vector<number>) => {
   expect(v.capacity).to.equal(5);
   const cursor = v.append(1);
   v.insertBefore(cursor, 2);
@@ -41,10 +41,10 @@ test('Vector.insertBefore() allocates more storage if required', (v: Vector<numb
   v.insertBefore(cursor, 11);
   expect(v.capacity).to.equal(15);
 }, {
-  args: [{ allocStep: 5, capacity: 5, }]
+  args: [{ allocStep: 5, capacity: 5 }],
 });
 
-test('Vector.insertAfter() allocates more storage if required', (v: Vector<number>) => {
+test("Vector.insertAfter() allocates more storage if required", (v: Vector<number>) => {
   expect(v.capacity).to.equal(5);
   const cursor = v.append(1);
   v.insertAfter(cursor, 2);
@@ -62,10 +62,10 @@ test('Vector.insertAfter() allocates more storage if required', (v: Vector<numbe
   v.insertAfter(cursor, 11);
   expect(v.capacity).to.equal(15);
 }, {
-  args: [{ allocStep: 5, capacity: 5, }]
+  args: [{ allocStep: 5, capacity: 5 }],
 });
 
-test('Vector.append() allocates more storage if required', (v: Vector<number>) => {
+test("Vector.append() allocates more storage if required", (v: Vector<number>) => {
   expect(v.capacity).to.equal(5);
   v.append(1);
   v.append(2);
@@ -83,10 +83,10 @@ test('Vector.append() allocates more storage if required', (v: Vector<number>) =
   v.append(11);
   expect(v.capacity).to.equal(15);
 }, {
-  args: [{ allocStep: 5, capacity: 5, }]
+  args: [{ allocStep: 5, capacity: 5 }],
 });
 
-test('Vector.prepend() allocates more storage if required', (v: Vector<number>) => {
+test("Vector.prepend() allocates more storage if required", (v: Vector<number>) => {
   expect(v.capacity).to.equal(3);
   v.prepend(1);
   v.prepend(2);
@@ -105,10 +105,10 @@ test('Vector.prepend() allocates more storage if required', (v: Vector<number>) 
   v.prepend(11);
   expect(v.capacity).to.equal(13);
 }, {
-  args: [{ allocStep: 5, capacity: 3, }]
+  args: [{ allocStep: 5, capacity: 3 }],
 });
 
-test('Vector.replace() throws a RangeError if the index is out of bounds', (v: Vector<number>) => {
+test("Vector.replace() throws a RangeError if the index is out of bounds", (v: Vector<number>) => {
   expect(() => v.replace(0, 5)).to.throw(RangeError);
   v.append(1);
   v.append(2);
@@ -116,7 +116,7 @@ test('Vector.replace() throws a RangeError if the index is out of bounds', (v: V
   expect(() => v.replace(10, 5)).to.throw(RangeError);
 });
 
-test('Vector.shrinkFit() shrinks the vector to fit its size', (v: Vector<number>) => {
+test("Vector.shrinkFit() shrinks the vector to fit its size", (v: Vector<number>) => {
   v.append(1);
   v.append(2);
   v.append(3);
@@ -124,7 +124,7 @@ test('Vector.shrinkFit() shrinks the vector to fit its size', (v: Vector<number>
   expect(v.capacity).to.equal(3);
 });
 
-test('Vector.shrinkFit() retains the elements that are added to the vector', (v: Vector<number>) => {
+test("Vector.shrinkFit() retains the elements that are added to the vector", (v: Vector<number>) => {
   v.append(1);
   v.append(2);
   v.append(3);
@@ -135,10 +135,8 @@ test('Vector.shrinkFit() retains the elements that are added to the vector', (v:
   expect(v.getAt(2)).to.equal(3);
 });
 
-test('Vector.allocate() grows the vector if it is too small', (v: Vector<number>) => {
+test("Vector.allocate() grows the vector if it is too small", (v: Vector<number>) => {
   expect(v.capacity).to.equal(3);
   v.allocate(15);
   expect(v.capacity).to.equal(15);
-}, { args: [{ allocStep: 5, capacity: 3 }, ] });
-
-
+}, { args: [{ allocStep: 5, capacity: 3 } ] });

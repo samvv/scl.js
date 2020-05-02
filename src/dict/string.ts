@@ -1,9 +1,9 @@
 
-import { Pair, Dict, Cursor, CollectionRange } from "../interfaces"
-import { RangeBase, CursorBase } from "../util"
+import { CollectionRange, Cursor, Dict, Pair } from "../interfaces";
+import { CursorBase, RangeBase } from "../util";
 
 class ObjectCursor<V> extends CursorBase<[string, V]> {
-  
+
   constructor(public _dict: StringDict<V>, public key: string) {
     super();
   }
@@ -28,11 +28,11 @@ class ObjectRange<V> extends RangeBase<[string, V]> {
     return this._dict.size;
   }
 
-  [Symbol.iterator]() {
+  public [Symbol.iterator]() {
     return this._dict[Symbol.iterator]();
   }
 
-  *cursors() {
+  public *cursors() {
     for (const key of Object.keys(this._dict._values)) {
       yield new ObjectCursor<V>(this._dict, key);
     }
@@ -65,7 +65,7 @@ export class StringDict<V> implements Dict<string, V> {
   /**
    * @ignore
    */
-  _values = Object.create(null);
+  public _values = Object.create(null);
 
   protected _size = 0;
 
@@ -93,21 +93,21 @@ export class StringDict<V> implements Dict<string, V> {
     }
   }
 
-  add([key, val]: Pair<string, V>) {
-    return this.emplace(key, val)
+  public add([key, val]: Pair<string, V>) {
+    return this.emplace(key, val);
   }
 
   get size() {
     return this._size;
   }
 
-  has(element: Pair<string, V>) {
+  public has(element: Pair<string, V>) {
     const value = this._values[element[0]];
     return value !== undefined
         && element[1] === value;
   }
 
-  emplace(key: string, value: V): [boolean, Cursor<[string, V]>] {
+  public emplace(key: string, value: V): [boolean, Cursor<[string, V]>] {
     if (this._values[key] !== undefined) {
       return [false, new ObjectCursor<V>(this, key)];
     }
@@ -116,24 +116,25 @@ export class StringDict<V> implements Dict<string, V> {
     return [true, new ObjectCursor<V>(this, key)];
   }
 
-  getValue(key: string) {
-    const value = this._values[key]
-    if (value === undefined)
-      throw new Error(`key ${key} not found`)
-    return value
+  public getValue(key: string) {
+    const value = this._values[key];
+    if (value === undefined) {
+      throw new Error(`key ${key} not found`);
+    }
+    return value;
   }
 
-  hasKey(key: string) {
-    return this._values[key] !== undefined
+  public hasKey(key: string) {
+    return this._values[key] !== undefined;
   }
 
-  *[Symbol.iterator](): IterableIterator<[string, V]> {
+  public *[Symbol.iterator](): IterableIterator<[string, V]> {
     for (const key of Object.keys(this._values)) {
-      yield [key, this._values[key]]
+      yield [key, this._values[key]];
     }
   }
 
-  delete(pair: Pair<string, V>) {
+  public delete(pair: Pair<string, V>) {
     if (!Object.prototype.hasOwnProperty.call(this._values, pair[0])) {
       return false;
     }
@@ -142,7 +143,7 @@ export class StringDict<V> implements Dict<string, V> {
     return true;
   }
 
-  deleteKey(key: string) {
+  public deleteKey(key: string) {
     if (!Object.prototype.hasOwnProperty.call(this._values, key)) {
       return 0;
     }
@@ -151,16 +152,16 @@ export class StringDict<V> implements Dict<string, V> {
     return 1;
   }
 
-  findKey(key: string) {
+  public findKey(key: string) {
     return new ObjectCursor<V>(this, key);
   }
 
-  deleteAt(cursor: ObjectCursor<V>) {
+  public deleteAt(cursor: ObjectCursor<V>) {
     delete this._values[cursor.key];
     this._size--;
   }
 
-  deleteAll(element: [string, V]) {
+  public deleteAll(element: [string, V]) {
     let count = 0;
     for (const key of Object.keys(this._values)) {
       if (key === element[0] && this._values[key] === element[1]) {
@@ -172,18 +173,18 @@ export class StringDict<V> implements Dict<string, V> {
     return count;
   }
 
-  toRange() {
+  public toRange() {
     return new ObjectRange<V>(this);
   }
 
-  clear() {
-    this._values = Object.create(null)
+  public clear() {
+    this._values = Object.create(null);
   }
 
-  clone() {
+  public clone() {
     return new StringDict<V>(Object.assign(Object.create(null), this._values));
   }
 
 }
 
-export default StringDict
+export default StringDict;

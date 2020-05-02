@@ -1,7 +1,7 @@
 
-import { Queuelike } from "./interfaces"
+import { Queuelike } from "./interfaces";
 
-import SingleLinkedList from "./list/single"
+import SingleLinkedList from "./list/single";
 
 /**
  * A _LIFO queue_, where the last element to be pushed into the queue is the
@@ -27,11 +27,11 @@ import SingleLinkedList from "./list/single"
  */
 export class Stack<T> extends SingleLinkedList<T> implements Queuelike<T> {
 
-  peek() {
+  public peek() {
     return this.first();
   }
 
-  pop() {
+  public pop() {
     const cursor = this.at(0);
     this.deleteAt(cursor);
     return cursor.value;
@@ -39,5 +39,4 @@ export class Stack<T> extends SingleLinkedList<T> implements Queuelike<T> {
 
 }
 
-export default Stack
-
+export default Stack;

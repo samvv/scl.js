@@ -1,7 +1,7 @@
 
-import { Queuelike, Cursor } from "./interfaces"
+import { Cursor, Queuelike } from "./interfaces";
 
-import DoubleLinkedList from "./list/double"
+import DoubleLinkedList from "./list/double";
 
 /**
  * A _FIFO queue_, where the first element pushed into the collection is also
@@ -30,7 +30,7 @@ import DoubleLinkedList from "./list/double"
  */
 export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
 
-  static from<T>(iterable: Iterable<T>) {
+  public static from<T>(iterable: Iterable<T>) {
     const queue = new Queue<T>();
     for (const element of iterable) {
       queue.add(element);
@@ -38,21 +38,21 @@ export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
     return queue;
   }
 
-  static empty<T>() {
+  public static empty<T>() {
     return new Queue<T>();
   }
 
   /**
    * This method's time complexity is in `O(1)`.
    */
-  peek() {
+  public peek() {
     return this.first();
   }
 
   /**
    * This method's time complexity is in `O(1)`.
    */
-  pop() {
+  public pop() {
     const cursor = this.at(0);
     this.deleteAt(cursor);
     return cursor.value;
@@ -61,11 +61,10 @@ export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
   /**
    * This method's time complexity is in `O(1)`.
    */
-  add(el: T): [boolean, Cursor<T>] {
+  public add(el: T): [boolean, Cursor<T>] {
     return [true, this.append(el)];
   }
 
 }
 
 export default Queue;
-

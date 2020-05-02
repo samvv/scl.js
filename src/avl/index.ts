@@ -1,27 +1,31 @@
 
-import { IndexedCollection, Cursor, CollectionRange } from "../interfaces"
-import { liftLesser, lesser, RangeBase, CursorBase } from "../util"
+import { Cursor, IndexedCollection } from "../interfaces";
+import { CursorBase, lesser, liftLesser, RangeBase } from "../util";
 
 /**
  * @ignore
  */
 export class Node<T> extends CursorBase<T> {
 
-  balance: number = 0;
-  left: Node<T> | null = null;
-  right: Node<T> | null=  null;
+  public balance: number = 0;
+  public left: Node<T> | null = null;
+  public right: Node<T> | null =  null;
+
+  public leftThread: Node<T> | null = null;
+  public rightThread: Node<T> | null = null;
 
   constructor(public value: T, public parent: Node<T> | null = null) {
     super();
   }
 
-  next(): Node<T> | null {
+  public next(): Node<T> | null {
     if (this.right !== null) {
       let node = this.right;
-      while (node.left !== null) node = node.left;
+      while (node.left !== null) {
+        node = node.left;
+      }
       return node;
     }
-  
     let node: Node<T> = this;
     while (node.parent !== null && node === node.parent.right) {
       node = node.parent;
@@ -29,13 +33,15 @@ export class Node<T> extends CursorBase<T> {
     return node.parent;
   }
 
-  prev(): Node<T> | null {
-    if (this.left !== null) { 
+  public prev(): Node<T> | null {
+    if (this.left !== null) {
       let node = this.left;
-      while (node.right !== null) node = node.right;
+      while (node.right !== null) {
+        node = node.right;
+      }
       return node;
     }
-  
+
     let node: Node<T> = this;
     while (node.parent !== null && node === node.parent.left) {
       node = node.parent;
@@ -54,7 +60,7 @@ export class NodeRange<T> extends RangeBase<T> {
     super();
   }
 
-  reverse() {
+  public reverse() {
     return new NodeRange<T>(this.min, this.max, !this.reversed);
   }
 
@@ -63,24 +69,26 @@ export class NodeRange<T> extends RangeBase<T> {
     return [...this].length;
   }
 
-  *[Symbol.iterator]() {
+  public *[Symbol.iterator]() {
     for (const node of this.cursors()) {
       yield node.value;
     }
   }
 
-  *cursors() {
+  public *cursors() {
     if (!this.reversed) {
-      let node = this.min, max = this.max;
+      let node = this.min;
+      const max = this.max;
       while (node !== null) {
         yield node;
-        if (node === max){
+        if (node === max) {
           break;
         }
         node = node.next();
       }
     } else {
-      let node = this.max, min = this.min;
+      let node = this.max
+      const min = this.min;
       while (node !== null) {
         yield node;
         if (node === min) {
@@ -94,10 +102,10 @@ export class NodeRange<T> extends RangeBase<T> {
 }
 
 function rotateLeft<T>(node: Node<T>) {
-  let rightNode = node.right!;
+  const rightNode = node.right!;
   node.right    = rightNode.left;
 
-  if (rightNode.left) rightNode.left.parent = node;
+  if (rightNode.left) { rightNode.left.parent = node; }
 
   rightNode.parent = node.parent;
   if (rightNode.parent) {
@@ -123,11 +131,10 @@ function rotateLeft<T>(node: Node<T>) {
   return rightNode;
 }
 
-
 function rotateRight<T>(node: Node<T>) {
-  let leftNode = node.left!;
+  const leftNode = node.left!;
   node.left = leftNode.right;
-  if (node.left) node.left.parent = node;
+  if (node.left) { node.left.parent = node; }
 
   leftNode.parent = node.parent;
   if (leftNode.parent) {
@@ -161,57 +168,62 @@ type AddHint<T> = [boolean, Node<T> | null, number?];
  */
 export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
-  protected _comparator: (a: K, b: K) => number;
-
-  /** 
-   * @ignore
-   */
-  constructor(
-        /** @ignore */ protected lessThan: (a: K, b: K) => boolean = lesser
-      , /** @ignore */ protected getKey: (val: T) => K = val => val as any
-      , /** @ignore */ protected elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
-      , /** @ignore */ protected _allowDuplicates = true) {
-    this._comparator = liftLesser(lessThan);
-  }
-  
-  protected _size = 0;
-  protected _root: Node<T> | null = null;
-
-  /**
-   * This method always runs in `O(1)` time.
-   */
-  clear() {
-    this._root = null;
-    this._size = 0;
-  }
-
   get size() {
     return this._size;
   }
 
-  getAddHint(value: T): AddHint<T> {
+  protected _compare: (a: K, b: K) => number;
+  protected _size = 0;
+  protected _root: Node<T> | null = null;
 
-    const compare = this._comparator
-        , getKey = this.getKey
-        , key = getKey(value); 
-    let node    = this._root
-      , parent  = null
-      , cmp;
+  /**
+   * @ignore
+   */
+  constructor(
+        /** @ignore */ protected lessThan: (a: K, b: K) => boolean = lesser
+      , /** @ignore */ protected getKey: (val: T) => K = (val) => val as any
+      , /** @ignore */ protected elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
+      , /** @ignore */ protected _allowDuplicates = true) {
+    this._compare = liftLesser(lessThan);
+  }
+
+  /**
+   * This method always runs in `O(1)` time.
+   */
+  public clear() {
+    this._root = null;
+    this._size = 0;
+  }
+
+  public getAddHint(value: T): AddHint<T> {
+
+    const key = this.getKey(value);
+    let node = this._root;
+    let parent = null;
+    let cmp;
 
     if (!this._allowDuplicates) {
       while (node !== null) {
-        cmp = compare(key, getKey(node.value));
+        cmp = this._compare(key, this.getKey(node.value));
         parent = node;
-        if      (cmp === 0) return [false, node];
-        else if (cmp < 0)   node = node.left;
-        else                node = node.right;
+        if (cmp === 0) {
+          return [false, node];
+        } else  if (cmp < 0) {
+          node = node.left;
+        } else {
+          node = node.right;
+        }
       }
     } else {
       while (node !== null) {
-        cmp = compare(key, getKey(node.value));
+        cmp = this._compare(key, this.getKey(node.value));
         parent = node;
-        if      (cmp <= 0)  node = node.left; //return null;
-        else                node = node.right;
+        if (cmp <= 0) {
+          // FIXME should I return null?
+          node = node.left;
+        } else {
+          node = node.right;
+        }
       }
     }
 
@@ -221,7 +233,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   /**
    * This operation takes `O(log(n))` time.
    */
-  add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
+  public add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
     if (this._root === null) {
       this._root = new Node<T>(value);
       this._size++;
@@ -237,35 +249,51 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
       return hint as [boolean, Node<T>];
     }
 
-    let parent = hint[1], cmp = hint[2]!;
-    
-    const compare = this._comparator;
-    let newNode = new Node<T>(value, parent);
+    let parent = hint[1];
+    let cmp = hint[2]!;
+
+    const compare = this._compare;
+    const newNode = new Node<T>(value, parent);
     let newRoot;
-    if (cmp <= 0) parent!.left  = newNode;
-    else          parent!.right = newNode;
+    if (cmp <= 0) {
+      parent!.left  = newNode;
+    } else {
+      parent!.right = newNode; 
+    }
 
     while (parent !== null) {
       cmp = compare(getKey(parent.value), getKey(value));
-      if (cmp < 0) parent.balance -= 1;
-      else         parent.balance += 1;
+      if (cmp < 0) {
+        parent.balance -= 1;
+      } else {
+        parent.balance += 1;
+      }
 
-      if        (parent.balance === 0) break;
-      else if   (parent.balance < -1) {
+      if (parent.balance === 0) {
+        break; 
+      } else if (parent.balance < -1) {
         // inlined
-        //let newRoot = rightBalance(parent);
-        if (parent.right!.balance === 1) rotateRight(parent.right!);
+        // let newRoot = rightBalance(parent);
+        if (parent.right!.balance === 1) {
+          rotateRight(parent.right!);
+        }
         newRoot = rotateLeft(parent);
 
-        if (parent === this._root) this._root = newRoot;
+        if (parent === this._root) {
+          this._root = newRoot;
+        }
         break;
       } else if (parent.balance > 1) {
         // inlined
         // let newRoot = leftBalance(parent);
-        if (parent.left!.balance === -1) rotateLeft(parent.left!);
+        if (parent.left!.balance === -1) {
+          rotateLeft(parent.left!);
+        }
         newRoot = rotateRight(parent);
 
-        if (parent === this._root) this._root = newRoot;
+        if (parent === this._root) {
+          this._root = newRoot;
+        }
         break;
       }
       parent = parent.parent;
@@ -275,7 +303,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     return [true, newNode];
   }
 
-  has(element: T): boolean {
+  public has(element: T): boolean {
     for (const node of this.equalKeys(this.getKey(element)).cursors()) {
       if (this.elementsEqual(node.value, element)) {
         return true;
@@ -287,7 +315,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   /**
    * This method takes `O(log(n))` time.
    */
-  hasKey(key: K): boolean {
+  public hasKey(key: K): boolean {
     return this.findKey(key) !== null;
   }
 
@@ -300,42 +328,54 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    *
    * @param key The key so search for.
    */
-  findKey(key: K): Node<T> | null {
+  public findKey(key: K): Node<T> | null {
     let node = this._root;
-    const compare = this._comparator;
+    const compare = this._compare;
     const getKey = this.getKey;
     while (node !== null) {
       const cmp = compare(key, getKey(node.value));
-      if (cmp < 0)   node = node.left;
-      else if (cmp > 0) node = node.right;
-      else return node;
+      if (cmp < 0) {
+        node = node.left;
+      } else if (cmp > 0) {
+        node = node.right;
+      } else {
+        return node;
+      }
     }
     return null;
   }
-  
+
   /**
    * @ignore
    */
-  _findMin(key: K, node = this.findKey(key)): Node<T> | null {
-    if (node === null)
+  public _findMin(key: K, node = this.findKey(key)): Node<T> | null {
+    if (node === null) {
       return null;
-    const cmp = this._comparator(key, this.getKey(node.value));
-    if (cmp < 0) return this._findMin(key, node.left);
-    if (cmp > 0) return this._findMin(key, node.right);
+    }
+    const cmp = this._compare(key, this.getKey(node.value));
+    if (cmp < 0) {
+      return this._findMin(key, node.left);
+    }
+    if (cmp > 0) {
+      return this._findMin(key, node.right);
+    }
     return this._findMin(key, node.left) || node;
   }
 
   /**
    * @ignore
    */
-  _findMax(key: K, node = this.findKey(key)): Node<T> | null {
-    if (node === null)
+  public _findMax(key: K, node = this.findKey(key)): Node<T> | null {
+    if (node === null) {
       return null;
-    const cmp = this._comparator(key, this.getKey(node.value));
-    if (cmp < 0)
+    }
+    const cmp = this._compare(key, this.getKey(node.value));
+    if (cmp < 0) {
       return this._findMax(key, node.left);
-    if (cmp > 0)
+    }
+    if (cmp > 0) {
       return this._findMax(key, node.right);
+    }
     return this._findMax(key, node.right) || node;
   }
 
@@ -343,73 +383,71 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * This methods generally returns in `O(log(n))` time, but this might become `O(n)` in
    * the case where multiple elements with the same key are allowed.
    */
-  equalKeys(key: K): NodeRange<T> {
-    const top = this.findKey(key)
-        , min = this._findMin(key, top)
-        , max = this._findMax(key, top);
+  public equalKeys(key: K): NodeRange<T> {
+    const top = this.findKey(key);
+    const min = this._findMin(key, top);
+    const max = this._findMax(key, top);
     return new NodeRange<T>(min, max);
   }
 
-  lowerKey(key: K): Node<T> | null {
-    const compare = this._comparator;
-    const getKey = this.getKey;
+  public lowerKey(key: K): Node<T> | null {
     let node = this._root;
-    while (node !== null && compare(getKey(node.value), key) > 0) {
+    while (node !== null && this._compare(this.getKey(node.value), key) > 0) {
       if (node.left !== null) {
         node = node.left;
-      } else { 
+      } else {
         node = null;
         break;
       }
     }
-    if (node !== null && compare(getKey(node.value), key) === 0 && node.right !== null) {
+    if (node !== null && this._compare(this.getKey(node.value), key) === 0 && node.right !== null) {
       node = node.right;
-      while (node.left !== null) node = node.left;
+      while (node.left !== null) {
+        node = node.left;
+      }
     }
     return node;
   }
 
-  upperKey(key: K): Node<T> | null {
-    const compare = this._comparator;
-    const getKey = this.getKey;
+  public upperKey(key: K): Node<T> | null {
     let node = this._root;
-    while (node !== null && compare(getKey(node.value), key) < 0) {
+    while (node !== null && this._compare(this.getKey(node.value), key) < 0) {
       if (node.right !== null) {
         node = node.right;
-      } else { 
+      } else {
         node = null;
         break;
       }
     }
-    if (node !== null && compare(getKey(node.value), key) === 0) {
+    if (node !== null && this._compare(this.getKey(node.value), key) === 0) {
       node = node.left;
       if (node !== null) {
-        while (node.right !== null) node = node.right;
+        while (node.right !== null) { node = node.right; }
       }
     }
 
     return node;
   }
 
-  toRange() {
+  public toRange() {
     return new NodeRange(this.begin(), this.end());
   }
 
-  begin(): Node<T> | null {
-    if (this._root === null) return null;
+  public begin(): Node<T> | null {
+    if (this._root === null) { return null; }
     let node = this._root;
-    while (node.left !== null) node = node.left;
+    while (node.left !== null) { node = node.left; }
     return node;
   }
 
-  end(): Node<T> | null {
-    if (this._root === null) return null;
+  public end(): Node<T> | null {
+    if (this._root === null) { return null; }
     let node = this._root;
-    while (node.right !== null) node = node.right;
+    while (node.right !== null) { node = node.right; }
     return node;
   }
 
-  *[Symbol.iterator]() {
+  public *[Symbol.iterator]() {
     // TODO issue #12
     for (const value of this.toRange()) {
       yield value;
@@ -421,7 +459,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * with the same key are allowed. In that case, the complexity can grow to
    * `O(n)`.
    */
-  deleteKey(key: K): number {
+  public deleteKey(key: K): number {
     let deleteCount = 0;
     for (const node of this.equalKeys(key).cursors()) {
       this.deleteAt(node);
@@ -435,7 +473,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * with the same key are allowed. In that case, the complexity can grow to
    * `O(n)`.
    */
-  deleteAll(value: T): number {
+  public deleteAll(value: T): number {
     let deleteCount = 0;
     for (const node of  this.equalKeys(this.getKey(value)).cursors()) {
       if (this.elementsEqual(node.value, value)) {
@@ -450,7 +488,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * This method takes at most `O(log(n))` time, where `n` is the amount of
    * elements in the collection.
    */
-  delete(element: T): boolean {
+  public delete(element: T): boolean {
     for (const node of this.equalKeys(this.getKey(element)).cursors()) {
       if (this.elementsEqual(node.value, element)) {
         this.deleteAt(node);
@@ -464,35 +502,46 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * Takes `O(log(n))` time, and is slightly faster than deleting the element
    * by key due to the fact that a search for the node has already been done.
    */
-  deleteAt(node: Node<T>) {
-    let returnValue = node.value;
-    let max, min;
+  public deleteAt(node: Node<T>) {
+    const returnValue = node.value;
+    let max;
+    let min;
 
-    if (node.left) {
+    if (node.left !== null) {
+
       max = node.left;
 
-      while (max.left || max.right) {
-        while (max.right) max = max.right;
+      while (max.left !== null || max.right !== null) {
+
+        while (max.right !== null) {
+          max = max.right;
+        }
 
         node.value = max.value;
-        if (max.left) {
+
+        if (max.left !== null) {
           node = max;
           max = max.left;
         }
+
       }
 
       node.value  = max.value;
       node = max;
     }
 
-    if (node.right) {
+    if (node.right !== null) {
+
       min = node.right;
 
-      while (min.left || min.right) {
-        while (min.left) min = min.left;
+      while (min.left !== null || min.right !== null) {
+
+        while (min.left !== null) {
+          min = min.left;
+        }
 
         node.value  = min.value;
-        if (min.right) {
+        if (min.right !== null) {
           node = min;
           min = min.right;
         }
@@ -503,55 +552,73 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     }
 
     let parent = node.parent;
-    let pp     = node;
+    let child = node;
     let newRoot;
 
-    while (parent) {
-      if (parent.left === pp) parent.balance -= 1;
-      else                    parent.balance += 1;
+    while (parent !== null) {
+      if (parent.left === child) {
+        parent.balance -= 1;
+      } else {
+        parent.balance += 1;
+      }
 
       if (parent.balance < -1) {
         // inlined
-        //let newRoot = rightBalance(parent);
-        if (parent.right!.balance === 1) rotateRight(parent.right!);
+        // let newRoot = rightBalance(parent);
+        if (parent.right!.balance === 1) {
+          rotateRight(parent.right!);
+        }
         newRoot = rotateLeft(parent);
 
-        if (parent === this._root) this._root = newRoot;
+        if (parent === this._root) {
+          this._root = newRoot;
+        }
         parent = newRoot;
       } else if (parent.balance > 1) {
         // inlined
         // let newRoot = leftBalance(parent);
-        if (parent.left!.balance === -1) rotateLeft(parent.left!);
+        if (parent.left!.balance === -1) {
+          rotateLeft(parent.left!);
+        }
         newRoot = rotateRight(parent);
 
-        if (parent === this._root) this._root = newRoot;
+        if (parent === this._root) {
+          this._root = newRoot;
+        }
         parent = newRoot;
       }
 
-      if (parent.balance === -1 || parent.balance === 1) break;
+      if (parent.balance === -1 || parent.balance === 1) {
+        break;
+      }
 
-      pp     = parent;
+      child = parent;
       parent = parent.parent;
     }
 
     if (node.parent) {
-      if (node.parent.left === node) node.parent.left  = null;
-      else                           node.parent.right = null;
+      if (node.parent.left === node) {
+        node.parent.left  = null;
+      } else {
+        node.parent.right = null;
+      }
     }
 
-    if (node === this._root) this._root = null;
+    if (node === this._root) {
+      this._root = null;
+    }
 
     this._size--;
     return returnValue;
   }
 
-  clone() {
+  public clone() {
     return new AVLTree<T, K>(
       this.lessThan
     , this.getKey
     , this.elementsEqual
-    , this._allowDuplicates
-    )
+    , this._allowDuplicates,
+    );
   }
 
 }
@@ -559,13 +626,11 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 /**
  * @ignore
  */
-export interface AVLTreeConstructor<T, K> {
-  new(
+export type AVLTreeConstructor<T, K> = new(
     lessThan: (a: K, b: K) => boolean
   , getKey: (val: T) => K
   , elementsEqual: (a: T, b: T) => boolean
-  , allowDuplicates: boolean
-  ): AVLTree<T, K>;
-}
+  , allowDuplicates: boolean,
+  ) => AVLTree<T, K>;
 
 export default AVLTree;

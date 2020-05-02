@@ -1,7 +1,7 @@
 
-import { IndexedCollection, CollectionRange, Cursor } from "../interfaces"
-import DoubleLinkedList, { DoubleLinkedListCursor } from "../list/double"
-import { RangeBase, EmptyRange } from "../util"
+import { CollectionRange, Cursor, IndexedCollection } from "../interfaces";
+import DoubleLinkedList, { DoubleLinkedListCursor } from "../list/double";
+import { EmptyRange, RangeBase } from "../util";
 
 /**
  * @ignore
@@ -39,7 +39,7 @@ class HashRange<T, K> extends RangeBase<T> {
     return this._hash.size;
   }
 
-  *[Symbol.iterator]() {
+  public *[Symbol.iterator]() {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
         for (const element of bucket) {
@@ -49,7 +49,7 @@ class HashRange<T, K> extends RangeBase<T> {
     }
   }
 
-  *cursors() {
+  public *cursors() {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
         for (const cursor of bucket.toRange().cursors()) {
@@ -66,15 +66,19 @@ class HashRange<T, K> extends RangeBase<T> {
  */
 export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
 
-  /**
-   * @ignore
-   */
-  _array: Bucket<T>[];
+  get size() {
+    return this._size;
+  }
 
   /**
    * @ignore
    */
-  _size = 0;
+  public _array: Array<Bucket<T>>;
+
+  /**
+   * @ignore
+   */
+  public _size = 0;
 
   /**
    * @ignore
@@ -84,22 +88,16 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       , /** @ignore */ public keysEqual: (a: K, b: K) => boolean
       , /** @ignore */ public elementsEqual: (a: T, b: T) => boolean
       , /** @ignore */ public getKey: (val: T) => K = (val: T) => val as any
-    , capacity = DEFAULT_BUCKET_COUNT) {
+    ,                  capacity = DEFAULT_BUCKET_COUNT) {
     this._array = new Array(capacity);
   }
 
-  protected abstract _getConflict(bucket: Bucket<T>, element: T): DoubleLinkedListCursor<T> | null;
-
-  get size() {
-    return this._size;
-  }
-
-  clear() {
+  public clear() {
     this._array.splice(0, this._array.length);
     this._size = 0;
   }
 
-  equalKeys(key: K) {
+  public equalKeys(key: K) {
     const bucket = this._getBucket(key);
     if (bucket === null) {
       return new EmptyRange<T>();
@@ -108,40 +106,40 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
       .filter((cursor: Cursor<T>) => this.keysEqual(this.getKey(cursor.value), key));
   }
 
-  add(element: T): [boolean, HashCursor<T>] {
+  public add(element: T): [boolean, HashCursor<T>] {
     const h = this.getHash(this.getKey(element));
     const i = h % this._array.length;
-    let bucket = this._array[i] === undefined
+    const bucket = this._array[i] === undefined
       ? this._array[i] = new DoubleLinkedList<T>()
       : this._array[i];
     const conflict = this._getConflict(bucket, element);
     if (conflict !== null) {
-      return [false, new HashCursor<T>(bucket, conflict)]; 
+      return [false, new HashCursor<T>(bucket, conflict)];
     }
     const bucketPos = bucket.append(element);
     ++this._size;
     return [true, new HashCursor<T>(bucket, bucketPos)];
   }
 
-  deleteAt(cursor: HashCursor<T>) {
+  public deleteAt(cursor: HashCursor<T>) {
     cursor._bucket.deleteAt(cursor._bucketPos);
     --this._size;
   }
 
-  findKey(key: K): HashCursor<T> | null {
+  public findKey(key: K): HashCursor<T> | null {
     const bucket = this._getBucket(key);
     if (bucket === null) {
       return null;
     }
     for (const cursor of bucket.toRange().cursors()) {
-      if (this.keysEqual(this.getKey(cursor.value), key)) { 
+      if (this.keysEqual(this.getKey(cursor.value), key)) {
         return new HashCursor<T>(bucket, cursor);
       }
-    } 
+    }
     return null;
   }
 
-  has(element: T): boolean {
+  public has(element: T): boolean {
     for (const cursor of this.equalKeys(this.getKey(element)).cursors()) {
       if (this.elementsEqual(cursor.value, element)) {
         return true;
@@ -150,14 +148,14 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     return false;
   }
 
-  hasKey(key: K) {
+  public hasKey(key: K) {
     return this.findKey(key) !== null;
   }
 
   /**
    * @ignore
    */
-  _getBucket(key: K): Bucket<T> | null {
+  public _getBucket(key: K): Bucket<T> | null {
     const h = this.getHash(key);
     const i = h % this._array.length;
     const bucket = this._array[i];
@@ -167,14 +165,14 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     return bucket;
   }
 
-  deleteKey(key: K) {
+  public deleteKey(key: K) {
     const bucket = this._getBucket(key);
     if (bucket === null) {
       return 0;
     }
     let deleted = 0;
     for (const cursor of bucket.toRange().cursors()) {
-      if (this.keysEqual(this.getKey(cursor.value), key)) { 
+      if (this.keysEqual(this.getKey(cursor.value), key)) {
         bucket.deleteAt(cursor);
         --this._size;
         ++deleted;
@@ -183,15 +181,15 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     return deleted;
   }
 
-  [Symbol.iterator]() {
+  public [Symbol.iterator]() {
     return this.toRange()[Symbol.iterator]();
   }
 
-  toRange() {
+  public toRange() {
     return new HashRange<T, K>(this);
   }
 
-  delete(el: T) {
+  public delete(el: T) {
     const cursor = this.findKey(this.getKey(el));
     if (cursor === null || !this.elementsEqual(el, cursor.value)) {
       return false;
@@ -200,7 +198,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     return true;
   }
 
-  deleteAll(element: T) {
+  public deleteAll(element: T) {
     const key = this.getKey(element);
     const h = this.getHash(key);
     const i = h % this._array.length;
@@ -209,7 +207,7 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     }
     let deleted = 0;
     for (const cursor of this._array[i].toRange().cursors()) {
-      if (this.keysEqual(this.getKey(cursor.value), key)) { 
+      if (this.keysEqual(this.getKey(cursor.value), key)) {
         this._array[i].deleteAt(cursor);
         --this._size;
         ++deleted;
@@ -218,7 +216,9 @@ export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
     return deleted;
   }
 
-  abstract clone(): Hash<T, K>;
+  public abstract clone(): Hash<T, K>;
+
+  protected abstract _getConflict(bucket: Bucket<T>, element: T): DoubleLinkedListCursor<T> | null;
 
 }
 

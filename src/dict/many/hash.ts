@@ -1,8 +1,8 @@
 
-import { Hash, Bucket, HashCursor } from "../../hash/index"
-import { MultiDict } from "../../interfaces"
-import { HashDictOptions } from "../hash"
-import { hash, equal, isIterable } from "../../util"
+import { Bucket, Hash, HashCursor } from "../../hash/index";
+import { MultiDict } from "../../interfaces";
+import { equal, hash, isIterable } from "../../util";
+import { HashDictOptions } from "../hash";
 
 /**
  * A hash-based dictionary that can store multile items with the same key, but
@@ -15,7 +15,7 @@ import { hash, equal, isIterable } from "../../util"
  * Most methods in this collection, given that a proper hashing function is set
  * up, are in `Θ(1 + n/k)`. If you're out of luck, this characteristic can grow
  * to `O(n)`.
- * 
+ *
  * When a new entry is added with a key and a value that is already taken, the
  * dictionary will replace the corresponding entry with the new one.
  *
@@ -35,15 +35,6 @@ import { hash, equal, isIterable } from "../../util"
  */
 export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, V> {
 
-  _getConflict(bucket: Bucket<[K, V]>, val: [K, V]) {
-    for (const cursor of bucket.toRange().cursors()) {
-      if (this.elementsEqual(cursor.value, val)) {
-        return cursor;
-      }
-    }
-    return null;
-  }
-
   protected valuesEqual: (a: V, b: V) => boolean;
 
   /**
@@ -59,7 +50,7 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
    *
    * ```ts
    * const d = new HashManyDict<number, string>([
-   *   [1, 'one'], 
+   *   [1, 'one'],
    *   [2, 'two']
    * ])
    * ```
@@ -81,7 +72,7 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
    */
   constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(hash, equal, (a, b) => equal(a[1], b[1]), pair => pair[0]);
+      super(hash, equal, (a, b) => equal(a[1], b[1]), (pair) => pair[0]);
       for (const element of opts) {
         this.add(element);
       }
@@ -93,8 +84,8 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
           opts.hash !== undefined ? opts.hash : hash
         , keysEqual
         , (a, b) => valuesEqual(a[1], b[1])
-        , pair => pair[0]
-        , opts.capacity !== undefined ? opts.capacity : undefined
+        , (pair) => pair[0]
+        , opts.capacity !== undefined ? opts.capacity : undefined,
       );
       if (opts.elements !== undefined) {
         for (const element of opts.elements) {
@@ -105,34 +96,43 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
     }
   }
 
-  emplace(key: K, val: V) {
+  public _getConflict(bucket: Bucket<[K, V]>, val: [K, V]) {
+    for (const cursor of bucket.toRange().cursors()) {
+      if (this.elementsEqual(cursor.value, val)) {
+        return cursor;
+      }
+    }
+    return null;
+  }
+
+  public emplace(key: K, val: V) {
     return this.add([key, val]);
   }
 
-  *getValues(key: K): IterableIterator<V> {
+  public *getValues(key: K): IterableIterator<V> {
     for (const value of this.equalKeys(key)) {
       yield value[1];
     }
   }
 
-  add(value: [K, V]): [boolean, HashCursor<[K, V]>] {
+  public add(value: [K, V]): [boolean, HashCursor<[K, V]>] {
     const [added, cursor] = super.add(value);
     if (added === false) {
       cursor.value = value;
     }
-    return [added, cursor]; 
+    return [added, cursor];
   }
 
-  clone() {
+  public clone() {
     return new HashManyDict<K, V>({
         hash: this.getHash
       , keysEqual: this.keysEqual
       , valuesEqual: this.valuesEqual
       , capacity: this._array.length
-      , elements: this
+      , elements: this,
     });
   }
 
 }
 
-export default HashManyDict
+export default HashManyDict;

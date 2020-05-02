@@ -1,8 +1,8 @@
 
-import { Queuelike } from "./interfaces"
-import Heap, { HeapOptions } from "./heap"
-import { lesser, isIterable, omit } from "./util"
-import { Vector, VectorCursor } from "./vector"
+import Heap, { HeapOptions } from "./heap";
+import { Queuelike } from "./interfaces";
+import { isIterable, lesser, omit } from "./util";
+import { Vector, VectorCursor } from "./vector";
 // import { DEFAULT_VECTOR_CAPACITY, DEFAULT_VECTOR_ALLOC_STEP } from "./constants"
 
 export type PriorityQueueOptions<T> = HeapOptions<T>;
@@ -54,7 +54,7 @@ export class PriorityQueue<T> implements Queuelike<T> {
       }
     } else {
       const lessThan = opts.compare !== undefined ? opts.compare : lesser;
-      const vector = new Vector<T>(omit(opts, 'elements'));
+      const vector = new Vector<T>(omit(opts, "elements"));
       this._heap = new Heap<T>(vector, lessThan);
     }
   }
@@ -63,62 +63,61 @@ export class PriorityQueue<T> implements Queuelike<T> {
     return this._heap.size;
   }
 
-  has(element: T) {
+  public has(element: T) {
     return this._heap._vector.has(element);
   }
 
-  deleteAtIndex(index: number) {
+  public deleteAtIndex(index: number) {
     this._heap.deleteAtIndex(index);
   }
 
-  delete(element: T) {
+  public delete(element: T) {
     return this._heap.delete(element);
   }
 
-  deleteAt(cursor: VectorCursor<T>) {
+  public deleteAt(cursor: VectorCursor<T>) {
     this._heap.deleteAt(cursor);
   }
 
-  deleteAll(element: T) {
+  public deleteAll(element: T) {
     return this._heap.deleteAll(element);
   }
 
-  add(element: T) {
+  public add(element: T) {
     return this._heap.add(element);
   }
 
-  peek() {
+  public peek() {
     return this._heap.min();
   }
 
-  pop() {
-    const min = this._heap.min()
-    this._heap.deleteMin()
-    return min
+  public pop() {
+    const min = this._heap.min();
+    this._heap.deleteMin();
+    return min;
   }
 
-  *[Symbol.iterator]() {
-    // FIXME can this be optimised? 
-    const h = this._heap.clone()
+  public *[Symbol.iterator]() {
+    // FIXME can this be optimised?
+    const h = this._heap.clone();
     while (h.size > 0) {
       yield h.min();
       h.deleteMin();
     }
   }
 
-  toRange() {
+  public toRange() {
     return this._heap._vector.toRange();
   }
 
-  clear() {
+  public clear() {
     this._heap._vector.clear();
   }
 
-  clone(): PriorityQueue<T> {
+  public clone(): PriorityQueue<T> {
     return new PriorityQueue<T>(this._heap.clone());
   }
 
 }
 
-export default PriorityQueue
-
+export default PriorityQueue;

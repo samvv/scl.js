@@ -1,15 +1,15 @@
 
 // import MultiTreeDict from "../multi/tree"
-import AVL from "../../avl"
-import { Cursor } from "../../interfaces"
-import { lesser, equal, isIterable } from "../../util"
-import { MultiDict } from "../../interfaces"
-import { TreeDictOptions } from "../tree"
+import AVL from "../../avl";
+import { Cursor } from "../../interfaces";
+import { MultiDict } from "../../interfaces";
+import { equal, isIterable, lesser } from "../../util";
+import { TreeDictOptions } from "../tree";
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but
  * only if the values differ.
- * 
+ *
  * ```ts
  * import TreeManyDict from "scl/dict/many/tree"
  * ```
@@ -103,7 +103,7 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lesser, pair => pair[0], (a, b) => equal(a[1], b[1]), true);
+      super(lesser, (pair) => pair[0], (a, b) => equal(a[1], b[1]), true);
       for (const element of opts) {
         this.add(element);
       }
@@ -112,15 +112,15 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
       const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
       super(
         opts.compare !== undefined ? opts.compare : lesser
-      , pair => pair[0]
+      , (pair) => pair[0]
       , (a, b) => valuesEqual(a[1], b[1])
-      , true
+      , true,
       );
       this.valuesEqual = valuesEqual;
     }
   }
 
-  add(pair: [K, V]): [boolean, Cursor<[K, V]>] {
+  public add(pair: [K, V]): [boolean, Cursor<[K, V]>] {
     for (const node of this.equalKeys(pair[0]).cursors()) {
       if (this.elementsEqual(pair, node.value)) {
         node.value = pair;
@@ -130,22 +130,22 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
     return super.add(pair) as [boolean, Cursor<[K, V]>];
   }
 
-  *getValues(key: K) {
+  public *getValues(key: K) {
     for (const value of this.equalKeys(key)) {
       yield value[1];
     }
   }
 
-  emplace(key: K, val: V) {
+  public emplace(key: K, val: V) {
     return this.add([key, val]);
   }
 
-  clone() {
+  public clone() {
     return new TreeManyDict<K, V>({
       compare: this.lessThan
     , valuesEqual: this.valuesEqual
-    , elements: this
-    })
+    , elements: this,
+    });
   }
 
 }

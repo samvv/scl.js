@@ -1,11 +1,11 @@
 
-import { expect } from "chai"
+import { expect } from "chai";
 
-import { Queuelike } from "../interfaces"
-import PriorityQueue from "../priority-queue"
-import { test } from "./_helpers"
+import { Queuelike } from "../interfaces";
+import PriorityQueue from "../priority-queue";
+import { test } from "./_helpers";
 
-test('PriorityQueue[Symbol.iterator]() iterates over elements in the correct order', (q: Queuelike<number>) => {
+test("PriorityQueue[Symbol.iterator]() iterates over elements in the correct order", (q: Queuelike<number>) => {
   q.add(10);
   q.add(51);
   q.add(5);
@@ -15,7 +15,7 @@ test('PriorityQueue[Symbol.iterator]() iterates over elements in the correct ord
   expect([...q]).to.deep.equal([5, 10, 15, 23, 51, 70]);
 });
 
-test('PriorityQueue[Symbol.iterator]() returns a new iterator with each call', (q: Queuelike<number>) => {
+test("PriorityQueue[Symbol.iterator]() returns a new iterator with each call", (q: Queuelike<number>) => {
   q.add(10);
   q.add(51);
   q.add(5);
@@ -26,7 +26,7 @@ test('PriorityQueue[Symbol.iterator]() returns a new iterator with each call', (
   expect([...q]).to.deep.equal([5, 10, 15, 23, 51, 70]);
 });
 
-test('PriorityQueue.deleteAt() can delete an arbitrary element in the queue', (q: PriorityQueue<number>) => {
+test("PriorityQueue.deleteAt() can delete an arbitrary element in the queue", (q: PriorityQueue<number>) => {
   q.add(10);
   q.add(51);
   q.add(5);
@@ -39,7 +39,7 @@ test('PriorityQueue.deleteAt() can delete an arbitrary element in the queue', (q
   expect([...q]).to.deep.equal([5, 15, 51, 70]);
 });
 
-test('PriorityQueue.pop() dequeues elements according to priority', (q: Queuelike<number>) => {
+test("PriorityQueue.pop() dequeues elements according to priority", (q: Queuelike<number>) => {
   q.add(10);
   q.add(51);
   q.add(5);
@@ -54,7 +54,7 @@ test('PriorityQueue.pop() dequeues elements according to priority', (q: Queuelik
   expect(q.pop()).to.equal(70);
 });
 
-test('PriorityQueue.peek() find the element with the highest priority without removing it', (q: Queuelike<number>) => {
+test("PriorityQueue.peek() find the element with the highest priority without removing it", (q: Queuelike<number>) => {
   q.add(10);
   expect(q.peek()).to.equal(10);
   q.add(51);
@@ -70,4 +70,3 @@ test('PriorityQueue.peek() find the element with the highest priority without re
   q.pop();
   expect(q.peek()).to.equal(10);
 });
-

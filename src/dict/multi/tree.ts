@@ -1,13 +1,13 @@
 
-import AVL from "../../avl"
-import { lesser, equal, isIterable } from "../../util"
-import { MultiDict } from "../../interfaces"
-import { TreeDictOptions } from "../tree"
+import AVL from "../../avl";
+import { MultiDict } from "../../interfaces";
+import { equal, isIterable, lesser } from "../../util";
+import { TreeDictOptions } from "../tree";
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but
  * only if the values differ.
- * 
+ *
  * ```ts
  * import TreeMultiDict from "scl/dict/many/tree"
  * ```
@@ -101,7 +101,7 @@ export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, 
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lesser, pair => pair[0], (a, b) => equal(a[1], b[1]), true);
+      super(lesser, (pair) => pair[0], (a, b) => equal(a[1], b[1]), true);
       for (const element of opts) {
         this.add(element);
       }
@@ -110,34 +110,32 @@ export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, 
       const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
       super(
         opts.compare !== undefined ? opts.compare : lesser
-      , pair => pair[0]
+      , (pair) => pair[0]
       , (a, b) => valuesEqual(a[1], b[1])
-      , true
+      , true,
       );
       this.valuesEqual = valuesEqual;
     }
   }
 
-  *getValues(key: K) {
+  public *getValues(key: K) {
     for (const value of this.equalKeys(key)) {
       yield value[1];
     }
   }
 
-  emplace(key: K, val: V) {
+  public emplace(key: K, val: V) {
     return this.add([key, val]);
   }
 
-  clone() {
+  public clone() {
     return new TreeMultiDict<K, V>({
       compare: this.lessThan
     , valuesEqual: this.valuesEqual
-    , elements: this
-    })
+    , elements: this,
+    });
   }
-
 
 }
 
 export default TreeMultiDict;
-
