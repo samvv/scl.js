@@ -11,7 +11,7 @@ export { StringDict } from "./StringDict";
 export { HashDict } from "./HashDict";
 export { HashManyDict } from "./HashManyDict";
 export { HashMultiDict } from "./HashMultiDict";
-export { AVLTreeIndex } from "./AVLTreeIndex";
+export { AVLTreeIndexOptions, AVLTreeIndex } from "./AVLTreeIndex";
 export { TreeDict } from "./TreeDict";
 export { TreeManyDict } from "./TreeManyDict";
 export { TreeMultiDict } from "./TreeMultiDict";

@@ -165,7 +165,7 @@ function rotateRight<T>(node: Node<T>) {
 
 type AddHint<T> = [boolean, Node<T> | null, number?];
 
-export interface AVLTreeOptions<T, K = T> {
+export interface AVLTreeIndexOptions<T, K = T> {
 
   /**
    * An iterable that will be consumed to fill the collection.
@@ -282,7 +282,7 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
   public isEqual: (a: T, b: T) => boolean;
   public allowDuplicates: boolean;
 
-  constructor(opts: Iterable<T> | AVLTreeOptions<T, K>) {
+  constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K>) {
     let elements: Iterable<T> = [];
     if (isIterable(opts)) {
       elements = opts;

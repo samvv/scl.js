@@ -1,5 +1,5 @@
 
-import { AVLTreeIndex, AVLTreeOptions } from "./AVLTreeIndex";
+import { AVLTreeIndex, AVLTreeIndexOptions } from "./AVLTreeIndex";
 import { Dict } from "./interfaces";
 import { isEqual, isIterable } from "./util";
 
@@ -10,7 +10,7 @@ import { isEqual, isIterable } from "./util";
  * @see [[TreeManyDict]]
  * @see [[TreeMultiDict]]
  */
-export interface TreeDictOptions<K, V> extends AVLTreeOptions<[K, V], K> {
+export interface TreeDictOptions<K, V> extends AVLTreeIndexOptions<[K, V], K> {
 
   /**
    * Compares two values in the dictionary and returns whether the values are
