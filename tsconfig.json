@@ -4,8 +4,13 @@
     "target": "es6",
     "outDir": "./lib",
     "sourceMap": true,
+    "declarationMap": true,
+    "declaration": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
+  "include": ["src"],
   "exclude": ["node_modules", "dist/"]
 }
