@@ -210,6 +210,8 @@ export interface AVLTreeIndexOptions<T, K = T> {
  * propery, like so:
  *
  * ```
+ * import { AVLTreeIndex } from "scl";
+ *
  * interface Person {
  *   firstName: string
  *   email: string,
