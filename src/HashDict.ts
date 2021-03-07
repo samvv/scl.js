@@ -1,7 +1,7 @@
 
-import { Bucket, Hash } from "../hash";
-import { Dict } from "../interfaces";
-import { equal, hash, isIterable } from "../util";
+import { Bucket, Hash } from "./Hash";
+import { Dict } from "./interfaces";
+import { equal, hash, isIterable } from "./util";
 
 /**
  * Options passed to a hash-like dictionary in order to configure its behaviour.
@@ -67,7 +67,7 @@ export interface HashDictOptions<K, V> {
  * A simple hash-based dictionary that only allows one item with same key.
  *
  * ```ts
- * import HashDict from "scl/dict/hash"
+ * import { HashDict } from "scl"
  * ```
  *
  * Most methods in this collection, given that a proper hashing function is set

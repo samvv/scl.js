@@ -1,8 +1,8 @@
 
-import Heap, { HeapOptions } from "./heap";
+import Heap, { HeapOptions } from "./Heap";
 import { Queuelike } from "./interfaces";
 import { isIterable, lesser, omit } from "./util";
-import { Vector, VectorCursor } from "./vector";
+import { Vector, VectorCursor } from "./Vector";
 // import { DEFAULT_VECTOR_CAPACITY, DEFAULT_VECTOR_ALLOC_STEP } from "./constants"
 
 export type PriorityQueueOptions<T> = HeapOptions<T>;
@@ -11,7 +11,7 @@ export type PriorityQueueOptions<T> = HeapOptions<T>;
  * A queue that pops element based on their given priority.
  *
  * ```ts
- * import PriorityQueue from "scl/priority-queue"
+ * import { PriorityQueue } from "scl"
  * ```
  *
  * The queue will return elements with a lower priority first. If you want the

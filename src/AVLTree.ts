@@ -1,6 +1,6 @@
 
-import { Cursor, IndexedCollection } from "../interfaces";
-import { CursorBase, lesser, liftLesser, RangeBase } from "../util";
+import { Cursor, IndexedCollection } from "./interfaces";
+import { CursorBase, lesser, liftLesser, RangeBase } from "./util";
 
 /**
  * @ignore

@@ -1,6 +1,6 @@
 
 import { expect } from "chai";
-import Vector from "../vector";
+import Vector from "../Vector";
 import { test } from "./_helpers";
 
 test("Vector.slice() can take slices", (v: Vector<number>) => {

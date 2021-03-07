@@ -1,7 +1,7 @@
 
-import { CollectionRange, Cursor, IndexedCollection } from "../interfaces";
-import DoubleLinkedList, { DoubleLinkedListCursor } from "../list/double";
-import { EmptyRange, RangeBase } from "../util";
+import { CollectionRange, Cursor, IndexedCollection } from "./interfaces";
+import DoubleLinkedList, { DoubleLinkedListCursor } from "./DoubleLinkedList";
+import { EmptyRange, RangeBase } from "./util";
 
 /**
  * @ignore

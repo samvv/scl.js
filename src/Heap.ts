@@ -1,6 +1,6 @@
 
 import { Collection, Cursor } from "./interfaces";
-import Vector, { VectorCursor, VectorOptions } from "./vector";
+import Vector, { VectorCursor, VectorOptions } from "./Vector";
 
 export interface HeapOptions<T> extends VectorOptions<T> {
   compare?: (a: T, b: T) => boolean;

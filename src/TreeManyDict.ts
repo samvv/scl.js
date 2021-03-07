@@ -1,17 +1,16 @@
 
 // import MultiTreeDict from "../multi/tree"
-import AVL from "../../avl";
-import { Cursor } from "../../interfaces";
-import { MultiDict } from "../../interfaces";
-import { equal, isIterable, lesser } from "../../util";
-import { TreeDictOptions } from "../tree";
+import AVL from "./AVLTree";
+import { Cursor, MultiDict } from "./interfaces";
+import { equal, isIterable, lesser } from "./util";
+import { TreeDictOptions } from "./TreeDict";
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but
  * only if the values differ.
  *
  * ```ts
- * import TreeManyDict from "scl/dict/many/tree"
+ * import { TreeManyDict } from "scl"
  * ```
  *
  * The following table summarises the worst-case time complexity of the most

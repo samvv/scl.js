@@ -1,6 +1,6 @@
 
-import { CollectionRange, Cursor, List } from "../interfaces";
-import { CursorBase, RangeBase } from "../util";
+import { Cursor, List } from "./interfaces";
+import { CursorBase, RangeBase } from "./util";
 
 class Node<T> extends CursorBase<T> {
 
@@ -72,7 +72,7 @@ export { Node as DoubleLinkedListCursor, NodeRange as DoubleLinkedListRange };
  * but consumes a bit more memory.
  *
  * ```ts
- * import DoubleLinkedList from "scl/list/double"
+ * import { DoubleLinkedList } from "scl"
  * ```
  *
  * The following table summarises the time complexity of the most commonly used
@@ -216,11 +216,12 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public has(el: T) {
-    const node = this._firstNode;
+    let node = this._firstNode;
     while (node !== null) {
       if (node.value === el) {
         return true;
       }
+      node = node._nextNode;
     }
     return false;
   }

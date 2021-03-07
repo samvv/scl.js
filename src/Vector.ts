@@ -145,7 +145,7 @@ export interface VectorOptions<T> {
  * A vector is a sequence with fast member access by sequence number.
  *
  * ```
- * import Vector from "scl/vector"
+ * import { Vector } from "scl"
  * ```
  *
  * Inserting elements anywhere else than at the end is very slow and should be

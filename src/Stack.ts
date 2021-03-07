@@ -1,14 +1,13 @@
 
 import { Queuelike } from "./interfaces";
-
-import SingleLinkedList from "./list/single";
+import { SingleLinkedList } from "./SingleLinkedList";
 
 /**
  * A _LIFO queue_, where the last element to be pushed into the queue is the
  * first element to be popped out of it.
  *
  * ```ts
- * import Stack from "scl/stack"
+ * import { Stack } from "scl"
  * ```
  *
  * Pushing and popping an element are both in `O(1)`.

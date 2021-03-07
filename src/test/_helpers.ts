@@ -2,78 +2,65 @@
 import { expect } from "chai";
 import { Collection } from "../interfaces";
 
-// import TreeMultiDict from "../dict/multi/tree"
-// import HashMultiDict from "../dict/multi/hash"
-// import TreeManyDict from "../dict/many/tree"
-// import HashManyDict from "../dict/many/hash"
-// import TreeDict from "../dict/tree"
-// import HashDict from "../dict/hash"
-// import Queue from "../queue"
-// import Stack from "../stack"
-// import PriorityQueue from "../priority-queue"
-// import SingleLinkedList from "../list/single"
-// import DoubleLinkedList from "../list/double"
-// import Vector from "../vector"
-
 const TEST_FILES = [
   {
     name: "TreeMultiDict",
-    file: "../dict/multi/tree",
+    file: "../TreeMultiDict",
     implements: ["MultiDict", "DictLike", "IndexedCollection", "CollectionLike"],
   },
   {
     name: "HashMultiDict",
-    file: "../dict/multi/hash",
+    file: "../HashMultiDict",
     implements: ["MultiDict", "DictLike", "IndexedCollection", "CollectionLike"],
   },
   {
     name: "TreeManyDict",
-    file: "../dict/many/tree",
+    file: "../TreeManyDict",
     implements: ["ManyDict", "DictLike", "IndexedCollection", "CollectionLike"],
   },
   {
     name: "HashManyDict",
-    file: "../dict/many/hash",
+    file: "../HashManyDict",
     implements: ["ManyDict", "DictLike", "IndexedCollection", "CollectionLike"],
   },
   {
     name: "TreeDict",
-    file: "../dict/tree",
+    file: "../TreeDict",
     implements: ["Dict", "DictLike", "IndexedCollection", "CollectionLike"],
   },
   {
     name: "HashDict",
-    file: "../dict/hash",
+    file: "../HashDict",
     implements: ["Dict", "DictLike", "IndexedCollection", "CollectionLike"],
   },
   {
     name: "Queue",
-    file: "../queue",
+    file: "../Queue",
     implements: ["Queuelike", "Collection"],
   },
   {
     name: "Stack",
-    file: "../stack",
+    file: "../Stack",
     implements: ["Queuelike", "Collection"],
   },
   {
     name: "PriorityQueue",
-    file: "../priority-queue",
+    file: "../PriorityQueue",
     implements: ["Queuelike", "Collection"],
   },
   {
     name: "DoubleLinkedList",
-    file: "../list/double",
+    file: "../DoubleLinkedList",
     implements: ["Sequence", "List", "Collection"],
   },
   {
     name: "SingleLinkedList",
-    file: "../list/single",
+    file: "../SingleLinkedList",
     implements: ["Sequence", "List", "Collection"],
   },
   {
     name: "Vector",
-    file: "../vector",
+    file: "../Vector",
     implements: ["Sequence", "Collection"],
   },
 ];

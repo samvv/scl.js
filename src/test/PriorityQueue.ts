@@ -2,7 +2,7 @@
 import { expect } from "chai";
 
 import { Queuelike } from "../interfaces";
-import PriorityQueue from "../priority-queue";
+import PriorityQueue from "../PriorityQueue";
 import { test } from "./_helpers";
 
 test("PriorityQueue[Symbol.iterator]() iterates over elements in the correct order", (q: Queuelike<number>) => {

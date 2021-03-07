@@ -18,7 +18,7 @@ npm i scl
 Using the priority queue to sort some tasks on importance:
 
 ```ts
-import PriorityQueue from "scl/priority-queue"
+import { PriorityQueue } from "scl"
 
 interface Task {
  priority: number
@@ -45,7 +45,7 @@ assert.strictEqual(q.size, 4)
 Storing many different translations in the same dictionary:
 
 ```ts
-import TreeMultiDict from "scl/dict/multi/tree"
+import { TreeMultiDict } from "scl"
 
 const d = new TreeMultiDict<number, string>()
 d.emplace(1, 'uno')

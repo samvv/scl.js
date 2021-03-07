@@ -1,6 +1,7 @@
 
-import { List } from "../interfaces";
-import { CursorBase, RangeBase } from "../util";
+import { Vector } from "./Vector"
+import { List } from "./interfaces";
+import { CursorBase, RangeBase } from "./util";
 
 interface Node<T> {
   next: Node<T> | null;
@@ -121,7 +122,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
  * but consumes less memory.
  *
  * ```ts
- * import SingleLinkedList from "scl/list/single"
+ * import { SingleLinkedList } from "scl"
  * ```
  *
  * The following table summarises the time complexity of the most commonly used
@@ -266,11 +267,12 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   public has(el: T) {
-    const node = this._firstNode;
+    let node = this._firstNode;
     while (node !== null) {
       if (node.value === el) {
         return true;
       }
+      node = node.next;
     }
 
     return false;

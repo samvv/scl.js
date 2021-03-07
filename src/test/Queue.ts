@@ -1,6 +1,6 @@
 
 import { expect } from "chai";
-import Queue from "../queue";
+import Queue from "../Queue";
 import { test } from "./_helpers";
 
 test("Queue.peek() always peeks the front of the queue", (queue: Queue<number>) => {

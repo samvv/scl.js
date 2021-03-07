@@ -1,6 +1,6 @@
 
-import { CollectionRange, Cursor, Dict, Pair } from "../interfaces";
-import { CursorBase, RangeBase } from "../util";
+import { CollectionRange, Cursor, Dict, Pair } from "./interfaces";
+import { CursorBase, RangeBase } from "./util";
 
 class ObjectCursor<V> extends CursorBase<[string, V]> {
 
@@ -45,7 +45,7 @@ class ObjectRange<V> extends RangeBase<[string, V]> {
  * to provide very fast lookup, insertion and deletion.
  *
  * ```ts
- * import StringDict from "scl/dict/string"
+ * import { StringDict } from "scl"
  * ```
  *
  * When two items are added with the same key, the second item will

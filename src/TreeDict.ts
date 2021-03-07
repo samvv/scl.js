@@ -1,6 +1,6 @@
 
-import AVL, { AVLTreeConstructor } from "../avl";
-import { equal, isIterable, lesser } from "../util";
+import { AVLTree } from "./AVLTree";
+import { equal, isIterable, lesser } from "./util";
 
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.
@@ -42,7 +42,7 @@ export interface TreeDictOptions<K, V> {
  * A tree-based dictionary that only allows one item with the same key.
  *
  * ```ts
- * import TreeDict from "scl/dict/tree"
+ * import { TreeDict } from "scl"
  * ```
  *
  * The following table summarises the worst-case time complexity of the most
@@ -90,7 +90,7 @@ export interface TreeDictOptions<K, V> {
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
  */
-export class TreeDict<K, V> extends AVL<[K, V], K> {
+export class TreeDict<K, V> extends AVLTree<[K, V], K> {
 
   protected valuesEqual: (a: V, b: V) => boolean;
 

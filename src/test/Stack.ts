@@ -1,6 +1,6 @@
 
 import { expect } from "chai";
-import Stack from "../stack";
+import Stack from "../Stack";
 import { test } from "./_helpers";
 
 test("Stack.peek() always peeks the top of the stack", (stack: Stack<number>) => {

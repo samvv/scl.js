@@ -1,14 +1,14 @@
 
 import { Cursor, Queuelike } from "./interfaces";
 
-import DoubleLinkedList from "./list/double";
+import DoubleLinkedList from "./DoubleLinkedList";
 
 /**
  * A _FIFO queue_, where the first element pushed into the collection is also
  * the first to be popped out of it.
  *
  * ```ts
- * import Queue from "scl/queue"
+ * import { Queue } from "scl"
  * ```
  *
  * Pushing and popping an element are both in `O(1)`.

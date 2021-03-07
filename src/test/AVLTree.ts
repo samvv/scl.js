@@ -2,7 +2,7 @@
 import { expect } from "chai";
 import { test } from "./_helpers"
 
-import AVLTree from "../avl";
+import AVLTree from "../AVLTree";
 
 test<AVLTree<number>>("AVLTree.add() successfully adds new elements", avl => {
   avl.add(1);

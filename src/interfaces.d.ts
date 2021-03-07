@@ -1,4 +1,6 @@
 
+import { PriorityQueue } from "./PriorityQueue";
+
 /**
  * Base interface for any data structure that contains multiple elements.
  *
