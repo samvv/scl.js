@@ -7,7 +7,7 @@ npm test
 
 # Check whether source files actually changed. If so, we will need to rebuild
 # the documentation.
-CHANGED=$(git diff-index --name-only HEAD -- src)
+CHANGED=$(git diff-index --cached --name-only HEAD -- src)
 
 if [ ! -x .should-skip-docs ] && [ -n "$CHANGED" ]; then
   # We don't rebuild the documentation right now. The documentation may depend
