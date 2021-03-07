@@ -333,9 +333,9 @@ export interface DictLike<K, V> extends IndexedCollection<[K, V], K> {
 }
 
 /**
- * A dictionary, also known as 'maps' in some languages, associates a certain
- * value (called the key) with another value. It provides efficient lookup of
- * a value when given a key.
+ * A dictionary, also known as 'maps' in other languages, associates a certain
+ * value (called the key) with another value, providing efficient lookup of the
+ * value when given the key.
  */
 export interface Dict<K, V> extends DictLike<K, V> {
 
@@ -416,7 +416,7 @@ export interface MultiDict<K, V> extends DictLike<K, V> {
 
 /**
  * Queuelike structures hold their data in an order that is determined by the
- * structure itself rather than the end-user.
+ * structure itself rather than the one who created the collection.
  */
 export interface Queuelike<T> extends Collection<T> {
   /**
@@ -434,6 +434,12 @@ export interface Queuelike<T> extends Collection<T> {
   pop(): T | undefined
 }
 
+/**
+ * A collection that stores at most one copy of an element and generally
+ * provides fast ways to check the presence of an element.
+ *
+ * @see [[Dict]]
+ */
 export interface Set<T> extends IndexedCollection<T> {
 
 }
