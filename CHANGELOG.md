@@ -3,6 +3,21 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v3.0.0
+
+ - Moved files around to be much easier to maintain and easier for newcomers to
+   get a grip on
+ - Added experimental support for tree shaking
+ - Fixed some issues with missing/wrong documentation
+ - The collections now should be imported using the top-level `index.ts` file
+ - Removed dependency on `xxhash` and added a custom hashing function.
+ - Added ability to quickly define hashable/comparable classes with special tag symbols
+ - Fixed some bugs such as an infinite loop in SingleLinkedList
+ - Hash functions now return a string instead of a number
+ - Renamed some utility functions, such as `lesser` to `lessThan`
+ - Fixed the `lessThan` comparison function
+ - Added more documentation
+
 ### v2.0.0
 
  - Renamed the `Container` concept to `Collection`
