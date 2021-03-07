@@ -2777,13 +2777,13 @@ img {
 			<a href="modules.html#isequaltag" class="tsd-kind-icon">is<wbr>Equal<wbr>Tag</a>
 		</li>
 		<li class=" tsd-kind-function">
-			<a href="modules.html#equal" class="tsd-kind-icon">equal</a>
-		</li>
-		<li class=" tsd-kind-function">
 			<a href="modules.html#hash" class="tsd-kind-icon">hash</a>
 		</li>
 		<li class=" tsd-kind-function">
-			<a href="modules.html#lesser" class="tsd-kind-icon">lesser</a>
+			<a href="modules.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="modules.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a>
 		</li>
 	</ul>
 </nav>
@@ -2928,9 +2928,9 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-function"><a href="modules.html#equal" class="tsd-kind-icon">equal</a></li>
 							<li class="tsd-kind-function"><a href="modules.html#hash" class="tsd-kind-icon">hash</a></li>
-							<li class="tsd-kind-function"><a href="modules.html#lesser" class="tsd-kind-icon">lesser</a></li>
+							<li class="tsd-kind-function"><a href="modules.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
+							<li class="tsd-kind-function"><a href="modules.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a></li>
 						</ul>
 					</section>
 				</div>
@@ -2944,7 +2944,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Hasher<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L44">util.ts:44</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L44">util.ts:44</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2985,7 +2985,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Pair&lt;K, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/interfaces.d.ts#L321">interfaces.d.ts:321</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L321">interfaces.d.ts:321</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3010,7 +3010,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Vec2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/interfaces.d.ts#L352">interfaces.d.ts:352</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L352">interfaces.d.ts:352</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3029,7 +3029,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">compare<wbr>Tag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="modules.html#comparetag" class="tsd-signature-type" data-tsd-kind="Variable">compareTag</a><span class="tsd-signature-symbol"> = ...</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L136">util.ts:136</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L136">util.ts:136</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3037,7 +3037,7 @@ img {
 						<p>A symbol that is used to define a custom hash method for a certain class or
 						object.</p>
 					</div>
-					<p>If this tag is present on an object, <a href="modules.html#lesser">lesser</a> will use the method
+					<p>If this tag is present on an object, <a href="modules.html#lessthan">lessThan</a> will use the method
 					associated with this tag to compare the given object with something else.</p>
 					<p>Note that the value passed to the object&#39;s method does not have to be of the
 						same type. It may be possible that a number is passed in, or something else
@@ -3057,7 +3057,7 @@ img {
 </code></pre>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
-						<dd><p><a href="modules.html#lesser">lesser</a></p>
+						<dd><p><a href="modules.html#lessthan">lessThan</a></p>
 						</dd>
 					</dl>
 				</div>
@@ -3068,7 +3068,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">hash<wbr>Tag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="modules.html#hashtag" class="tsd-signature-type" data-tsd-kind="Variable">hashTag</a><span class="tsd-signature-symbol"> = ...</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L37">util.ts:37</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L37">util.ts:37</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3108,7 +3108,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">is<wbr>Equal<wbr>Tag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="modules.html#isequaltag" class="tsd-signature-type" data-tsd-kind="Variable">isEqualTag</a><span class="tsd-signature-symbol"> = ...</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L263">util.ts:263</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L265">util.ts:265</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -3116,7 +3116,7 @@ img {
 						<p>A symbol that is used to define a custom equality operator for a class or
 						object.</p>
 					</div>
-					<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">equal</span><span style="color: #000000">, </span><span style="color: #001080">isEqualTag</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;scl&quot;</span><span style="color: #000000">;</span>
+					<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">isEqual</span><span style="color: #000000">, </span><span style="color: #001080">isEqualTag</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;scl&quot;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Cat</span><span style="color: #000000"> {</span>
 
@@ -3130,7 +3130,7 @@ img {
 
 <span style="color: #000000">  </span><span style="color: #0000FF">public</span><span style="color: #000000"> [</span><span style="color: #001080">isEqualTag</span><span style="color: #000000">](</span><span style="color: #001080">other</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) {</span>
 <span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">Cat</span>
-<span style="color: #000000">        &amp;&amp; </span><span style="color: #795E26">equal</span><span style="color: #000000">(</span><span style="color: #001080">cat</span><span style="color: #000000">.</span><span style="color: #001080">owner</span><span style="color: #000000">, </span><span style="color: #001080">other</span><span style="color: #000000">.</span><span style="color: #001080">owner</span><span style="color: #000000">)</span>
+<span style="color: #000000">        &amp;&amp; </span><span style="color: #795E26">isEqual</span><span style="color: #000000">(</span><span style="color: #001080">cat</span><span style="color: #000000">.</span><span style="color: #001080">owner</span><span style="color: #000000">, </span><span style="color: #001080">other</span><span style="color: #000000">.</span><span style="color: #001080">owner</span><span style="color: #000000">)</span>
 <span style="color: #000000">        &amp;&amp; </span><span style="color: #001080">cat</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> === </span><span style="color: #001080">other</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">;</span>
 <span style="color: #000000">  }</span>
 
@@ -3138,7 +3138,7 @@ img {
 </code></pre>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
-						<dd><p><a href="modules.html#equal">equal</a></p>
+						<dd><p><a href="modules.html#isequal">isEqual</a></p>
 						</dd>
 					</dl>
 				</div>
@@ -3146,53 +3146,6 @@ img {
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Functions</h2>
-			<section class="tsd-panel tsd-member tsd-kind-function">
-				<a name="equal" class="tsd-anchor"></a>
-				<h3>equal</h3>
-				<ul class="tsd-signatures tsd-kind-function">
-					<li class="tsd-signature tsd-kind-icon">equal<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L281">util.ts:281</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Check whether two values are the same</p>
-							</div>
-							<p>If <code>a</code> is an object that contains the <a href="modules.html#isequaltag">isEqualTag</a>, then this function
-								will call that method and return whatever that method returned. If <code>b</code>
-								contains the <a href="modules.html#isequaltag">isEqualTag</a>, it will attempt the same with <code>b</code>. This way,
-								you can define your own classes with custom equality operators. See the
-							<a href="modules.html#isequaltag">isEqualTag</a> for more information.</p>
-							<p>Built-in JavaScript objects are just checked as if they were encoded to a
-								JSON format and the resulting ouput is identical. For exmple, two plain
-							JavaScript are the same if their enumerable keys contain the same values.</p>
-							<dl class="tsd-comment-tags">
-								<dt>see</dt>
-								<dd><p><a href="modules.html#isequaltag">isEqualTag</a></p>
-								</dd>
-								<dt>see</dt>
-								<dd><p><a href="modules.html#lesser">lesser</a></p>
-								</dd>
-							</dl>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>a: <span class="tsd-signature-type">any</span></h5>
-							</li>
-							<li>
-								<h5>b: <span class="tsd-signature-type">any</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function">
 				<a name="hash" class="tsd-anchor"></a>
 				<h3>hash</h3>
@@ -3203,7 +3156,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L62">util.ts:62</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L62">util.ts:62</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3235,16 +3188,63 @@ img {
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function">
-				<a name="lesser" class="tsd-anchor"></a>
-				<h3>lesser</h3>
+				<a name="isequal" class="tsd-anchor"></a>
+				<h3>is<wbr>Equal</h3>
 				<ul class="tsd-signatures tsd-kind-function">
-					<li class="tsd-signature tsd-kind-icon">lesser<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					<li class="tsd-signature tsd-kind-icon">is<wbr>Equal<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/fab5cec/src/util.ts#L193">util.ts:193</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L283">util.ts:283</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Check whether two values are the same</p>
+							</div>
+							<p>If <code>a</code> is an object that contains the <a href="modules.html#isequaltag">isEqualTag</a>, then this function
+								will call that method and return whatever that method returned. If <code>b</code>
+								contains the <a href="modules.html#isequaltag">isEqualTag</a>, it will attempt the same with <code>b</code>. This way,
+								you can define your own classes with custom equality operators. See the
+							<a href="modules.html#isequaltag">isEqualTag</a> for more information.</p>
+							<p>Built-in JavaScript objects are just checked as if they were encoded to a
+								JSON format and the resulting ouput is identical. For exmple, two plain
+							JavaScript are the same if their enumerable keys contain the same values.</p>
+							<dl class="tsd-comment-tags">
+								<dt>see</dt>
+								<dd><p><a href="modules.html#isequaltag">isEqualTag</a></p>
+								</dd>
+								<dt>see</dt>
+								<dd><p><a href="modules.html#lessthan">lessThan</a></p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>a: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>b: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="lessthan" class="tsd-anchor"></a>
+				<h3>less<wbr>Than</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">less<wbr>Than<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/util.ts#L195">util.ts:195</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3271,7 +3271,7 @@ img {
 									first array. In that case, the first array is smaller if and only if each
 									element is less then or equal to the corresponding element in the second
 								array. The remaining elements &#39;force&#39; the array to be larger.</li>
-								<li>An object is only lesser than another object if the values of the first
+								<li>An object is only smaller than another object if the values of the first
 									object is smaller then the corresponding value of the second object. An
 									exception is made when the second object contains more keys than the first
 									object. In that case, the first obejct is smaller if and only if each
@@ -3281,9 +3281,11 @@ img {
 							</ul>
 							<p>The above rules might seem strange at first, but they ensure that we can
 								perform equality checks on string, arrays and objects by just using
-							<a href="modules.html#lesser">lesser</a>, as demonstrated in the following code:</p>
-							<pre><code><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">equalByLesser</span><span style="color: #000000">(</span><span style="color: #001080">a</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> !</span><span style="color: #795E26">lesser</span><span style="color: #000000">(</span><span style="color: #001080">a</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">) &amp;&amp; !</span><span style="color: #795E26">lesser</span><span style="color: #000000">(</span><span style="color: #001080">b</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000">);</span>
+							<a href="modules.html#lessthan">lessThan</a>, as demonstrated in the following code:</p>
+							<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">lessThan</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;scl&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">equalByLesser</span><span style="color: #000000">(</span><span style="color: #001080">a</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> !</span><span style="color: #795E26">lessThan</span><span style="color: #000000">(</span><span style="color: #001080">a</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">) &amp;&amp; !</span><span style="color: #795E26">lessThan</span><span style="color: #000000">(</span><span style="color: #001080">b</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000">);</span>
 <span style="color: #000000">}</span>
 
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #795E26">equalByLesser</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">)) </span><span style="color: #008000">// true</span>
@@ -3303,7 +3305,7 @@ img {
 								<dd><p><a href="modules.html#hash">hash</a></p>
 								</dd>
 								<dt>see</dt>
-								<dd><p><a href="modules.html#equal">equal</a></p>
+								<dd><p><a href="modules.html#isequal">isEqual</a></p>
 								</dd>
 							</dl>
 						</div>
