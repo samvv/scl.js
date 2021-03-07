@@ -1,6 +1,6 @@
 
 export * from "./interfaces";
-export { lesser, equal, hash } from "./util";
+export { lesser, compareTag, equal, isEqualTag, hash, hashTag, Hasher } from "./util";
 export { DoubleLinkedList } from "./DoubleLinkedList";
 export { SingleLinkedList } from "./SingleLinkedList";
 export { Vector } from "./Vector";
