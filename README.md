@@ -13,6 +13,8 @@ npm i scl
 ☝️ We could use a helping hand. If you think you're up for it,
 [open an issue][4].
 
+📖 Go straight to [the documentation][6]!
+
 ## Examples
 
 Using the priority queue to sort some tasks on importance:
@@ -69,7 +71,7 @@ console.log(d.hasKey(3)); // outputs false
 
 ## Usage
 
-The sources in this library target a relatively new EcmaScript version, so that
+The sources in this library target a relatively new ECMAScript version, so that
 you are able to choose how much backwards-compatible the generated JavaScript
 should be. You are expected to use this library with a bundler such as
 [Webpack][1] or [Rollup][2]. Recent versions of NodeJS should also work without
