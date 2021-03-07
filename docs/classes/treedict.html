@@ -2713,6 +2713,18 @@ img {
 				<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter">
 					<a href="treedict.html#constructor" class="tsd-kind-icon">constructor</a>
 				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class">
+					<a href="treedict.html#allowduplicates" class="tsd-kind-icon">allow<wbr>Duplicates</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class">
+					<a href="treedict.html#elementsequal" class="tsd-kind-icon">elements<wbr>Equal</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class">
+					<a href="treedict.html#getkey" class="tsd-kind-icon">get<wbr>Key</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class">
+					<a href="treedict.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a>
+				</li>
 				<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 					<a href="treedict.html#size" class="tsd-kind-icon">size</a>
 				</li>
@@ -2955,6 +2967,12 @@ img {
 				</li>
 			</ul>
 		</section>
+		<section class="tsd-panel">
+			<h3>Implements</h3>
+			<ul class="tsd-hierarchy">
+				<li><a href="../interfaces/dict.html" class="tsd-signature-type" data-tsd-kind="Interface">Dict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+			</ul>
+		</section>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
@@ -2963,6 +2981,15 @@ img {
 						<h3>Constructors</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter"><a href="treedict.html#constructor" class="tsd-kind-icon">constructor</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Properties</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="treedict.html#allowduplicates" class="tsd-kind-icon">allow<wbr>Duplicates</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="treedict.html#elementsequal" class="tsd-kind-icon">elements<wbr>Equal</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="treedict.html#getkey" class="tsd-kind-icon">get<wbr>Key</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="treedict.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
@@ -3011,7 +3038,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/TreeDict.ts#L95">TreeDict.ts:95</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/TreeDict.ts#L96">TreeDict.ts:96</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3059,6 +3086,106 @@ img {
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Properties</h2>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<a name="allowduplicates" class="tsd-anchor"></a>
+				<h3>allow<wbr>Duplicates</h3>
+				<div class="tsd-signature tsd-kind-icon">allow<wbr>Duplicates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
+				<aside class="tsd-sources">
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<a name="elementsequal" class="tsd-anchor"></a>
+				<h3>elements<wbr>Equal</h3>
+				<div class="tsd-signature tsd-kind-icon">elements<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></div>
+				<aside class="tsd-sources">
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>a: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+										</li>
+										<li>
+											<h5>b: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<a name="getkey" class="tsd-anchor"></a>
+				<h3>get<wbr>Key</h3>
+				<div class="tsd-signature tsd-kind-icon">get<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> = ...</span></div>
+				<aside class="tsd-sources">
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>val: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<a name="lessthan" class="tsd-anchor"></a>
+				<h3>less<wbr>Than</h3>
+				<div class="tsd-signature tsd-kind-icon">less<wbr>Than<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></div>
+				<aside class="tsd-sources">
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>a: <span class="tsd-signature-type">K</span></h5>
+										</li>
+										<li>
+											<h5>b: <span class="tsd-signature-type">K</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Accessors</h2>
 			<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 				<a name="size" class="tsd-anchor"></a>
@@ -3069,10 +3196,19 @@ img {
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#size">size</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L171">AVLTree.ts:171</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L171">AVLTree.ts:171</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Count the amount of elements in the collection.</p>
+							</div>
+							<p>⚠️ In most cases, this should be an <code>O(1)</code> operation. However, there are
+								cases where this can be an <code>O(n)</code> operation. Therefore, it is recommended
+							to always cache the result in a local variable.</p>
+						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 					</li>
 				</ul>
@@ -3089,10 +3225,19 @@ img {
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#_symbol_iterator_">[Symbol.iterator]</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L450">AVLTree.ts:450</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L450">AVLTree.ts:450</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Returns an object which is able to sift through the values in this collection.</p>
+							</div>
+							<p>The order by which the elements are traversed depends on the kind of collection.
+								For unordered collections, the iteration order is unspecified and may even differ
+							between two iterations on the same collection.</p>
+						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
@@ -3107,7 +3252,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/TreeDict.ts#L152">TreeDict.ts:152</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/TreeDict.ts#L153">TreeDict.ts:153</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3130,7 +3275,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L436">AVLTree.ts:436</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L436">AVLTree.ts:436</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3146,8 +3291,9 @@ img {
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#clear">clear</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L193">AVLTree.ts:193</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L193">AVLTree.ts:193</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3168,10 +3314,16 @@ img {
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#clone">clone</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/TreeDict.ts#L168">TreeDict.ts:168</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/TreeDict.ts#L169">TreeDict.ts:169</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Copies all elements in the collection to a new one of the same kind.</p>
+							</div>
+						</div>
 						<h4 class="tsd-returns-title">Returns <a href="treedict.html" class="tsd-signature-type" data-tsd-kind="Class">TreeDict</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
@@ -3186,7 +3338,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L491">AVLTree.ts:491</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L491">AVLTree.ts:491</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3215,7 +3367,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L476">AVLTree.ts:476</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L476">AVLTree.ts:476</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3239,13 +3391,13 @@ img {
 				<a name="deleteat" class="tsd-anchor"></a>
 				<h3>delete<wbr>At</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></li>
+					<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L505">AVLTree.ts:505</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L505">AVLTree.ts:505</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3260,7 +3412,7 @@ img {
 								<h5>node: <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -3274,7 +3426,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L462">AVLTree.ts:462</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L462">AVLTree.ts:462</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3304,7 +3456,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/TreeDict.ts#L148">TreeDict.ts:148</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/TreeDict.ts#L149">TreeDict.ts:149</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3330,7 +3482,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L443">AVLTree.ts:443</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L443">AVLTree.ts:443</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3347,7 +3499,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L386">AVLTree.ts:386</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L386">AVLTree.ts:386</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3376,7 +3528,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L331">AVLTree.ts:331</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L331">AVLTree.ts:331</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3410,7 +3562,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L198">AVLTree.ts:198</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L198">AVLTree.ts:198</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3433,7 +3585,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/TreeDict.ts#L160">TreeDict.ts:160</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/TreeDict.ts#L161">TreeDict.ts:161</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3456,7 +3608,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L306">AVLTree.ts:306</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L306">AVLTree.ts:306</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3479,7 +3631,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L318">AVLTree.ts:318</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L318">AVLTree.ts:318</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3507,7 +3659,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L393">AVLTree.ts:393</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L393">AVLTree.ts:393</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3529,10 +3681,16 @@ img {
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/dict.html">Dict</a>.<a href="../interfaces/dict.html#torange">toRange</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L432">AVLTree.ts:432</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L432">AVLTree.ts:432</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Converts the entire collection to a range.</p>
+							</div>
+						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodeRange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
@@ -3547,7 +3705,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/0962edb/src/AVLTree.ts#L412">AVLTree.ts:412</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/f2290e4/src/AVLTree.ts#L412">AVLTree.ts:412</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>

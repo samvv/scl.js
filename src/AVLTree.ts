@@ -180,10 +180,10 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * @ignore
    */
   constructor(
-        /** @ignore */ protected lessThan: (a: K, b: K) => boolean = lesser
-      , /** @ignore */ protected getKey: (val: T) => K = (val) => val as any
-      , /** @ignore */ protected elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
-      , /** @ignore */ protected _allowDuplicates = true) {
+        /** @ignore */ public lessThan: (a: K, b: K) => boolean = lesser
+      , /** @ignore */ public getKey: (val: T) => K = (val) => val as any
+      , /** @ignore */ public elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
+      , /** @ignore */ public allowDuplicates = true) {
     this._compare = liftLesser(lessThan);
   }
 
@@ -202,7 +202,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     let parent = null;
     let cmp;
 
-    if (!this._allowDuplicates) {
+    if (!this.allowDuplicates) {
       while (node !== null) {
         cmp = this._compare(key, this.getKey(node.value));
         parent = node;
@@ -502,8 +502,8 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    * Takes `O(log(n))` time, and is slightly faster than deleting the element
    * by key due to the fact that a search for the node has already been done.
    */
-  public deleteAt(node: Node<T>) {
-    const returnValue = node.value;
+  public deleteAt(node: Node<T>): void {
+
     let max;
     let min;
 
@@ -609,7 +609,6 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     }
 
     this._size--;
-    return returnValue;
   }
 
   public clone() {
@@ -617,7 +616,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
       this.lessThan
     , this.getKey
     , this.elementsEqual
-    , this._allowDuplicates,
+    , this.allowDuplicates,
     );
   }
 

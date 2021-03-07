@@ -1,5 +1,6 @@
 
 import { AVLTree } from "./AVLTree";
+import { Dict } from "./interfaces";
 import { equal, isIterable, lesser } from "./util";
 
 /**
@@ -90,7 +91,7 @@ export interface TreeDictOptions<K, V> {
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
  */
-export class TreeDict<K, V> extends AVLTree<[K, V], K> {
+export class TreeDict<K, V> extends AVLTree<[K, V], K> implements Dict<K, V> {
 
   protected valuesEqual: (a: V, b: V) => boolean;
 

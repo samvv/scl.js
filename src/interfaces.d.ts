@@ -333,9 +333,9 @@ export interface DictLike<K, V> extends IndexedCollection<[K, V], K> {
 }
 
 /**
- * A dictionary, also known as 'maps' in other languages, associates a certain
- * value (called the key) with another value, providing efficient lookup of the
- * value when given the key.
+ * A dictionary, also known as 'maps' in some languages, associates a certain
+ * value (called the key) with another value. It provides efficient lookup of
+ * a value when given a key.
  */
 export interface Dict<K, V> extends DictLike<K, V> {
 

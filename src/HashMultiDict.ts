@@ -2,6 +2,7 @@
 import { Bucket, Hash } from "./Hash";
 import { equal, hash, isIterable } from "./util";
 import { HashDictOptions } from "./HashDict";
+import {MultiDict} from "./interfaces";
 
 /**
  * A hash-based dictionary that can store multiple items with the same key.
@@ -27,7 +28,7 @@ import { HashDictOptions } from "./HashDict";
  * assert.strictEqual(values.length, 3)
  * ```
  */
-export class HashMultiDict<K, V> extends Hash<[K, V], K> {
+export class HashMultiDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, V> {
 
   protected valuesEqual: (a: V, b: V) => boolean;
 
