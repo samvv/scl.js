@@ -29,11 +29,11 @@
     "xxhashjs": "^0.2.2"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky install && tsc",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "build": "gulp",
-    "test": "mocha lib/test --reporter min --require source-map-support",
-    "coverage": "nyc mocha 'src/test/**/*.ts' --reporter min --require ts-node/register --require source-map-support/register",
+    "test": "mocha lib/test --require source-map-support",
+    "coverage": "nyc mocha 'src/test/**/*.ts' --require ts-node/register --require source-map-support/register",
     "build-docs": "typedoc --out docs"
   },
   "authors": [
