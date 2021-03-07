@@ -137,7 +137,7 @@ export class DoubleLinkedList<T> implements List<T> {
    * const l = new DoubleinkedList();
    * ```
    *
-   * You can also constrcut a linked list from any iterable, like so:
+   * You can also construct a linked list from any iterable, like so:
    *
    * ```ts
    * const l = new DoubleLinkedList([1, 2, 3])

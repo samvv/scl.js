@@ -163,12 +163,6 @@ export interface Sequence<T> extends Collection<T> {
    */
   getAt(position: number): T
 
-  /**
-   * Since ordered collections have keep track of the position of elements, it
-   * is required to define an iterator.
-   */
-  [Symbol.iterator](): IterableIterator<T>
-
 }
 
 /**
