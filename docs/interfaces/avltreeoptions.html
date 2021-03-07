@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IndexedCollection | Standard Collections Library for TypeScript</title>
+	<title>AVLTreeOptions | Standard Collections Library for TypeScript</title>
 	<meta name="description" content="Documentation for Standard Collections Library for TypeScript">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -2681,6 +2681,9 @@ img {
 <nav class="tsd-navigation secondary">
 	<ul>
 		<li class=" tsd-kind-class tsd-has-type-parameter">
+			<a href="../classes/avltreeindex.html" class="tsd-kind-icon">AVLTree<wbr>Index</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter">
 			<a href="../classes/doublelinkedlist.html" class="tsd-kind-icon">Double<wbr>Linked<wbr>List</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter">
@@ -2719,6 +2722,26 @@ img {
 		<li class=" tsd-kind-class tsd-has-type-parameter">
 			<a href="../classes/vector.html" class="tsd-kind-icon">Vector</a>
 		</li>
+		<li class="current tsd-kind-interface tsd-has-type-parameter">
+			<a href="avltreeoptions.html" class="tsd-kind-icon">AVLTree<wbr>Options</a>
+			<ul>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="avltreeoptions.html#allowduplicates" class="tsd-kind-icon">allow<wbr>Duplicates</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="avltreeoptions.html#comparekeys" class="tsd-kind-icon">compare<wbr>Keys</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="avltreeoptions.html#elements" class="tsd-kind-icon">elements</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="avltreeoptions.html#getkey" class="tsd-kind-icon">get<wbr>Key</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="avltreeoptions.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
+				</li>
+			</ul>
+		</li>
 		<li class=" tsd-kind-interface tsd-has-type-parameter">
 			<a href="bag.html" class="tsd-kind-icon">Bag</a>
 		</li>
@@ -2740,64 +2763,8 @@ img {
 		<li class=" tsd-kind-interface tsd-has-type-parameter">
 			<a href="grid.html" class="tsd-kind-icon">Grid</a>
 		</li>
-		<li class="current tsd-kind-interface tsd-has-type-parameter">
-			<a href="indexedcollection.html" class="tsd-kind-icon">Indexed<wbr>Collection</a>
-			<ul>
-				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#size" class="tsd-kind-icon">size</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#_symbol_iterator_" class="tsd-kind-icon">[<wbr>Symbol.iterator]</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#add" class="tsd-kind-icon">add</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#clear" class="tsd-kind-icon">clear</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#clone" class="tsd-kind-icon">clone</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#delete" class="tsd-kind-icon">delete</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface">
-					<a href="indexedcollection.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface">
-					<a href="indexedcollection.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface">
-					<a href="indexedcollection.html#findkey" class="tsd-kind-icon">find<wbr>Key</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#has" class="tsd-kind-icon">has</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface">
-					<a href="indexedcollection.html#haskey" class="tsd-kind-icon">has<wbr>Key</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#iterator" class="tsd-kind-icon">iterator</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface">
-					<a href="indexedcollection.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a href="indexedcollection.html#torange" class="tsd-kind-icon">to<wbr>Range</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-interface">
-					<a href="indexedcollection.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a>
-				</li>
-			</ul>
+		<li class=" tsd-kind-interface tsd-has-type-parameter">
+			<a href="index.html" class="tsd-kind-icon">Index</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-has-type-parameter">
 			<a href="list.html" class="tsd-kind-icon">List</a>
@@ -2827,10 +2794,16 @@ img {
 			<a href="../modules.html#comparetag" class="tsd-kind-icon">compare<wbr>Tag</a>
 		</li>
 		<li class=" tsd-kind-variable">
+			<a href="../modules.html#getkeytag" class="tsd-kind-icon">get<wbr>Key<wbr>Tag</a>
+		</li>
+		<li class=" tsd-kind-variable">
 			<a href="../modules.html#hashtag" class="tsd-kind-icon">hash<wbr>Tag</a>
 		</li>
 		<li class=" tsd-kind-variable">
 			<a href="../modules.html#isequaltag" class="tsd-kind-icon">is<wbr>Equal<wbr>Tag</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="../modules.html#getkey" class="tsd-kind-icon">get<wbr>Key</a>
 		</li>
 		<li class=" tsd-kind-function">
 			<a href="../modules.html#hash" class="tsd-kind-icon">hash</a>
@@ -2845,14 +2818,6 @@ img {
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
-		<section class="tsd-panel tsd-comment">
-			<div class="tsd-comment tsd-typography">
-				<div class="lead">
-					<p>Represents a collection that uses some part of the element to optimise
-					certain operations.</p>
-				</div>
-			</div>
-		</section>
 		<section class="tsd-panel tsd-type-parameters">
 			<h3>Type parameters</h3>
 			<ul class="tsd-type-parameters">
@@ -2868,23 +2833,7 @@ img {
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<a href="collection.html" class="tsd-signature-type" data-tsd-kind="Interface">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
-					<ul class="tsd-hierarchy">
-						<li>
-							<span class="target">IndexedCollection</span>
-							<ul class="tsd-hierarchy">
-								<li>
-									<a href="bag.html" class="tsd-signature-type" data-tsd-kind="Interface">Bag</a>
-								</li>
-								<li>
-									<a href="dictlike.html" class="tsd-signature-type" data-tsd-kind="Interface">DictLike</a>
-								</li>
-								<li>
-									<a href="set.html" class="tsd-signature-type" data-tsd-kind="Interface">Set</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
+					<span class="target">AVLTreeOptions</span>
 				</li>
 			</ul>
 		</section>
@@ -2895,29 +2844,11 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#size" class="tsd-kind-icon">size</a></li>
-						</ul>
-					</section>
-					<section class="tsd-index-section ">
-						<h3>Methods</h3>
-						<ul class="tsd-index-list">
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#_symbol_iterator_" class="tsd-kind-icon">[<wbr>Symbol.iterator]</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#add" class="tsd-kind-icon">add</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#clear" class="tsd-kind-icon">clear</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#clone" class="tsd-kind-icon">clone</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#delete" class="tsd-kind-icon">delete</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#deleteall" class="tsd-kind-icon">delete<wbr>All</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="indexedcollection.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="indexedcollection.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="indexedcollection.html#findkey" class="tsd-kind-icon">find<wbr>Key</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#has" class="tsd-kind-icon">has</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="indexedcollection.html#haskey" class="tsd-kind-icon">has<wbr>Key</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#iterator" class="tsd-kind-icon">iterator</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="indexedcollection.html#lowerkey" class="tsd-kind-icon">lower<wbr>Key</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="indexedcollection.html#torange" class="tsd-kind-icon">to<wbr>Range</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="indexedcollection.html#upperkey" class="tsd-kind-icon">upper<wbr>Key</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="avltreeoptions.html#allowduplicates" class="tsd-kind-icon">allow<wbr>Duplicates</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="avltreeoptions.html#comparekeys" class="tsd-kind-icon">compare<wbr>Keys</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="avltreeoptions.html#elements" class="tsd-kind-icon">elements</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="avltreeoptions.html#getkey" class="tsd-kind-icon">get<wbr>Key</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="avltreeoptions.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
 						</ul>
 					</section>
 				</div>
@@ -2925,509 +2856,153 @@ img {
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-				<a name="size" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> size</h3>
-				<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="allowduplicates" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> allow<wbr>Duplicates</h3>
+				<div class="tsd-signature tsd-kind-icon">allow<wbr>Duplicates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
-					<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#size">size</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L68">interfaces.d.ts:68</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/1b9abfe/src/AVLTreeIndex.ts#L199">AVLTreeIndex.ts:199</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Count the amount of elements in the collection.</p>
+						<p>Set to <code>false</code> to prevent an element with the same key for which
+						<a href="avltreeoptions.html#isequal">isEqual</a> returns true to be added to the collection.</p>
 					</div>
-					<p>⚠️ In most cases, this should be an <code>O(1)</code> operation. However, there are
-						cases where this can be an <code>O(n)</code> operation. Therefore, it is recommended
-					to always cache the result in a local variable.</p>
 				</div>
 			</section>
-		</section>
-		<section class="tsd-panel-group tsd-member-group ">
-			<h2>Methods</h2>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="_symbol_iterator_" class="tsd-anchor"></a>
-				<h3>[<wbr>Symbol.iterator]</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">[<wbr>Symbol.iterator]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#_symbol_iterator_">[Symbol.iterator]</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L54">interfaces.d.ts:54</a></li>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="comparekeys" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> compare<wbr>Keys</h3>
+				<div class="tsd-signature tsd-kind-icon">compare<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/1b9abfe/src/AVLTreeIndex.ts#L182">AVLTreeIndex.ts:182</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Compares two keys and returns whether the first key is less than the
+						second.</p>
+					</div>
+					<p>If left unspecified, a default function will be chosen that works on most
+					keys.</p>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Returns an object which is able to sift through the values in this collection.</p>
-							</div>
-							<p>The order by which the elements are traversed depends on the kind of collection.
-								For unordered collections, the iteration order is unspecified and may even differ
-							between two iterations on the same collection.</p>
-						</div>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>a: <span class="tsd-signature-type">K</span></h5>
+										</li>
+										<li>
+											<h5>b: <span class="tsd-signature-type">K</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="add" class="tsd-anchor"></a>
-				<h3>add</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, hint<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#add">add</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L37">interfaces.d.ts:37</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Add an element to the collection. If the element already exists, update its
-								value.</p>
-							</div>
-							<p>The location where the element is placed depends on the collection type,
-								and in the generic case there is no guarantee on the location where it is
-							inserted.</p>
-							<p>This method returns a pair with the first element indicating whether the
-								element was added, while the second element refers to the actual location
-							of the element.</p>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>element: <span class="tsd-signature-type">T</span></h5>
-							</li>
-							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> hint: <span class="tsd-signature-type">any</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<p>A transparent object obtained by <a href="indexedcollection.html#getaddhint">getAddHint</a>.</p>
-								</div>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span></h4>
-					</li>
-				</ul>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="elements" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> elements</h3>
+				<div class="tsd-signature tsd-kind-icon">elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/1b9abfe/src/AVLTreeIndex.ts#L173">AVLTreeIndex.ts:173</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>An iterable that will be consumed to fill the collection.</p>
+					</div>
+				</div>
 			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="clear" class="tsd-anchor"></a>
-				<h3>clear</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">clear<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#clear">clear</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L74">interfaces.d.ts:74</a></li>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="getkey" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> get<wbr>Key</h3>
+				<div class="tsd-signature tsd-kind-icon">get<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>elements<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">K</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/1b9abfe/src/AVLTreeIndex.ts#L187">AVLTreeIndex.ts:187</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Exctracts the key part of the element.</p>
+					</div>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>elements<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span></li>
 							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Remove all elements from this collection, effectively setting the collection
-								to the empty collection.</p>
-							</div>
-						</div>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-					</li>
-				</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>elements: <span class="tsd-signature-type">T</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="clone" class="tsd-anchor"></a>
-				<h3>clone</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="collection.html" class="tsd-signature-type" data-tsd-kind="Interface">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#clone">clone</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L79">interfaces.d.ts:79</a></li>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="isequal" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>Equal</h3>
+				<div class="tsd-signature tsd-kind-icon">is<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/1b9abfe/src/AVLTreeIndex.ts#L193">AVLTreeIndex.ts:193</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Used for checking two elements with the same key in the collection.</p>
+					</div>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Copies all elements in the collection to a new one of the same kind.</p>
-							</div>
-						</div>
-						<h4 class="tsd-returns-title">Returns <a href="collection.html" class="tsd-signature-type" data-tsd-kind="Interface">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="delete" class="tsd-anchor"></a>
-				<h3>delete</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#delete">delete</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L92">interfaces.d.ts:92</a></li>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>a: <span class="tsd-signature-type">T</span></h5>
+										</li>
+										<li>
+											<h5>b: <span class="tsd-signature-type">T</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
 							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Remove an element from the collection. If multiple elements are matched,
-								the collection picks one of them.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>el: <span class="tsd-signature-type">T</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						<p><code>true</code> if the element was found, <code>false</code> otherwise.</p>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="deleteall" class="tsd-anchor"></a>
-				<h3>delete<wbr>All</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#deleteall">deleteAll</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L100">interfaces.d.ts:100</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Remove an element from the collection. If multiple elements are matched,
-								the collection removes all of them.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>el: <span class="tsd-signature-type">T</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						<p>The amount of elements that was removed.</p>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="deleteat" class="tsd-anchor"></a>
-				<h3>delete<wbr>At</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#deleteat">deleteAt</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L84">interfaces.d.ts:84</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Remove the element pointed to by the iterator result from this collection.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>pos: <a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-				<a name="deletekey" class="tsd-anchor"></a>
-				<h3>delete<wbr>Key</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">delete<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L192">interfaces.d.ts:192</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Delete a pair from the underlying collection that has the given key as key.</p>
-							</div>
-							<p>Returns the amount of items that have been deleted.</p>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>key: <span class="tsd-signature-type">K</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-				<a name="equalkeys" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> equal<wbr>Keys</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">equal<wbr>Keys<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="collectionrange.html" class="tsd-signature-type" data-tsd-kind="Interface">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L197">interfaces.d.ts:197</a></li>
-							</ul>
-						</aside>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>key: <span class="tsd-signature-type">K</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="collectionrange.html" class="tsd-signature-type" data-tsd-kind="Interface">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-				<a name="findkey" class="tsd-anchor"></a>
-				<h3>find<wbr>Key</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">find<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L185">interfaces.d.ts:185</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Similar to <code>Dict.getValue</code>, except that it returns the pair that was inserted in the collection.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>key: <span class="tsd-signature-type">K</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="getaddhint" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> get<wbr>Add<wbr>Hint</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">get<wbr>Add<wbr>Hint<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#getaddhint">getAddHint</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L21">interfaces.d.ts:21</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Returns a transparent object that can be used as an argument to <a href="indexedcollection.html#add">add</a>
-								to speed up things. Generally, you don&#39;t have to use this method.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>element: <span class="tsd-signature-type">T</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="has" class="tsd-anchor"></a>
-				<h3>has</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">has<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#has">has</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L45">interfaces.d.ts:45</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Checks if the collection holds the given element.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>el: <span class="tsd-signature-type">T</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<p>The element to check membership of.</p>
-								</div>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						<p>True if the collections holds the given element, false otherwise.</p>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-				<a name="haskey" class="tsd-anchor"></a>
-				<h3>has<wbr>Key</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">has<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L180">interfaces.d.ts:180</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Checks whether there a pair in this collection that has the given key.</p>
-							</div>
-							<p>In some cases, this might be faster than accessing <a href="collectionrange.html#size">CollectionRange.size</a> of <a href="indexedcollection.html#equalkeys">equalKeys()</a>. In others,
-							it will be equivalent to it.</p>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>key: <span class="tsd-signature-type">K</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="iterator" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> iterator</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">iterator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#iterator">iterator</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L59">interfaces.d.ts:59</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<dl class="tsd-comment-tags">
-								<dt>deprecated</dt>
-								<dd></dd>
-							</dl>
-						</div>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-				<a name="lowerkey" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> lower<wbr>Key</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">lower<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L202">interfaces.d.ts:202</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Returns the value that is just below the given value, if any.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>key: <span class="tsd-signature-type">K</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-				<a name="torange" class="tsd-anchor"></a>
-				<h3>to<wbr>Range</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">to<wbr>Range<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="collectionrange.html" class="tsd-signature-type" data-tsd-kind="Interface">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<p>Inherited from <a href="collection.html">Collection</a>.<a href="collection.html#torange">toRange</a></p>
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L105">interfaces.d.ts:105</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Converts the entire collection to a range.</p>
-							</div>
-						</div>
-						<h4 class="tsd-returns-title">Returns <a href="collectionrange.html" class="tsd-signature-type" data-tsd-kind="Interface">CollectionRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-				<a name="upperkey" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> upper<wbr>Key</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">upper<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/06e9ebc/src/interfaces.d.ts#L207">interfaces.d.ts:207</a></li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Return the value that is just above the given value, if any.</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>key: <span class="tsd-signature-type">K</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</div>
 			</section>
 		</section>
 		<footer class="with-border-bottom">
@@ -3443,6 +3018,7 @@ img {
 						<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 					</ul>
 					<ul class="tsd-legend">
+						<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 						<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 					</ul>
 				</div>
