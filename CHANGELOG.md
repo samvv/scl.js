@@ -3,6 +3,12 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v3.1.0
+
+ - Rename `IndexedCollection` to just `Index`
+ - Make `AVLTreeIndex` available to end-users
+ - Do some refactoring on internal properties
+
 ### v3.0.0
 
  - Moved files around to be much easier to maintain and easier for newcomers to
