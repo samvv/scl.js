@@ -2,6 +2,7 @@
   "name": "scl",
   "version": "3.0.0",
   "description": "A curated set of essential algorithms and data structures for TypeScript",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samvv/scl.js.git"
