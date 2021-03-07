@@ -71,28 +71,25 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
    * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
    */
   constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
+    let iterable: Iterable<[K, V]> = [];
     if (isIterable(opts)) {
-      super(hash, isEqual, (a, b) => isEqual(a[1], b[1]), (pair) => pair[0]);
-      for (const element of opts) {
-        this.add(element);
-      }
-      this.valuesEqual = isEqual;
-    } else {
-      const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : isEqual;
-      const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : isEqual;
-      super(
-          opts.hash !== undefined ? opts.hash : hash
-        , keysEqual
-        , (a, b) => valuesEqual(a[1], b[1])
-        , (pair) => pair[0]
-        , opts.capacity !== undefined ? opts.capacity : undefined,
-      );
-      if (opts.elements !== undefined) {
-        for (const element of opts.elements) {
-          this.add(element);
-        }
-      }
-      this.valuesEqual = valuesEqual;
+      iterable = opts
+      opts = {}
+    } else if (opts.elements !== undefined) {
+      iterable = opts.elements
+    }
+    const valuesEqual = opts.valuesEqual ?? isEqual;
+    const keysEqual = opts.keysEqual ?? isEqual;
+    super(
+      opts.hash !== undefined ? opts.hash : hash
+    , keysEqual
+    , (a, b) => valuesEqual(a[1], b[1])
+    , pair => pair[0]
+    , opts.capacity,
+    );
+    this.valuesEqual = valuesEqual;
+    for (const element of iterable) {
+      this.add(element);
     }
   }
 

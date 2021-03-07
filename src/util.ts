@@ -6,6 +6,18 @@ export function isIterable<T = any>(value: any): value is Iterable<T> {
       && Symbol.iterator in value;
 }
 
+export const getKeyTag = Symbol('object key property');
+
+export function getKey(value: any) {
+  if (getKeyTag in value) {
+    return value[getKeyTag];
+  }
+  if (Array.isArray(value)) {
+    return value[0];
+  }
+  throw new Error(`Could not extract a key-value pair out of the provided JavaScript object`)
+}
+
 /**
  * A symbol that is used to define a custom hash method for a certain class or
  * object.
@@ -46,7 +58,7 @@ export type Hasher = (value: any) => void;
 /**
  * Hash any value to a number that should provide the least amount of
  * collisions.
- *
+ *{
  * This method will use [[hashTag]] if it is present on an object to hash
  * according to a method you provided.
  *

@@ -1,8 +1,19 @@
 
 import { expect } from "chai";
+import AVLTreeIndex from "../AVLTreeIndex";
 import { Collection } from "../interfaces";
 
 const TEST_FILES = [
+  {
+    name: 'AVLTreeIndex',
+    file: "../AVLTreeIndex",
+    implements: ["IndexedCollection", "CollectionLike"],
+    factory: (elements?: any[]) => new AVLTreeIndex({
+      elements,
+      getKey: element => element,
+      allowDuplicates: true
+    })
+  },
   {
     name: "TreeMultiDict",
     file: "../TreeMultiDict",
@@ -73,11 +84,18 @@ for (const testFile of TEST_FILES) {
   describe(testFile.name + "()", () => {
     it("successfully creates a collection with the given elements", () => {
       const ctor = require(testFile.file).default;
-      const coll = new ctor([[1, 2], [2, 3]]);
+      const elements = [[1, 2], [2, 3]];
+      let coll;
+      if (testFile.factory !== undefined) {
+        coll = testFile.factory(elements);
+      } else {
+        coll = new ctor(elements);
+      }
       expect(coll.size).to.equal(2);
-      const elements = [...coll];
-      expect(elements).to.deep.include([1, 2]);
-      expect(elements).to.deep.include([2, 3]);
+      const storedElements = [...coll];
+      expect(storedElements).to.have.lengthOf(2);
+      expect(storedElements).to.deep.include([1, 2]);
+      expect(storedElements).to.deep.include([2, 3]);
     });
   });
 }
@@ -108,7 +126,13 @@ export function test<C extends Collection<any>>(name: string, callback: (collect
         it(description, () => {
           const args = (opts && opts.args) || [];
           const ctor = require(testFile.file).default;
-          callback(new ctor(...args));
+          let coll;
+          if (testFile.factory !== undefined) {
+            coll = testFile.factory();
+          } else {
+            coll = new ctor(...args);
+          }
+          callback(coll);
         });
       });
     }

@@ -1,6 +1,6 @@
 
 // import MultiTreeDict from "../multi/tree"
-import AVL from "./AVLTree";
+import AVL from "./AVLTreeIndex";
 import { Cursor, MultiDict } from "./interfaces";
 import { isEqual, isIterable, lessThan } from "./util";
 import { TreeDictOptions } from "./TreeDict";
@@ -102,26 +102,26 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lessThan, (pair) => pair[0], (a, b) => isEqual(a[1], b[1]), true);
-      for (const element of opts) {
-        this.add(element);
-      }
-      this.valuesEqual = isEqual;
-    } else {
-      const valuesEqual = opts.valuesEqual ?? isEqual;
-      super(
-        opts.compare !== undefined ? opts.compare : lessThan
-      , (pair) => pair[0]
-      , (a, b) => valuesEqual(a[1], b[1])
-      , true,
-      );
-      this.valuesEqual = valuesEqual;
+      opts = { elements: opts }
     }
+    const {
+      valuesEqual = isEqual,
+      compareKeys,
+      ...restOpts
+    } = opts;
+    super({
+      compareKeys,
+      getKey: pair => pair[0],
+      isEqual: (a, b) => valuesEqual(a[1], b[1]),
+      allowDuplicates: true,
+      ...restOpts
+    });
+    this.valuesEqual = valuesEqual;
   }
 
   public add(pair: [K, V]): [boolean, Cursor<[K, V]>] {
     for (const node of this.equalKeys(pair[0]).cursors()) {
-      if (this.elementsEqual(pair, node.value)) {
+      if (this.isEqual(pair, node.value)) {
         node.value = pair;
         return [false, node];
       }
@@ -141,7 +141,7 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
 
   public clone() {
     return new TreeManyDict<K, V>({
-      compare: this.lessThan
+      compareKeys: this.compareKeys
     , valuesEqual: this.valuesEqual
     , elements: this,
     });

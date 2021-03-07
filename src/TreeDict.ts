@@ -1,7 +1,7 @@
 
-import { AVLTree } from "./AVLTree";
+import { AVLTreeIndex, AVLTreeOptions } from "./AVLTreeIndex";
 import { Dict } from "./interfaces";
-import { isEqual, isIterable, lessThan } from "./util";
+import { isEqual, isIterable } from "./util";
 
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.
@@ -10,20 +10,7 @@ import { isEqual, isIterable, lessThan } from "./util";
  * @see [[TreeManyDict]]
  * @see [[TreeMultiDict]]
  */
-export interface TreeDictOptions<K, V> {
-
-  /**
-   * An iterable that will be consumed to fill the dictionary.
-   */
-  elements?: Iterable<[K, V]>;
-
-  /**
-   * Compares two keys and returns whether the first key is less than the second.
-   *
-   * If left unspecified, a default function will be chosen that works on most
-   * keys.
-   */
-  compare?: (a: K, b: K) => boolean;
+export interface TreeDictOptions<K, V> extends AVLTreeOptions<[K, V], K> {
 
   /**
    * Compares two values in the dictionary and returns whether the values are
@@ -91,7 +78,7 @@ export interface TreeDictOptions<K, V> {
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
  */
-export class TreeDict<K, V> extends AVLTree<[K, V], K> implements Dict<K, V> {
+export class TreeDict<K, V> extends AVLTreeIndex<[K, V], K> implements Dict<K, V> {
 
   protected valuesEqual: (a: V, b: V) => boolean;
 
@@ -119,7 +106,7 @@ export class TreeDict<K, V> extends AVLTree<[K, V], K> implements Dict<K, V> {
    *
    * ```ts
    * const d = new TreeDict<number, string>({
-   *   compare: (a, b) => a < b,
+   *   compareKeys: (a, b) => a < b,
    *   valuesEqual: (a, b) => a === b,
    *   elements: [[1, 'one'], [2, 'two']]
    * })
@@ -129,21 +116,21 @@ export class TreeDict<K, V> extends AVLTree<[K, V], K> implements Dict<K, V> {
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lessThan, (pair) => pair[0], (a, b) => isEqual(a[1], b[1]), false);
-      for (const element of opts) {
-        this.add(element);
-      }
-      this.valuesEqual = isEqual;
-    } else {
-      const valuesEqual = opts.valuesEqual ?? isEqual;
-      super(
-        opts.compare ?? lessThan
-      , (pair) => pair[0]
-      , (a, b) => valuesEqual(a[1], b[1])
-      , false,
-      );
-      this.valuesEqual = valuesEqual;
+      opts = { elements: opts }
     }
+    const {
+      valuesEqual = isEqual,
+      compareKeys,
+      ...restOpts
+    } = opts;
+    super({
+      compareKeys,
+      getKey: pair => pair[0],
+      isEqual: (a, b) => valuesEqual(a[1], b[1]),
+      allowDuplicates: false,
+      ...restOpts
+    });
+    this.valuesEqual = valuesEqual;
   }
 
   public emplace(key: K, val: V) {
@@ -168,7 +155,7 @@ export class TreeDict<K, V> extends AVLTree<[K, V], K> implements Dict<K, V> {
 
   public clone() {
     return new TreeDict<K, V>({
-      compare: this.lessThan
+      compareKeys: this.compareKeys
     , valuesEqual: this.valuesEqual
     , elements: this,
     });

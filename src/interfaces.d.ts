@@ -169,18 +169,20 @@ export interface Sequence<T> extends Collection<T> {
  * Represents a collection that uses some part of the element to optimise
  * certain operations.
  */
-export interface IndexedCollection<T, K = T> extends Collection<T> {
+export interface Index<T, K = T> extends Collection<T> {
 
   /**
    * Checks whether there a pair in this collection that has the given key. 
    *
-   * In some cases, this might be faster than accessing {@link CollectionRange.size} of {@link IndexedCollection.equalKeys equalKeys()}. In others,
-   * it will be equivalent to it.
+   * In some cases, this might be faster than accessing {@link CollectionRange.size}
+   * of {@link Index.equalKeys equalKeys()}. In others, it will be
+   * equivalent to it.
    */
   hasKey(key: K): boolean
 
   /**
-   * Similar to `Dict.getValue`, except that it returns the pair that was inserted in the collection. 
+   * Similar to `Dict.getValue`, except that it returns the pair that was
+   * inserted in the collection.
    */
   findKey(key: K): Cursor<T> | null;
 
@@ -310,7 +312,7 @@ export interface CollectionRange<T> {
  * elements, but contrary to a set it can hold multiple values of the same
  * kind.
  */
-export interface Bag<T> extends IndexedCollection<T> {
+export interface Bag<T> extends Index<T> {
 
 }
 
@@ -323,7 +325,7 @@ export type Pair<K, V> = [K, V]
 /**
  * Base interface for `Dict` and `MultiDict`.
  */
-export interface DictLike<K, V> extends IndexedCollection<[K, V], K> {
+export interface DictLike<K, V> extends Index<[K, V], K> {
 
   /**
    * Creates a new pair and inserts it in the underlying collection.
@@ -440,6 +442,6 @@ export interface Queuelike<T> extends Collection<T> {
  *
  * @see [[Dict]]
  */
-export interface Set<T> extends IndexedCollection<T> {
+export interface Set<T> extends Index<T> {
 
 }

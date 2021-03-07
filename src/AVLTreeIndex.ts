@@ -1,16 +1,21 @@
 
-import { Cursor, IndexedCollection } from "./interfaces";
-import { CursorBase, lessThan as defaultLessThan, liftLesser, RangeBase } from "./util";
+import { Cursor, Index } from "./interfaces";
+import {
+  CursorBase,
+  getKey as defaultGetKey,
+  lessThan as defaultLessThan,
+  liftLesser,
+  RangeBase,
+  isEqual as defaultIsEqual,
+  isIterable
+} from "./util";
 
-/**
- * @ignore
- */
 export class Node<T> extends CursorBase<T> {
 
   public balance: number = 0;
   public left: Node<T> | null = null;
   public right: Node<T> | null =  null;
-
+ 
   public leftThread: Node<T> | null = null;
   public rightThread: Node<T> | null = null;
 
@@ -51,9 +56,6 @@ export class Node<T> extends CursorBase<T> {
 
 }
 
-/**
- * @ignore
- */
 export class NodeRange<T> extends RangeBase<T> {
 
   constructor(public min: Node<T> | null, public max: Node<T> | null, public readonly reversed = false) {
@@ -163,25 +165,139 @@ function rotateRight<T>(node: Node<T>) {
 
 type AddHint<T> = [boolean, Node<T> | null, number?];
 
+export interface AVLTreeOptions<T, K = T> {
+
+  /**
+   * An iterable that will be consumed to fill the collection.
+   */
+  elements?: Iterable<T>;
+
+  /**
+   * Compares two keys and returns whether the first key is less than the
+   * second.
+   *
+   * If left unspecified, a default function will be chosen that works on most
+   * keys.
+   */
+  compareKeys?: (a: K, b: K) => boolean;
+
+  /**
+   * Exctracts the key part of the element.
+   */
+  getKey?: (elements: T) => K;
+
+
+  /**
+   * Used for checking two elements with the same key in the collection.
+   */
+  isEqual?: (a: T, b: T) => boolean;
+
+  /**
+   * Set to `false` to prevent an element with the same key for which
+   * [[isEqual]] returns true to be added to the collection.
+   */
+  allowDuplicates?: boolean;
+
+}
+
 /**
- * @ignore
+ * A tree-like data structure that implements the Adelson-Velsky and Landis
+ * algorithm for inserting and deleting nodes. The tree will always be almost
+ * completely balanced and is very performant when there are frequent lookups
+ * but not as much mutations.
+ *
+ * You can use this data structure to index objects based on some kind of
+ * propery, like so:
+ *
+ * ```
+ * interface Person {
+ *   firstName: string
+ *   email: string,
+ *   age: number,
+ * }
+ *
+ * const personsSortedByAge = new AVLTreeIndex<Person, number>([
+ *   {
+ *     firstName: 'Jack',
+ *     email: 'jack.smith@gmail.com',
+ *     age: 34
+ *   },
+ *   {
+ *     firstName: 'Bob',
+ *     email: 'thebobman@gmail.com',
+ *     age: 17
+ *   },
+ *   {
+ *      firstName: 'Jessie',
+ *      email: 'jessie@gmail.com',
+ *      age: 25
+ *   },
+ *   {
+ *     firstName: 'Anna',
+ *     email: 'anna@outlook.com',
+ *     age: 58
+ *   }
+ * ]);
+ *
+ * const jack = personsSortedByAge.findKey(34);
+ *
+ * // The following will return Jessie (aged 25)
+ * const oldestPersonYoungerThan30 = personsSortedByAge.lowerKey(30)
+ *
+ * // This will print names in the following order:
+ * // Bob (aged 17)
+ * // Jessie (aged 25)
+ * // Jack (aged 34)
+ * // Anna (aged 58)
+ * for (const person of personsSortedByAge) {
+ *   console.log(person.fullName);
+ * }
+ * ```
+ *
+ * The following table lists some of the performance characteristics of
+ * different methods:
+ *
+ * | Property name                              | Worst case   |
+ * |--------------------------------------------|--------------|
+ * | {@link AVLTreeIndex.add add()}             | `O(log(n))`  |
+ * | {@link AVLTreeIndex.clear clear()}         | `O(1)`       |
+ * | {@link AVLTreeIndex.equalKeys equalKeys()} | `O(log(n))`  |
+ * | {@link AVLTreeIndex.delete delete()}       | `O(log(n))`  |
+ * | {@link AVLTreeIndex.deleteAll deleteAll()} | `O(log(n))`  |
+ * | {@link AVLTreeIndex.deleteAt deleteAt()}   | `O(log(n))`  |
+ * | {@link AVLTreeIndex.size size}             | `O(1)`       |
  */
-export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
+export class AVLTreeIndex<T, K = T> implements Index<T, K> {
 
   get size() {
     return this._size;
   }
 
-  protected _compare: (a: K, b: K) => number;
+  protected compare: (a: K, b: K) => number;
   protected _size = 0;
   protected _root: Node<T> | null = null;
 
-  constructor(
-        public lessThan: (a: K, b: K) => boolean = defaultLessThan
-      , public getKey: (val: T) => K = (val) => val as any
-      , public elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
-      , public allowDuplicates = true) {
-    this._compare = liftLesser(lessThan);
+  public compareKeys: (a: K, b: K) => boolean;
+  public getKey: (element: T) => K;
+  public isEqual: (a: T, b: T) => boolean;
+  public allowDuplicates: boolean;
+
+  constructor(opts: Iterable<T> | AVLTreeOptions<T, K>) {
+    let elements: Iterable<T> = [];
+    if (isIterable(opts)) {
+      elements = opts;
+      opts = {};
+    } else if (opts.elements !== undefined) {
+      elements = opts.elements;
+    }
+    this.compareKeys = opts.compareKeys ?? defaultLessThan
+    this.compare = liftLesser(this.compareKeys);
+    this.getKey = opts.getKey ?? defaultGetKey
+    this.isEqual = opts.isEqual ?? defaultIsEqual
+    this.allowDuplicates = opts.allowDuplicates ?? true;
+    for (const element of elements) {
+      this.add(element);
+    }
   }
 
   /**
@@ -201,7 +317,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
     if (!this.allowDuplicates) {
       while (node !== null) {
-        cmp = this._compare(key, this.getKey(node.value));
+        cmp = this.compare(key, this.getKey(node.value));
         parent = node;
         if (cmp === 0) {
           return [false, node];
@@ -213,7 +329,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
       }
     } else {
       while (node !== null) {
-        cmp = this._compare(key, this.getKey(node.value));
+        cmp = this.compare(key, this.getKey(node.value));
         parent = node;
         if (cmp <= 0) {
           // FIXME should I return null?
@@ -249,7 +365,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     let parent = hint[1];
     let cmp = hint[2]!;
 
-    const compare = this._compare;
+    const compare = this.compare;
     const newNode = new Node<T>(value, parent);
     let newRoot;
     if (cmp <= 0) {
@@ -302,7 +418,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
   public has(element: T): boolean {
     for (const node of this.equalKeys(this.getKey(element)).cursors()) {
-      if (this.elementsEqual(node.value, element)) {
+      if (this.isEqual(node.value, element)) {
         return true;
       }
     }
@@ -327,7 +443,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    */
   public findKey(key: K): Node<T> | null {
     let node = this._root;
-    const compare = this._compare;
+    const compare = this.compare;
     const getKey = this.getKey;
     while (node !== null) {
       const cmp = compare(key, getKey(node.value));
@@ -349,7 +465,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     if (node === null) {
       return null;
     }
-    const cmp = this._compare(key, this.getKey(node.value));
+    const cmp = this.compare(key, this.getKey(node.value));
     if (cmp < 0) {
       return this._findMin(key, node.left);
     }
@@ -366,7 +482,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
     if (node === null) {
       return null;
     }
-    const cmp = this._compare(key, this.getKey(node.value));
+    const cmp = this.compare(key, this.getKey(node.value));
     if (cmp < 0) {
       return this._findMax(key, node.left);
     }
@@ -389,7 +505,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
   public lowerKey(key: K): Node<T> | null {
     let node = this._root;
-    while (node !== null && this._compare(this.getKey(node.value), key) > 0) {
+    while (node !== null && this.compare(this.getKey(node.value), key) > 0) {
       if (node.left !== null) {
         node = node.left;
       } else {
@@ -397,7 +513,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
         break;
       }
     }
-    if (node !== null && this._compare(this.getKey(node.value), key) === 0 && node.right !== null) {
+    if (node !== null && this.compare(this.getKey(node.value), key) === 0 && node.right !== null) {
       node = node.right;
       while (node.left !== null) {
         node = node.left;
@@ -408,7 +524,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
 
   public upperKey(key: K): Node<T> | null {
     let node = this._root;
-    while (node !== null && this._compare(this.getKey(node.value), key) < 0) {
+    while (node !== null && this.compare(this.getKey(node.value), key) < 0) {
       if (node.right !== null) {
         node = node.right;
       } else {
@@ -416,7 +532,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
         break;
       }
     }
-    if (node !== null && this._compare(this.getKey(node.value), key) === 0) {
+    if (node !== null && this.compare(this.getKey(node.value), key) === 0) {
       node = node.left;
       if (node !== null) {
         while (node.right !== null) { node = node.right; }
@@ -473,7 +589,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   public deleteAll(value: T): number {
     let deleteCount = 0;
     for (const node of  this.equalKeys(this.getKey(value)).cursors()) {
-      if (this.elementsEqual(node.value, value)) {
+      if (this.isEqual(node.value, value)) {
         this.deleteAt(node);
         ++deleteCount;
       }
@@ -487,7 +603,7 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
    */
   public delete(element: T): boolean {
     for (const node of this.equalKeys(this.getKey(element)).cursors()) {
-      if (this.elementsEqual(node.value, element)) {
+      if (this.isEqual(node.value, element)) {
         this.deleteAt(node);
         return true;
       }
@@ -609,24 +725,15 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   }
 
   public clone() {
-    return new AVLTree<T, K>(
-      this.lessThan
-    , this.getKey
-    , this.elementsEqual
-    , this.allowDuplicates,
-    );
+    return new AVLTreeIndex<T, K>({
+      compareKeys: this.compareKeys
+    , getKey: this.getKey
+    , isEqual: this.isEqual
+    , allowDuplicates: this.allowDuplicates
+    , elements: this
+    });
   }
 
 }
 
-/**
- * @ignore
- */
-export type AVLTreeConstructor<T, K> = new(
-    lessThan: (a: K, b: K) => boolean
-  , getKey: (val: T) => K
-  , elementsEqual: (a: T, b: T) => boolean
-  , allowDuplicates: boolean,
-  ) => AVLTree<T, K>;
-
-export default AVLTree;
+export default AVLTreeIndex;

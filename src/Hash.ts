@@ -1,5 +1,5 @@
 
-import { CollectionRange, Cursor, IndexedCollection } from "./interfaces";
+import { CollectionRange, Cursor, Index } from "./interfaces";
 import DoubleLinkedList, { DoubleLinkedListCursor } from "./DoubleLinkedList";
 import { EmptyRange, RangeBase } from "./util";
 
@@ -64,7 +64,7 @@ class HashRange<T, K> extends RangeBase<T> {
 /**
  * @ignore
  */
-export abstract class Hash<T, K = T> implements IndexedCollection<T, K> {
+export abstract class Hash<T, K = T> implements Index<T, K> {
 
   get size() {
     return this._size;

@@ -47,15 +47,16 @@ export class PriorityQueue<T> implements Queuelike<T> {
    * ```
    */
   constructor(opts: Iterable<T> | HeapOptions<T> = {}) {
+    let iterable: Iterable<T> = [];
     if (isIterable(opts)) {
-      this._heap = new Heap<T>(new Vector<T>(), defaultLessThan);
-      for (const element of opts) {
-        this._heap.add(element);
-      }
-    } else {
-      const lessThan = opts.compare ?? defaultLessThan;
-      const vector = new Vector<T>(omit(opts, "elements"));
-      this._heap = new Heap<T>(vector, lessThan);
+      iterable = opts;
+      opts = {}
+    }
+    const lessThan = opts.compare ?? defaultLessThan;
+    const vector = new Vector<T>(omit(opts, "elements"));
+    this._heap = new Heap<T>(vector, lessThan);
+    for (const element of iterable) {
+      this._heap.add(element);
     }
   }
 

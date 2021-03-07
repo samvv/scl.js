@@ -1,5 +1,5 @@
 
-import AVL from "./AVLTree";
+import AVL from "./AVLTreeIndex";
 import { MultiDict } from "./interfaces";
 import { isEqual, isIterable, lessThan } from "./util";
 import { TreeDictOptions } from "./TreeDict";
@@ -101,21 +101,21 @@ export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, 
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lessThan, (pair) => pair[0], (a, b) => isEqual(a[1], b[1]), true);
-      for (const element of opts) {
-        this.add(element);
-      }
-      this.valuesEqual = isEqual;
-    } else {
-      const valuesEqual = opts.valuesEqual ?? isEqual;
-      super(
-        opts.compare ?? lessThan
-      , (pair) => pair[0]
-      , (a, b) => valuesEqual(a[1], b[1])
-      , true,
-      );
-      this.valuesEqual = valuesEqual;
+      opts = { elements: opts }
     }
+    const {
+      valuesEqual = isEqual,
+      compareKeys,
+      ...restOpts
+    } = opts;
+    super({
+      compareKeys,
+      getKey: pair => pair[0],
+      isEqual: (a, b) => valuesEqual(a[1], b[1]),
+      allowDuplicates: true,
+      ...restOpts
+    });
+    this.valuesEqual = valuesEqual;
   }
 
   public *getValues(key: K) {
@@ -130,7 +130,7 @@ export class TreeMultiDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, 
 
   public clone() {
     return new TreeMultiDict<K, V>({
-      compare: this.lessThan
+      compareKeys: this.compareKeys
     , valuesEqual: this.valuesEqual
     , elements: this,
     });

@@ -2,9 +2,9 @@
 import { expect } from "chai";
 import { test } from "./_helpers"
 
-import AVLTree from "../AVLTree";
+import AVLTreeIndex from "../AVLTreeIndex";
 
-test<AVLTree<number>>("AVLTree.add() successfully adds new elements", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.add() successfully adds new elements", avl => {
   avl.add(1);
   avl.add(5);
   avl.add(2);
@@ -13,7 +13,7 @@ test<AVLTree<number>>("AVLTree.add() successfully adds new elements", avl => {
   expect([...avl]).to.deep.equal([1, 2, 3, 4, 5]);
 });
 
-test<AVLTree<number>>("AVLTree.add() can store multiple equal keys", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.add() can store multiple equal keys", avl => {
   avl.add(1);
   avl.add(5);
   avl.add(2);
@@ -24,7 +24,7 @@ test<AVLTree<number>>("AVLTree.add() can store multiple equal keys", avl => {
   expect([...avl]).to.deep.equal([1, 2, 3, 3, 3, 4, 5]);
 });
 
-test<AVLTree<number>>("AVLTree.delete() successfully deletes elements", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.delete() successfully deletes elements", avl => {
   avl.add(1);
   avl.add(5);
   avl.add(2);
@@ -43,7 +43,7 @@ test<AVLTree<number>>("AVLTree.delete() successfully deletes elements", avl => {
   expect([...avl]).to.deep.equal([]);
 });
 
-test<AVLTree<number>>("AVLTree.lowerKey() finds nearest smaller key", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.lowerKey() finds nearest smaller key", avl => {
   avl.add(1);
   avl.add(5);
   avl.add(2);
@@ -54,7 +54,7 @@ test<AVLTree<number>>("AVLTree.lowerKey() finds nearest smaller key", avl => {
   expect(pos!.value).to.equal(3);
 });
 
-test<AVLTree<number>>("AVLTree.upperKey() finds the nearest larger key", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.upperKey() finds the nearest larger key", avl => {
   avl.add(1);
   avl.add(5);
   avl.add(2);
@@ -68,7 +68,7 @@ test<AVLTree<number>>("AVLTree.upperKey() finds the nearest larger key", avl => 
   expect(pos2!.value).to.equal(1);
 });
 
-test<AVLTree<number>>("AVLTree.toRange() can reverse-iterate over elements", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.toRange() can reverse-iterate over elements", avl => {
   avl.add(1);
   avl.add(5);
   avl.add(2);
@@ -77,7 +77,7 @@ test<AVLTree<number>>("AVLTree.toRange() can reverse-iterate over elements", avl
   expect([...avl.toRange().reverse()]).to.deep.equal([5, 4, 3, 2, 1]);
 });
 
-test<AVLTree<number>>("AVLTree.equalKeys() returns a range with only keys that are the same", avl => {
+test<AVLTreeIndex<number>>("AVLTreeIndex.equalKeys() returns a range with only keys that are the same", avl => {
   avl.add(1);
   avl.add(2);
   avl.add(3);
