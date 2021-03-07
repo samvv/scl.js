@@ -1,7 +1,7 @@
 
 import Heap, { HeapOptions } from "./Heap";
 import { Queuelike } from "./interfaces";
-import { isIterable, lesser, omit } from "./util";
+import { isIterable, lessThan as defaultLessThan, omit } from "./util";
 import { Vector, VectorCursor } from "./Vector";
 // import { DEFAULT_VECTOR_CAPACITY, DEFAULT_VECTOR_ALLOC_STEP } from "./constants"
 
@@ -48,12 +48,12 @@ export class PriorityQueue<T> implements Queuelike<T> {
    */
   constructor(opts: Iterable<T> | HeapOptions<T> = {}) {
     if (isIterable(opts)) {
-      this._heap = new Heap<T>(new Vector<T>(), lesser);
+      this._heap = new Heap<T>(new Vector<T>(), defaultLessThan);
       for (const element of opts) {
         this._heap.add(element);
       }
     } else {
-      const lessThan = opts.compare !== undefined ? opts.compare : lesser;
+      const lessThan = opts.compare ?? defaultLessThan;
       const vector = new Vector<T>(omit(opts, "elements"));
       this._heap = new Heap<T>(vector, lessThan);
     }

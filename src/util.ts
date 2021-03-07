@@ -109,7 +109,7 @@ export function hash(value: any): number {
  * A symbol that is used to define a custom hash method for a certain class or
  * object.
  *
- * If this tag is present on an object, [[lesser]] will use the method
+ * If this tag is present on an object, [[lessThan]] will use the method
  * associated with this tag to compare the given object with something else.
  *
  * Note that the value passed to the object's method does not have to be of the
@@ -131,7 +131,7 @@ export function hash(value: any): number {
  * }
  * ```
  *
- * @see [[lesser]]
+ * @see [[lessThan]]
  */
 export const compareTag = Symbol('object comparison method');
 
@@ -159,7 +159,7 @@ export const compareTag = Symbol('object comparison method');
  *   first array. In that case, the first array is smaller if and only if each
  *   element is less then or equal to the corresponding element in the second
  *   array. The remaining elements 'force' the array to be larger.
- * - An object is only lesser than another object if the values of the first
+ * - An object is only smaller than another object if the values of the first
  *   object is smaller then the corresponding value of the second object. An
  *   exception is made when the second object contains more keys than the first
  *   object. In that case, the first obejct is smaller if and only if each
@@ -169,11 +169,13 @@ export const compareTag = Symbol('object comparison method');
  *
  * The above rules might seem strange at first, but they ensure that we can
  * perform equality checks on string, arrays and objects by just using
- * [[lesser]], as demonstrated in the following code:
+ * [[lessThan]], as demonstrated in the following code:
  * 
  * ```
+ * import { lessThan } from "scl";
+ * 
  * function equalByLesser(a, b) {
- *   return !lesser(a, b) && !lesser(b, a);
+ *   return !lessThan(a, b) && !lessThan(b, a);
  * }
  *
  * console.log(equalByLesser(1, 1)) // true
@@ -188,9 +190,9 @@ export const compareTag = Symbol('object comparison method');
  *
  * @see [[compareTag]]
  * @see [[hash]]
- * @see [[equal]]
+ * @see [[isEqual]]
  */
-export function lesser(a: any, b: any) {
+export function lessThan(a: any, b: any) {
   if (typeof(a) === "number" && typeof(b) === "number") {
     return a < b;
   }
@@ -203,10 +205,10 @@ export function lesser(a: any, b: any) {
     }
     const allowEqual = a.length < b.length;
     for (let i = 0; i < a.length; ++i) {
-      if (allowEqual && equal(a[i], b[i])) {
+      if (allowEqual && isEqual(a[i], b[i])) {
         continue;
       }
-      if (!lesser(a[i], b[i])) {
+      if (!lessThan(a[i], b[i])) {
         return false;
       }
     }
@@ -220,10 +222,10 @@ export function lesser(a: any, b: any) {
       if (b[key] === undefined) {
         return false;
       }
-      if (allowEqual && equal(a[key], b[key])) {
+      if (allowEqual && isEqual(a[key], b[key])) {
         continue;
       }
-      if (!lesser(a[key], b[key])) {
+      if (!lessThan(a[key], b[key])) {
         return false;
       }
     }
@@ -237,7 +239,7 @@ export function lesser(a: any, b: any) {
  * object.
  *
  * ```
- * import { equal, isEqualTag } from "scl";
+ * import { isEqual, isEqualTag } from "scl";
  *
  * class Cat {
  *
@@ -251,14 +253,14 @@ export function lesser(a: any, b: any) {
  *
  *   public [isEqualTag](other: any) {
  *     return value instanceof Cat
- *         && equal(cat.owner, other.owner)
+ *         && isEqual(cat.owner, other.owner)
  *         && cat.name === other.name;
  *   }
  *
  * }
  * ```
  *
- * @see [[equal]]
+ * @see [[isEqual]]
  */
 export const isEqualTag = Symbol('object equality method');
 
@@ -276,9 +278,9 @@ export const isEqualTag = Symbol('object equality method');
  * JavaScript are the same if their enumerable keys contain the same values.
  *
  * @see [[isEqualTag]]
- * @see [[lesser]]
+ * @see [[lessThan]]
  */
-export function equal(a: any, b: any): boolean {
+export function isEqual(a: any, b: any): boolean {
   if (typeof a === "number" && typeof b === "number") {
     return a === b;
   }
@@ -290,7 +292,7 @@ export function equal(a: any, b: any): boolean {
       return false;
     }
     for (let i = 0; i < a.length; ++i) {
-      if (!equal(a[i], b[i])) {
+      if (!isEqual(a[i], b[i])) {
         return false;
       }
     }
@@ -312,7 +314,7 @@ export function equal(a: any, b: any): boolean {
       if (b[key] === undefined) {
         return false;
       }
-      if (!equal(a[key], b[key])) {
+      if (!isEqual(a[key], b[key])) {
         return false;
       }
     }

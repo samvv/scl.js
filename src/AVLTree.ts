@@ -1,6 +1,6 @@
 
 import { Cursor, IndexedCollection } from "./interfaces";
-import { CursorBase, lesser, liftLesser, RangeBase } from "./util";
+import { CursorBase, lessThan as defaultLessThan, liftLesser, RangeBase } from "./util";
 
 /**
  * @ignore
@@ -176,14 +176,11 @@ export class AVLTree<T, K = T> implements IndexedCollection<T, K> {
   protected _size = 0;
   protected _root: Node<T> | null = null;
 
-  /**
-   * @ignore
-   */
   constructor(
-        /** @ignore */ public lessThan: (a: K, b: K) => boolean = lesser
-      , /** @ignore */ public getKey: (val: T) => K = (val) => val as any
-      , /** @ignore */ public elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
-      , /** @ignore */ public allowDuplicates = true) {
+        public lessThan: (a: K, b: K) => boolean = defaultLessThan
+      , public getKey: (val: T) => K = (val) => val as any
+      , public elementsEqual: (a: T, b: T) => boolean = (a, b) => a === b
+      , public allowDuplicates = true) {
     this._compare = liftLesser(lessThan);
   }
 

@@ -1,7 +1,7 @@
 
 import { Bucket, Hash, HashCursor } from "./Hash";
 import { MultiDict } from "./interfaces";
-import { equal, hash, isIterable } from "./util";
+import { isEqual, hash, isIterable } from "./util";
 import { HashDictOptions } from "./HashDict";
 
 /**
@@ -72,14 +72,14 @@ export class HashManyDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, 
    */
   constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(hash, equal, (a, b) => equal(a[1], b[1]), (pair) => pair[0]);
+      super(hash, isEqual, (a, b) => isEqual(a[1], b[1]), (pair) => pair[0]);
       for (const element of opts) {
         this.add(element);
       }
-      this.valuesEqual = equal;
+      this.valuesEqual = isEqual;
     } else {
-      const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
-      const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : equal;
+      const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : isEqual;
+      const keysEqual = opts.keysEqual !== undefined ? opts.keysEqual : isEqual;
       super(
           opts.hash !== undefined ? opts.hash : hash
         , keysEqual

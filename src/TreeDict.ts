@@ -1,7 +1,7 @@
 
 import { AVLTree } from "./AVLTree";
 import { Dict } from "./interfaces";
-import { equal, isIterable, lesser } from "./util";
+import { isEqual, isIterable, lessThan } from "./util";
 
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.
@@ -129,15 +129,15 @@ export class TreeDict<K, V> extends AVLTree<[K, V], K> implements Dict<K, V> {
    */
   constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
     if (isIterable(opts)) {
-      super(lesser, (pair) => pair[0], (a, b) => equal(a[1], b[1]), false);
+      super(lessThan, (pair) => pair[0], (a, b) => isEqual(a[1], b[1]), false);
       for (const element of opts) {
         this.add(element);
       }
-      this.valuesEqual = equal;
+      this.valuesEqual = isEqual;
     } else {
-      const valuesEqual = opts.valuesEqual !== undefined ? opts.valuesEqual : equal;
+      const valuesEqual = opts.valuesEqual ?? isEqual;
       super(
-        opts.compare !== undefined ? opts.compare : lesser
+        opts.compare ?? lessThan
       , (pair) => pair[0]
       , (a, b) => valuesEqual(a[1], b[1])
       , false,
