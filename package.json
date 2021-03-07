@@ -26,6 +26,7 @@
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.19",
     "ts-node": "^9.1.1",
+    "typedoc": "^0.20.30",
     "typescript": "^4.2.3",
     "xxhashjs": "^0.2.2"
   },
@@ -33,7 +34,7 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "build": "gulp",
     "test": "nyc mocha 'src/test/**/*.ts' --reporter min --require ts-node/register --require source-map-support/register",
-    "build-docs": "typedoc src/ --exclude src/test/ --out docs --listInvalidSymbolLinks --includeDeclarations --excludeExternals --excludeNotExported --excludeExternals --excludeProtected --mode file --name 'Standard Collections Library for JavaScript' --readme readme-docs.md"
+    "build-docs": "typedoc --out docs"
   },
   "authors": [
     "Sam Vervaeck <vervaeck.sam@skynet.be>"
