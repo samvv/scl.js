@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+if [ -f '.should-update-docs' ]; then
+  rm .should-update-docs
+  npm run build-docs
+  git add docs/
+  touch .should-skip-docs
+  git commit -m 'Regenerate documentation'
+fi
+

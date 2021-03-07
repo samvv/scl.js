@@ -1,10 +1,16 @@
 {
-  "name": "scl-workspace",
-  "private": true,
-  "description": "The workspace for developing scl.js.",
+  "name": "scl",
+  "version": "3.0.0",
+  "description": "A curated set of essential algorithms and data structures for TypeScript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samvv/scl.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samvv/scl.js/issues"
+  },
+  "homepage": "https://samvv.github.io/scl.js",
   "devDependencies": {
-    "@babel/core": "^7.13.8",
-    "@babel/preset-env": "^7.13.9",
     "@types/benchmark": "^2.1.0",
     "@types/chai": "^4.2.15",
     "@types/mocha": "^8.2.1",
@@ -12,16 +18,8 @@
     "benchmark": "^2.1.4",
     "chai": "^4.3.3",
     "coveralls": "^3.1.0",
-    "del": "^6.0.0",
-    "fs-extra": "^9.1.0",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-mocha": "^8.0.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-typescript": "^5.0.1",
+    "husky": "^5.1.3",
     "merge-char": "^1.3.4",
-    "merge2": "^1.4.1",
     "mocha": "^8.3.1",
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.19",
@@ -31,14 +29,30 @@
     "xxhashjs": "^0.2.2"
   },
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "husky install",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "build": "gulp",
-    "test": "nyc mocha 'src/test/**/*.ts' --reporter min --require ts-node/register --require source-map-support/register",
+    "test": "mocha lib/test --reporter min --require source-map-support",
+    "coverage": "nyc mocha 'src/test/**/*.ts' --reporter min --require ts-node/register --require source-map-support/register",
     "build-docs": "typedoc --out docs"
   },
   "authors": [
-    "Sam Vervaeck <vervaeck.sam@skynet.be>"
+    "Sam Vervaeck"
+  ],
+  "keywords": [
+    "data",
+    "algorithm",
+    "data-structure",
+    "library",
+    "typescript",
+    "collection",
+    "priority-queue",
+    "avl-tree",
+    "hash-map",
+    "hash-set",
+    "dictionary",
+    "map",
+    "set"
   ],
   "license": "MIT"
 }
