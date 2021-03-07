@@ -58,18 +58,17 @@ export type Hasher = (value: any) => void;
 /**
  * Hash any value to a number that should provide the least amount of
  * collisions.
- *{
+ *
  * This method will use [[hashTag]] if it is present on an object to hash
  * according to a method you provided.
  *
  * The logic of this hash function was roughly taken from [this StackOverflow answer][1].
  *
+ * [1]: https://stackoverflow.com/a/2741898/1173521
+ *
  * @param value The value to hash
  * @returns A hash code
  * @see [[hashTag]]
- *
- * [1]: https://stackoverflow.com/a/2741898/1173521
- *
  */
 export function hash(value: any): number {
   let result = 17;
