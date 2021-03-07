@@ -1,4 +1,22 @@
-/test
-/scl-*.tgz
-/src/test
-Makefile
+
+# We explicitly exclude everything and only allow certain files.
+# This way, we don't accidentally publish a new file that shouldn't be there.
+*
+
+# These are our source file
+!lib/**/*.js
+!lib/**/*.js.map
+!lib/**/*.d.ts
+!lib/**/*.d.ts.map
+!src/**/*.ts
+
+# Test files are removed from the source files because they require our test data
+# and make the package much larger.
+lib/test
+src/test
+
+# These files are always added but it's good to make sure they are really there.
+CHANGELOG.md
+README.md
+LICENSE.txt
+package.json
