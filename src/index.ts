@@ -8,6 +8,7 @@ export { Stack } from "./Stack";
 export { Queue } from "./Queue";
 export { PriorityQueue } from "./PriorityQueue";
 export { TreeIndexOptions, TreeIndex } from "./TreeIndex";
+export { RBTreeIndexOptions, RBTreeIndex } from "./RBTreeIndex";
 export { AVLTreeIndexOptions, AVLTreeIndex } from "./AVLTreeIndex";
 export { StringDict } from "./StringDict";
 export { HashDict } from "./HashDict";

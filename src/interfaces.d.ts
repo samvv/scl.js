@@ -34,7 +34,7 @@ export interface Collection<T> {
    *
    * @param hint A transparent object obtained by {@link getAddHint}.
    */
-  add(element: T, hint?: any): [boolean, Cursor<T>];
+  add(element: T, hint?: any): AddResult<T>;
 
   /**
    * Checks if the collection holds the given element.
@@ -105,6 +105,8 @@ export interface Collection<T> {
   toRange(): CollectionRange<T>;
 
 }
+
+export type AddResult<T> = [boolean, Cursor<T>];
 
 /**
  * Represents any collection that has an order defined on its elements.

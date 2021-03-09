@@ -2,13 +2,23 @@
 import { CollectionRange, Cursor } from "./interfaces";
 
 export function isIterable<T = any>(value: any): value is Iterable<T> {
-  return value !== null
-      && Symbol.iterator in value;
+  return Symbol.iterator in Object(value);
 }
 
 export const getKeyTag = Symbol('object key property');
 
+function isPrimitive(value: any): boolean {
+  return value === null
+      || typeof(value) === 'number'
+      || typeof(value) === 'string'
+      || typeof(value) === 'boolean'
+      || typeof(value) === 'bigint';
+}
+
 export function getKey(value: any) {
+  if (isPrimitive(value)) {
+    return value;
+  }
   if (getKeyTag in value) {
     return value[getKeyTag];
   }

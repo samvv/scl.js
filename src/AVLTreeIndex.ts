@@ -284,7 +284,7 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
   public isEqual: (a: T, b: T) => boolean;
   public allowDuplicates: boolean;
 
-  constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K>) {
+  constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K> = {}) {
     let elements: Iterable<T> = [];
     if (isIterable(opts)) {
       elements = opts;
