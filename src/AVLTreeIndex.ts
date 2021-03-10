@@ -1,105 +1,53 @@
 
+import { BSNode, BSNodeRange, BST, BSTOptions, equalKeysNoStrict } from "./BST";
 import { Cursor, Index } from "./interfaces";
 import {
-  CursorBase,
-  getKey as defaultGetKey,
-  lessThan as defaultLessThan,
   liftLesser,
   RangeBase,
-  isEqual as defaultIsEqual,
-  isIterable
 } from "./util";
 
-export class Node<T> extends CursorBase<T> {
+export class Node<T> extends BSNode<T> {
 
-  public balance: number = 0;
-  public left: Node<T> | null = null;
-  public right: Node<T> | null =  null;
- 
-  public leftThread: Node<T> | null = null;
-  public rightThread: Node<T> | null = null;
-
-  constructor(public value: T, public parent: Node<T> | null = null) {
-    super();
+  constructor(
+    value: T,
+    parent: Node<T> | null = null,
+    public left: Node<T> | null = null,
+    public right: Node<T> | null =  null,
+    public balance: number = 0
+  ) {
+    super(parent, value, left, right);
   }
 
-  public next(): Node<T> | null {
-    if (this.right !== null) {
-      let node = this.right;
-      while (node.left !== null) {
-        node = node.left;
-      }
-      return node;
-    }
-    let node: Node<T> = this;
-    while (node.parent !== null && node === node.parent.right) {
-      node = node.parent;
-    }
-    return node.parent;
-  }
+  // public next(): Node<T> | null {
+  //   if (this.right !== null) {
+  //     let node = this.right;
+  //     while (node.left !== null) {
+  //       node = node.left;
+  //     }
+  //     return node;
+  //   }
+  //   let node: Node<T> = this;
+  //   while (node.parent !== null && node === node.parent.right) {
+  //     node = node.parent as Node<T>;
+  //   }
+  //   return node.parent as BSNode<T>;
+  // }
 
-  public prev(): Node<T> | null {
-    if (this.left !== null) {
-      let node = this.left;
-      while (node.right !== null) {
-        node = node.right;
-      }
-      return node;
-    }
+  // public prev(): Node<T> | null {
+  //   if (this.left !== null) {
+  //     let node = this.left;
+  //     while (node.right !== null) {
+  //       node = node.right;
+  //     }
+  //     return node;
+  //   }
 
-    let node: Node<T> = this;
-    while (node.parent !== null && node === node.parent.left) {
-      node = node.parent;
-    }
-    return node.parent;
-  }
-
-}
-
-export class NodeRange<T> extends RangeBase<T> {
-
-  constructor(public min: Node<T> | null, public max: Node<T> | null, public readonly reversed = false) {
-    super();
-  }
-
-  public reverse() {
-    return new NodeRange<T>(this.min, this.max, !this.reversed);
-  }
-
-  get size() {
-    // FIXME can be optimised
-    return [...this].length;
-  }
-
-  public *[Symbol.iterator]() {
-    for (const node of this.cursors()) {
-      yield node.value;
-    }
-  }
-
-  public *cursors() {
-    if (!this.reversed) {
-      let node = this.min;
-      const max = this.max;
-      while (node !== null) {
-        yield node;
-        if (node === max) {
-          break;
-        }
-        node = node.next();
-      }
-    } else {
-      let node = this.max
-      const min = this.min;
-      while (node !== null) {
-        yield node;
-        if (node === min) {
-          break;
-        }
-        node = node.prev();
-      }
-    }
-  }
+  //   let node: Node<T> = this;
+  //   while (node.parent !== null && node === node.parent.left) {
+  //     node = node.parent;
+  //   }
+  //   return node.parent;
+  // }
 
 }
 
@@ -165,38 +113,7 @@ function rotateRight<T>(node: Node<T>) {
 
 type AddHint<T> = [boolean, Node<T> | null, number?];
 
-export interface AVLTreeIndexOptions<T, K = T> {
-
-  /**
-   * An iterable that will be consumed to fill the collection.
-   */
-  elements?: Iterable<T>;
-
-  /**
-   * Compares two keys and returns whether the first key is less than the
-   * second.
-   *
-   * If left unspecified, a default function will be chosen that works on most
-   * keys.
-   */
-  compareKeys?: (a: K, b: K) => boolean;
-
-  /**
-   * Exctracts the key part of the element.
-   */
-  getKey?: (elements: T) => K;
-
-
-  /**
-   * Used for checking two elements with the same key in the collection.
-   */
-  isEqual?: (a: T, b: T) => boolean;
-
-  /**
-   * Set to `false` to prevent an element with the same key for which
-   * [[isEqual]] returns true to be added to the collection.
-   */
-  allowDuplicates?: boolean;
+export interface AVLTreeIndexOptions<T, K = T> extends BSTOptions<T, K> {
 
 }
 
@@ -269,51 +186,19 @@ export interface AVLTreeIndexOptions<T, K = T> {
  * | {@link AVLTreeIndex.deleteAt deleteAt()}   | `O(log(n))`  |
  * | {@link AVLTreeIndex.size size}             | `O(1)`       |
  */
-export class AVLTreeIndex<T, K = T> implements Index<T, K> {
-
-  get size() {
-    return this._size;
-  }
+export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 
   protected compare: (a: K, b: K) => number;
-  protected _size = 0;
-  protected _root: Node<T> | null = null;
-
-  public compareKeys: (a: K, b: K) => boolean;
-  public getKey: (element: T) => K;
-  public isEqual: (a: T, b: T) => boolean;
-  public allowDuplicates: boolean;
 
   constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K> = {}) {
-    let elements: Iterable<T> = [];
-    if (isIterable(opts)) {
-      elements = opts;
-      opts = {};
-    } else if (opts.elements !== undefined) {
-      elements = opts.elements;
-    }
-    this.compareKeys = opts.compareKeys ?? defaultLessThan
+    super(opts);
     this.compare = liftLesser(this.compareKeys);
-    this.getKey = opts.getKey ?? defaultGetKey
-    this.isEqual = opts.isEqual ?? defaultIsEqual
-    this.allowDuplicates = opts.allowDuplicates ?? true;
-    for (const element of elements) {
-      this.add(element);
-    }
-  }
-
-  /**
-   * This method always runs in `O(1)` time.
-   */
-  public clear() {
-    this._root = null;
-    this._size = 0;
   }
 
   public getAddHint(value: T): AddHint<T> {
 
     const key = this.getKey(value);
-    let node = this._root;
+    let node = this.rootNode as Node<T>;
     let parent = null;
     let cmp;
 
@@ -323,10 +208,10 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
         parent = node;
         if (cmp === 0) {
           return [false, node];
-        } else  if (cmp < 0) {
-          node = node.left;
+        } else if (cmp < 0) {
+          node = node.left as Node<T>;
         } else {
-          node = node.right;
+          node = node.right as Node<T>;
         }
       }
     } else {
@@ -335,9 +220,9 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
         parent = node;
         if (cmp <= 0) {
           // FIXME should I return null?
-          node = node.left;
+          node = node.left as Node<T>;
         } else {
-          node = node.right;
+          node = node.right as Node<T>;
         }
       }
     }
@@ -349,10 +234,11 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
    * This operation takes `O(log(n))` time.
    */
   public add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
-    if (this._root === null) {
-      this._root = new Node<T>(value);
-      this._size++;
-      return [true, this._root];
+
+    if (this.rootNode === null) {
+      this.rootNode = new Node<T>(value);
+      this.elementCount++;
+      return [true, this.rootNode];
     }
 
     const getKey = this.getKey;
@@ -394,8 +280,8 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
         }
         newRoot = rotateLeft(parent);
 
-        if (parent === this._root) {
-          this._root = newRoot;
+        if (parent === this.rootNode) {
+          this.rootNode = newRoot;
         }
         break;
       } else if (parent.balance > 1) {
@@ -406,212 +292,147 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
         }
         newRoot = rotateRight(parent);
 
-        if (parent === this._root) {
-          this._root = newRoot;
+        if (parent === this.rootNode) {
+          this.rootNode = newRoot;
         }
         break;
       }
-      parent = parent.parent;
+      parent = parent.parent as Node<T>;
     }
 
-    this._size++;
+    this.elementCount++;
     return [true, newNode];
   }
 
-  public has(element: T): boolean {
-    for (const node of this.equalKeys(this.getKey(element)).cursors()) {
-      if (this.isEqual(node.value, element)) {
-        return true;
-      }
-    }
-    return false;
+  public equalKeys(key: K): BSNodeRange<T> {
+    return equalKeysNoStrict(this, key);
   }
 
-  /**
-   * This method takes `O(log(n))` time.
-   */
-  public hasKey(key: K): boolean {
-    return this.findKey(key) !== null;
-  }
+  // protected findMinEqual(key: K, node: Node<T> | null): Node<T> | null {
+  //   if (node === null) {
+  //     return null;
+  //   }
+  //   const cmp = this.compare(key, this.getKey(node.value));
+  //   if (cmp < 0) {
+  //     return this.findMinEqual(key, node.left);
+  //   }
+  //   if (cmp > 0) {
+  //     return this.findMinEqual(key, node.right);
+  //   }
+  //   return this.findMinEqual(key, node.left) || node as Node<T>;
+  // }
 
-  /**
-   * This method always returns the topmost node that contains the given key,
-   * which means that calling {@link Cursor.next next()} on the result will
-   * always return a node with the same key if there is any.
-   *
-   * This method takes `O(log(n))` time.
-   *
-   * @param key The key so search for.
-   */
-  public findKey(key: K): Node<T> | null {
-    let node = this._root;
-    const compare = this.compare;
-    const getKey = this.getKey;
-    while (node !== null) {
-      const cmp = compare(key, getKey(node.value));
-      if (cmp < 0) {
-        node = node.left;
-      } else if (cmp > 0) {
-        node = node.right;
-      } else {
-        return node;
-      }
-    }
-    return null;
-  }
+  // protected findMaxEqual(key: K, node: Node<T> | null): Node<T> | null {
+  //   if (node === null) {
+  //     return null;
+  //   }
+  //   const cmp = this.compare(key, this.getKey(node.value));
+  //   if (cmp < 0) {
+  //     return this.findMaxEqual(key, node.left);
+  //   }
+  //   if (cmp > 0) {
+  //     return this.findMaxEqual(key, node.right);
+  //   }
+  //   return this.findMaxEqual(key, node.right) || node as Node<T>;
+  // }
 
-  /**
-   * @ignore
-   */
-  public _findMin(key: K, node = this.findKey(key)): Node<T> | null {
-    if (node === null) {
-      return null;
-    }
-    const cmp = this.compare(key, this.getKey(node.value));
-    if (cmp < 0) {
-      return this._findMin(key, node.left);
-    }
-    if (cmp > 0) {
-      return this._findMin(key, node.right);
-    }
-    return this._findMin(key, node.left) || node;
-  }
+  // /**
+  //  * This methods generally returns in `O(log(n))` time, but this might become `O(n)` in
+  //  * the case where multiple elements with the same key are allowed.
+  //  */
+  // public equalKeys(key: K): BSNodeRange<T> {
+  //   // We need to override this method because the standard implementation of an
+  //   // AVL tree does not retain the property that L < R when inserting duplicate
+  //   // keys. The core operations remain the same, but duplicates have to be
+  //   // searched on the left and on the right.
+  //   const top = this.findKey(key) as Node<T>;
+  //   const min = this.findMinEqual(key, top);
+  //   const max = this.findMaxEqual(key, top);
+  //   return new BSNodeRange(min, max, undefined, false);
+  // }
 
-  /**
-   * @ignore
-   */
-  public _findMax(key: K, node = this.findKey(key)): Node<T> | null {
-    if (node === null) {
-      return null;
-    }
-    const cmp = this.compare(key, this.getKey(node.value));
-    if (cmp < 0) {
-      return this._findMax(key, node.left);
-    }
-    if (cmp > 0) {
-      return this._findMax(key, node.right);
-    }
-    return this._findMax(key, node.right) || node;
-  }
+  // public lowerKey(key: K): Node<T> | null {
+  //   let node = this.root;
+  //   while (node !== null && this.compare(this.getKey(node.value), key) > 0) {
+  //     if (node.left !== null) {
+  //       node = node.left;
+  //     } else {
+  //       node = null;
+  //       break;
+  //     }
+  //   }
+  //   if (node !== null && this.compare(this.getKey(node.value), key) === 0 && node.right !== null) {
+  //     node = node.right;
+  //     while (node.left !== null) {
+  //       node = node.left;
+  //     }
+  //   }
+  //   return node;
+  // }
 
-  /**
-   * This methods generally returns in `O(log(n))` time, but this might become `O(n)` in
-   * the case where multiple elements with the same key are allowed.
-   */
-  public equalKeys(key: K): NodeRange<T> {
-    const top = this.findKey(key);
-    const min = this._findMin(key, top);
-    const max = this._findMax(key, top);
-    return new NodeRange<T>(min, max);
-  }
+  // public upperKey(key: K): Node<T> | null {
+  //   let node = this.root;
+  //   while (node !== null && this.compare(this.getKey(node.value), key) < 0) {
+  //     if (node.right !== null) {
+  //       node = node.right;
+  //     } else {
+  //       node = null;
+  //       break;
+  //     }
+  //   }
+  //   if (node !== null && this.compare(this.getKey(node.value), key) === 0) {
+  //     node = node.left;
+  //     if (node !== null) {
+  //       while (node.right !== null) { node = node.right; }
+  //     }
+  //   }
 
-  public lowerKey(key: K): Node<T> | null {
-    let node = this._root;
-    while (node !== null && this.compare(this.getKey(node.value), key) > 0) {
-      if (node.left !== null) {
-        node = node.left;
-      } else {
-        node = null;
-        break;
-      }
-    }
-    if (node !== null && this.compare(this.getKey(node.value), key) === 0 && node.right !== null) {
-      node = node.right;
-      while (node.left !== null) {
-        node = node.left;
-      }
-    }
-    return node;
-  }
-
-  public upperKey(key: K): Node<T> | null {
-    let node = this._root;
-    while (node !== null && this.compare(this.getKey(node.value), key) < 0) {
-      if (node.right !== null) {
-        node = node.right;
-      } else {
-        node = null;
-        break;
-      }
-    }
-    if (node !== null && this.compare(this.getKey(node.value), key) === 0) {
-      node = node.left;
-      if (node !== null) {
-        while (node.right !== null) { node = node.right; }
-      }
-    }
-
-    return node;
-  }
-
-  public toRange() {
-    return new NodeRange(this.begin(), this.end());
-  }
-
-  public begin(): Node<T> | null {
-    if (this._root === null) { return null; }
-    let node = this._root;
-    while (node.left !== null) { node = node.left; }
-    return node;
-  }
-
-  public end(): Node<T> | null {
-    if (this._root === null) { return null; }
-    let node = this._root;
-    while (node.right !== null) { node = node.right; }
-    return node;
-  }
-
-  public *[Symbol.iterator]() {
-    // TODO issue #12
-    for (const value of this.toRange()) {
-      yield value;
-    }
-  }
+  //   return node;
+  // }
 
   /**
    * This operation generally takes `O(log(n))` time, unless multiple entries
    * with the same key are allowed. In that case, the complexity can grow to
    * `O(n)`.
    */
-  public deleteKey(key: K): number {
-    let deleteCount = 0;
-    for (const node of this.equalKeys(key).cursors()) {
-      this.deleteAt(node);
-      ++deleteCount;
-    }
-    return deleteCount;
-  }
+  // public deleteKey(key: K): number {
+  //   let deleteCount = 0;
+  //   for (const node of this.equalKeys(key).cursors()) {
+  //     this.deleteAt(node);
+  //     ++deleteCount;
+  //   }
+  //   return deleteCount;
+  // }
 
   /**
    * This operation generally takes `O(log(n))` time, unless multiple entries
    * with the same key are allowed. In that case, the complexity can grow to
    * `O(n)`.
    */
-  public deleteAll(value: T): number {
-    let deleteCount = 0;
-    for (const node of  this.equalKeys(this.getKey(value)).cursors()) {
-      if (this.isEqual(node.value, value)) {
-        this.deleteAt(node);
-        ++deleteCount;
-      }
-    }
-    return deleteCount;
-  }
+  // public deleteAll(value: T): number {
+  //   let deleteCount = 0;
+  //   for (const node of  this.equalKeys(this.getKey(value)).cursors()) {
+  //     if (this.isEqual(node.value, value)) {
+  //       this.deleteAt(node as Node<T>);
+  //       ++deleteCount;
+  //     }
+  //   }
+  //   return deleteCount;
+  // }
 
   /**
    * This method takes at most `O(log(n))` time, where `n` is the amount of
    * elements in the collection.
    */
-  public delete(element: T): boolean {
-    for (const node of this.equalKeys(this.getKey(element)).cursors()) {
-      if (this.isEqual(node.value, element)) {
-        this.deleteAt(node);
-        return true;
-      }
-    }
-    return false;
-  }
+  // public delete(element: T): boolean {
+  //   for (const node of this.equalKeys(this.getKey(element)).cursors()) {
+  //     if (this.isEqual(node.value, element)) {
+  //       this.deleteAt(node as Node<T>);
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   /**
    * Takes `O(log(n))` time, and is slightly faster than deleting the element
@@ -666,11 +487,12 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
       node = min;
     }
 
-    let parent = node.parent;
+    let parent = node.parent as Node<T>;
     let child = node;
     let newRoot;
 
     while (parent !== null) {
+
       if (parent.left === child) {
         parent.balance -= 1;
       } else {
@@ -685,8 +507,8 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
         }
         newRoot = rotateLeft(parent);
 
-        if (parent === this._root) {
-          this._root = newRoot;
+        if (parent === this.rootNode) {
+          this.rootNode = newRoot;
         }
         parent = newRoot;
       } else if (parent.balance > 1) {
@@ -697,8 +519,8 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
         }
         newRoot = rotateRight(parent);
 
-        if (parent === this._root) {
-          this._root = newRoot;
+        if (parent === this.rootNode) {
+          this.rootNode = newRoot;
         }
         parent = newRoot;
       }
@@ -708,7 +530,7 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
       }
 
       child = parent;
-      parent = parent.parent;
+      parent = parent.parent as Node<T>;
     }
 
     if (node.parent) {
@@ -719,11 +541,11 @@ export class AVLTreeIndex<T, K = T> implements Index<T, K> {
       }
     }
 
-    if (node === this._root) {
-      this._root = null;
+    if (node === this.rootNode) {
+      this.rootNode = null;
     }
 
-    this._size--;
+    this.elementCount--;
   }
 
   public clone() {

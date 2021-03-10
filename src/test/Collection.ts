@@ -1,12 +1,96 @@
 
 import { expect } from "chai";
 import { Collection } from "../interfaces";
+import { checkInvariants } from "./invariants";
 import { test } from "./_helpers";
+
+import numbers1 from "./data/numbers1.json";
+import numbers2 from "./data/numbers2.json";
 
 test("Collection.add() returns a cursor to the added element", (coll: Collection<number>) => {
   const [added1, pos1] = coll.add(1);
   expect(added1).to.be.true;
   expect(pos1.value).to.equal(1);
+  const [added2, pos2] = coll.add(2);
+  expect(added2).to.be.true;
+  expect(pos2.value).to.equal(2);
+  const [added3, pos3] = coll.add(3);
+  expect(added3).to.be.true;
+  expect(pos3.value).to.equal(3);
+  const [added4, pos4] = coll.add(4);
+  expect(added4).to.be.true;
+  expect(pos4.value).to.equal(4);
+});
+
+test("Collection.add() successfully adds new elements and reports them as added", (coll: Collection<number>) => {
+  expect(coll.has(1)).to.be.false
+  expect(coll.has(2)).to.be.false
+  expect(coll.has(3)).to.be.false
+  expect(coll.has(4)).to.be.false
+  expect(coll.has(5)).to.be.false
+  checkInvariants(coll);
+  coll.add(1);
+  expect(coll.has(2)).to.be.false
+  expect(coll.has(3)).to.be.false
+  expect(coll.has(4)).to.be.false
+  expect(coll.has(5)).to.be.false
+  checkInvariants(coll);
+  coll.add(5);
+  expect(coll.has(3)).to.be.false
+  expect(coll.has(4)).to.be.false
+  expect(coll.has(2)).to.be.false
+  checkInvariants(coll);
+  coll.add(2);
+  expect(coll.has(4)).to.be.false
+  expect(coll.has(3)).to.be.false
+  checkInvariants(coll);
+  coll.add(3);
+  expect(coll.has(4)).to.be.false
+  checkInvariants(coll);
+  coll.add(4);
+  checkInvariants(coll);
+  expect(coll.has(1)).to.be.true
+  expect(coll.has(2)).to.be.true
+  expect(coll.has(3)).to.be.true
+  expect(coll.has(4)).to.be.true
+  expect(coll.has(5)).to.be.true
+});
+
+test("Collection.add() should work some random data", (collection: Collection<number>) => {
+  checkInvariants(collection);
+  for (const num of numbers1) {
+    collection.add(num);
+    checkInvariants((collection as any).rootNode);
+  }
+})
+
+test("RBTreeIndex.delete() works on some examples", (collection: Collection<number>) => {
+  collection.add(1);
+  collection.add(3);
+  collection.add(4);
+  collection.add(2);
+  collection.add(5);
+  checkInvariants(collection);
+  collection.delete(2);
+  checkInvariants(collection);
+  collection.delete(4);
+  checkInvariants(collection);
+  collection.delete(1);
+  checkInvariants(collection);
+  collection.delete(3);
+  checkInvariants(collection);
+})
+
+
+test("Collection.delete() should work on some random data", (collection: Collection<number>) => {
+  for (const num of numbers1) {
+    collection.add(num);
+  }
+  checkInvariants((collection as any).rootNode);
+  for (const num of numbers2) {
+    collection.delete(num);
+    checkInvariants((collection as any).rootNode);
+  }
 });
 
 test("Collection.size is correctly updated when adding elements", (coll: Collection<string>) => {

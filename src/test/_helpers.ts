@@ -1,115 +1,233 @@
 
-import { expect } from "chai";
 import AVLTreeIndex from "../AVLTreeIndex";
-import { Collection } from "../interfaces";
+import DoubleLinkedList from "../DoubleLinkedList";
+import HashDict from "../HashDict";
+import HashManyDict from "../HashManyDict";
+import HashMultiDict from "../HashMultiDict";
+import PriorityQueue from "../PriorityQueue";
+import Queue from "../Queue";
+import RBTreeIndex from "../RBTreeIndex";
+import SingleLinkedList from "../SingleLinkedList";
+import Stack from "../Stack";
+import TreeDict from "../TreeDict";
+import TreeManyDict from "../TreeManyDict";
+import TreeMultiDict from "../TreeMultiDict";
+import Vector from "../Vector";
 
-const TEST_FILES = [
+class AVLTreeMultiIndex<T, K = T> extends AVLTreeIndex<T, K> {
+  constructor(opts = {}) {
+    super({
+      ...opts,
+      allowDuplicates: true,
+    })
+  }
+}
+
+class RBTreeMultiIndex<T, K = T> extends RBTreeIndex<T, K> {
+  constructor(opts = {}) {
+    super({
+      ...opts,
+      allowDuplicates: true,
+    })
+  }
+}
+
+
+type Newable<T> = { new (...args: any[]): T; }
+
+interface Type {
+  name: string;
+  implements: string[];
+  classConstructor?: Newable<any>;
+}
+
+const TYPE_NAMES: Type[] = [
+  {
+    name: 'Collection',
+    implements: []
+  },
+  {
+    name: 'SortedIndex',
+    implements: ['Index'],
+  },
+  {
+    name: 'SortedMultiIndex',
+    implements: ['SortedIndex'],
+  },
+  {
+    name: 'Sequence',
+    implements: ['Collection']
+  },
+  {
+    name: 'Index',
+    implements: ['Collection'],
+  },
+  {
+    name: 'DictLike',
+    implements: []
+  },
+  {
+    name: 'Dict',
+    implements: ['DictLike']
+  },
+  {
+    name: 'ManyDict',
+    implements: ['DictLike']
+  },
+  {
+    name: 'MultiDict',
+    implements: ['DictLike']
+  },
+  {
+    name: 'QueueLike',
+    implements: ['Collection']
+  },
+  {
+    name: 'SingleLinkedList',
+    implements: ['Sequence'],
+    classConstructor: SingleLinkedList
+  },
+  {
+    name: 'DoubleLinkedList',
+    implements: ['Sequence'],
+    classConstructor: DoubleLinkedList
+  },
+  {
+    name: 'Stack',
+    implements: ['QueueLike'],
+    classConstructor: Stack
+  },
+  {
+    name: 'PriorityQueue',
+    implements: ['QueueLike'],
+    classConstructor: PriorityQueue
+  },
+  {
+    name: 'Queue',
+    implements: ['QueueLike'],
+    classConstructor: Queue
+  },
+  {
+    name: 'Vector',
+    implements: ['Sequence'],
+    classConstructor: Vector,
+  },
+  {
+    name: 'RBTreeIndex',
+    implements: ['SortedIndex'],
+    classConstructor: RBTreeIndex,
+  },
+  {
+    name: 'RBTreeMultiIndex',
+    implements: ['SortedMultiIndex'],
+    classConstructor: RBTreeMultiIndex
+  },
   {
     name: 'AVLTreeIndex',
-    file: "../AVLTreeIndex",
-    implements: ["IndexedCollection", "CollectionLike"],
-    factory: (elements?: any[]) => new AVLTreeIndex({
-      elements,
-      getKey: element => element,
-      allowDuplicates: true
-    })
+    implements: ['SortedIndex'],
+    classConstructor: AVLTreeIndex,
   },
   {
-    name: "TreeMultiDict",
-    file: "../TreeMultiDict",
-    implements: ["MultiDict", "DictLike", "IndexedCollection", "CollectionLike"],
+    name: 'AVLTreeMultiIndex',
+    implements: ['SortedMultiIndex'],
+    classConstructor: AVLTreeMultiIndex
   },
   {
-    name: "HashMultiDict",
-    file: "../HashMultiDict",
-    implements: ["MultiDict", "DictLike", "IndexedCollection", "CollectionLike"],
+    name: 'HashDict',
+    implements: ['Dict'],
+    classConstructor: HashDict,
   },
   {
-    name: "TreeManyDict",
-    file: "../TreeManyDict",
-    implements: ["ManyDict", "DictLike", "IndexedCollection", "CollectionLike"],
+    name: 'HashManyDict',
+    implements: ['ManyDict'],
+    classConstructor: HashManyDict,
   },
   {
-    name: "HashManyDict",
-    file: "../HashManyDict",
-    implements: ["ManyDict", "DictLike", "IndexedCollection", "CollectionLike"],
+    name: 'HashMultiDict',
+    implements: ['MultiDict'],
+    classConstructor: HashMultiDict,
   },
   {
-    name: "TreeDict",
-    file: "../TreeDict",
-    implements: ["Dict", "DictLike", "IndexedCollection", "CollectionLike"],
+    name: 'TreeDict',
+    implements: ['Dict'],
+    classConstructor: TreeDict,
   },
   {
-    name: "HashDict",
-    file: "../HashDict",
-    implements: ["Dict", "DictLike", "IndexedCollection", "CollectionLike"],
+    name: 'TreeManyDict',
+    implements: ['ManyDict'],
+    classConstructor: TreeManyDict,
   },
   {
-    name: "Queue",
-    file: "../Queue",
-    implements: ["Queuelike", "Collection"],
+    name: 'TreeMultiDict',
+    implements: ['MultiDict'],
+    classConstructor: TreeMultiDict
   },
-  {
-    name: "Stack",
-    file: "../Stack",
-    implements: ["Queuelike", "Collection"],
-  },
-  {
-    name: "PriorityQueue",
-    file: "../PriorityQueue",
-    implements: ["Queuelike", "Collection"],
-  },
-  {
-    name: "DoubleLinkedList",
-    file: "../DoubleLinkedList",
-    implements: ["Sequence", "List", "Collection"],
-  },
-  {
-    name: "SingleLinkedList",
-    file: "../SingleLinkedList",
-    implements: ["Sequence", "List", "Collection"],
-  },
-  {
-    name: "Vector",
-    file: "../Vector",
-    implements: ["Sequence", "Collection"],
-  },
-];
+]
 
-interface TestOptions {
-  args?: any[];
+interface Test {
+  hasNew: boolean;
+  classConstructorName: string;
+  methodName: string;
+  description: string;
+  execute: (collection?: any) => void;
 }
 
-for (const testFile of TEST_FILES) {
-  describe(testFile.name + "()", () => {
-    it("successfully creates a collection with the given elements", () => {
-      const ctor = require(testFile.file).default;
-      const elements = [[1, 2], [2, 3]];
-      let coll;
-      if (testFile.factory !== undefined) {
-        coll = testFile.factory(elements);
-      } else {
-        coll = new ctor(elements);
+const tests: Test[] = [];
+
+function addTest(test: Test, type: Type) {
+  it(`${type.name}.${test.methodName} ${test.description}`, () => {
+    if (test.hasNew) {
+      test.execute();
+    } else {
+      const Class = type.classConstructor!;
+      const instance = new Class();
+      test.execute(instance);
+    }
+  })
+}
+
+function isImplementationOf(derived: string, base: string): boolean {
+  const type = TYPE_NAMES.find(type => type.name === derived);
+  if (type === undefined) {
+    throw new Error(`Could not find definition of ${derived}`);
+  }
+  if (type.name === base) {
+    return true;
+  }
+  return type.implements.some(parent => isImplementationOf(parent, base));
+}
+
+before(() => {
+  for (const type of TYPE_NAMES) {
+    if (type.classConstructor === undefined) {
+      continue;
+    }
+    describe(type.name, () => {
+      for (const test of tests) {
+        if (isImplementationOf(type.name, test.classConstructorName)){ 
+          addTest(test, type);
+        }
       }
-      expect(coll.size).to.equal(2);
-      const storedElements = [...coll];
-      expect(storedElements).to.have.lengthOf(2);
-      expect(storedElements).to.deep.include([1, 2]);
-      expect(storedElements).to.deep.include([2, 3]);
     });
-  });
-}
+  }
+});
 
-function parseTestName(name: string): [string, string, string] {
-  for (let i = 0; i < name.length; i++) {
-    const ch = name[i];
+function parseTestTitle(title: string): [boolean, string, string, string] {
+  let i = 0;
+  let hasNew = false;
+  if (title.startsWith('new ')) {
+    hasNew = true;
+    i = 4;
+  }
+  for (; i < title.length; i++) {
+    const ch = title[i];
     if (!/^[a-zA-Z]$/.test(ch)) {
-      for (let j = i; j < name.length; j++) {
-        if (name[j] === " ") {
-          const methodName = name.substring(i, j);
-          const description = name.substring(j);
-          const className = name.substring(0, i);
-          return [className, methodName, description];
+      for (let j = i; j < title.length; j++) {
+        if (title[j] === " ") {
+          const methodName = title.substring(i+1, j);
+          const description = title.substring(j+1);
+          const classConstructorName = title.substring(0, i);
+          return [hasNew, classConstructorName, methodName, description];
         }
       }
       throw new Error(`Property name must be followed by '()' or a space and a description.`);
@@ -118,23 +236,13 @@ function parseTestName(name: string): [string, string, string] {
   throw new Error(`Class name must be followed by a property name and a description.`);
 }
 
-export function test<C extends Collection<any>>(name: string, callback: (collection: C) => void, opts?: TestOptions) {
-  const [className, methodName, description] = parseTestName(name);
-  for (const testFile of TEST_FILES) {
-    if (testFile.name === className || testFile.implements.some((intfName) => intfName === className)) {
-      describe(testFile.name + methodName, () => {
-        it(description, () => {
-          const args = (opts && opts.args) || [];
-          const ctor = require(testFile.file).default;
-          let coll;
-          if (testFile.factory !== undefined) {
-            coll = testFile.factory();
-          } else {
-            coll = new ctor(...args);
-          }
-          callback(coll);
-        });
-      });
-    }
-  }
+export function test<C>(title: string, execute: (collection: C) => void) {
+  const [hasNew, classConstructorName, methodName, description] = parseTestTitle(title);
+  tests.push({
+    hasNew,
+    classConstructorName,
+    methodName,
+    description,
+    execute,
+  })
 }

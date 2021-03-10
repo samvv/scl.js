@@ -174,11 +174,7 @@ export interface Sequence<T> extends Collection<T> {
 export interface Index<T, K = T> extends Collection<T> {
 
   /**
-   * Checks whether there a pair in this collection that has the given key. 
-   *
-   * In some cases, this might be faster than accessing {@link CollectionRange.size}
-   * of {@link Index.equalKeys equalKeys()}. In others, it will be
-   * equivalent to it.
+   * Checks whether there a pair in this collection that has the given key.
    */
   hasKey(key: K): boolean
 
@@ -195,6 +191,11 @@ export interface Index<T, K = T> extends Collection<T> {
    */
   deleteKey(key: K): number;
 
+
+}
+
+export interface SortedIndex<T, K = T> extends Index<T, K> {
+
   /*
    * Returns a range of items that have the same key.
    */
@@ -203,13 +204,12 @@ export interface Index<T, K = T> extends Collection<T> {
   /**
    * Returns the value that is just below the given value, if any.
    */
-  lowerKey?(key: K): Cursor<T> | null;
+  lowerKey(key: K): Cursor<T> | null;
 
   /**
    * Return the value that is just above the given value, if any.
    */
-  upperKey?(key: K): Cursor<T> | null;
-
+  upperKey(key: K): Cursor<T> | null;
 }
 
 /**

@@ -64,7 +64,6 @@ describe("default lesser", () => {
   });
 
 });
-    expect(equalByLesser({ foo: 1 }, { foo: 1 })).to.be.true
 
 describe('an equality function', () => {
 

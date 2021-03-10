@@ -1,8 +1,8 @@
 import { AddResult, Index } from "./interfaces";
 import { getKey, lessThan } from "./util";
-import { BST, BSNodeLike, BSNode, BSTOptions } from "./BST"
+import { BST, BSNodeLike, BSNode, BSTOptions, equalKeysNoStrict, BSNodeRange } from "./BST"
 
-const enum RBColor {
+export const enum RBColor {
   Red,
   Black,
 }
@@ -19,28 +19,6 @@ export class RBNode<T> extends BSNode<T> {
     super(parentNode, value, left, right);
   }
 
-}
-
-export function checkInvariants<T>(node: RBNode<T>): number {
-  if (node === null) {
-    return 0;
-  }
-  const left = node.left as RBNode<T>;
-  const right = node.right as RBNode<T>;
-  if (node.color === RBColor.Red) {
-    if (left !== null && left.color === RBColor.Red) {
-      throw new Error(`Node on the left of node with value ${node.value} is red while the parent is also red.`)
-    }
-    if (right !== null && right.color === RBColor.Red) {
-      throw new Error(`Node on the right of node with value ${node.value} is red while the parent is also red.`)
-    }
-  }
-  const blackCountLeft = node.left !== null ? checkInvariants(left) : 0;
-  const blackCountRight = node.right !== null ? checkInvariants(right) : 0;
-  if (blackCountLeft !== blackCountRight) {
-    throw new Error(`The amount of black nodes on the left of node with value ${node.value} does not equal the amount of black nodes on the right`)
-  }
-  return blackCountLeft + node.color === RBColor.Black ? 1 : 0;
 }
 
 
@@ -144,7 +122,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
         && node.color === RBColor.Red) {
 
       // We know the parentNode must exist because `node` wasn't the root node.
-      const parent = node.parentNode as RBNode<T>;
+      const parent = node.parent as RBNode<T>;
 
       // This should be an invariant of the while-loop but awesome TypeScript
       // forces us to cast the parent node first.
@@ -154,7 +132,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
       // We know the parent node's parent node must exist because the parent
       // node was red and the root node can never be red.
-      const grandParent = parent.parentNode as RBNode<T>;
+      const grandParent = parent.parent as RBNode<T>;
 
       // The uncle is the node next to `parent` and shares the same
       // `grandParent` with it.
@@ -277,7 +255,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
     while (true) {
 
-      const parent = node.parentNode as RBNode<T>;
+      const parent = node.parent as RBNode<T>;
 
       // If `node` is a leaf node without any children, this means that we can
       // delete `node` and be done with it. We just need to make sure our
@@ -315,7 +293,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
         const replacement = (node.left !== null ? node.left : node.right) as RBNode<T>;
 
         // This logic performs the actual deletion of `node`.
-        replacement.parentNode = parent;
+        replacement.parent = parent;
         if (node === this.rootNode) {
           this.rootNode = replacement;
         } else {
@@ -369,7 +347,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
       // We may take the non-nullable parent of `node` because the loop
       // invariant guarantees that `node` is not the root node.
-      const parent = node.parentNode as RBNode<T>;
+      const parent = node.parent as RBNode<T>;
 
       // If the sibling is not there then the double-black just transplants
       // itself to the parent node.
@@ -503,6 +481,10 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
     }
 
+  }
+
+  public equalKeys(key: K): BSNodeRange<T> {
+    return equalKeysNoStrict(this, key);
   }
 
   public clone(): RBTreeIndex<T, K> {

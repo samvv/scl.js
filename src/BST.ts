@@ -1,8 +1,8 @@
-import { AddResult, CollectionRange, Index } from "./interfaces";
+import { AddResult, CollectionRange, Index, SortedIndex } from "./interfaces";
 import { isEqual, getKey, isIterable, lessThan } from "./util";
 
 export interface BSNodeLike<T> {
-  parentNode: BSNodeLike<T> | null;
+  parent: BSNodeLike<T> | null;
   value: T;
   left: BSNodeLike<T> | null;
   right: BSNodeLike<T> | null;
@@ -11,7 +11,7 @@ export interface BSNodeLike<T> {
 export class BSNode<T> implements BSNodeLike<T> {
 
   constructor(
-    public parentNode: BSNode<T> | null = null,
+    public parent: BSNode<T> | null = null,
     public value: T,
     public left: BSNode<T> | null = null,
     public right: BSNode<T> | null = null,
@@ -46,18 +46,33 @@ export class BSNode<T> implements BSNodeLike<T> {
       return this.right.getLeftmost();
     }
     let node: BSNode<T> = this;
-    while (node.parentNode !== null && node === node.parentNode.right) {
-      node = node.parentNode;
+    while (node.parent !== null && node === node.parent.right) {
+      node = node.parent;
     }
-    return node.parentNode;
+    return node.parent;
+  }
+
+  public prev(): BSNode<T> | null {
+    if (this.left !== null) {
+      let node = this.left;
+      while (node.right !== null) {
+        node = node.right;
+      }
+      return node;
+    }
+    let node: BSNode<T> = this;
+    while (node.parent !== null && node === node.parent.left) {
+      node = node.parent;
+    }
+    return node.parent;
   }
 
   public getUncle(): BSNode<T> | null {
-    if (this.parentNode === null || this.parentNode.parentNode === null) {
+    if (this.parent === null || this.parent.parent === null) {
       return null;
     }
-    const parent = this.parentNode;
-    const grandParent = this.parentNode.parentNode;
+    const parent = this.parent;
+    const grandParent = this.parent.parent;
     return grandParent.left === parent
       ? grandParent.right
       : grandParent.left;
@@ -65,24 +80,121 @@ export class BSNode<T> implements BSNodeLike<T> {
 
 }
 
+/**
+ * Search for equal keys even when the binary search tree is not strictly
+ * a binary search tree in the strict sense.
+ * 
+ * This function generally returns in `O(log(n))` time, but this might become
+ * `O(n)` in the case where multiple elements with the same key are allowed.
+ */
+export function equalKeysNoStrict<T, K>(tree: BST<T, K>, key: K) {
+
+  function findMinEqual(key: K, node: BSNode<T> | null): BSNode<T> | null {
+    if (node === null) {
+      return null;
+    }
+    const nodeKey = tree.getKey(node.value);
+    if (tree.compareKeys(key, nodeKey)) {
+      return findMinEqual(key, node.left);
+    }
+    if (tree.compareKeys(nodeKey, key)) {
+      return findMinEqual(key, node.right);
+    }
+    return findMinEqual(key, node.left) || node;
+  }
+
+  function findMaxEqual(key: K, node: BSNode<T> | null): BSNode<T> | null {
+    if (node === null) {
+      return null;
+    }
+    const nodeKey = tree.getKey(node.value);
+    if (tree.compareKeys(key, nodeKey)) {
+      return findMaxEqual(key, node.left);
+    }
+    if (tree.compareKeys(nodeKey, key)) {
+      return findMaxEqual(key, node.right);
+    }
+    return findMaxEqual(key, node.right) || node;
+  }
+
+  const top = tree.findKey(key);
+  const min = findMinEqual(key, top);
+  const max = findMaxEqual(key, top);
+  return new BSNodeRange(min, max, undefined, false);
+}
+
+/**
+ * Find duplicate keys in a binary search tree that strictly upholds the `<=`
+ * relation for all its child nodes.
+ */
+export function equalKeysStrict<T, K>(this: BST<T, K>, key: K): BSNodeRange<T> {
+  const min = this.findKey(key);
+  if (min === null) {
+    return new BSNodeRange(null, null, 0, false);
+  }
+  let count = 1;
+  let max = min;
+  while (true) {
+    const next = max.next();
+    if (next === null || this.compareKeys(key, this.getKey(next.value))) {
+      break;
+    }
+    max = next;
+    count++;
+  }
+  return new BSNodeRange(min, max, count, false);
+}
+
 export class BSNodeRange<T> implements CollectionRange<T> {
 
-  constructor(public min: BSNode<T> | null, public max: BSNode<T> | null, private nodeCount: number) {
-    
+  constructor(
+    public min: BSNode<T> | null,
+    public max: BSNode<T> | null,
+    private nodeCount: number | undefined,
+    public readonly reversed: boolean
+  ) {
+
   }
 
   public get size(): number {
+    if (this.nodeCount === undefined) {
+      let count = 0;
+      for (const node of this.cursors()) {
+        count++;
+      }
+      return this.nodeCount = count;
+    }
     return this.nodeCount;
   }
 
+  public reverse() {
+    return new BSNodeRange(
+      this.min,
+      this.max,
+      this.nodeCount,
+      !this.reversed
+    )
+  }
+
   public *cursors() {
-    let node = this.min;
-    while (node !== null) {
-      yield node;
-      if (node === this.max) {
-        break;
+    if (this.reversed) {
+      let node = this.max;
+      while (node !== null) {
+        yield node;
+        if (node === this.min) {
+          break;
+        }
+        node = node.prev();
       }
-      node = node.next();
+    } else {
+      let node = this.min;
+      while (node !== null) {
+        yield node;
+        if (node === this.max) {
+          break;
+        }
+        node = node.next();
+      }
     }
   }
 
@@ -132,7 +244,7 @@ export interface BSTOptions<T, K = T> {
 /**
  * A base implementation of binary search trees.
  */
-export abstract class BST<T, K = T> implements Index<T, K> {
+export abstract class BST<T, K = T> implements SortedIndex<T, K> {
 
   protected elementCount = 0;
 
@@ -141,7 +253,7 @@ export abstract class BST<T, K = T> implements Index<T, K> {
   public getKey: (element: T) => K;
   public compareKeys: (a: K, b: K) => boolean;
   public isEqual: (a: T, b: T) => boolean;
-  public allowDuplicates = false;
+  public allowDuplicates: boolean;
 
   public constructor(opts: Iterable<T> | BSTOptions<T, K> = {}) {
     let elements: Iterable<T> = [];
@@ -154,7 +266,7 @@ export abstract class BST<T, K = T> implements Index<T, K> {
     this.getKey = opts.getKey ?? getKey;
     this.compareKeys = opts.compareKeys ?? lessThan;
     this.isEqual = opts.isEqual ?? isEqual;
-    this.allowDuplicates = opts.allowDuplicates ?? false;
+    this.allowDuplicates = opts.allowDuplicates ?? true; // FIXME Should default to `false`.
     for (const element of elements) {
       this.add(element);
     }
@@ -176,15 +288,10 @@ export abstract class BST<T, K = T> implements Index<T, K> {
 
   public deleteAll(element: T): number {
     let deleteCount = 0;
-    const key = this.getKey(element);
-    let node = this.findKey(key);
-    while (node !== null) {
+    for (const node of  this.equalKeys(this.getKey(element)).cursors()) {
       if (this.isEqual(node.value, element)) {
         this.deleteAt(node);
-      }
-      deleteCount++;
-      if (node.right !== null && !this.compareKeys(key, this.getKey(node.right.value))) {
-        node = node.right;
+        ++deleteCount;
       }
     }
     return deleteCount;
@@ -192,13 +299,9 @@ export abstract class BST<T, K = T> implements Index<T, K> {
 
   public deleteKey(key: K): number {
     let deleteCount = 0;
-    let node = this.findKey(key);
-    while (node !== null) {
+    for (const node of  this.equalKeys(key).cursors()) {
       this.deleteAt(node);
-      deleteCount++;
-      if (node.right !== null && !this.compareKeys(key, this.getKey(node.right.value))) {
-        node = node.right;
-      }
+      ++deleteCount;
     }
     return deleteCount;
   }
@@ -215,21 +318,21 @@ export abstract class BST<T, K = T> implements Index<T, K> {
     if (node === this.rootNode) {
       this.rootNode = newNode;
     } else {
-      const parent = node.parentNode!;
+      const parent = node.parent!;
       if (parent.left === node) {
         parent.left = newNode;
       } else {
         parent.right = newNode;
       }
     }
-    newNode.parentNode = node.parentNode;
-    node.parentNode = right;
+    newNode.parent = node.parent;
+    node.parent = right;
     node.right = right.left;
     if (right.left !== null) {
-      right.left.parentNode = node;
+      right.left.parent = node;
     }
     right.left = node;
-    node.parentNode = right;
+    node.parent = right;
   }
 
   protected rotateRight(node: BSNode<T>) {
@@ -238,18 +341,18 @@ export abstract class BST<T, K = T> implements Index<T, K> {
     if (node === this.rootNode) {
       this.rootNode = newNode;
     } else {
-      const parent = node.parentNode!;
+      const parent = node.parent!;
       if (parent.left === node) {
         parent.left = newNode;
       } else {
         parent.right = newNode;
       }
     }
-    newNode.parentNode = node.parentNode;
-    node.parentNode = left;
+    newNode.parent = node.parent;
+    node.parent = left;
     node.left = left.right;
     if (left.right !== null) {
-      left.right.parentNode = node;
+      left.right.parent = node;
     }
     left.right = node;
   }
@@ -268,6 +371,15 @@ export abstract class BST<T, K = T> implements Index<T, K> {
     return node;
   }
 
+  /**
+   * This method always returns the topmost node that contains the given key,
+   * which means that calling {@link Cursor.next next()} on the result will
+   * always return a node with the same key if there is any.
+   *
+   * This method takes `O(log(n))` time.
+   *
+   * @param key The key to search for.
+   */
   public findKey(key: K): BSNode<T> | null {
     let node = this.rootNode;
     while (node !== null) {
@@ -298,7 +410,7 @@ export abstract class BST<T, K = T> implements Index<T, K> {
       if (this.compareKeys(key, currKey)) {
         if (currNode.left === null) {
           currNode.left = node;
-          node.parentNode = currNode;
+          node.parent = currNode;
           break;
         } else {
           currNode = currNode.left;
@@ -309,7 +421,7 @@ export abstract class BST<T, K = T> implements Index<T, K> {
             return false;
           }
           currNode.right = node;
-          node.parentNode = currNode;
+          node.parent = currNode;
           break;
         } else {
           currNode = currNode.right;
@@ -324,7 +436,7 @@ export abstract class BST<T, K = T> implements Index<T, K> {
     if (node === null) {
       return null;
     }
-    const parent = node.parentNode!;
+    const parent = node.parent!;
     if (parent.left === node) {
       return parent.right;
     } else {
@@ -358,68 +470,79 @@ export abstract class BST<T, K = T> implements Index<T, K> {
 
   public toRange() {
     return new BSNodeRange(
-      this.rootNode !== null ? this.rootNode.getLeftmost() : null,
-      null,
-      this.elementCount
+      this.begin(), 
+      this.end(),
+      this.elementCount,
+      false
     );
   }
 
   public has(element: T): boolean {
-    return this.findKey(this.getKey(element)) !== null;
+    for (const node of this.equalKeys(this.getKey(element)).cursors()) {
+      if (this.isEqual(node.value, element)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public hasKey(key: K): boolean {
     return this.findKey(key) !== null;
   }
 
-  public lowerKey(key: K): BSNode<T> | null {
+  public getNearest(key: K): BSNode<T> | null {
     let node = this.rootNode;
     while (node !== null) {
       const nodeKey = this.getKey(node.value);
       if (this.compareKeys(key, nodeKey)) {
+        if (node.left === null) {
+          break;
+        }
         node = node.left;
-      } else if (node.right === null) {
-        return node;
-      } else {
+      } else if (this.compareKeys(nodeKey, key)) {
+        if (node.right === null) {
+          break;
+        }
         node = node.right;
+      } else {
+        break;
       }
     }
-    return null;
+    return node;
+  }
+
+  public lowerKey(key: K): BSNode<T> | null {
+    let nearest = this.getNearest(key);
+    while (nearest !== null && this.compareKeys(key, this.getKey(nearest.value))) {
+      nearest = nearest.prev();
+    }
+    return nearest;
   }
 
   public upperKey(key: K): BSNode<T> | null {
-    let node = this.rootNode;
-    while (node !== null) {
-      const nodeKey = this.getKey(node.value);
-      if (this.compareKeys(nodeKey, key)) {
-        node = node.right;
-      } else if (node.left === null) {
-        return node;
-      } else {
-        node = node.left;
-      }
+    let nearest = this.getNearest(key);
+    while (nearest !== null && this.compareKeys(this.getKey(nearest.value), key)) {
+      nearest = nearest.next();
     }
-    return null;
+    return nearest;
   }
 
-  public equalKeys(key: K): BSNodeRange<T> {
-    const min = this.findKey(key);
-    if (min === null) {
-      return new BSNodeRange(null, null, 0);
-    }
-    let count = 1;
-    let max = min;
-    while (max.right !== null && !this.compareKeys(this.getKey(max.right.value), key)) {
-      max = max.right;
-      count++;
-    }
-    return new BSNodeRange(min, max, count);
-  }
+  public abstract equalKeys(key: K): BSNodeRange<T>;
 
   public *[Symbol.iterator]() {
-    for (let node = this.rootNode; node !== null; node = node.next()) {
+    for (let node = this.begin(); node !== null; node = node.next()) {
       yield node.value;
     }
+  }
+
+  public begin(): BSNode<T> | null {
+    return this.rootNode === null
+      ? null : this.rootNode.getLeftmost();
+  }
+
+  public end(): BSNode<T> | null {
+    return this.rootNode === null
+      ? null : this.rootNode.getRightmost();
   }
 
 }
