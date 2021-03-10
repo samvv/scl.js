@@ -30,6 +30,7 @@
     "xxhashjs": "^0.2.2"
   },
   "scripts": {
+    "watch": "mocha --watch lib/test --require source-map-support/register",
     "prepare": "husky install && tsc",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "mocha lib/test --require source-map-support/register",
