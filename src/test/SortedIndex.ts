@@ -43,7 +43,7 @@ test<SortedIndex<number>>("SortedIndex.delete() deletes elements while retaining
   expect([...index]).to.deep.equal([]);
 });
 
-test<SortedIndex<number>>("SortedIndex.lowerKey() finds the lower bound of an existing key", index => {
+test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() finds the lower bound of an existing key", index => {
   index.add(1);
   index.add(5);
   index.add(2);
@@ -61,7 +61,7 @@ test<SortedIndex<number>>("SortedIndex.lowerKey() finds the lower bound of an ex
   expect(pos5!.value).to.equal(5);
 });
 
-test<SortedIndex<number>>("SortedIndex.upperKey() finds the upper bound of an existing key", index => {
+test<SortedIndex<number>>("SortedIndex.getLeastUpperBound() finds the upper bound of an existing key", index => {
   index.add(1);
   index.add(5);
   index.add(2);
@@ -79,7 +79,7 @@ test<SortedIndex<number>>("SortedIndex.upperKey() finds the upper bound of an ex
   expect(pos5!.value).to.equal(5);
 });
 
-test<SortedIndex<number>>("SortedIndex.lowerKey() works pn existing keys no matter where the node is located", index => {
+test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() works pn existing keys no matter where the node is located", index => {
   for (const num of numbers1) {
     index.add(num);
   }
@@ -89,7 +89,7 @@ test<SortedIndex<number>>("SortedIndex.lowerKey() works pn existing keys no matt
   }
 })
 
-test<SortedIndex<number>>("SortedIndex.upperKey() works on existing keys no matter where the node is located", index => {
+test<SortedIndex<number>>("SortedIndex.getLeastUpperBound() works on existing keys no matter where the node is located", index => {
   for (const num of numbers1) {
     index.add(num);
   }
@@ -99,7 +99,7 @@ test<SortedIndex<number>>("SortedIndex.upperKey() works on existing keys no matt
   }
 });
 
-test<SortedIndex<number>>("SortedIndex.upperKey() finds the nearest upper bound if the key is not found", index => {
+test<SortedIndex<number>>("SortedIndex.getLeastUpperBound() finds the nearest upper bound if the key is not found", index => {
   index.add(1);
   index.add(3);
   index.add(6);
@@ -140,7 +140,7 @@ test<SortedIndex<number>>("SortedIndex.upperKey() finds the nearest upper bound 
   expect(pos16).to.be.null
 });
 
-test<SortedIndex<number>>("SortedIndex.lowerKey() finds the nearest lower bound if the key is not found", index => {
+test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() finds the nearest lower bound if the key is not found", index => {
   index.add(1);
   index.add(3);
   index.add(6);
