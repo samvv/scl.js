@@ -155,7 +155,7 @@ export class TreeDict<K, V> extends AVLTreeIndex<[K, V], K> implements Dict<K, V
 
   public clone() {
     return new TreeDict<K, V>({
-      compareKeys: this.compareKeys
+      compareKeys: this.isKeyLessThan
     , valuesEqual: this.valuesEqual
     , elements: this,
     });

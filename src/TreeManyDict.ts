@@ -141,7 +141,7 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
 
   public clone() {
     return new TreeManyDict<K, V>({
-      compareKeys: this.compareKeys
+      compareKeys: this.isKeyLessThan
     , valuesEqual: this.valuesEqual
     , elements: this,
     });

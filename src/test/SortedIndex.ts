@@ -49,15 +49,15 @@ test<SortedIndex<number>>("SortedIndex.lowerKey() finds the lower bound of an ex
   index.add(2);
   index.add(3);
   index.add(4);
-  const pos1 = index.lowerKey(1);
+  const pos1 = index.getGreatestLowerBound(1);
   expect(pos1!.value).to.equal(1);
-  const pos2 = index.lowerKey(2);
+  const pos2 = index.getGreatestLowerBound(2);
   expect(pos2!.value).to.equal(2);
-  const pos3 = index.lowerKey(3);
+  const pos3 = index.getGreatestLowerBound(3);
   expect(pos3!.value).to.equal(3);
-  const pos4 = index.lowerKey(4);
+  const pos4 = index.getGreatestLowerBound(4);
   expect(pos4!.value).to.equal(4);
-  const pos5 = index.lowerKey(5);
+  const pos5 = index.getGreatestLowerBound(5);
   expect(pos5!.value).to.equal(5);
 });
 
@@ -67,15 +67,15 @@ test<SortedIndex<number>>("SortedIndex.upperKey() finds the upper bound of an ex
   index.add(2);
   index.add(3);
   index.add(4);
-  const pos1 = index.upperKey(1);
+  const pos1 = index.getLeastUpperBound(1);
   expect(pos1!.value).to.equal(1);
-  const pos2 = index.upperKey(2);
+  const pos2 = index.getLeastUpperBound(2);
   expect(pos2!.value).to.equal(2);
-  const pos3 = index.upperKey(3);
+  const pos3 = index.getLeastUpperBound(3);
   expect(pos3!.value).to.equal(3);
-  const pos4 = index.upperKey(4);
+  const pos4 = index.getLeastUpperBound(4);
   expect(pos4!.value).to.equal(4);
-  const pos5 = index.upperKey(5);
+  const pos5 = index.getLeastUpperBound(5);
   expect(pos5!.value).to.equal(5);
 });
 
@@ -84,7 +84,7 @@ test<SortedIndex<number>>("SortedIndex.lowerKey() works pn existing keys no matt
     index.add(num);
   }
   for (const num of numbers1) {
-    const pos = index.lowerKey(num);
+    const pos = index.getGreatestLowerBound(num);
     expect(pos!.value).to.equal(num);
   }
 })
@@ -94,7 +94,7 @@ test<SortedIndex<number>>("SortedIndex.upperKey() works on existing keys no matt
     index.add(num);
   }
   for (const num of numbers1) {
-    const pos = index.upperKey(num);
+    const pos = index.getLeastUpperBound(num);
     expect(pos!.value).to.equal(num);
   }
 });
@@ -106,37 +106,37 @@ test<SortedIndex<number>>("SortedIndex.upperKey() finds the nearest upper bound 
   index.add(8);
   index.add(11);
   index.add(15);
-  const pos1 = index.upperKey(1);
+  const pos1 = index.getLeastUpperBound(1);
   expect(pos1!.value).to.equal(1);
-  const pos2 = index.upperKey(2);
+  const pos2 = index.getLeastUpperBound(2);
   expect(pos2!.value).to.equal(3);
-  const pos3 = index.upperKey(3);
+  const pos3 = index.getLeastUpperBound(3);
   expect(pos3!.value).to.equal(3);
-  const pos4 = index.upperKey(4);
+  const pos4 = index.getLeastUpperBound(4);
   expect(pos4!.value).to.equal(6);
-  const pos5 = index.upperKey(5);
+  const pos5 = index.getLeastUpperBound(5);
   expect(pos5!.value).to.equal(6);
-  const pos6 = index.upperKey(6);
+  const pos6 = index.getLeastUpperBound(6);
   expect(pos6!.value).to.equal(6);
-  const pos7 = index.upperKey(7);
+  const pos7 = index.getLeastUpperBound(7);
   expect(pos7!.value).to.equal(8);
-  const pos8 = index.upperKey(8);
+  const pos8 = index.getLeastUpperBound(8);
   expect(pos8!.value).to.equal(8);
-  const pos9 = index.upperKey(9);
+  const pos9 = index.getLeastUpperBound(9);
   expect(pos9!.value).to.equal(11);
-  const pos10 = index.upperKey(10);
+  const pos10 = index.getLeastUpperBound(10);
   expect(pos10!.value).to.equal(11);
-  const pos11 = index.upperKey(11);
+  const pos11 = index.getLeastUpperBound(11);
   expect(pos11!.value).to.equal(11);
-  const pos12 = index.upperKey(12);
+  const pos12 = index.getLeastUpperBound(12);
   expect(pos12!.value).to.equal(15);
-  const pos13 = index.upperKey(13);
+  const pos13 = index.getLeastUpperBound(13);
   expect(pos13!.value).to.equal(15);
-  const pos14 = index.upperKey(14);
+  const pos14 = index.getLeastUpperBound(14);
   expect(pos14!.value).to.equal(15);
-  const pos15 = index.upperKey(15);
+  const pos15 = index.getLeastUpperBound(15);
   expect(pos15!.value).to.equal(15);
-  const pos16 = index.upperKey(16);
+  const pos16 = index.getLeastUpperBound(16);
   expect(pos16).to.be.null
 });
 
@@ -147,36 +147,36 @@ test<SortedIndex<number>>("SortedIndex.lowerKey() finds the nearest lower bound 
   index.add(8);
   index.add(11);
   index.add(15);
-  const pos1 = index.lowerKey(1);
+  const pos1 = index.getGreatestLowerBound(1);
   expect(pos1!.value).to.equal(1);
-  const pos2 = index.lowerKey(2);
+  const pos2 = index.getGreatestLowerBound(2);
   expect(pos2!.value).to.equal(1);
-  const pos3 = index.lowerKey(3);
+  const pos3 = index.getGreatestLowerBound(3);
   expect(pos3!.value).to.equal(3);
-  const pos4 = index.lowerKey(4);
+  const pos4 = index.getGreatestLowerBound(4);
   expect(pos4!.value).to.equal(3);
-  const pos5 = index.lowerKey(5);
+  const pos5 = index.getGreatestLowerBound(5);
   expect(pos5!.value).to.equal(3);
-  const pos6 = index.lowerKey(6);
+  const pos6 = index.getGreatestLowerBound(6);
   expect(pos6!.value).to.equal(6);
-  const pos7 = index.lowerKey(7);
+  const pos7 = index.getGreatestLowerBound(7);
   expect(pos7!.value).to.equal(6);
-  const pos8 = index.lowerKey(8);
+  const pos8 = index.getGreatestLowerBound(8);
   expect(pos8!.value).to.equal(8);
-  const pos9 = index.lowerKey(9);
+  const pos9 = index.getGreatestLowerBound(9);
   expect(pos9!.value).to.equal(8);
-  const pos10 = index.lowerKey(10);
+  const pos10 = index.getGreatestLowerBound(10);
   expect(pos10!.value).to.equal(8);
-  const pos11 = index.lowerKey(11);
+  const pos11 = index.getGreatestLowerBound(11);
   expect(pos11!.value).to.equal(11);
-  const pos12 = index.lowerKey(12);
+  const pos12 = index.getGreatestLowerBound(12);
   expect(pos12!.value).to.equal(11);
-  const pos13 = index.lowerKey(13);
+  const pos13 = index.getGreatestLowerBound(13);
   expect(pos13!.value).to.equal(11);
-  const pos14 = index.lowerKey(14);
+  const pos14 = index.getGreatestLowerBound(14);
   expect(pos14!.value).to.equal(11);
-  const pos15 = index.lowerKey(15);
+  const pos15 = index.getGreatestLowerBound(15);
   expect(pos15!.value).to.equal(15);
-  const pos16 = index.lowerKey(16);
+  const pos16 = index.getGreatestLowerBound(16);
   expect(pos16!.value).to.equal(15);
 });;

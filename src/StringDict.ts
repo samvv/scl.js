@@ -1,5 +1,5 @@
 
-import { CollectionRange, Cursor, Dict, Pair } from "./interfaces";
+import { Range, Cursor, Dict, Pair } from "./interfaces";
 import { CursorBase, RangeBase } from "./util";
 
 class ObjectCursor<V> extends CursorBase<[string, V]> {

@@ -1,18 +1,18 @@
 
-import { BSNode, BSNodeRange, BST, BSTOptions, equalKeysNoStrict } from "./BST";
+import { BSNode, BSNodeRange, BST, BSTOptions, equalKeysNoStrict } from "./BSTreeIndex";
 import { Cursor, Index } from "./interfaces";
 import {
   liftLesser,
   RangeBase,
 } from "./util";
 
-export class Node<T> extends BSNode<T> {
+export class AVLNode<T> extends BSNode<T> {
 
   constructor(
     value: T,
-    parent: Node<T> | null = null,
-    public left: Node<T> | null = null,
-    public right: Node<T> | null =  null,
+    parent: AVLNode<T> | null = null,
+    public left: AVLNode<T> | null = null,
+    public right: AVLNode<T> | null =  null,
     public balance: number = 0
   ) {
     super(parent, value, left, right);
@@ -51,7 +51,7 @@ export class Node<T> extends BSNode<T> {
 
 }
 
-function rotateLeft<T>(node: Node<T>) {
+function rotateLeft<T>(node: AVLNode<T>) {
   const rightNode = node.right!;
   node.right    = rightNode.left;
 
@@ -81,7 +81,7 @@ function rotateLeft<T>(node: Node<T>) {
   return rightNode;
 }
 
-function rotateRight<T>(node: Node<T>) {
+function rotateRight<T>(node: AVLNode<T>) {
   const leftNode = node.left!;
   node.left = leftNode.right;
   if (node.left) { node.left.parent = node; }
@@ -111,7 +111,7 @@ function rotateRight<T>(node: Node<T>) {
   return leftNode;
 }
 
-type AddHint<T> = [boolean, Node<T> | null, number?];
+type AddHint<T> = [boolean, AVLNode<T> | null, number?];
 
 export interface AVLTreeIndexOptions<T, K = T> extends BSTOptions<T, K> {
 
@@ -192,13 +192,13 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 
   constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K> = {}) {
     super(opts);
-    this.compare = liftLesser(this.compareKeys);
+    this.compare = liftLesser(this.isKeyLessThan);
   }
 
   public getAddHint(value: T): AddHint<T> {
 
     const key = this.getKey(value);
-    let node = this.rootNode as Node<T>;
+    let node = this.root as AVLNode<T>;
     let parent = null;
     let cmp;
 
@@ -209,9 +209,9 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
         if (cmp === 0) {
           return [false, node];
         } else if (cmp < 0) {
-          node = node.left as Node<T>;
+          node = node.left as AVLNode<T>;
         } else {
-          node = node.right as Node<T>;
+          node = node.right as AVLNode<T>;
         }
       }
     } else {
@@ -220,9 +220,9 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
         parent = node;
         if (cmp <= 0) {
           // FIXME should I return null?
-          node = node.left as Node<T>;
+          node = node.left as AVLNode<T>;
         } else {
-          node = node.right as Node<T>;
+          node = node.right as AVLNode<T>;
         }
       }
     }
@@ -235,10 +235,10 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
    */
   public add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
 
-    if (this.rootNode === null) {
-      this.rootNode = new Node<T>(value);
+    if (this.root === null) {
+      this.root = new AVLNode<T>(value);
       this.elementCount++;
-      return [true, this.rootNode];
+      return [true, this.root];
     }
 
     const getKey = this.getKey;
@@ -247,14 +247,14 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
     }
 
     if (hint[0] === false) {
-      return hint as [boolean, Node<T>];
+      return hint as [boolean, AVLNode<T>];
     }
 
     let parent = hint[1];
     let cmp = hint[2]!;
 
     const compare = this.compare;
-    const newNode = new Node<T>(value, parent);
+    const newNode = new AVLNode<T>(value, parent);
     let newRoot;
     if (cmp <= 0) {
       parent!.left  = newNode;
@@ -280,8 +280,8 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
         }
         newRoot = rotateLeft(parent);
 
-        if (parent === this.rootNode) {
-          this.rootNode = newRoot;
+        if (parent === this.root) {
+          this.root = newRoot;
         }
         break;
       } else if (parent.balance > 1) {
@@ -292,12 +292,12 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
         }
         newRoot = rotateRight(parent);
 
-        if (parent === this.rootNode) {
-          this.rootNode = newRoot;
+        if (parent === this.root) {
+          this.root = newRoot;
         }
         break;
       }
-      parent = parent.parent as Node<T>;
+      parent = parent.parent as AVLNode<T>;
     }
 
     this.elementCount++;
@@ -438,7 +438,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
    * Takes `O(log(n))` time, and is slightly faster than deleting the element
    * by key due to the fact that a search for the node has already been done.
    */
-  public deleteAt(node: Node<T>): void {
+  public deleteAt(node: AVLNode<T>): void {
 
     let max;
     let min;
@@ -487,7 +487,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
       node = min;
     }
 
-    let parent = node.parent as Node<T>;
+    let parent = node.parent as AVLNode<T>;
     let child = node;
     let newRoot;
 
@@ -507,8 +507,8 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
         }
         newRoot = rotateLeft(parent);
 
-        if (parent === this.rootNode) {
-          this.rootNode = newRoot;
+        if (parent === this.root) {
+          this.root = newRoot;
         }
         parent = newRoot;
       } else if (parent.balance > 1) {
@@ -519,8 +519,8 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
         }
         newRoot = rotateRight(parent);
 
-        if (parent === this.rootNode) {
-          this.rootNode = newRoot;
+        if (parent === this.root) {
+          this.root = newRoot;
         }
         parent = newRoot;
       }
@@ -530,7 +530,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
       }
 
       child = parent;
-      parent = parent.parent as Node<T>;
+      parent = parent.parent as AVLNode<T>;
     }
 
     if (node.parent) {
@@ -541,8 +541,8 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
       }
     }
 
-    if (node === this.rootNode) {
-      this.rootNode = null;
+    if (node === this.root) {
+      this.root = null;
     }
 
     this.elementCount--;
@@ -550,7 +550,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 
   public clone() {
     return new AVLTreeIndex<T, K>({
-      compareKeys: this.compareKeys
+      compareKeys: this.isKeyLessThan
     , getKey: this.getKey
     , isEqual: this.isEqual
     , allowDuplicates: this.allowDuplicates

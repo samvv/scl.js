@@ -1,6 +1,6 @@
 import { AddResult, Index } from "./interfaces";
 import { getKey, lessThan } from "./util";
-import { BST, BSNodeLike, BSNode, BSTOptions, equalKeysNoStrict, BSNodeRange } from "./BST"
+import { BST, BSNodeLike, BSNode, BSTOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex"
 
 export const enum RBColor {
   Red,
@@ -118,7 +118,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
     // We only have to loop for as long as there is a parent node that shares
     // the same red color with the child node being visited.
-    while (node !== this.rootNode
+    while (node !== this.root
         && node.color === RBColor.Red) {
 
       // We know the parentNode must exist because `node` wasn't the root node.
@@ -243,7 +243,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
     // We don't have to check for null because this function is only called
     // when a node has been inserted.
-    const root = this.rootNode as RBNode<T>;
+    const root = this.root as RBNode<T>;
 
     // The root node can in theory be of any color, but we prefer black.
     root.color = RBColor.Black;
@@ -271,8 +271,8 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
         }
 
         // This logic performs the actual deletion of `node`.
-        if (node === this.rootNode) {
-          this.rootNode = null;
+        if (node === this.root) {
+          this.root = null;
         } else {
           if (node === parent.left) {
             parent.left = null;
@@ -294,8 +294,8 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
         // This logic performs the actual deletion of `node`.
         replacement.parent = parent;
-        if (node === this.rootNode) {
-          this.rootNode = replacement;
+        if (node === this.root) {
+          this.root = replacement;
         } else {
           if (node === parent.left) {
             parent.left = replacement;
@@ -341,7 +341,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
   private fixDoubleBlack(node: RBNode<T>): void {
 
-    while (node !== this.rootNode) {
+    while (node !== this.root) {
 
       const sibling = this.getSibling(node) as RBNode<T> | null;
 
@@ -490,7 +490,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
   public clone(): RBTreeIndex<T, K> {
     return new RBTreeIndex({
       elements: this,
-      compareKeys: this.compareKeys,
+      compareKeys: this.isKeyLessThan,
       getKey: this.getKey,
     })
   }

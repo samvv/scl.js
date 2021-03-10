@@ -1,5 +1,5 @@
 
-import { CollectionRange, Cursor, Index } from "./interfaces";
+import { Range, Cursor, Index } from "./interfaces";
 import DoubleLinkedList, { DoubleLinkedListCursor } from "./DoubleLinkedList";
 import { EmptyRange, RangeBase } from "./util";
 

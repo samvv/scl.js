@@ -1,5 +1,5 @@
 
-import { CollectionRange, Cursor } from "./interfaces";
+import { Range, Cursor } from "./interfaces";
 
 export function isIterable<T = any>(value: any): value is Iterable<T> {
   return Symbol.iterator in Object(value);
@@ -356,7 +356,7 @@ export function omit<O extends object, K extends keyof O>(obj: O, ...keys: K[]):
   return out;
 }
 
-export class EmptyRange<T> implements CollectionRange<T> {
+export class EmptyRange<T> implements Range<T> {
 
   constructor(public readonly reversed = false) { }
 
@@ -451,7 +451,7 @@ export abstract class CursorBase<T> implements Cursor<T> {
  * }
  * ```
  */
-export abstract class RangeBase<T> implements CollectionRange<T> {
+export abstract class RangeBase<T> implements Range<T> {
 
   public abstract readonly size: number;
 
@@ -459,7 +459,7 @@ export abstract class RangeBase<T> implements CollectionRange<T> {
 
   public abstract [Symbol.iterator](): IterableIterator<T>;
 
-  public filter(pred: (el: Cursor<T>) => boolean): CollectionRange<T> {
+  public filter(pred: (el: Cursor<T>) => boolean): Range<T> {
     return new FilteredRange<T>(this, pred);
   }
 
@@ -467,7 +467,7 @@ export abstract class RangeBase<T> implements CollectionRange<T> {
 
 export class FilteredRange<T> extends RangeBase<T> {
 
-  constructor(public _range: CollectionRange<T>, public _pred: (el: Cursor<T>) => boolean) {
+  constructor(public _range: Range<T>, public _pred: (el: Cursor<T>) => boolean) {
     super();
   }
 

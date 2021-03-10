@@ -102,7 +102,7 @@ export interface Collection<T> {
   /**
    * Converts the entire collection to a range.
    */
-  toRange(): CollectionRange<T>;
+  toRange(): Range<T>;
 
 }
 
@@ -191,7 +191,6 @@ export interface Index<T, K = T> extends Collection<T> {
    */
   deleteKey(key: K): number;
 
-
 }
 
 export interface SortedIndex<T, K = T> extends Index<T, K> {
@@ -199,17 +198,17 @@ export interface SortedIndex<T, K = T> extends Index<T, K> {
   /*
    * Returns a range of items that have the same key.
    */
-  equalKeys?(key: K): CollectionRange<T>;
+  equalKeys(key: K): Range<T>;
 
   /**
    * Returns the value that is just below the given value, if any.
    */
-  lowerKey(key: K): Cursor<T> | null;
+  getGreatestLowerBound(key: K): Cursor<T> | null;
 
   /**
    * Return the value that is just above the given value, if any.
    */
-  upperKey(key: K): Cursor<T> | null;
+  getLeastUpperBound(key: K): Cursor<T> | null;
 }
 
 /**
@@ -262,7 +261,7 @@ export interface Cursor<T> {
  * some exceptions). To be safe, you need to manually make a copy of the
  * elements in the range before adding or removing elements.
  */
-export interface CollectionRange<T> {
+export interface Range<T> {
 
   /**
    * Get how many elements are in this range.
@@ -289,7 +288,7 @@ export interface CollectionRange<T> {
    * returned range will cause all cursors that did not match the predicate to
    * be omitted.
    */
-  filter?(pred: (el: Cursor<T>) => boolean): CollectionRange<T>;
+  filter?(pred: (el: Cursor<T>) => boolean): Range<T>;
 
   /**
    * Indicates whether this range will traverse its elements in reverse order.
@@ -305,7 +304,7 @@ export interface CollectionRange<T> {
    * Reversing a range is only possible when the order of the elements is
    * well-defined, such as the elements in a list or a tree-based dictionary.
    */
-  reverse?(): CollectionRange<T>;
+  reverse?(): Range<T>;
 
 }
 

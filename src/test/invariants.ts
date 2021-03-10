@@ -1,11 +1,11 @@
 
-import { AVLTreeIndex, Node } from "../AVLTreeIndex";
+import { AVLTreeIndex, AVLNode } from "../AVLTreeIndex";
 import { Collection } from "../interfaces";
 import { RBTreeIndex, RBNode, RBColor } from "../RBTreeIndex";
 
 export function checkAVLTreeInvariants<T, K>(this: AVLTreeIndex<T, K>) {
 
-  const visit = (node: Node<T> | null): number => {
+  const visit = (node: AVLNode<T> | null): number => {
 
     if (node === null) {
       return 0;
@@ -17,19 +17,19 @@ export function checkAVLTreeInvariants<T, K>(this: AVLTreeIndex<T, K>) {
     const key = this.getKey(node.value);
     if (node.left !== null) {
       const leftKey =  this.getKey(node.left.value);
-      if (!this.allowDuplicates && !this.compareKeys(key, leftKey) && !this.compareKeys(leftKey, key)) {
+      if (!this.allowDuplicates && !this.isKeyLessThan(key, leftKey) && !this.isKeyLessThan(leftKey, key)) {
         throw new Error(`Child on the left has the same value of its parent ${node.value} while duplicates are not allowed`)
       }
-      if (!this.compareKeys(leftKey, key)) {
+      if (!this.isKeyLessThan(leftKey, key)) {
         throw new Error(`Child on the left of ${node.value} is not strictly larger than its parent.`)
       }
     }
     if (node.right !== null) {
       const rightKey = this.getKey(node.right.value);
-      if (!this.allowDuplicates && !this.compareKeys(key, rightKey) && !this.compareKeys(rightKey, key)) {
+      if (!this.allowDuplicates && !this.isKeyLessThan(key, rightKey) && !this.isKeyLessThan(rightKey, key)) {
         throw new Error(`Child on the right has the same value of its parent ${node.value} while duplicates are not allowed`)
       }
-      if (!this.compareKeys(key, rightKey)) {
+      if (!this.isKeyLessThan(key, rightKey)) {
         throw new Error(`Child on the left of ${node.value} is not strictly smaller than its parent.`)
       }
     }
@@ -48,7 +48,7 @@ export function checkAVLTreeInvariants<T, K>(this: AVLTreeIndex<T, K>) {
     return Math.max(leftHeight, rightHeight);
   }
 
-  visit(this.rootNode as Node<T> | null);
+  visit(this.root as AVLNode<T> | null);
 }
 
 export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
@@ -65,19 +65,19 @@ export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
     const key = this.getKey(node.value);
     if (node.left !== null) {
       const leftKey =  this.getKey(node.left.value);
-      if (!this.allowDuplicates && !this.compareKeys(key, leftKey) && !this.compareKeys(leftKey, key)) {
+      if (!this.allowDuplicates && !this.isKeyLessThan(key, leftKey) && !this.isKeyLessThan(leftKey, key)) {
         throw new Error(`Child on the left has the same value of its parent ${node.value} while duplicates are not allowed`)
       }
-      if (!this.compareKeys(leftKey, key)) {
+      if (!this.isKeyLessThan(leftKey, key)) {
         throw new Error(`Child on the left of ${node.value} is not strictly larger than its parent.`)
       }
     }
     if (node.right !== null) {
       const rightKey = this.getKey(node.right.value);
-      if (!this.allowDuplicates && !this.compareKeys(key, rightKey) && !this.compareKeys(rightKey, key)) {
+      if (!this.allowDuplicates && !this.isKeyLessThan(key, rightKey) && !this.isKeyLessThan(rightKey, key)) {
         throw new Error(`Child on the right has the same value of its parent ${node.value} while duplicates are not allowed`)
       }
-      if (!this.compareKeys(key, rightKey)) {
+      if (!this.isKeyLessThan(key, rightKey)) {
         throw new Error(`Child on the left of ${node.value} is not strictly smaller than its parent.`)
       }
     }
@@ -112,7 +112,7 @@ export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
     return blackCountLeft + node.color === RBColor.Black ? 1 : 0;
   }
 
-  visit(this.rootNode as RBNode<T> | null);
+  visit(this.root as RBNode<T> | null);
 }
 
 export function checkInvariants<T>(collection: Collection<T>) {
