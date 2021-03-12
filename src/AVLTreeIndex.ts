@@ -1,7 +1,6 @@
 
 import { BSNode, BSNodeRange, BST, BSTreeIndexOptions, equalKeysNoStrict } from "./BSTreeIndex";
 import { AddResult } from "./interfaces";
-import { isIterable } from "./util";
 
 export class AVLNode<T> extends BSNode<T> {
 

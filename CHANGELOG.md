@@ -3,6 +3,13 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v4.1.0
+
+ - Fix critical bug occurring because main `index.js` is not being found due to
+   missing `'main'` field in `package.json`
+ - Updated the examples in the README.md
+ - Enabled ESLint on the entire code base
+
 ### v4.0.0
 
  - Generated JavaScript now has all comments removed
