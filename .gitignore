@@ -5,3 +5,4 @@ node_modules/
 scl-*.tgz
 dist/
 lib/
+coverage/
