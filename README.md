@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/samvv/scl.js.svg?branch=master)](https://travis-ci.org/samvv/scl.js) [![Coverage Status](https://coveralls.io/repos/github/samvv/scl.js/badge.svg?branch=master)](https://coveralls.io/github/samvv/scl.js?branch=master)
+[![Build Status](https://travis-ci.org/samvv/scl.js.svg?branch=master)](https://travis-ci.org/samvv/scl.js) [![Coverage Status](https://coveralls.io/repos/github/samvv/scl.js/badge.svg?branch=master)](https://coveralls.io/github/samvv/scl.js?branch=master) ![Code Quality Score](https://www.code-inspector.com/project/20101/score/svg)
 
 This is a curated, open-source project of common JavaScript collections with
 full support for TypeScript. Initially started as a side-project to abstract
