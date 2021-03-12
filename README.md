@@ -71,7 +71,7 @@ interface Person {
   age: number;
 }
 
-const people = new TreeIndex<Person, string>([
+const people = new TreeIndex<Person, number>([
   {
     name: 'Bob',
     email: 'thebobman@gmail.com',
