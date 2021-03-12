@@ -17,7 +17,7 @@ npm i scl
 
 ## Examples
 
-Using the priority queue to sort some tasks on importance:
+**Using the priority queue to sort some tasks on importance**
 
 ```ts
 import { PriorityQueue } from "scl"
@@ -31,42 +31,113 @@ const tasks = new PriorityQueue<Task>({
   compare: (a, b) => a.priority < b.priority
 })
 
-q.add({ description: 'Do the dishes.', priority: 5 })
-q.add({ description: 'Buy food.', priority: 1 })
-q.add({ description: 'Play some games.', priority: 52 })
-q.add({ description: 'Go for a walk.', priority: 10 })
-q.add({ description: 'Program like crazy.', priority: 20 })
+tasks.add({ description: 'Do the dishes', priority: 5 })
+tasks.add({ description: 'Buy food', priority: 1 })
+tasks.add({ description: 'Play some games', priority: 52 })
+tasks.add({ description: 'Go for a walk', priority: 10 })
+tasks.add({ description: 'Program like crazy', priority: 20 })
 
-const firstTask = q.pop()
-assert.strictEqual(firstTask.description, 'Buy food.')
-const secondTask = q.peek() // do not remove the task
-assert.strictEqual(secondTask.description, 'Do the dishes.')
-assert.strictEqual(q.size, 4)
+// Take the most important task from the queue
+const buyFood = tasks.pop();
+
+// See what the next task looks like without removing it
+const doTheDishes = tasks.peek()
+
+console.log('I should do the remaining tasks in the following order:');
+for (const task of tasks) {
+  console.log(`- ${task.description}`);
+}
+
 ```
 
-Storing many different translations in the same dictionary:
+This will output the following text:
+
+```
+I should do the remaining tasks in the following order:
+- Do the dishes
+- Go for a walk
+- Program like crazy
+- Play some games
+```
+
+**Sorting and querying a list of people based on their age**
+
+```ts
+import { HashIndex, getKeyTag } from "scl"
+
+interface Person {
+  name: string;
+  email: string;
+  age: number;
+}
+
+const people = new TreeIndex<Person, string>([
+  {
+    name: 'Bob',
+    email: 'thebobman@gmail.com',
+    age: 45,
+  },
+  {
+    name: 'Fred',
+    email: 'fred@outlook.com',
+    age: 33,
+  },
+  {
+    name: 'Lisa',
+    email: 'lisa.turner@gmail.com',
+    age: 37,
+  }
+]);
+
+// Lisa is the oldest person who is at the very most 40 years old.
+const lisa = people.getGreatestLowerBound(40);
+
+// Bob is the youngest person older than Lisa
+const bob = lisa.next();
+
+// No one is older than Bob
+assert(bob.next() === null);
+```
+
+**Storing many different translations in the same dictionary**
 
 ```ts
 import { TreeMultiDict } from "scl"
 
-const d = new TreeMultiDict<number, string>()
-d.emplace(1, 'uno')
-d.emplace(2, 'dos')
-d.emplace(1, 'one')
-d.emplace(2, 'two')
-d.emplace(2, 'duo')
+const d = new TreeMultiDict<number, string>([
+  [1, 'Ein'],
+  [2, 'dos'],
+  [1, 'one'],
+  [2, 'Zwei'],
+  [2, 'duo'],
+])
 
-console.log([...d.getValues(1)]); // will output ['one', 'uno']
+const oneInDifferentLanguages = [...d.getValues(1)];
 
-console.log(d.hasKey(3)); // outputs false
+for (const word of oneInDifferentLanguages) {
+  console.log(`The number 1 can be translated as '${word}'`);
+}
 
-const [added, pos] = d.emplace(3, 'tres')
+const [added, threeCursor] = d.emplace(3, 'tres')
 
-console.log(d.size) // outputs 6
+if (d.hasKey(3)) {
+  console.log(`The dictionary now has 3 in its keys.`);
+} else {
+  console.log(`The dictionary does not contain '3'.`);
+}
 
-d.deleteAt(pos)
+console.log(`The dictionary now has ${d.size} elements.`)
 
-console.log(d.hasKey(3)); // outputs false
+d.deleteAt(threeCursor)
+```
+
+The output of the above program:
+
+```
+The number 1 can be translated as as 'uno'
+The number 1 can be translated as as 'Ein'
+The dictionary has 3 in its keys.
+The dictionary now has 6 elements.
 ```
 
 ## Usage
