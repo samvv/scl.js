@@ -63,7 +63,7 @@ I should do the remaining tasks in the following order:
 **Sorting and querying a list of people based on their age**
 
 ```ts
-import { HashIndex, getKeyTag } from "scl"
+import { TreeIndex } from "scl"
 
 interface Person {
   name: string;
@@ -123,7 +123,7 @@ const [added, threeCursor] = d.emplace(3, 'tres')
 if (d.hasKey(3)) {
   console.log(`The dictionary now has 3 in its keys.`);
 } else {
-  console.log(`The dictionary does not contain '3'.`);
+  console.log(`The dictionary does not contain 3.`);
 }
 
 console.log(`The dictionary now has ${d.size} elements.`)
@@ -136,7 +136,7 @@ The output of the above program:
 ```
 The number 1 can be translated as as 'uno'
 The number 1 can be translated as as 'Ein'
-The dictionary has 3 in its keys.
+The dictionary now has 3 in its keys.
 The dictionary now has 6 elements.
 ```
 
