@@ -88,7 +88,6 @@ test("Collection.delete() should work on some random data", (collection: Collect
   }
   checkInvariants(collection);
   for (const num of numbers2) {
-    console.log(num);
     collection.delete(num);
     checkInvariants(collection);
   }
