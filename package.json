@@ -1,6 +1,6 @@
 {
   "name": "scl",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "A curated set of essential algorithms and data structures for TypeScript",
   "sideEffects": false,
   "main": "lib/index.js",
