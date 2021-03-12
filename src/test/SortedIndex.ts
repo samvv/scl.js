@@ -4,7 +4,6 @@ import { test } from "./_helpers"
 import { SortedIndex } from "../interfaces";
 
 import numbers1 from "./data/numbers1.json"
-import numbers2 from "./data/numbers2.json"
 import { Newable, ResolveAction } from "../util";
 import { checkInvariants } from "./invariants";
 

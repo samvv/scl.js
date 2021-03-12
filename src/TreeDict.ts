@@ -1,10 +1,6 @@
 
-import { BSNode, BSTreeIndexOptions } from "./BSTreeIndex";
-import { DictBase } from "./DictBase";
-import { Dict } from "./interfaces";
+import { BSTreeIndexOptions } from "./BSTreeIndex";
 import { RBTreeDict } from "./RBTreeDict";
-import RBTreeIndex from "./RBTreeIndex";
-import { isEqual, isIterable } from "./util";
 
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.

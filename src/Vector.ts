@@ -94,8 +94,8 @@ export class VectorRange<T> extends RangeBase<T> {
 function copy<T>(
   src: T[],
   dst: T[],
-  dstStart: number = 0,
-  srcStart: number = 0,
+  dstStart = 0,
+  srcStart = 0,
   srcEnd: number = src.length,
 ) {
   for (let i = 0; i < srcEnd - srcStart; i++) {

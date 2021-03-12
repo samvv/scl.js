@@ -1,5 +1,5 @@
 
-import { Collection, Cursor } from "./interfaces";
+import { Cursor } from "./interfaces";
 import Vector, { VectorCursor, VectorOptions } from "./Vector";
 
 export interface HeapOptions<T> extends VectorOptions<T> {
@@ -11,21 +11,18 @@ export interface HeapOptions<T> extends VectorOptions<T> {
  */
 export class BinaryMinHeap<T> {
 
-  get size() {
+  public get size(): number {
     return this._vector.size;
   }
 
-  /**
-   * @ignore
-   */
   constructor(
-      /** @ignore */ public _vector: Vector<T>
-    , /** @ignore */ public compare: (a: T, b: T) => boolean,
+      public _vector: Vector<T>
+    , public compare: (a: T, b: T) => boolean,
   ) {
 
   }
 
-  public min() {
+  public min(): T {
     if (this._vector.size === 0) {
       throw new Error(`Cannot get smallest element: heap is empty.`);
     }
@@ -38,7 +35,7 @@ export class BinaryMinHeap<T> {
     return [true, new VectorCursor<T>(this._vector, position - 1)];
   }
 
-  public delete(el: T) {
+  public delete(el: T): boolean {
     for (let i = 0; i < this._vector.size; ++i) {
       if (this._vector.getAt(i) === el) {
         this.deleteAtIndex(i);
@@ -59,11 +56,11 @@ export class BinaryMinHeap<T> {
     return count;
   }
 
-  public deleteMin() {
+  public deleteMin(): void {
     this.deleteAtIndex(0);
   }
 
-  public deleteAtIndex(index: number) {
+  public deleteAtIndex(index: number): void {
     if (index === this._vector.size - 1) {
       this._vector.deleteAtIndex(index);
       return;
@@ -81,11 +78,11 @@ export class BinaryMinHeap<T> {
     }
   }
 
-  public deleteAt(cursor: VectorCursor<T>) {
+  public deleteAt(cursor: VectorCursor<T>): void {
     this.deleteAtIndex(cursor._index);
   }
 
-  public clone() {
+  public clone(): BinaryMinHeap<T> {
     return new BinaryMinHeap<T>(this._vector.clone(), this.compare);
   }
 

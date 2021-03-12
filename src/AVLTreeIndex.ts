@@ -16,68 +16,6 @@ export class AVLNode<T> extends BSNode<T> {
 
 }
 
-// function rotateLeft<T>(node: AVLNode<T>) {
-//   const rightNode = node.right!;
-//   node.right    = rightNode.left;
-
-//   if (rightNode.left) { rightNode.left.parent = node; }
-
-//   rightNode.parent = node.parent;
-//   if (rightNode.parent) {
-//     if (rightNode.parent.left === node) {
-//       rightNode.parent.left = rightNode;
-//     } else {
-//       rightNode.parent.right = rightNode;
-//     }
-//   }
-
-//   node.parent    = rightNode;
-//   rightNode.left = node;
-
-//   node.balance += 1;
-//   if (rightNode.balance < 0) {
-//     node.balance -= rightNode.balance;
-//   }
-
-//   rightNode.balance += 1;
-//   if (node.balance > 0) {
-//     rightNode.balance += node.balance;
-//   }
-//   return rightNode;
-// }
-
-// function rotateRight<T>(node: AVLNode<T>) {
-//   const leftNode = node.left!;
-//   node.left = leftNode.right;
-//   if (node.left) { node.left.parent = node; }
-
-//   leftNode.parent = node.parent;
-//   if (leftNode.parent) {
-//     if (leftNode.parent.left === node) {
-//       leftNode.parent.left = leftNode;
-//     } else {
-//       leftNode.parent.right = leftNode;
-//     }
-//   }
-
-//   node.parent    = leftNode;
-//   leftNode.right = node;
-
-//   node.balance -= 1;
-//   if (leftNode.balance > 0) {
-//     node.balance -= leftNode.balance;
-//   }
-
-//   leftNode.balance -= 1;
-//   if (node.balance < 0) {
-//     leftNode.balance += node.balance;
-//   }
-
-//   return leftNode;
-// }
-
-type AddHint<T> = [boolean, AVLNode<T> | null, number?];
-
 export interface AVLTreeIndexOptions<T, K = T> extends BSTreeIndexOptions<T, K> {
 
 }
@@ -284,10 +222,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
       return [true, this.root];
     }
 
-    const key = this.getKey(element);
-
     let node: AVLNode<T> = insertedNode;
-    let grandparent;
 
     for (
       let parent: AVLNode<T> | null = node.parent as AVLNode<T>;
@@ -405,8 +340,6 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 
 
   private retrace(N: AVLNode<T>) {
-
-    let G: AVLNode<T> | null;
 
     for (
       let X = N.parent as AVLNode<T> | null;

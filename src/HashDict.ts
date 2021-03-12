@@ -1,8 +1,7 @@
 
 import { DictBase } from "./DictBase";
-import { Bucket, HashIndex, HashIndexOptions } from "./HashIndex";
+import { HashIndex, HashIndexOptions } from "./HashIndex";
 import { isEqual, isIterable, ResolveAction } from "./util";
-import { HashMultiDict } from "./HashMultiDict"
 
 /**
  * Options passed to a hash-like dictionary in order to configure its behaviour.
@@ -120,7 +119,7 @@ export class HashDict<K, V> extends DictBase<K, V> {
     }
   }
 
-  public clone() {
+  public clone(): HashDict<K, V> {
     return new HashDict<K, V>(this.index.clone());
   }
 

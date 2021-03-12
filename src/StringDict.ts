@@ -93,6 +93,7 @@ export class StringDict<V> implements Dict<string, V> {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public equalKeys(key: string): Range<[string, V]> {
     throw new Error(`Method not implemented.`)
   }

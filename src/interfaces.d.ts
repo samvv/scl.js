@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PriorityQueue } from "./PriorityQueue";
 
 /**
@@ -288,7 +289,7 @@ export interface Range<T> {
    * returned range will cause all cursors that did not match the predicate to
    * be omitted.
    */
-  filter?(pred: (el: Cursor<T>) => boolean): Range<T>;
+  filter?(pred: (element: Cursor<T>) => boolean): Range<T>;
 
   /**
    * Indicates whether this range will traverse its elements in reverse order.

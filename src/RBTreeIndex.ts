@@ -1,6 +1,5 @@
 import { AddResult, Index } from "./interfaces";
-import { getKey, lessThan } from "./util";
-import { BST, BSNodeLike, BSNode, BSTreeIndexOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex"
+import { BST, BSNode, BSTreeIndexOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex"
 
 export const enum RBColor {
   Red,

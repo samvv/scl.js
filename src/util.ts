@@ -353,7 +353,9 @@ export function isEqual(a: any, b: any): boolean {
 
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
-export function omit<O extends object, K extends keyof O>(obj: O, ...keys: K[]): Omit<O, K>  {
+type AnyObject = { [key: string]: any }
+
+export function omit<O extends AnyObject, K extends keyof O>(obj: O, ...keys: K[]): Omit<O, K>  {
   const out: any = {}; // no need to typecheck
   for (const key of Object.keys(obj)) {
     if (keys.indexOf(key as K) === -1) {
@@ -367,6 +369,7 @@ export class EmptyRange<T> implements Range<T> {
 
   constructor(public readonly reversed = false) { }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public filter(predicate: (element: Cursor<T>) => boolean) {
     return this;
   }
@@ -394,26 +397,6 @@ export function get(value: any, path: any[]) {
     value = value[chunk];
   }
   return value;
-}
-
-export function liftKeyed(proc: Function, path: string[]): Function {
-  if (path.length === 0) {
-    return proc;
-  } else {
-    return (...args: any[]) => proc(...args.map((arg) => get(arg, path)));
-  }
-}
-
-export function liftLesser<T>(lt: (a: T, b: T) => boolean): (a: T, b: T) => number {
-  return function(a, b) {
-    if (lt(a, b)) {
-      return -1;
-    }
-    if (lt(b, a)) {
-      return 1;
-    }
-    return 0;
-  };
 }
 
 /**
@@ -478,11 +461,11 @@ export class FilteredRange<T> extends RangeBase<T> {
     super();
   }
 
-  get size() {
+  public get size(): number {
     return this._range.size;
   }
 
-  public *cursors() {
+  public *cursors(): IterableIterator<Cursor<T>> {
     for (const cursor of this._range.cursors()) {
       if (this._pred(cursor)) {
         yield cursor;
@@ -490,11 +473,11 @@ export class FilteredRange<T> extends RangeBase<T> {
     }
   }
 
-  public reverse() {
+  public reverse(): FilteredRange<T> {
     return new FilteredRange<T>(this._range.reverse!(), this._pred);
   }
 
-  public *[Symbol.iterator]() {
+  public *[Symbol.iterator](): IterableIterator<T> {
     for (const cursor of this._range.cursors()) {
       if (this._pred(cursor)) {
         yield cursor.value;
@@ -510,6 +493,6 @@ export function isObject(val: any): boolean {
   return Object.prototype.toString.call(val) === '[object Object]';
 }
 
-export function isArray(val: any) {
+export function isArray(val: any): boolean {
   return Object.prototype.toString.call(val) === "[object Array]";
 }

@@ -1,7 +1,7 @@
 
-import { Cursor, Queuelike } from "./interfaces";
+import { Queuelike } from "./interfaces";
 
-import DoubleLinkedList from "./DoubleLinkedList";
+import DoubleLinkedList, {DoubleLinkedListCursor} from "./DoubleLinkedList";
 
 /**
  * A _FIFO queue_, where the first element pushed into the collection is also
@@ -61,7 +61,7 @@ export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
   /**
    * This method's time complexity is in `O(1)`.
    */
-  public add(el: T): [boolean, Cursor<T>] {
+  public add(el: T): [boolean, DoubleLinkedListCursor<T>] {
     return [true, this.append(el)];
   }
 

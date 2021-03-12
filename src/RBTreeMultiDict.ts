@@ -1,20 +1,8 @@
 
 import { MultiDictBase } from "./MultiDictBase";
-import { isEqual, isIterable, ResolveAction, lessThan } from "./util";
+import { isEqual, isIterable, ResolveAction } from "./util";
 import { TreeDictOptions } from "./TreeDict";
-import { RBTreeIndex, RBTreeIndexOptions } from "./RBTreeIndex";
-
-function parseTreeMultiDictOptions<K, V>(opts: Iterable<[K, V]> | TreeDictOptions<K, V>) {
-  if (isIterable(opts)) {
-    opts = { elements: opts };
-  }
-  const {
-    valuesEqual = isEqual,
-    elements = [],
-    compareKeys = lessThan,
-  } = opts;
-  return { compareKeys, valuesEqual, elements };
-}
+import { RBTreeIndex } from "./RBTreeIndex";
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but

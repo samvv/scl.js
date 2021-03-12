@@ -1,4 +1,4 @@
-import { AddResult, Range, Index, SortedIndex } from "./interfaces";
+import { AddResult, Range, SortedIndex } from "./interfaces";
 import { ResolveAction, isEqual, getKey, isIterable, lessThan } from "./util";
 
 export interface BSNodeLike<T> {
@@ -159,6 +159,7 @@ export class BSNodeRange<T> implements Range<T> {
   public get size(): number {
     if (this.nodeCount === undefined) {
       let count = 0;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const node of this.cursors()) {
         count++;
       }
@@ -285,7 +286,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
 
   public add(element: T, hint = this.getAddHint(element)): AddResult<T> {
     const key = this.getKey(element);
-    let parent = hint as BSNode<T> | null;
+    const parent = hint as BSNode<T> | null;
     if (parent === null) {
       this.root = this.createNode(element);
       this.elementCount++;

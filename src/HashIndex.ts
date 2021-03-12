@@ -1,27 +1,24 @@
 
-import { Range, Cursor, Index, AddResult } from "./interfaces";
-import DoubleLinkedList, { DoubleLinkedListCursor } from "./DoubleLinkedList";
-import { getKey as defaultGetKey, EmptyRange, isEqual, RangeBase, hash, ResolveAction } from "./util";
+import { Cursor, Index, AddResult, Range } from "./interfaces";
+import { DoubleLinkedList, DoubleLinkedListCursor } from "./DoubleLinkedList";
+import { getKey as defaultGetKey, EmptyRange, isEqual, RangeBase, hash, ResolveAction, isIterable } from "./util";
 
 /**
  * @ignore
  */
 export type Bucket<T> = DoubleLinkedList<T>;
 
-/**
- * @ignore
- */
 export class HashCursor<T> implements Cursor<T> {
 
   constructor(public _bucket: Bucket<T>, public _bucketPos: DoubleLinkedListCursor<T>) {
 
   }
 
-  get value() {
+  public get value(): T {
     return this._bucketPos.value;
   }
 
-  set value(newVal: T) {
+  public set value(newVal: T) {
     this._bucketPos.value = newVal;
   }
 
@@ -53,7 +50,7 @@ class FullHashRange<T, K> extends RangeBase<T> {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
         for (const cursor of bucket.toRange().cursors()) {
-          yield new HashCursor(bucket, cursor);
+          yield new HashCursor(bucket, cursor as DoubleLinkedListCursor<T>);
         }
       }
     }
@@ -141,7 +138,9 @@ export class HashIndex<T, K = T> implements Index<T, K> {
    * @ignore
    */
   constructor(opts: HashIndexOptions<T, K> = {}) {
-    let elements = [];
+    if (isIterable(opts)) {
+      opts = { elements: opts }
+    }
     this.keysEqual = opts.keysEqual ?? isEqual;
     this.elementsEqual = opts.elementsEqual ?? isEqual;
     this.getHash = opts.getHash ?? hash;
@@ -149,23 +148,29 @@ export class HashIndex<T, K = T> implements Index<T, K> {
     this.onDuplicateKeys = opts.onDuplicateKeys ?? ResolveAction.Error;
     this.onDuplicateElements = opts.onDuplicateElements ?? ResolveAction.Error;
     this._array = new Array(opts.capacity ?? DEFAULT_BUCKET_COUNT);
+    if (opts.elements !== undefined) {
+      for (const element of opts.elements) {
+        this.add(element);
+      }
+    }
   }
 
-  public get size() {
+  public get size(): number {
     return this.elementCount;
   }
 
-  public clear() {
+  public clear(): void {
     this._array.splice(0, this._array.length);
     this.elementCount = 0;
   }
 
-  public equalKeys(key: K) {
+  public equalKeys(key: K): Range<T> {
     const bucket = this._getBucket(key);
     if (bucket === null) {
       return new EmptyRange<T>();
     }
-    return bucket.toRange()
+    return bucket
+      .toRange()
       .filter((cursor: Cursor<T>) => this.keysEqual(this.getKey(cursor.value), key));
   }
 
@@ -309,7 +314,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
       onDuplicateElements: this.onDuplicateElements,
       onDuplicateKeys: this.onDuplicateKeys
     })
-  };
+  }
 
 }
 

@@ -11,6 +11,7 @@ export abstract class MultiDictBase<K, V> implements MultiDict<K, V> {
   }
 
   public *getValues(key: K): IterableIterator<V> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [k, v] of this.index.equalKeys(key)) {
       yield v;
     }

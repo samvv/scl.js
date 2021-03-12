@@ -1,5 +1,4 @@
 
-import { Vector } from "./Vector"
 import { List } from "./interfaces";
 import { CursorBase, RangeBase } from "./util";
 
