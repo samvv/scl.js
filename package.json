@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "A curated set of essential algorithms and data structures for TypeScript",
   "sideEffects": false,
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samvv/scl.js.git"

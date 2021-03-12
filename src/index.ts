@@ -1,5 +1,23 @@
 
-export * from "./interfaces";
+export type {
+  AddResult,
+  Bag,
+  Collection,
+  Cursor,
+  Dict,
+  DictLike,
+  Grid,
+  Index,
+  List,
+  MultiDict,
+  Pair,
+  Queuelike,
+  Range,
+  Sequence,
+  Set,
+  SortedIndex,
+  Vec2
+} from "./interfaces";
 export { getKey, getKeyTag, lessThan, compareTag, isEqual, isEqualTag, hash, hashTag, Hasher } from "./util";
 export { DoubleLinkedList } from "./DoubleLinkedList";
 export { SingleLinkedList } from "./SingleLinkedList";
