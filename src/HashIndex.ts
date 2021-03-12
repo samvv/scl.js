@@ -93,7 +93,7 @@ export interface HashIndexOptions<T, K = T> {
    * This function is only called after is has been determined that the keys
    * are equal, so you may safely skip the equality check for the keys.
    *
-   * If omitted, the [[equal built-in equality function]] will be used.
+   * If omitted, the [[isEqual built-in equality function]] will be used.
    */
   elementsEqual?: (a: T, b: T) => boolean
 

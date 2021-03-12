@@ -10,6 +10,7 @@ export { PriorityQueue } from "./PriorityQueue";
 export { TreeIndexOptions, TreeIndex } from "./TreeIndex";
 export { RBTreeIndexOptions, RBTreeIndex } from "./RBTreeIndex";
 export { AVLTreeIndexOptions, AVLTreeIndex } from "./AVLTreeIndex";
+export { HashIndexOptions, HashIndex } from "./HashIndex";
 export { StringDict } from "./StringDict";
 export { HashDict } from "./HashDict";
 export { HashMultiDict } from "./HashMultiDict";
