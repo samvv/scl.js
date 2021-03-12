@@ -107,7 +107,7 @@ import { TreeMultiDict } from "scl"
 const d = new TreeMultiDict<number, string>([
   [1, 'Ein'],
   [2, 'dos'],
-  [1, 'one'],
+  [1, 'uno'],
   [2, 'Zwei'],
   [2, 'duo'],
 ])
