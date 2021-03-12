@@ -1,6 +1,7 @@
 
 import { BSNode, BSNodeRange, BST, BSTreeIndexOptions, equalKeysNoStrict } from "./BSTreeIndex";
 import { AddResult } from "./interfaces";
+import { isIterable } from "./util";
 
 export class AVLNode<T> extends BSNode<T> {
 
@@ -92,10 +93,7 @@ export interface AVLTreeIndexOptions<T, K = T> extends BSTreeIndexOptions<T, K> 
 export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 
   constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K> = {}) {
-    super({
-      createNode: value => new AVLNode(value),
-      ...opts
-    });
+    super(opts, value => new AVLNode(value));
   }
 
   protected rotateLeft(node: AVLNode<T>): AVLNode<T> {

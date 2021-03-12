@@ -242,11 +242,6 @@ export interface BSTreeIndexOptions<T, K = T> {
 
   onDuplicateElements?: ResolveAction;
 
-  /**
-   * A custom factory function for when a new tree node needs to be created.
-   */
-  createNode?: (value: T) => BSNode<T>;
-
 }
 
 /**
@@ -263,9 +258,14 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
   public isEqual: (a: T, b: T) => boolean;
   public duplicateElements: ResolveAction;
   public duplicateKeys: ResolveAction;
-  protected createNode: (value: T) => BSNode<T>;
 
-  public constructor(opts: Iterable<T> | BSTreeIndexOptions<T, K> = {}) {
+  public constructor(
+    opts: Iterable<T> | BSTreeIndexOptions<T, K> = {},
+    /**
+     * A custom factory function for when a new tree node needs to be created.
+     */
+    protected createNode: (value: T) => BSNode<T> = value => new BSNode(null, value)
+  ) {
     let elements: Iterable<T> = [];
     if (isIterable(opts)) {
       elements = opts;
@@ -276,7 +276,6 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
     this.getKey = opts.getKey ?? getKey;
     this.isKeyLessThan = opts.compareKeys ?? lessThan;
     this.isEqual = opts.isEqual ?? isEqual;
-    this.createNode = opts.createNode ?? (value => new BSNode(null, value));
     this.duplicateElements = opts.onDuplicateElements ?? ResolveAction.Error;
     this.duplicateKeys = opts.onDuplicateKeys ?? ResolveAction.Error;
     for (const element of elements) {

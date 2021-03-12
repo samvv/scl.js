@@ -1,5 +1,5 @@
 
-import { AVLTreeIndex } from "./AVLTreeIndex"
+import { RBTreeIndex } from "./RBTreeIndex"
 
 export interface TreeIndexOptions<T, K = T> {
 
@@ -92,7 +92,7 @@ export interface TreeIndexOptions<T, K = T> {
  *
  * @see AVLTreeIndex
  */
-export class TreeIndex<T, K = T> extends AVLTreeIndex<T, K> {
+export class TreeIndex<T, K = T> extends RBTreeIndex<T, K> {
 
   constructor(opts: Iterable<T> | TreeIndexOptions<T, K> = {}) {
     super(opts);

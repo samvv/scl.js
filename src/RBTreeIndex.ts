@@ -93,11 +93,8 @@ export interface RBTreeIndexOptions<T, K = T> extends BSTreeIndexOptions<T, K> {
  */
 export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
-  constructor(opts: RBTreeIndexOptions<T, K> = {}) {
-    super({
-      ...opts,
-      createNode: value => new RBNode<T>(null, value),
-    });
+  constructor(opts: Iterable<T> | RBTreeIndexOptions<T, K> = {}) {
+    super(opts, value => new RBNode<T>(null, value));
   }
 
   public add(element: T, hint?: unknown): AddResult<T> {
