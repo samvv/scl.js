@@ -93,6 +93,10 @@ export class StringDict<V> implements Dict<string, V> {
     }
   }
 
+  public equalKeys(key: string): Range<[string, V]> {
+    throw new Error(`Method not implemented.`)
+  }
+
   public add([key, val]: Pair<string, V>) {
     return this.emplace(key, val);
   }

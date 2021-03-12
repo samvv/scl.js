@@ -1,16 +1,27 @@
 
-// import MultiTreeDict from "../multi/tree"
-import AVL from "./AVLTreeIndex";
-import { Cursor, MultiDict } from "./interfaces";
-import { isEqual, isIterable, lessThan } from "./util";
+import { MultiDictBase } from "./MultiDictBase";
+import { isEqual, isIterable, ResolveAction, lessThan } from "./util";
 import { TreeDictOptions } from "./TreeDict";
+import { RBTreeIndex, RBTreeIndexOptions } from "./RBTreeIndex";
+
+function parseTreeMultiDictOptions<K, V>(opts: Iterable<[K, V]> | TreeDictOptions<K, V>) {
+  if (isIterable(opts)) {
+    opts = { elements: opts };
+  }
+  const {
+    valuesEqual = isEqual,
+    elements = [],
+    compareKeys = lessThan,
+  } = opts;
+  return { compareKeys, valuesEqual, elements };
+}
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but
  * only if the values differ.
  *
  * ```ts
- * import { TreeManyDict } from "scl"
+ * import { TreeMultiDict } from "scl"
  * ```
  *
  * The following table summarises the worst-case time complexity of the most
@@ -31,14 +42,14 @@ import { TreeDictOptions } from "./TreeDict";
  * dictionary will replace the corresponding entry with the new one.
  *
  * ```ts
- * const d = new TreeManyDict<number, string>()
+ * const d = new TreeMultiDict<number, string>()
  * d.emplace(1, 'foo') // ok
  * assert.strictEqual(d.getValues(1), 'foo')
  * d.emplace(1, 'bar') // ok
- * d.emplace(1, 'foo') // ok; replaced
+ * d.emplace(1, 'foo') // ok
  * const values = [...d.getValues(1)]
- * assert.lengthOf(values, 2)
- * assert.deepInclude(value, [1, 'foo'])
+ * assert.lengthOf(values, 3)
+ * assert.deepInclude(value, [1, 'foo']) // appears two times
  * assert.deepInclude(value, [1, 'bar'])
  * ```
  *
@@ -50,29 +61,27 @@ import { TreeDictOptions } from "./TreeDict";
  * the order by which they were inserted.
  *
  * ```ts
- * const d = new TreeManyDict<number, string>()
+ * const d = new TreeMultiDict<number, string>()
  * d.emplace(2, 'two')
  * d.emplace(1, 'one')
  * d.emplace(3, 'three')
  * assert.deepEqual([...d], [[1, 'one'], [2, 'two'], [3, 'three']])
  * ```
  *
- * @see [[HashManyDict]] for a fast, unordered version of this collection.
- * @see [[TreeDict]] when you want your keys to be unique.
- * @see [[TreeMultiDict]] when you need to store multiple items.
+ * @see [[HashMultiDict]] for a fast, unordered version of this collection.
+ * @see [[TreeDict]] when you need your keys to be unique.
+ * @see [[TreeManyDict]] when you want the values to be unique but not the keys.
  *
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
  */
-export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V> {
-
-  protected valuesEqual: (a: V, b: V) => boolean;
+export class RBTreeMultiDict<K, V> extends MultiDictBase<K, V> {
 
   /**
    * Construct a new tree-based dictionary.
    *
    * ```ts
-   * const d = new TreeManyDict<number, string>()
+   * const d = new TreeMultiDict<number, string>()
    * ```
    *
    * Similar to JavaScript's built-in [map type][1], the constructor accepts a
@@ -80,7 +89,7 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
    * dictionary.
    *
    * ```ts
-   * const d = new TreeManyDict<number, string>([
+   * const d = new TreeMultiDict<number, string>([
    *   [1, 'one'],
    *   [2, 'two']
    * ])
@@ -91,7 +100,7 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
    * value equality.
    *
    * ```ts
-   * const d = new TreeManyDict<number, string>({
+   * const d = new TreeMultiDict<number, string>({
    *   compare: (a, b) => a < b,
    *   valuesEqual: (a, b) => a === b,
    *   elements: [[1, 'one'], [2, 'two']]
@@ -100,53 +109,30 @@ export class TreeManyDict<K, V> extends AVL<[K, V], K> implements MultiDict<K, V
    *
    * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
    */
-  constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
-    if (isIterable(opts)) {
-      opts = { elements: opts }
-    }
-    const {
-      valuesEqual = isEqual,
-      compareKeys,
-      ...restOpts
-    } = opts;
-    super({
-      compareKeys,
-      getKey: pair => pair[0],
-      isEqual: (a, b) => valuesEqual(a[1], b[1]),
-      allowDuplicates: true,
-      ...restOpts
-    });
-    this.valuesEqual = valuesEqual;
-  }
-
-  public add(pair: [K, V]): [boolean, Cursor<[K, V]>] {
-    for (const node of this.equalKeys(pair[0]).cursors()) {
-      if (this.isEqual(pair, node.value)) {
-        node.value = pair;
-        return [false, node];
+  constructor(opts: Iterable<[K, V]> | RBTreeIndex<[K, V], K> | TreeDictOptions<K, V> = {}) {
+    if (opts instanceof RBTreeIndex) {
+      super(opts);
+    } else {
+      if (isIterable(opts)) {
+        opts = { elements: opts }
       }
+      const valuesEqual = opts.valuesEqual ?? isEqual;
+      super(
+        new RBTreeIndex({
+          getKey: pair => pair[0],
+          isEqual: (a, b) => valuesEqual(a[1], b[1]),
+          onDuplicateKeys: ResolveAction.Insert,
+          onDuplicateElements: ResolveAction.Insert,
+          ...opts
+        })
+      );
     }
-    return super.add(pair) as [boolean, Cursor<[K, V]>];
-  }
-
-  public *getValues(key: K) {
-    for (const value of this.equalKeys(key)) {
-      yield value[1];
-    }
-  }
-
-  public emplace(key: K, val: V) {
-    return this.add([key, val]);
   }
 
   public clone() {
-    return new TreeManyDict<K, V>({
-      compareKeys: this.isKeyLessThan
-    , valuesEqual: this.valuesEqual
-    , elements: this,
-    });
+    return new RBTreeMultiDict(this.index)
   }
 
 }
 
-export default TreeManyDict;
+export default RBTreeMultiDict;

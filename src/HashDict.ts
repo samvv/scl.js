@@ -1,7 +1,8 @@
 
-import { Bucket, Hash } from "./Hash";
-import { Dict } from "./interfaces";
-import { isEqual, hash, isIterable } from "./util";
+import { DictBase } from "./DictBase";
+import { Bucket, HashIndex, HashIndexOptions } from "./HashIndex";
+import { isEqual, isIterable, ResolveAction } from "./util";
+import { HashMultiDict } from "./HashMultiDict"
 
 /**
  * Options passed to a hash-like dictionary in order to configure its behaviour.
@@ -10,41 +11,20 @@ import { isEqual, hash, isIterable } from "./util";
  * a hashing function that simply returns the integer itself.
  *
  * ```ts
+ * import { hash as xxh } from "xxhash"
+ * 
  * const d = new HashDict<number, string>({
  *   capacity: 1024,
- *   hash: key => key,
+ *   getHash: key => xxh(key),
  *   keysEqual: key => key === key,
  *   valuesEqual: value => value === value
  * })
  * ```
  *
  * @see [[HashDict]]
- * @see [[HashManyDict]]
  * @see [[HashMultiDict]]
  */
-export interface HashDictOptions<K, V> {
-
-  /**
-   * An iterable that will be consumed to fill the dictionary.
-   */
-  elements?: Iterable<[K, V]>;
-
-  /**
-   * The hashing function that will be used to map entries to a certain bucket.
-   *
-   * If omitted, the [[hash built-in hash function]] will be used.
-   */
-  hash?: (key: K) => number;
-
-  /**
-   * A predicate for determining when two keys are equal.
-   *
-   * Two keys may produce the same hash result, but that does not necessarily
-   * mean that they are equal. This function resolves any conflicts.
-   *
-   * If omitted, the [[equal built-in equality function]] will be used.
-   */
-  keysEqual?: (a: K, b: K) => boolean;
+export interface HashDictOptions<K, V> extends HashIndexOptions<[K, V], K> {
 
   /**
    * A predicate determining when two elements are equal.
@@ -55,11 +35,6 @@ export interface HashDictOptions<K, V> {
    * If omitted, the [[equal built-in equality function]] will be used.
    */
   valuesEqual?: (a: V, b: V) => boolean;
-
-  /**
-   * The initial capacity of the underling vector that will store the buckets.
-   */
-  capacity?: number;
 
 }
 
@@ -88,9 +63,7 @@ export interface HashDictOptions<K, V> {
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
  */
-export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
-
-  protected valuesEqual: (a: V, b: V) => boolean;
+export class HashDict<K, V> extends DictBase<K, V> {
 
   /**
    * Construct a new hash-based dictionary.
@@ -125,63 +98,30 @@ export class HashDict<K, V> extends Hash<[K, V], K> implements Dict<K, V> {
    *
    * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
    */
-  constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
-    let iterable: Iterable<[K, V]> = [];
-    if (isIterable(opts)) {
-      iterable = opts;
-      opts = {};
-    } else if (opts.elements !== undefined) {
-      iterable = opts.elements;
-    }
-    const valuesEqual = opts.valuesEqual ?? isEqual;
-    const keysEqual = opts.keysEqual ?? isEqual;
-    super(
-      opts.hash !== undefined ? opts.hash : hash
-    , keysEqual
-    , (a, b) => valuesEqual(a[1], b[1])
-    , pair => pair[0]
-    , opts.capacity,
-    );
-    this.valuesEqual = valuesEqual;
-    for (const element of iterable) {
-      this.add(element);
-    }
-  }
-
-  /**
-   * @ignore
-   */
-  public _getConflict(bucket: Bucket<[K, V]>, value: [K, V]) {
-    const key = this.getKey(value);
-    for (const cursor of bucket.toRange().cursors()) {
-      if (this.keysEqual(this.getKey(cursor.value), key)) {
-        cursor.value = value;
-        return cursor;
+  constructor(opts: Iterable<[K, V]> | HashIndex<[K, V], K> | HashDictOptions<K, V> = {}) {
+    if (opts instanceof HashIndex) {
+      super(opts);
+    } else {
+      if (isIterable(opts)) {
+        opts = { elements: opts };
       }
+      const {
+        valuesEqual = isEqual,
+        ...restOpts
+      } = opts;
+      super(
+        new HashIndex<[K, V], K>({
+          elementsEqual: (a, b) => valuesEqual(a[1], b[1]),
+          onDuplicateElements: ResolveAction.Error,
+          onDuplicateKeys: ResolveAction.Error,
+          ...restOpts,
+        })
+      );
     }
-    return null;
-  }
-
-  public emplace(key: K, val: V) {
-    return this.add([key, val]);
-  }
-
-  public getValue(key: K) {
-    const match = this.findKey(key);
-    if (match === null) {
-      throw new Error(`Cannot retrieve value: provided key does not exist.`);
-    }
-    return match.value[1];
   }
 
   public clone() {
-    return new HashDict<K, V>({
-        hash: this.getHash
-      , keysEqual: this.keysEqual
-      , valuesEqual: this.valuesEqual
-      , capacity: this._array.length
-      , elements: this,
-    });
+    return new HashDict<K, V>(this.index.clone());
   }
 
 }

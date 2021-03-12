@@ -1,8 +1,8 @@
 
-import { Bucket, Hash } from "./Hash";
-import { isEqual, hash, isIterable } from "./util";
+import { HashIndex } from "./HashIndex";
+import { isEqual, isIterable, ResolveAction } from "./util";
 import { HashDictOptions } from "./HashDict";
-import { MultiDict } from "./interfaces";
+import { MultiDictBase } from "./MultiDictBase";
 
 /**
  * A hash-based dictionary that can store multiple items with the same key.
@@ -28,9 +28,7 @@ import { MultiDict } from "./interfaces";
  * assert.strictEqual(values.length, 3)
  * ```
  */
-export class HashMultiDict<K, V> extends Hash<[K, V], K> implements MultiDict<K, V> {
-
-  protected valuesEqual: (a: V, b: V) => boolean;
+export class HashMultiDict<K, V> extends MultiDictBase<K, V> {
 
   /**
    * Construct a new hash-based dictionary.
@@ -65,51 +63,31 @@ export class HashMultiDict<K, V> extends Hash<[K, V], K> implements MultiDict<K,
    *
    * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
    */
-  constructor(opts: Iterable<[K, V]> | HashDictOptions<K, V> = {}) {
-    let iterable: Iterable<[K, V]> = [];
-    if (isIterable(opts)) {
-      iterable = opts;
-      opts = {};
-    } else if (opts.elements !== undefined) {
-      iterable = opts.elements;
-    }
-    const valuesEqual = opts.valuesEqual ?? isEqual;
-    const keysEqual = opts.keysEqual ?? isEqual;
-    super(
-      opts.hash !== undefined ? opts.hash : hash
-    , keysEqual
-    , (a, b) => valuesEqual(a[1], b[1])
-    , pair => pair[0]
-    , opts.capacity,
-    );
-    this.valuesEqual = valuesEqual;
-    for (const element of iterable) {
-      this.add(element);
-    }
-  }
-
-  public emplace(key: K, val: V) {
-    return this.add([key, val]);
-  }
-
-  public *getValues(key: K) {
-    for (const value of this.equalKeys(key)) {
-      yield value[1];
+  constructor(opts: Iterable<[K, V]> | HashIndex<[K, V], K> | HashDictOptions<K, V> = {}) {
+    if (opts instanceof HashIndex) {
+      super(opts);
+    } else {
+      if (isIterable(opts)) {
+        opts = { elements: opts };
+      }
+      const {
+        valuesEqual = isEqual,
+        ...restOpts
+      } = opts;
+      super(
+        new HashIndex({
+          onDuplicateKeys: ResolveAction.Insert,
+          onDuplicateElements: ResolveAction.Insert,
+          elementsEqual: (a, b) => valuesEqual(a[1], b[1]),
+          getKey: pair => pair[0],
+          ...restOpts,
+        })
+      );
     }
   }
 
   public clone() {
-    return new HashMultiDict<K, V>({
-        hash: this.getHash
-      , keysEqual: this.keysEqual
-      , valuesEqual: this.valuesEqual
-      , capacity: this._array.length
-      , elements: this,
-    });
-  }
-
-  protected _getConflict(bucket: Bucket<[K, V]>, element: [K, V]) {
-    return null;
+    return new HashMultiDict<K, V>(this.index.clone());
   }
 
 }

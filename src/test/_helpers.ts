@@ -2,7 +2,6 @@
 import AVLTreeIndex from "../AVLTreeIndex";
 import DoubleLinkedList from "../DoubleLinkedList";
 import HashDict from "../HashDict";
-import HashManyDict from "../HashManyDict";
 import HashMultiDict from "../HashMultiDict";
 import PriorityQueue from "../PriorityQueue";
 import Queue from "../Queue";
@@ -10,28 +9,10 @@ import RBTreeIndex from "../RBTreeIndex";
 import SingleLinkedList from "../SingleLinkedList";
 import Stack from "../Stack";
 import TreeDict from "../TreeDict";
-import TreeManyDict from "../TreeManyDict";
 import TreeMultiDict from "../TreeMultiDict";
 import Vector from "../Vector";
-
-class AVLTreeMultiIndex<T, K = T> extends AVLTreeIndex<T, K> {
-  constructor(opts = {}) {
-    super({
-      ...opts,
-      allowDuplicates: true,
-    })
-  }
-}
-
-class RBTreeMultiIndex<T, K = T> extends RBTreeIndex<T, K> {
-  constructor(opts = {}) {
-    super({
-      ...opts,
-      allowDuplicates: true,
-    })
-  }
-}
-
+import { RBTreeDict } from "../RBTreeDict";
+import RBTreeMultiDict from "../RBTreeMultiDict";
 
 type Newable<T> = { new (...args: any[]): T; }
 
@@ -118,29 +99,14 @@ const TYPE_NAMES: Type[] = [
     classConstructor: RBTreeIndex,
   },
   {
-    name: 'RBTreeMultiIndex',
-    implements: ['SortedMultiIndex'],
-    classConstructor: RBTreeMultiIndex
-  },
-  {
     name: 'AVLTreeIndex',
     implements: ['SortedIndex'],
     classConstructor: AVLTreeIndex,
   },
   {
-    name: 'AVLTreeMultiIndex',
-    implements: ['SortedMultiIndex'],
-    classConstructor: AVLTreeMultiIndex
-  },
-  {
     name: 'HashDict',
     implements: ['Dict'],
     classConstructor: HashDict,
-  },
-  {
-    name: 'HashManyDict',
-    implements: ['ManyDict'],
-    classConstructor: HashManyDict,
   },
   {
     name: 'HashMultiDict',
@@ -153,14 +119,19 @@ const TYPE_NAMES: Type[] = [
     classConstructor: TreeDict,
   },
   {
-    name: 'TreeManyDict',
-    implements: ['ManyDict'],
-    classConstructor: TreeManyDict,
-  },
-  {
     name: 'TreeMultiDict',
     implements: ['MultiDict'],
     classConstructor: TreeMultiDict
+  },
+  {
+    name: 'RBTreeDict',
+    implements: ['Dict'],
+    classConstructor: RBTreeDict,
+  },
+  {
+    name: 'RBTreeMultiDict',
+    implements: ['MultiDict'],
+    classConstructor: RBTreeMultiDict
   },
 ]
 
@@ -169,15 +140,18 @@ interface Test {
   classConstructorName: string;
   methodName: string;
   description: string;
+  title: string;
   execute: (collection?: any) => void;
+  willExecute: boolean;
 }
 
 const tests: Test[] = [];
 
 function addTest(test: Test, type: Type) {
+  test.willExecute = true;
   it(`${type.name}.${test.methodName} ${test.description}`, () => {
     if (test.hasNew) {
-      test.execute();
+      test.execute(type.classConstructor);
     } else {
       const Class = type.classConstructor!;
       const instance = new Class();
@@ -210,23 +184,28 @@ before(() => {
       }
     });
   }
+  for (const test of tests) {
+    if (!test.willExecute) {
+      throw new Error(`The test titled ${test.title} will never execute.`)
+    }
+  }
 });
 
 function parseTestTitle(title: string): [boolean, string, string, string] {
-  let i = 0;
+  let k = 0;
   let hasNew = false;
   if (title.startsWith('new ')) {
     hasNew = true;
-    i = 4;
+    k = 4;
   }
-  for (; i < title.length; i++) {
+  for (let i = k; i < title.length; i++) {
     const ch = title[i];
     if (!/^[a-zA-Z]$/.test(ch)) {
       for (let j = i; j < title.length; j++) {
         if (title[j] === " ") {
           const methodName = title.substring(i+1, j);
           const description = title.substring(j+1);
-          const classConstructorName = title.substring(0, i);
+          const classConstructorName = title.substring(k, i);
           return [hasNew, classConstructorName, methodName, description];
         }
       }
@@ -243,6 +222,8 @@ export function test<C>(title: string, execute: (collection: C) => void) {
     classConstructorName,
     methodName,
     description,
+    title,
     execute,
+    willExecute: false,
   })
 }

@@ -60,7 +60,7 @@ test("Collection.add() should work some random data", (collection: Collection<nu
   checkInvariants(collection);
   for (const num of numbers1) {
     collection.add(num);
-    checkInvariants((collection as any).rootNode);
+    checkInvariants(collection);
   }
 })
 
@@ -86,10 +86,11 @@ test("Collection.delete() should work on some random data", (collection: Collect
   for (const num of numbers1) {
     collection.add(num);
   }
-  checkInvariants((collection as any).rootNode);
+  checkInvariants(collection);
   for (const num of numbers2) {
+    console.log(num);
     collection.delete(num);
-    checkInvariants((collection as any).rootNode);
+    checkInvariants(collection);
   }
 });
 

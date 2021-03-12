@@ -1,6 +1,6 @@
 import { AddResult, Index } from "./interfaces";
 import { getKey, lessThan } from "./util";
-import { BST, BSNodeLike, BSNode, BSTOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex"
+import { BST, BSNodeLike, BSNode, BSTreeIndexOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex"
 
 export const enum RBColor {
   Red,
@@ -14,7 +14,7 @@ export class RBNode<T> extends BSNode<T> {
     value: T,
     left: RBNode<T> | null = null,
     right: RBNode<T> | null = null,
-    public color: RBColor,
+    public color: RBColor = RBColor.Red,
   ) {
     super(parentNode, value, left, right);
   }
@@ -22,7 +22,7 @@ export class RBNode<T> extends BSNode<T> {
 }
 
 
-export interface RBTreeIndexOptions<T, K = T> extends BSTOptions<T, K> {
+export interface RBTreeIndexOptions<T, K = T> extends BSTreeIndexOptions<T, K> {
 
 }
 
@@ -95,23 +95,23 @@ export interface RBTreeIndexOptions<T, K = T> extends BSTOptions<T, K> {
 export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
   constructor(opts: RBTreeIndexOptions<T, K> = {}) {
-    super(opts);
+    super({
+      ...opts,
+      createNode: value => new RBNode<T>(null, value),
+    });
   }
 
-  public add(element: T): AddResult<T> {
+  public add(element: T, hint?: unknown): AddResult<T> {
 
-    const toInsert = new RBNode(null, element, null, null, RBColor.Red);
-    const didInsert = super.insertNode(toInsert);
+    const [didInsert, node] = super.add(element, hint) as [boolean, RBNode<T>];
 
     if (!didInsert) {
-      return [false, toInsert];
+      return [false, node];
     }
 
-    this.elementCount++;
+    this.fixRedRed(node);
 
-    this.fixRedRed(toInsert);
-
-    return [true, toInsert];
+    return [true, node];
   }
 
   private fixRedRed(node: RBNode<T>): void {
@@ -329,7 +329,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
       } else {
 
         // Alternatively, we could have used this.getRightmost(node.left)
-        const replacement = this.getLeftmost(node.right) as RBNode<T>;
+        const replacement = node.right.getLeftmost() as RBNode<T>;
         this.swapValues(node, replacement);
         node = replacement;
 
@@ -493,17 +493,6 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
       compareKeys: this.isKeyLessThan,
       getKey: this.getKey,
     })
-  }
-
-  public deleteAll(element: T): number {
-    const nodesToDelete = this.equalKeys(this.getKey(element));
-    const deleteCount = 0;
-    for (const node of nodesToDelete.cursors()) {
-      if (this.isEqual(node.value, element)) {
-        this.deleteAt(node as RBNode<T>);
-      }
-    }
-    return deleteCount;
   }
 
 }

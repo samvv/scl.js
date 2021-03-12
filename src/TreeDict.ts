@@ -1,6 +1,9 @@
 
-import { AVLTreeIndex, AVLTreeIndexOptions } from "./AVLTreeIndex";
+import { BSNode, BSTreeIndexOptions } from "./BSTreeIndex";
+import { DictBase } from "./DictBase";
 import { Dict } from "./interfaces";
+import { RBTreeDict } from "./RBTreeDict";
+import RBTreeIndex from "./RBTreeIndex";
 import { isEqual, isIterable } from "./util";
 
 /**
@@ -10,7 +13,7 @@ import { isEqual, isIterable } from "./util";
  * @see [[TreeManyDict]]
  * @see [[TreeMultiDict]]
  */
-export interface TreeDictOptions<K, V> extends AVLTreeIndexOptions<[K, V], K> {
+export interface TreeDictOptions<K, V> extends BSTreeIndexOptions<[K, V], K> {
 
   /**
    * Compares two values in the dictionary and returns whether the values are
@@ -78,88 +81,7 @@ export interface TreeDictOptions<K, V> extends AVLTreeIndexOptions<[K, V], K> {
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
  */
-export class TreeDict<K, V> extends AVLTreeIndex<[K, V], K> implements Dict<K, V> {
-
-  protected valuesEqual: (a: V, b: V) => boolean;
-
-  /**
-   * Construct a new tree-based dictionary.
-   *
-   * ```ts
-   * const d = new TreeDict<number, string>()
-   * ```
-   *
-   * Similar to JavaScript's built-in [map type][1], the constructor accepts a
-   * list of key-value pairs that will immediately be added to the resulting
-   * dictionary.
-   *
-   * ```ts
-   * const d = new TreeDict<number, string>([
-   *   [1, 'one'],
-   *   [2, 'two']
-   * ])
-   * ```
-   *
-   * The dictionary can be tweaked by providing a [[TreeDictOptions]]-object,
-   * which allows to configure things like the default compare function and
-   * value equality.
-   *
-   * ```ts
-   * const d = new TreeDict<number, string>({
-   *   compareKeys: (a, b) => a < b,
-   *   valuesEqual: (a, b) => a === b,
-   *   elements: [[1, 'one'], [2, 'two']]
-   * })
-   * ```
-   *
-   * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
-   */
-  constructor(opts: Iterable<[K, V]> | TreeDictOptions<K, V> = {}) {
-    if (isIterable(opts)) {
-      opts = { elements: opts }
-    }
-    const {
-      valuesEqual = isEqual,
-      compareKeys,
-      ...restOpts
-    } = opts;
-    super({
-      compareKeys,
-      getKey: pair => pair[0],
-      isEqual: (a, b) => valuesEqual(a[1], b[1]),
-      allowDuplicates: false,
-      ...restOpts
-    });
-    this.valuesEqual = valuesEqual;
-  }
-
-  public emplace(key: K, val: V) {
-    return this.add([key, val]);
-  }
-
-  public add(p: [K, V]) {
-    const hint = this.getAddHint(p);
-    if (hint[0] === false) {
-      hint[1]!.value = p;
-    }
-    return super.add(p, hint);
-  }
-
-  public getValue(key: K) {
-    const match = this.findKey(key);
-    if (match === null) {
-      throw new Error(`Cannot retrieve value: provided key does not exist.`);
-    }
-    return match.value[1];
-  }
-
-  public clone() {
-    return new TreeDict<K, V>({
-      compareKeys: this.isKeyLessThan
-    , valuesEqual: this.valuesEqual
-    , elements: this,
-    });
-  }
+export class TreeDict<K, V> extends RBTreeDict<K, V> {
 
 }
 

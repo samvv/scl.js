@@ -39,10 +39,10 @@ export interface Collection<T> {
   /**
    * Checks if the collection holds the given element.
    *
-   * @param el The element to check membership of.
+   * @param element The element to check membership of.
    * @return True if the collections holds the given element, false otherwise.
    */
-  has(el: T): boolean
+  has(element: T): boolean
 
   /**
    * Returns an object which is able to sift through the values in this collection.
@@ -81,7 +81,7 @@ export interface Collection<T> {
   /**
    * Remove the element pointed to by the iterator result from this collection.
    */
-  deleteAt(pos: Cursor<T>): void;
+  deleteAt(position: Cursor<T>): void;
 
   /**
    * Remove an element from the collection. If multiple elements are matched,
@@ -89,7 +89,7 @@ export interface Collection<T> {
    *
    * @return `true` if the element was found, `false` otherwise.
    */
-  delete(el: T): boolean;
+  delete(element: T): boolean;
 
   /**
    * Remove an element from the collection. If multiple elements are matched,
@@ -97,7 +97,7 @@ export interface Collection<T> {
    *
    * @return The amount of elements that was removed.
    */
-  deleteAll(el: T): number;
+  deleteAll(element: T): number;
 
   /**
    * Converts the entire collection to a range.
@@ -173,6 +173,11 @@ export interface Sequence<T> extends Collection<T> {
  */
 export interface Index<T, K = T> extends Collection<T> {
 
+  /*
+   * Returns a range of items that have the same key.
+   */
+  equalKeys(key: K): Range<T>;
+
   /**
    * Checks whether there a pair in this collection that has the given key.
    */
@@ -194,11 +199,6 @@ export interface Index<T, K = T> extends Collection<T> {
 }
 
 export interface SortedIndex<T, K = T> extends Index<T, K> {
-
-  /*
-   * Returns a range of items that have the same key.
-   */
-  equalKeys(key: K): Range<T>;
 
   /**
    * Returns the value that is just below the given value, if any.
@@ -345,7 +345,7 @@ export interface Dict<K, V> extends DictLike<K, V> {
   /**
    * Get the value that is associated with the given key.
    */
-  getValue(key: K): V | null;
+  getValue(key: K): V | undefined;
 
 }
 

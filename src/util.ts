@@ -5,6 +5,13 @@ export function isIterable<T = any>(value: any): value is Iterable<T> {
   return Symbol.iterator in Object(value);
 }
 
+export enum ResolveAction {
+  Error,
+  Ignore,
+  Insert,
+  Replace,
+}
+
 export const getKeyTag = Symbol('object key property');
 
 function isPrimitive(value: any): boolean {

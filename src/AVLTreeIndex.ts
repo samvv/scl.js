@@ -1,6 +1,7 @@
 
-import { BSNode, BSNodeRange, BST, BSTOptions, equalKeysNoStrict } from "./BSTreeIndex";
-import { Cursor, Index } from "./interfaces";
+import { BSNode, BSNodeRange, BST, BSTreeIndexOptions, equalKeysNoStrict } from "./BSTreeIndex";
+import { AddResult } from "./interfaces";
+import { checkInvariants } from "./test/invariants";
 import {
   liftLesser,
   RangeBase,
@@ -18,102 +19,71 @@ export class AVLNode<T> extends BSNode<T> {
     super(parent, value, left, right);
   }
 
-  // public next(): Node<T> | null {
-  //   if (this.right !== null) {
-  //     let node = this.right;
-  //     while (node.left !== null) {
-  //       node = node.left;
-  //     }
-  //     return node;
-  //   }
-  //   let node: Node<T> = this;
-  //   while (node.parent !== null && node === node.parent.right) {
-  //     node = node.parent as Node<T>;
-  //   }
-  //   return node.parent as BSNode<T>;
-  // }
-
-  // public prev(): Node<T> | null {
-  //   if (this.left !== null) {
-  //     let node = this.left;
-  //     while (node.right !== null) {
-  //       node = node.right;
-  //     }
-  //     return node;
-  //   }
-
-  //   let node: Node<T> = this;
-  //   while (node.parent !== null && node === node.parent.left) {
-  //     node = node.parent;
-  //   }
-  //   return node.parent;
-  // }
-
 }
 
-function rotateLeft<T>(node: AVLNode<T>) {
-  const rightNode = node.right!;
-  node.right    = rightNode.left;
+// function rotateLeft<T>(node: AVLNode<T>) {
+//   const rightNode = node.right!;
+//   node.right    = rightNode.left;
 
-  if (rightNode.left) { rightNode.left.parent = node; }
+//   if (rightNode.left) { rightNode.left.parent = node; }
 
-  rightNode.parent = node.parent;
-  if (rightNode.parent) {
-    if (rightNode.parent.left === node) {
-      rightNode.parent.left = rightNode;
-    } else {
-      rightNode.parent.right = rightNode;
-    }
-  }
+//   rightNode.parent = node.parent;
+//   if (rightNode.parent) {
+//     if (rightNode.parent.left === node) {
+//       rightNode.parent.left = rightNode;
+//     } else {
+//       rightNode.parent.right = rightNode;
+//     }
+//   }
 
-  node.parent    = rightNode;
-  rightNode.left = node;
+//   node.parent    = rightNode;
+//   rightNode.left = node;
 
-  node.balance += 1;
-  if (rightNode.balance < 0) {
-    node.balance -= rightNode.balance;
-  }
+//   node.balance += 1;
+//   if (rightNode.balance < 0) {
+//     node.balance -= rightNode.balance;
+//   }
 
-  rightNode.balance += 1;
-  if (node.balance > 0) {
-    rightNode.balance += node.balance;
-  }
-  return rightNode;
-}
+//   rightNode.balance += 1;
+//   if (node.balance > 0) {
+//     rightNode.balance += node.balance;
+//   }
+//   return rightNode;
+// }
 
-function rotateRight<T>(node: AVLNode<T>) {
-  const leftNode = node.left!;
-  node.left = leftNode.right;
-  if (node.left) { node.left.parent = node; }
+// function rotateRight<T>(node: AVLNode<T>) {
+//   const leftNode = node.left!;
+//   node.left = leftNode.right;
+//   if (node.left) { node.left.parent = node; }
 
-  leftNode.parent = node.parent;
-  if (leftNode.parent) {
-    if (leftNode.parent.left === node) {
-      leftNode.parent.left = leftNode;
-    } else {
-      leftNode.parent.right = leftNode;
-    }
-  }
+//   leftNode.parent = node.parent;
+//   if (leftNode.parent) {
+//     if (leftNode.parent.left === node) {
+//       leftNode.parent.left = leftNode;
+//     } else {
+//       leftNode.parent.right = leftNode;
+//     }
+//   }
 
-  node.parent    = leftNode;
-  leftNode.right = node;
+//   node.parent    = leftNode;
+//   leftNode.right = node;
 
-  node.balance -= 1;
-  if (leftNode.balance > 0) {
-    node.balance -= leftNode.balance;
-  }
+//   node.balance -= 1;
+//   if (leftNode.balance > 0) {
+//     node.balance -= leftNode.balance;
+//   }
 
-  leftNode.balance -= 1;
-  if (node.balance < 0) {
-    leftNode.balance += node.balance;
-  }
+//   leftNode.balance -= 1;
+//   if (node.balance < 0) {
+//     leftNode.balance += node.balance;
+//   }
 
-  return leftNode;
-}
+//   return leftNode;
+// }
 
 type AddHint<T> = [boolean, AVLNode<T> | null, number?];
 
-export interface AVLTreeIndexOptions<T, K = T> extends BSTOptions<T, K> {
+export interface AVLTreeIndexOptions<T, K = T> extends BSTreeIndexOptions<T, K> {
 
 }
 
@@ -191,248 +161,210 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
   protected compare: (a: K, b: K) => number;
 
   constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K> = {}) {
-    super(opts);
+    super({
+      createNode: value => new AVLNode(value),
+      ...opts
+    });
     this.compare = liftLesser(this.isKeyLessThan);
   }
 
-  public getAddHint(value: T): AddHint<T> {
-
-    const key = this.getKey(value);
-    let node = this.root as AVLNode<T>;
-    let parent = null;
-    let cmp;
-
-    if (!this.allowDuplicates) {
-      while (node !== null) {
-        cmp = this.compare(key, this.getKey(node.value));
-        parent = node;
-        if (cmp === 0) {
-          return [false, node];
-        } else if (cmp < 0) {
-          node = node.left as AVLNode<T>;
-        } else {
-          node = node.right as AVLNode<T>;
-        }
-      }
+  protected rotateLeft(node: AVLNode<T>): AVLNode<T> {
+    const right = node.right!;
+    if (right.balance === 0) {
+      node.balance  = +1;
+      right.balance = -1;
     } else {
-      while (node !== null) {
-        cmp = this.compare(key, this.getKey(node.value));
-        parent = node;
-        if (cmp <= 0) {
-          // FIXME should I return null?
-          node = node.left as AVLNode<T>;
-        } else {
-          node = node.right as AVLNode<T>;
-        }
+      node.balance = 0;
+      right.balance = 0;
+    }
+    return super.rotateLeft(node) as AVLNode<T>;
+  }
+
+  protected rotateRight(node: AVLNode<T>): AVLNode<T> {
+    const left = node.left!;
+    if (left.balance === 0) {
+      node.balance = -1;
+      left.balance = +1;
+    } else {
+      left.balance = 0;
+      node.balance = 0;
+    }
+    return super.rotateRight(node) as AVLNode<T>;
+  }
+
+  protected rotateRightThenLeft(X: AVLNode<T>): AVLNode<T> {
+    const Z = X.right!;
+    const Y = Z.left!;
+    const t2 = Y.left;
+    const t3 = Y.right;
+    Z.left = t3;
+    if (t3 !== null) {
+      t3.parent = Z;
+    }
+    Y.right = Z;
+    Z.parent = Y;
+    X.right = t2;
+    if (t2 !== null) {
+      t2.parent = X;
+    }
+    if (X === this.root) {
+      this.root = Y;
+    } else {
+      const parent = X.parent!;
+      if (X === parent.left) {
+        parent.left = Y;
+      } else {
+        parent.right = Y;
       }
     }
+    Y.left = X;
+    Y.parent = X.parent;
+    X.parent = Y;
+    if (Y.balance === 0) {
+      X.balance = 0;
+      Z.balance = 0;
+    } else if (Y.balance > 0) {
+      X.balance = -1;
+      Z.balance = 0;
+    } else {
+      X.balance = 0;
+      Z.balance = +1;
+    }
+    Y.balance = 0;
+    return Y;
+  }
 
-    return [true, parent, cmp];
+  public rotateLeftThenRight(node: AVLNode<T>): AVLNode<T> { 
+    const X = node;
+    const Z = node.left!;
+    const Y = Z.right!;
+    const t2 = Y.left;
+    const t3 = Y.right;
+    Z.right = t2;
+    if (t2 !== null) {
+      t2.parent = Z;
+    }
+    Y.left =  Z;
+    Z.parent = Y;
+    X.left = t3;
+    if (t3 !== null) {
+      t3.parent = X;
+    }
+    if (X === this.root) {
+      this.root = Y;
+    } else {
+      const parent = X.parent!;
+      if (X === parent.left) {
+        parent.left = Y;
+      } else {
+        parent.right = Y;
+      }
+    }
+    Y.right = X;
+    Y.parent = X.parent;
+    X.parent = Y;
+    if (Y.balance === 0) {
+      X.balance = 0;
+      Z.balance = 0;
+    } else if (Y.balance < 0) {
+      X.balance = +1;
+      Z.balance = 0;
+    } else {
+      X.balance = 0;
+      Z.balance = -1;
+    }
+    Y.balance = 0;
+    return Y;
   }
 
   /**
    * This operation takes `O(log(n))` time.
    */
-  public add(value: T, hint?: AddHint<T>): [boolean, Cursor<T>] {
+  public add(element: T, hint?: unknown): AddResult<T> {
 
-    if (this.root === null) {
-      this.root = new AVLNode<T>(value);
-      this.elementCount++;
+    const [didInsert, insertedNode] = super.add(element, hint) as [boolean, AVLNode<T>];
+
+    if (!didInsert) {
+      return [false, insertedNode];
+    }
+
+    if (this.root === insertedNode) {
       return [true, this.root];
     }
 
-    const getKey = this.getKey;
-    if (hint === undefined) {
-      hint = this.getAddHint(value);
-    }
+    const key = this.getKey(element);
 
-    if (hint[0] === false) {
-      return hint as [boolean, AVLNode<T>];
-    }
+    let node: AVLNode<T> = insertedNode;
+    let grandparent;
 
-    let parent = hint[1];
-    let cmp = hint[2]!;
+    for (
+      let parent: AVLNode<T> | null = node.parent as AVLNode<T>;
+      parent !== null;
+      parent = node.parent as AVLNode<T> | null
+    ) {
 
-    const compare = this.compare;
-    const newNode = new AVLNode<T>(value, parent);
-    let newRoot;
-    if (cmp <= 0) {
-      parent!.left  = newNode;
-    } else {
-      parent!.right = newNode; 
-    }
+      if (node === parent.right) {
 
-    while (parent !== null) {
-      cmp = compare(getKey(parent.value), getKey(value));
-      if (cmp < 0) {
-        parent.balance -= 1;
+        if (parent.balance > 0) {
+
+          if (node.balance < 0) {
+            this.rotateRightThenLeft(parent);
+          } else { 
+            this.rotateLeft(parent);
+          }
+
+        } else {
+
+          // If `parent` contained more nodes on the other side of where we
+          // inserted, then the tree accidentally became balanced when the user
+          // inserted the element. There is no more work to do.
+          if (parent.balance < 0) {
+            parent.balance = 0;
+            break;
+          }
+
+          parent.balance = +1;
+          node = parent;
+          continue;
+        }
+
       } else {
-        parent.balance += 1;
+
+        if (parent.balance < 0) {
+
+          if (node.balance > 0) {
+            this.rotateLeftThenRight(parent)
+          } else {
+            this.rotateRight(parent);
+          }
+
+        } else {
+
+          // If `parent` contained more nodes on the other side of where we
+          // inserted, then the tree accidentally became balanced when the user
+          // inserted the element. There is no more work to do.
+          if (parent.balance > 0) {
+            parent.balance = 0;
+            break;
+          }
+
+          parent.balance = -1;
+          node = parent;
+          continue;
+        }
+
       }
 
-      if (parent.balance === 0) {
-        break; 
-      } else if (parent.balance < -1) {
-        // inlined
-        // let newRoot = rightBalance(parent);
-        if (parent.right!.balance === 1) {
-          rotateRight(parent.right!);
-        }
-        newRoot = rotateLeft(parent);
+      break;
 
-        if (parent === this.root) {
-          this.root = newRoot;
-        }
-        break;
-      } else if (parent.balance > 1) {
-        // inlined
-        // let newRoot = leftBalance(parent);
-        if (parent.left!.balance === -1) {
-          rotateLeft(parent.left!);
-        }
-        newRoot = rotateRight(parent);
-
-        if (parent === this.root) {
-          this.root = newRoot;
-        }
-        break;
-      }
-      parent = parent.parent as AVLNode<T>;
     }
 
-    this.elementCount++;
-    return [true, newNode];
+    return [true, insertedNode];
   }
 
   public equalKeys(key: K): BSNodeRange<T> {
     return equalKeysNoStrict(this, key);
   }
-
-  // protected findMinEqual(key: K, node: Node<T> | null): Node<T> | null {
-  //   if (node === null) {
-  //     return null;
-  //   }
-  //   const cmp = this.compare(key, this.getKey(node.value));
-  //   if (cmp < 0) {
-  //     return this.findMinEqual(key, node.left);
-  //   }
-  //   if (cmp > 0) {
-  //     return this.findMinEqual(key, node.right);
-  //   }
-  //   return this.findMinEqual(key, node.left) || node as Node<T>;
-  // }
-
-  // protected findMaxEqual(key: K, node: Node<T> | null): Node<T> | null {
-  //   if (node === null) {
-  //     return null;
-  //   }
-  //   const cmp = this.compare(key, this.getKey(node.value));
-  //   if (cmp < 0) {
-  //     return this.findMaxEqual(key, node.left);
-  //   }
-  //   if (cmp > 0) {
-  //     return this.findMaxEqual(key, node.right);
-  //   }
-  //   return this.findMaxEqual(key, node.right) || node as Node<T>;
-  // }
-
-  // /**
-  //  * This methods generally returns in `O(log(n))` time, but this might become `O(n)` in
-  //  * the case where multiple elements with the same key are allowed.
-  //  */
-  // public equalKeys(key: K): BSNodeRange<T> {
-  //   // We need to override this method because the standard implementation of an
-  //   // AVL tree does not retain the property that L < R when inserting duplicate
-  //   // keys. The core operations remain the same, but duplicates have to be
-  //   // searched on the left and on the right.
-  //   const top = this.findKey(key) as Node<T>;
-  //   const min = this.findMinEqual(key, top);
-  //   const max = this.findMaxEqual(key, top);
-  //   return new BSNodeRange(min, max, undefined, false);
-  // }
-
-  // public lowerKey(key: K): Node<T> | null {
-  //   let node = this.root;
-  //   while (node !== null && this.compare(this.getKey(node.value), key) > 0) {
-  //     if (node.left !== null) {
-  //       node = node.left;
-  //     } else {
-  //       node = null;
-  //       break;
-  //     }
-  //   }
-  //   if (node !== null && this.compare(this.getKey(node.value), key) === 0 && node.right !== null) {
-  //     node = node.right;
-  //     while (node.left !== null) {
-  //       node = node.left;
-  //     }
-  //   }
-  //   return node;
-  // }
-
-  // public upperKey(key: K): Node<T> | null {
-  //   let node = this.root;
-  //   while (node !== null && this.compare(this.getKey(node.value), key) < 0) {
-  //     if (node.right !== null) {
-  //       node = node.right;
-  //     } else {
-  //       node = null;
-  //       break;
-  //     }
-  //   }
-  //   if (node !== null && this.compare(this.getKey(node.value), key) === 0) {
-  //     node = node.left;
-  //     if (node !== null) {
-  //       while (node.right !== null) { node = node.right; }
-  //     }
-  //   }
-
-  //   return node;
-  // }
-
-  /**
-   * This operation generally takes `O(log(n))` time, unless multiple entries
-   * with the same key are allowed. In that case, the complexity can grow to
-   * `O(n)`.
-   */
-  // public deleteKey(key: K): number {
-  //   let deleteCount = 0;
-  //   for (const node of this.equalKeys(key).cursors()) {
-  //     this.deleteAt(node);
-  //     ++deleteCount;
-  //   }
-  //   return deleteCount;
-  // }
-
-  /**
-   * This operation generally takes `O(log(n))` time, unless multiple entries
-   * with the same key are allowed. In that case, the complexity can grow to
-   * `O(n)`.
-   */
-  // public deleteAll(value: T): number {
-  //   let deleteCount = 0;
-  //   for (const node of  this.equalKeys(this.getKey(value)).cursors()) {
-  //     if (this.isEqual(node.value, value)) {
-  //       this.deleteAt(node as Node<T>);
-  //       ++deleteCount;
-  //     }
-  //   }
-  //   return deleteCount;
-  // }
-
-  /**
-   * This method takes at most `O(log(n))` time, where `n` is the amount of
-   * elements in the collection.
-   */
-  // public delete(element: T): boolean {
-  //   for (const node of this.equalKeys(this.getKey(element)).cursors()) {
-  //     if (this.isEqual(node.value, element)) {
-  //       this.deleteAt(node as Node<T>);
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 
   /**
    * Takes `O(log(n))` time, and is slightly faster than deleting the element
@@ -440,112 +372,106 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
    */
   public deleteAt(node: AVLNode<T>): void {
 
-    let max;
-    let min;
-
-    if (node.left !== null) {
-
-      max = node.left;
-
-      while (max.left !== null || max.right !== null) {
-
-        while (max.right !== null) {
-          max = max.right;
-        }
-
-        node.value = max.value;
-
-        if (max.left !== null) {
-          node = max;
-          max = max.left;
-        }
-
-      }
-
-      node.value  = max.value;
-      node = max;
-    }
-
-    if (node.right !== null) {
-
-      min = node.right;
-
-      while (min.left !== null || min.right !== null) {
-
-        while (min.left !== null) {
-          min = min.left;
-        }
-
-        node.value  = min.value;
-        if (min.right !== null) {
-          node = min;
-          min = min.right;
-        }
-      }
-
-      node.value  = min.value;
-      node = min;
-    }
-
-    let parent = node.parent as AVLNode<T>;
-    let child = node;
-    let newRoot;
-
-    while (parent !== null) {
-
-      if (parent.left === child) {
-        parent.balance -= 1;
-      } else {
-        parent.balance += 1;
-      }
-
-      if (parent.balance < -1) {
-        // inlined
-        // let newRoot = rightBalance(parent);
-        if (parent.right!.balance === 1) {
-          rotateRight(parent.right!);
-        }
-        newRoot = rotateLeft(parent);
-
-        if (parent === this.root) {
-          this.root = newRoot;
-        }
-        parent = newRoot;
-      } else if (parent.balance > 1) {
-        // inlined
-        // let newRoot = leftBalance(parent);
-        if (parent.left!.balance === -1) {
-          rotateLeft(parent.left!);
-        }
-        newRoot = rotateRight(parent);
-
-        if (parent === this.root) {
-          this.root = newRoot;
-        }
-        parent = newRoot;
-      }
-
-      if (parent.balance === -1 || parent.balance === 1) {
-        break;
-      }
-
-      child = parent;
-      parent = parent.parent as AVLNode<T>;
-    }
-
-    if (node.parent) {
-      if (node.parent.left === node) {
-        node.parent.left  = null;
-      } else {
-        node.parent.right = null;
-      }
-    }
-
-    if (node === this.root) {
-      this.root = null;
-    }
-
     this.elementCount--;
+
+    while (true) {
+      const parent = node.parent as AVLNode<T> | null;
+      if (node.left === null && node.right === null) {
+        this.retrace(node);
+        if (parent === null) {
+          this.root = null;
+        } else {
+          if (node === parent.left) {
+            parent.left = null;
+          } else {
+            parent.right = null;
+          }
+        }
+        break;
+      } else if (node.left === null || node.right === null) {
+        const replacement = (node.left !== null ? node.left : node.right) as AVLNode<T>;
+        replacement.parent = parent;
+        if (parent === null) {
+          this.root = replacement;
+        } else {
+          if (node === parent.left) {
+            parent.left = replacement;
+          } else {
+            parent.right = replacement;
+          }
+          this.retrace(replacement);
+        }
+        break;
+      } else {
+        const replacement = node.right.getLeftmost() as AVLNode<T>;
+        this.swapValues(node, replacement);
+        node = replacement;
+      }
+    }
+
+  }
+
+
+  private retrace(N: AVLNode<T>) {
+
+    let G: AVLNode<T> | null;
+
+    for (
+      let X = N.parent as AVLNode<T> | null;
+      X !== null;
+      X = N.parent as AVLNode<T> | null
+    ) {
+
+      if (N === X.left) {
+
+        if (X.balance > 0) {
+          const Z = X.right!;
+          const oldBalance = Z.balance;
+          if (Z.balance < 0) {
+            N = this.rotateRightThenLeft(X);
+          } else {
+            N = this.rotateLeft(X);
+          }
+          if (oldBalance === 0) {
+            break;
+          }
+        } else {
+          if (X.balance === 0) {
+            X.balance = +1;
+            break;
+          }
+          N = X;
+          N.balance = 0;
+          continue;
+        }
+
+      } else {
+
+        if (X.balance < 0) {
+          const Z = X.left!;
+          const oldBalance = Z.balance;
+          if (Z.balance > 0) {
+            N = this.rotateLeftThenRight(X);
+          } else {
+            N = this.rotateRight(X);
+          }
+          if (oldBalance === 0) {
+            break;
+          }
+        } else {
+          if (X.balance === 0) {
+            X.balance = -1;
+            break;
+          }
+          N = X;
+          N.balance = 0;
+          continue;
+        }
+
+      }
+
+    }
+
   }
 
   public clone() {
@@ -553,7 +479,8 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
       compareKeys: this.isKeyLessThan
     , getKey: this.getKey
     , isEqual: this.isEqual
-    , allowDuplicates: this.allowDuplicates
+    , onDuplicateKeys: this.duplicateKeys
+    , onDuplicateElements: this.duplicateElements
     , elements: this
     });
   }

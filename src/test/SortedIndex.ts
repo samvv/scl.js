@@ -5,8 +5,10 @@ import { SortedIndex } from "../interfaces";
 
 import numbers1 from "./data/numbers1.json"
 import numbers2 from "./data/numbers2.json"
+import { Newable, ResolveAction } from "../util";
+import { checkInvariants } from "./invariants";
 
-test<SortedIndex<number>>("SortedIndex.add() storer elements in the correct order", index => {
+test<SortedIndex<number>>("SortedIndex.add() stores elements in the correct order", index => {
   index.add(1);
   index.add(5);
   index.add(2);
@@ -79,7 +81,7 @@ test<SortedIndex<number>>("SortedIndex.getLeastUpperBound() finds the upper boun
   expect(pos5!.value).to.equal(5);
 });
 
-test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() works pn existing keys no matter where the node is located", index => {
+test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() works on existing keys no matter where the node is located", index => {
   for (const num of numbers1) {
     index.add(num);
   }
@@ -179,4 +181,63 @@ test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() finds the nearest
   expect(pos15!.value).to.equal(15);
   const pos16 = index.getGreatestLowerBound(16);
   expect(pos16!.value).to.equal(15);
-});;
+});
+
+test("new SortedIndex.add() can store multiple equal keys", (Index: Newable<SortedIndex<number>>) => {
+  const index = new Index({
+    onDuplicateElements: ResolveAction.Insert,
+    onDuplicateKeys: ResolveAction.Insert,
+  });
+  index.add(1);
+  index.add(5);
+  index.add(2);
+  index.add(3);
+  index.add(3);
+  index.add(3);
+  index.add(4);
+  expect([...index]).to.deep.equal([1, 2, 3, 3, 3, 4, 5]);
+});
+
+test("new SortedIndex.add() can handle lots of elements with the same key", (Index: Newable<SortedIndex<number>>) => {
+  const index = new Index({
+    onDuplicateElements: ResolveAction.Insert,
+    onDuplicateKeys: ResolveAction.Insert,
+  });
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  index.add(1);
+  checkInvariants(index);
+  const elements = [...index]
+  expect(elements).to.have.lengthOf(17)
+  expect(elements.every(num => num === 1)).to.be.true
+});
+
+test("new SortedIndex.equalKeys() returns a range with only keys that are the same", (Index: Newable<SortedIndex<number>>) => {
+  const index = new Index({
+    onDuplicateElements: ResolveAction.Insert,
+    onDuplicateKeys: ResolveAction.Insert,
+  });
+  index.add(1);
+  index.add(2);
+  index.add(3);
+  index.add(3);
+  index.add(3);
+  index.add(4);
+  index.add(5);
+  expect([...index.equalKeys!(7)]).to.deep.equal([]);
+  expect([...index.equalKeys!(3)]).to.deep.equal([3, 3, 3]);
+})
