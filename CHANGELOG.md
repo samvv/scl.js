@@ -3,6 +3,22 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v4.0.0
+
+ - Generated JavaScript now has all comments removed
+ - Introduced a Red/Black tree as an alternative to the AVL tree
+ - `TreeDict` and `TreeMultiDict` now use Red/Black trees instead of AVL trees
+ - Extracted common logic in `AVLTreeIndex` and `RBTreeIndex` into `BSTreeIndex`
+ - Renamed `upperKey()` to `getLeastUpperBound()` and `lowerKey()` to `getGreatestLowerBound()`
+ - Refactored some internal variables to be more consistent and readable
+ - Renamed `CollectionCursor` to simply `Cursor` and `CollectionRange` to simply `Range`
+ - Removed the `TreeManyDict` and `HashManyDict` implementations
+ - Added a `ResolveAction` and make the indices able to adjust behaviour based on this value
+ - `Dict.getValue()` now returns `undefined` instead of `null` if the key was not found
+ - Made `DictLike.getValue()` not throw an error if a key is not found
+ - Fixed a bug in the AVL tree rebalancing algorithm 
+ - Added more tests
+
 ### v3.1.0
 
  - Rename `IndexedCollection` to just `Index`
