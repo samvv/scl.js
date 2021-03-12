@@ -2684,10 +2684,10 @@ img {
 			<a href="rbtreeindexoptions.html" class="tsd-kind-icon">RBTree<wbr>Index<wbr>Options</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="rbtreeindexoptions.html#allowduplicates" class="tsd-kind-icon">allow<wbr>Duplicates</a>
+					<a href="rbtreeindexoptions.html#comparekeys" class="tsd-kind-icon">compare<wbr>Keys</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="rbtreeindexoptions.html#comparekeys" class="tsd-kind-icon">compare<wbr>Keys</a>
+					<a href="rbtreeindexoptions.html#createnode" class="tsd-kind-icon">create<wbr>Node</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="rbtreeindexoptions.html#elements" class="tsd-kind-icon">elements</a>
@@ -2697,6 +2697,12 @@ img {
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="rbtreeindexoptions.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="rbtreeindexoptions.html#onduplicateelements" class="tsd-kind-icon">on<wbr>Duplicate<wbr>Elements</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="rbtreeindexoptions.html#onduplicatekeys" class="tsd-kind-icon">on<wbr>Duplicate<wbr>Keys</a>
 				</li>
 			</ul>
 		</li>
@@ -2719,7 +2725,7 @@ img {
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="tsd-signature-type">BSTOptions</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>
+					<span class="tsd-signature-type">BSTreeIndexOptions</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>
 					<ul class="tsd-hierarchy">
 						<li>
 							<span class="target">RBTreeIndexOptions</span>
@@ -2735,11 +2741,13 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#allowduplicates" class="tsd-kind-icon">allow<wbr>Duplicates</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#comparekeys" class="tsd-kind-icon">compare<wbr>Keys</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#createnode" class="tsd-kind-icon">create<wbr>Node</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#elements" class="tsd-kind-icon">elements</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#getkey" class="tsd-kind-icon">get<wbr>Key</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#onduplicateelements" class="tsd-kind-icon">on<wbr>Duplicate<wbr>Elements</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rbtreeindexoptions.html#onduplicatekeys" class="tsd-kind-icon">on<wbr>Duplicate<wbr>Keys</a></li>
 						</ul>
 					</section>
 				</div>
@@ -2748,28 +2756,12 @@ img {
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="allowduplicates" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> allow<wbr>Duplicates</h3>
-				<div class="tsd-signature tsd-kind-icon">allow<wbr>Duplicates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/BSTreeIndex.ts#L240">BSTreeIndex.ts:240</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Set to <code>false</code> to prevent an element with the same key for which
-						<a href="rbtreeindexoptions.html#isequal">isEqual</a> returns true to be added to the collection.</p>
-					</div>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="comparekeys" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> compare<wbr>Keys</h3>
 				<div class="tsd-signature tsd-kind-icon">compare<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/BSTreeIndex.ts#L223">BSTreeIndex.ts:223</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L223">BSTreeIndex.ts:223</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2806,12 +2798,48 @@ img {
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="createnode" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> create<wbr>Node</h3>
+				<div class="tsd-signature tsd-kind-icon">create<wbr>Node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">BSNode</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L247">BSTreeIndex.ts:247</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A custom factory function for when a new tree node needs to be created.</p>
+					</div>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BSNode</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>value: <span class="tsd-signature-type">T</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">BSNode</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="elements" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> elements</h3>
 				<div class="tsd-signature tsd-kind-icon">elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/BSTreeIndex.ts#L214">BSTreeIndex.ts:214</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L214">BSTreeIndex.ts:214</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2826,7 +2854,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">get<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>elements<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">K</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/BSTreeIndex.ts#L228">BSTreeIndex.ts:228</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L228">BSTreeIndex.ts:228</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2862,7 +2890,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">is<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/BSTreeIndex.ts#L234">BSTreeIndex.ts:234</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L234">BSTreeIndex.ts:234</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2893,6 +2921,32 @@ img {
 							</ul>
 						</li>
 					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="onduplicateelements" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Duplicate<wbr>Elements</h3>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Duplicate<wbr>Elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ResolveAction</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L242">BSTreeIndex.ts:242</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="onduplicatekeys" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Duplicate<wbr>Keys</h3>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Duplicate<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ResolveAction</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/BSTreeIndex.ts#L240">BSTreeIndex.ts:240</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Set to <code>false</code> to prevent an element with the same key to be added to the
+						collection.</p>
+					</div>
 				</div>
 			</section>
 		</section>

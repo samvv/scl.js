@@ -2714,6 +2714,9 @@ img {
 					<a href="dict.html#emplace" class="tsd-kind-icon">emplace</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a href="dict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a href="dict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
@@ -2776,9 +2779,7 @@ img {
 		<section class="tsd-panel">
 			<h3>Implemented by</h3>
 			<ul class="tsd-hierarchy">
-				<li><a href="../classes/hashdict.html" class="tsd-signature-type" data-tsd-kind="Class">HashDict</a></li>
 				<li><a href="../classes/stringdict.html" class="tsd-signature-type" data-tsd-kind="Class">StringDict</a></li>
-				<li><a href="../classes/treedict.html" class="tsd-signature-type" data-tsd-kind="Class">TreeDict</a></li>
 			</ul>
 		</section>
 		<section class="tsd-panel-group tsd-index-group">
@@ -2803,6 +2804,7 @@ img {
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="dict.html#deleteat" class="tsd-kind-icon">delete<wbr>At</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="dict.html#deletekey" class="tsd-kind-icon">delete<wbr>Key</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="dict.html#emplace" class="tsd-kind-icon">emplace</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="dict.html#equalkeys" class="tsd-kind-icon">equal<wbr>Keys</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="dict.html#findkey" class="tsd-kind-icon">find<wbr>Key</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="dict.html#getaddhint" class="tsd-kind-icon">get<wbr>Add<wbr>Hint</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface"><a href="dict.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a></li>
@@ -2824,7 +2826,7 @@ img {
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#size">size</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L68">interfaces.d.ts:68</a></li>
+						<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L68">interfaces.d.ts:68</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2850,7 +2852,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#_symbol_iterator_">[Symbol.iterator]</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L54">interfaces.d.ts:54</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L54">interfaces.d.ts:54</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2876,7 +2878,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#add">add</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L37">interfaces.d.ts:37</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L37">interfaces.d.ts:37</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2918,7 +2920,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#clear">clear</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L74">interfaces.d.ts:74</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L74">interfaces.d.ts:74</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2942,7 +2944,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#clone">clone</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L79">interfaces.d.ts:79</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L79">interfaces.d.ts:79</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2958,14 +2960,14 @@ img {
 				<a name="delete" class="tsd-anchor"></a>
 				<h3>delete</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#delete">delete</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L92">interfaces.d.ts:92</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L92">interfaces.d.ts:92</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2977,7 +2979,7 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>el: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+								<h5>element: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -2989,14 +2991,14 @@ img {
 				<a name="deleteall" class="tsd-anchor"></a>
 				<h3>delete<wbr>All</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					<li class="tsd-signature tsd-kind-icon">delete<wbr>All<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#deleteall">deleteAll</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L100">interfaces.d.ts:100</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L100">interfaces.d.ts:100</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3008,7 +3010,7 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>el: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+								<h5>element: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -3020,14 +3022,14 @@ img {
 				<a name="deleteat" class="tsd-anchor"></a>
 				<h3>delete<wbr>At</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<li class="tsd-signature tsd-kind-icon">delete<wbr>At<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#deleteat">deleteAt</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L84">interfaces.d.ts:84</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L84">interfaces.d.ts:84</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3038,7 +3040,7 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>pos: <a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5>position: <a href="cursor.html" class="tsd-signature-type" data-tsd-kind="Interface">Cursor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -3056,7 +3058,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#deletekey">deleteKey</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L192">interfaces.d.ts:192</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L197">interfaces.d.ts:197</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3086,7 +3088,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#emplace">emplace</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L334">interfaces.d.ts:334</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L334">interfaces.d.ts:334</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3108,6 +3110,30 @@ img {
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+				<a name="equalkeys" class="tsd-anchor"></a>
+				<h3>equal<wbr>Keys</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<li class="tsd-signature tsd-kind-icon">equal<wbr>Keys<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="range.html" class="tsd-signature-type" data-tsd-kind="Interface">Range</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#equalkeys">equalKeys</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L179">interfaces.d.ts:179</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>key: <span class="tsd-signature-type">K</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="range.html" class="tsd-signature-type" data-tsd-kind="Interface">Range</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 				<a name="findkey" class="tsd-anchor"></a>
 				<h3>find<wbr>Key</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
@@ -3118,7 +3144,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#findkey">findKey</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L185">interfaces.d.ts:185</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L190">interfaces.d.ts:190</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3148,7 +3174,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#getaddhint">getAddHint</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L21">interfaces.d.ts:21</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L21">interfaces.d.ts:21</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3171,13 +3197,13 @@ img {
 				<a name="getvalue" class="tsd-anchor"></a>
 				<h3>get<wbr>Value</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></li>
+					<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L348">interfaces.d.ts:348</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L348">interfaces.d.ts:348</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3191,7 +3217,7 @@ img {
 								<h5>key: <span class="tsd-signature-type">K</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -3199,14 +3225,14 @@ img {
 				<a name="has" class="tsd-anchor"></a>
 				<h3>has</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">has<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					<li class="tsd-signature tsd-kind-icon">has<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#has">has</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L45">interfaces.d.ts:45</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L45">interfaces.d.ts:45</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3217,7 +3243,7 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>el: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
+								<h5>element: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">]</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<p>The element to check membership of.</p>
 								</div>
@@ -3239,7 +3265,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#haskey">hasKey</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L179">interfaces.d.ts:179</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L184">interfaces.d.ts:184</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3268,7 +3294,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#iterator">iterator</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L59">interfaces.d.ts:59</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L59">interfaces.d.ts:59</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3292,7 +3318,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="dictlike.html">DictLike</a>.<a href="dictlike.html#torange">toRange</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/2d215d0/src/interfaces.d.ts#L105">interfaces.d.ts:105</a></li>
+								<li>Defined in <a href="https://github.com/samvv/scl.js/blob/04ba2e1/src/interfaces.d.ts#L105">interfaces.d.ts:105</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
