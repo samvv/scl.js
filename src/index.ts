@@ -39,6 +39,7 @@ export { Stack } from "./Stack";
 export { Queue } from "./Queue";
 export { PriorityQueue, PriorityQueueOptions } from "./PriorityQueue";
 export { TreeIndex, TreeIndexOptions } from "./TreeIndex";
+export { NativeIndex, NativeIndexOptions } from "./NativeIndex";
 export { RBTreeIndex, RBTreeIndexOptions, RBTreeIndexCursor } from "./RBTreeIndex";
 export { AVLTreeIndex, AVLTreeIndexOptions, AVLTreeIndexCursor } from "./AVLTreeIndex";
 export { HashSet, HashSetCursor } from "./HashSet";
