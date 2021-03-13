@@ -80,13 +80,13 @@ for (const task of tasks) {
 
 This will output the following text:
 
-```txt
+<pre>
 I should do the remaining tasks in the following order:
 - Do the dishes
 - Go for a walk
 - Program like crazy
 - Play some games
-```
+</pre>
 
 **Sorting and querying a list of people based on their age**
 
@@ -161,11 +161,11 @@ d.deleteAt(threeCursor)
 
 The output of the above program:
 
-```txt
+<pre>
 The number 1 can be translated as as 'uno'
 The number 1 can be translated as as 'Ein'
 The dictionary now has 3 in its keys.
 The dictionary now has 6 elements.
-```
+</pre>
 
 
