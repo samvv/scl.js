@@ -55,7 +55,6 @@ import { RBTreeMultiDict } from "./RBTreeMultiDict"
  *
  * @see [[HashMultiDict]] for a fast, unordered version of this collection.
  * @see [[TreeDict]] when you need your keys to be unique.
- * @see [[TreeManyDict]] when you want the values to be unique but not the keys.
  *
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.

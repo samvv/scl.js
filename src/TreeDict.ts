@@ -6,7 +6,6 @@ import { RBTreeDict } from "./RBTreeDict";
  * Options passed to a tree-like dictionary to configure its behaviour.
  *
  * @see [[TreeDict]]
- * @see [[TreeManyDict]]
  * @see [[TreeMultiDict]]
  */
 export interface TreeDictOptions<K, V> extends BSTreeIndexOptions<[K, V], K> {
@@ -71,7 +70,6 @@ export interface TreeDictOptions<K, V> extends BSTreeIndexOptions<[K, V], K> {
  * ```
  *
  * @see [[HashDict]] for a fast, unordered version of this collection.
- * @see [[TreeManyDict]] when you need to store multiple items with the same key but still want uniqueness.
  * @see [[TreeMultiDict]] when you need to store multiple items.
  *
  * @typeparam K The type of key of a given entry.

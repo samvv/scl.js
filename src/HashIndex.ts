@@ -8,7 +8,7 @@ import { getKey as defaultGetKey, EmptyRange, isEqual, RangeBase, hash, ResolveA
  */
 export type Bucket<T> = DoubleLinkedList<T>;
 
-export class HashCursor<T> implements Cursor<T> {
+export class HashIndexCursor<T> implements Cursor<T> {
 
   constructor(public _bucket: Bucket<T>, public _bucketPos: DoubleLinkedListCursor<T>) {
 
@@ -50,7 +50,7 @@ class FullHashRange<T, K> extends RangeBase<T> {
     for (const bucket of this._hash._array) {
       if (bucket !== undefined) {
         for (const cursor of bucket.toRange().cursors()) {
-          yield new HashCursor(bucket, cursor as DoubleLinkedListCursor<T>);
+          yield new HashIndexCursor(bucket, cursor as DoubleLinkedListCursor<T>);
         }
       }
     }
@@ -112,7 +112,58 @@ export interface HashIndexOptions<T, K = T> {
 }
 
 /**
- * @ignore
+ * A data structure that maps elements to different memory locations so that
+ * they can be very efficiently stored and retrieved.
+ *
+ * **Choosing the key and determining how to detect duplicates**
+ *
+ * In the next example, we index the states of a [finite-state machine][1].
+ * Each state has a unique `id` that we'd like to use as key. There is only one
+ * instance of each unique `FSMState`, so we can instruct `HashIndex` to use
+ * the much simpler strict equality check instead of the more advanced
+ * [[isEqual]]. Likewise, keys are just numbers, so we can save come CPU cycles
+ * by directly comparing them.
+ *
+ * ```
+ * import { HashIndex } from "scl";
+ *
+ * interface FSMState {
+ *   id: string;
+ *   isFinal: boolean;
+ *   edgeCount: number;
+ *   nextStates: Array<[string, FSMState]>;
+ * }
+ *
+ * const s0: FSMState = {
+ *   id: 0,
+ *   isFinal: false,
+ *   edgeCount: 1,
+ *   nextStates: [
+ *     ['a', s1],
+ *   ]
+ * }
+ *
+ * const s1: FSMState = {
+ *   id: 1,
+ *   isFinal: true,
+ *   edgeCount 0,
+ *   nextStates: [],
+ * }
+ *
+ * const allStates = new HashIndex<({
+ *   getKey: state => state.id,
+ *   compareKeys: (a, b) => a < b,
+ *   isEqual: (a, b) => a === b,
+ *   elements: [s0, s1],
+ * });
+ *
+ * assert(allStates.getKey(1) === s1);
+ * ```
+ *
+ * [2]: https://en.wikipedia.org/wiki/Finite-state_machine
+ *
+ * @see [[AVLTreeIndex]] for when the elements have to be sorted and there are frequent lookups
+ * @see [[RBTreeIndex]] for when the elements have to be sorted and there are frequent mutations
  */
 export class HashIndex<T, K = T> implements Index<T, K> {
 
@@ -189,7 +240,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
           case ResolveAction.Replace:
             position.value = element;
           case ResolveAction.Ignore:
-            return [false, new HashCursor(bucket, position)]
+            return [false, new HashIndexCursor(bucket, position)]
         }
         if (this.elementsEqual(position.value, element)) {
           switch (this.onDuplicateElements) {
@@ -198,29 +249,29 @@ export class HashIndex<T, K = T> implements Index<T, K> {
             case ResolveAction.Replace:
               position.value = element;
             case ResolveAction.Ignore:
-              return [false, new HashCursor(bucket, position)];
+              return [false, new HashIndexCursor(bucket, position)];
           }
         }
       }
     }
     const bucketPos = bucket.append(element);
     ++this.elementCount;
-    return [true, new HashCursor<T>(bucket, bucketPos)];
+    return [true, new HashIndexCursor<T>(bucket, bucketPos)];
   }
 
-  public deleteAt(cursor: HashCursor<T>) {
+  public deleteAt(cursor: HashIndexCursor<T>) {
     cursor._bucket.deleteAt(cursor._bucketPos);
     --this.elementCount;
   }
 
-  public findKey(key: K): HashCursor<T> | null {
+  public findKey(key: K): HashIndexCursor<T> | null {
     const bucket = this._getBucket(key);
     if (bucket === null) {
       return null;
     }
     for (const cursor of bucket.toRange().cursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) {
-        return new HashCursor<T>(bucket, cursor);
+        return new HashIndexCursor<T>(bucket, cursor);
       }
     }
     return null;

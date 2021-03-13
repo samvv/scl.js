@@ -298,6 +298,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
           throw new Error(`The key ${key} already exists in this index and duplicates are not allowed.`);
         case ResolveAction.Replace:
           parent.value = element;
+          return [true, parent];
         case ResolveAction.Ignore:
           return [false, parent];
       }
@@ -307,6 +308,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
             throw new Error(`The element ${element} is already present in this index and duplicates are not allowed.`)
           case ResolveAction.Replace:
             parent.value = element;
+            return [true, parent];
           case ResolveAction.Ignore:
             return [false, parent];
         }
