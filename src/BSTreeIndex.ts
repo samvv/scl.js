@@ -256,8 +256,8 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
   public getKey: (element: T) => K;
   public isKeyLessThan: (a: K, b: K) => boolean;
   public isEqual: (a: T, b: T) => boolean;
-  public duplicateElements: ResolveAction;
-  public duplicateKeys: ResolveAction;
+  public onDuplicateElements: ResolveAction;
+  public onDuplicateKeys: ResolveAction;
 
   public constructor(
     opts: Iterable<T> | BSTreeIndexOptions<T, K> = {},
@@ -276,8 +276,8 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
     this.getKey = opts.getKey ?? getKey;
     this.isKeyLessThan = opts.compareKeys ?? lessThan;
     this.isEqual = opts.isEqual ?? isEqual;
-    this.duplicateElements = opts.onDuplicateElements ?? ResolveAction.Error;
-    this.duplicateKeys = opts.onDuplicateKeys ?? ResolveAction.Error;
+    this.onDuplicateElements = opts.onDuplicateElements ?? ResolveAction.Error;
+    this.onDuplicateKeys = opts.onDuplicateKeys ?? ResolveAction.Error;
     for (const element of elements) {
       this.add(element);
     }
@@ -293,7 +293,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
     }
     const parentKey = this.getKey(parent.value);
     if (this.areKeysEqual(parentKey, key)) {
-      switch (this.duplicateKeys) {
+      switch (this.onDuplicateKeys) {
         case ResolveAction.Error:
           throw new Error(`The key ${key} already exists in this index and duplicates are not allowed.`);
         case ResolveAction.Replace:
@@ -303,7 +303,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
           return [false, parent];
       }
       if (this.isEqual(element, parent.value)) {
-        switch (this.duplicateElements) {
+        switch (this.onDuplicateElements) {
           case ResolveAction.Error:
             throw new Error(`The element ${element} is already present in this index and duplicates are not allowed.`)
           case ResolveAction.Replace:
@@ -468,7 +468,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
         }
       } else {
         if (currNode.right === null) {
-          if (!this.duplicateKeys && !this.isKeyLessThan(currKey, key)) {
+          if (!this.onDuplicateKeys && !this.isKeyLessThan(currKey, key)) {
             return false;
           }
           currNode.right = node;

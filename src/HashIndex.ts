@@ -65,8 +65,6 @@ export interface HashIndexOptions<T, K = T> {
    */
   elements?: Iterable<T>;
 
-  hash?: (key: K) => number;
-
   /**
    * A predicate for determining when two keys are equal.
    *
@@ -107,7 +105,18 @@ export interface HashIndexOptions<T, K = T> {
    */
   capacity?: number;
 
+  /**
+   * What to do when the key of the element being added already exists in the index.
+   * 
+   * This property defaults to [[ResolveAction.Error]].
+   */
   onDuplicateKeys?: ResolveAction;
+
+  /**
+   * What to do when the the element being added already exists in the index.
+   * 
+   * This property defaults to [[ResolveAction.Error]].
+   */
   onDuplicateElements?: ResolveAction;
 }
 

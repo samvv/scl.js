@@ -5,12 +5,6 @@ import { PriorityQueue } from "./PriorityQueue";
 /**
  * Base interface for any data structure that contains multiple elements.
  *
- * In general, an implementation of a collection (such as [[DoubleLinkedList]]
- * or a [[PriorityQueue]]) will contain static member functions that can be used
- * to create a new instance of the collection. For example,
- * [[DoubleLinkedList.from]] will create a new linked list filled with elements
- * of the given iterable.
- *
  * @typeparam T The type of element in the collection.
  */
 export interface Collection<T> {

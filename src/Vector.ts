@@ -3,33 +3,29 @@ import { DEFAULT_VECTOR_ALLOC_STEP, DEFAULT_VECTOR_CAPACITY } from "./constants"
 import { Sequence } from "./interfaces";
 import { CursorBase, isIterable, RangeBase } from "./util";
 
-/**
- * @ignore
- */
 export class VectorCursor<T> extends CursorBase<T> {
-
-  get value() {
-    return this.vector._elements[this._index];
-  }
-
-  set value(newValue: T) {
-    this.vector._elements[this._index] = newValue;
-  }
 
   constructor(public vector: Vector<T>, public _index: number) {
     super();
   }
 
+  public get value() {
+    return this.vector._elements[this._index];
+  }
+
+  public set value(newValue: T) {
+    this.vector._elements[this._index] = newValue;
+  }
   public *[Symbol.iterator]() {
     const elements = this.vector._elements;
-    const size = this.vector._size;
+    const size = this.vector._elementCount;
     for (let i = this._index; i < size; ++i) {
       yield elements[i];
     }
   }
 
   public next() {
-    if (this._index === this.vector._size - 1) {
+    if (this._index === this.vector._elementCount - 1) {
       return null;
     }
     return new VectorCursor<T>(this.vector, this._index + 1);
@@ -103,10 +99,7 @@ function copy<T>(
   }
 }
 
-/**
- * @ignore
- */
-export function createArray<T>(iterable: Iterable<T>, capacity: number) {
+function createArray<T>(iterable: Iterable<T>, capacity: number) {
   const elements = [...iterable];
   const size = elements.length;
   elements.length = Math.max(size, capacity);
@@ -189,7 +182,7 @@ export class Vector<T> implements Sequence<T> {
   /**
    * @ignore
    */
-  public _size: number;
+  public _elementCount: number;
 
   /**
    * @ignore
@@ -218,17 +211,17 @@ export class Vector<T> implements Sequence<T> {
     if (isIterable(opts)) {
       const [elements, size] = createArray(opts, DEFAULT_VECTOR_CAPACITY);
       this._elements = elements;
-      this._size = size;
+      this._elementCount = size;
       this._allocStep = DEFAULT_VECTOR_ALLOC_STEP;
     } else {
       const capacity = opts.capacity !== undefined ? opts.capacity : DEFAULT_VECTOR_CAPACITY;
       this._allocStep = opts.allocStep !== undefined ? opts.allocStep : DEFAULT_VECTOR_ALLOC_STEP;
       if (opts.elements !== undefined) {
         const [elements, size] = createArray(opts.elements, capacity);
-        this._size = size;
+        this._elementCount = size;
         this._elements = elements;
       } else {
-        this._size = 0;
+        this._elementCount = 0;
         this._elements = new Array(capacity);
       }
     }
@@ -239,25 +232,27 @@ export class Vector<T> implements Sequence<T> {
    *
    * @see [[Vector.size]]
    */
-  get capacity() {
+  public get capacity(): number {
     return this._elements.length;
   }
 
   /**
-   * Allocates the specified amount of free space at the end of the vector for
-   * storing data, without changing its `size()`.
+   * Ensure the vector can store at least `count` amount of elements.
+   * 
+   * The [[size]] property of this vector is never changed during this call.
    */
-  public allocate(count: number) {
-    if (count <= this._elements.length) {
-      return;
-    }
-    const newElements = new Array(count);
-    copy(this._elements, newElements, 0, this._size);
-    this._elements = newElements;
+  public allocate(count: number): void {
+    this._elements.length = Math.max(this._elements.length, count);
+    // if (count <= this._elements.length) {
+    //   return;
+    // }
+    // const newElements = new Array(count);
+    // copy(this._elements, newElements, 0, this._elementCount);
+    // this._elements = newElements;
   }
 
-  public has(element: T) {
-    for (let i = 0; i < this._size; i++) {
+  public has(element: T): boolean {
+    for (let i = 0; i < this._elementCount; i++) {
       if (this._elements[i] === element) {
         return true;
       }
@@ -265,50 +260,50 @@ export class Vector<T> implements Sequence<T> {
     return false;
   }
 
-  public replace(index: number, element: T) {
-    if (index < 0 || index >= this._size) {
+  public replace(index: number, element: T): void {
+    if (index < 0 || index >= this._elementCount) {
       throw new RangeError(`Could not replace element: index ${index} out of bounds.`);
     }
     this._elements[index] = element;
   }
 
   public getAt(index: number) {
-    if (index < 0 || index >= this._size) {
+    if (index < 0 || index >= this._elementCount) {
       throw new RangeError(`Could not get element: index ${index} out of bounds.`);
     }
     return this._elements[index];
   }
 
   public shrinkFit() {
-    this._elements.length = this._size;
+    this._elements.length = this._elementCount;
   }
 
   /**
    * Get how many elements are actually in the container.
    *
-   * @see [[Vector.capacity]]
+   * @see [[capacity]]
    */
-  get size() {
-    return this._size;
+  public get size(): number {
+    return this._elementCount;
   }
 
   public insertAfter(pos: VectorCursor<T>, element: T) {
-    if (this._elements.length === this._size) {
+    if (this._elements.length === this._elementCount) {
       this._elements.length += this._allocStep;
     }
-    this._elements.copyWithin(pos._index + 2, pos._index + 1, this._size);
-    this._size++;
+    this._elements.copyWithin(pos._index + 2, pos._index + 1, this._elementCount);
+    this._elementCount++;
     this._elements[pos._index + 1] = element;
     return new VectorCursor<T>(this, pos._index + 1);
   }
 
   public insertBefore(pos: VectorCursor<T>, element: T) {
-    if (this._elements.length === this._size) {
+    if (this._elements.length === this._elementCount) {
       this._elements.length += this._allocStep;
     }
-    this._elements.copyWithin(pos._index + 1, pos._index, this._size);
+    this._elements.copyWithin(pos._index + 1, pos._index, this._elementCount);
     this._elements[pos._index] = element;
-    this._size++;
+    this._elementCount++;
     return new VectorCursor<T>(this, pos._index);
   }
 
@@ -316,46 +311,46 @@ export class Vector<T> implements Sequence<T> {
     return new VectorRange<T>(this, a, b, false);
   }
 
-  public first() {
-    if (this._size === 0) {
+  public first(): T {
+    if (this._elementCount === 0) {
       throw new Error(`Could not get first element: collection is empty.`);
     }
     return this._elements[0];
   }
 
-  public last() {
-    if (this._size === 0) {
+  public last(): T {
+    if (this._elementCount === 0) {
       throw new Error(`Could not get last element: collection is empty.`);
     }
-    return this._elements[this._size - 1];
+    return this._elements[this._elementCount - 1];
   }
 
   public toRange() {
-    return new VectorRange<T>(this, 0, this._size, false);
+    return new VectorRange<T>(this, 0, this._elementCount, false);
   }
 
   public prepend(el: T) {
-    if (this._elements.length === this._size) {
+    if (this._elements.length === this._elementCount) {
       this._elements.length += this._allocStep;
     }
-    this._elements.copyWithin(1, 0, this._size);
+    this._elements.copyWithin(1, 0, this._elementCount);
     this._elements[0] = el;
-    this._size++;
+    this._elementCount++;
     return new VectorCursor<T>(this, 0);
   }
 
   public append(el: T) {
-    if (this._elements.length === this._size) {
+    if (this._elements.length === this._elementCount) {
       this._elements.length += this._allocStep;
     }
-    this._elements[this._size] = el;
-    this._size++;
-    return new VectorCursor<T>(this, this._size - 1);
+    this._elements[this._elementCount] = el;
+    this._elementCount++;
+    return new VectorCursor<T>(this, this._elementCount - 1);
   }
 
   public *[Symbol.iterator]() {
     const elements = this._elements;
-    const size = this._size;
+    const size = this._elementCount;
     for (let i = 0; i < size; i++) {
       yield elements[i];
     }
@@ -366,17 +361,17 @@ export class Vector<T> implements Sequence<T> {
   }
 
   public at(position: number): VectorCursor<T> {
-    if (position < 0 || position >= this._size) {
+    if (position < 0 || position >= this._elementCount) {
       throw new RangeError(`Could not get element at position ${position}: index out of range.`);
     }
     return new VectorCursor(this, position);
   }
 
   public delete(el: T): boolean {
-    for (let i = 0; i < this._size; i++) {
+    for (let i = 0; i < this._elementCount; i++) {
       if (el === this._elements[i]) {
-        this._elements.copyWithin(i, i + 1, this._size);
-        this._size--;
+        this._elements.copyWithin(i, i + 1, this._elementCount);
+        this._elementCount--;
         return true;
       }
     }
@@ -384,8 +379,8 @@ export class Vector<T> implements Sequence<T> {
   }
 
   public deleteAtIndex(index: number) {
-    this._elements.copyWithin(index, index + 1, this._size);
-    this._size--;
+    this._elements.copyWithin(index, index + 1, this._elementCount);
+    this._elementCount--;
   }
 
   public swap(a: number, b: number) {
@@ -401,20 +396,20 @@ export class Vector<T> implements Sequence<T> {
   public deleteAll(element: T): number {
     let k = 0;
     let count = 0;
-    for (let i = 0; i < this._size; i++) {
+    for (let i = 0; i < this._elementCount; i++) {
       if (element !== this._elements[i]) {
         this._elements[k++] = this._elements[i];
       } else {
         count++;
       }
     }
-    this._size = k;
+    this._elementCount = k;
     return count;
   }
 
   public clear() {
     this._elements = [];
-    this._size = 0;
+    this._elementCount = 0;
   }
 
   public clone() {

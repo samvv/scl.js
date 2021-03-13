@@ -11,7 +11,7 @@ function checkBinaryTreeNode<T, K>(tree: BST<T, K>, node: BSNode<T>) {
     const leftKey =  tree.getKey(node.left.value);
     const keysEqual = tree.areKeysEqual(key, leftKey);
     if (keysEqual) {
-      if (tree.duplicateKeys !== ResolveAction.Insert) {
+      if (tree.onDuplicateKeys !== ResolveAction.Insert) {
         throw new Error(`Child on the left has the same value of its parent ${node.value} while duplicates are not allowed`)
       }
     } else if (!tree.isKeyLessThan(leftKey, key)) {
@@ -22,7 +22,7 @@ function checkBinaryTreeNode<T, K>(tree: BST<T, K>, node: BSNode<T>) {
     const rightKey = tree.getKey(node.right.value);
     const keysEqual = tree.areKeysEqual(key, rightKey);
     if (keysEqual) {
-      if (tree.duplicateKeys !== ResolveAction.Insert) {
+      if (tree.onDuplicateKeys !== ResolveAction.Insert) {
         throw new Error(`Child on the right has the same value of its parent ${node.value} while duplicates are not allowed`)
       }
     } else if (!tree.isKeyLessThan(key, rightKey)) {

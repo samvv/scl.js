@@ -37,7 +37,7 @@ export { SingleLinkedList, SingleLinkedListRange, SingleLinkedListCursor } from 
 export { Vector } from "./Vector";
 export { Stack } from "./Stack";
 export { Queue } from "./Queue";
-export { PriorityQueue } from "./PriorityQueue";
+export { PriorityQueue, PriorityQueueOptions } from "./PriorityQueue";
 export { TreeIndex, TreeIndexOptions } from "./TreeIndex";
 export { RBTreeIndex, RBTreeIndexOptions, RBTreeIndexCursor } from "./RBTreeIndex";
 export { AVLTreeIndex, AVLTreeIndexOptions, AVLTreeIndexCursor } from "./AVLTreeIndex";

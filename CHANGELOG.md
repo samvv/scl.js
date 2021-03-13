@@ -3,6 +3,17 @@ Change Log
 
 This document keeps track of any changes made to the software.
 
+### v4.1.2
+
+ - Simplified and optimized the implementation of `Vector.allocate()`
+ - Fixed `PriorityQueue.clone()` not copying the elements to the new collection
+ - Added some more tests
+ - Added more documentation
+
+### v4.1.1
+
+ - Updated some documentation and README.md
+
 ### v4.1.0
 
  - Fix critical bug occurring because main `index.js` is not being found due to

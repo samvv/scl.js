@@ -59,6 +59,8 @@ class ObjectRange<V> extends RangeBase<[string, V]> {
  * ```
  *
  * All operations in the dictionary are in `O(1)`.
+ * 
+ * @deprecated
  */
 export class StringDict<V> implements Dict<string, V> {
 

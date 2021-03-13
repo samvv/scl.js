@@ -82,7 +82,7 @@ export class HashDict<K, V> extends DictBase<K, V> {
    * ])
    * ```
    *
-   * The dictionary can be tweaked by providing a [[HashDictOptions]]-object,
+   * The dictionary can be tweaked by providing a [[HashDictOptions]] object,
    * which allows to configure things like the default hashing function and
    * value equality.
    *

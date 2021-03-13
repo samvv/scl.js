@@ -116,7 +116,7 @@ test("Collection.size is correctly updated when deleting elements", (coll: Colle
   expect(coll.size).to.equal(0);
 });
 
-test("Collection.toRange() generates the elements of the full colluence", (coll: Collection<string>) => {
+test("Collection.toRange() generates the elements of the full sequence", (coll: Collection<string>) => {
   coll.add("a");
   coll.add("b");
   coll.add("c");
@@ -128,6 +128,70 @@ test("Collection.toRange() generates the elements of the full colluence", (coll:
   expect(elements).to.include("c");
   expect(elements).to.include("d");
 });
+
+test('Collection.clone() creates a collection which has the same elements as the original one', (collection: Collection<number>) => {
+  collection.add(1);
+  collection.add(2);
+  collection.add(4);
+  collection.add(7);
+  collection.add(10);
+  const cloned = collection.clone();
+  expect(cloned.size).to.equal(5);
+  expect(cloned.has(0)).to.be.false
+  expect(cloned.has(1)).to.be.true
+  expect(cloned.has(2)).to.be.true
+  expect(cloned.has(3)).to.be.false
+  expect(cloned.has(4)).to.be.true
+  expect(cloned.has(5)).to.be.false
+  expect(cloned.has(6)).to.be.false
+  expect(cloned.has(7)).to.be.true
+  expect(cloned.has(8)).to.be.false
+  expect(cloned.has(9)).to.be.false
+  expect(cloned.has(10)).to.be.true
+  expect(cloned.has(11)).to.be.false
+});
+
+test('Collection.clone() creates a copy that is not dependant on the first collection', (collection: Collection<number>) => {
+
+  collection.add(1);
+  collection.add(2);
+  collection.add(4);
+  collection.add(7);
+  collection.add(10);
+
+  const cloned = collection.clone();
+  cloned.add(8);
+  cloned.delete(7);
+
+  expect(collection.size).to.equal(5);
+  expect(collection.has(0)).to.be.false
+  expect(collection.has(1)).to.be.true
+  expect(collection.has(2)).to.be.true
+  expect(collection.has(3)).to.be.false
+  expect(collection.has(4)).to.be.true
+  expect(collection.has(5)).to.be.false
+  expect(collection.has(6)).to.be.false
+  expect(collection.has(7)).to.be.true
+  expect(collection.has(8)).to.be.false
+  expect(collection.has(9)).to.be.false
+  expect(collection.has(10)).to.be.true
+  expect(collection.has(11)).to.be.false
+
+  expect(cloned.size).to.equal(5);
+  expect(cloned.has(0)).to.be.false
+  expect(cloned.has(1)).to.be.true
+  expect(cloned.has(2)).to.be.true
+  expect(cloned.has(3)).to.be.false
+  expect(cloned.has(4)).to.be.true
+  expect(cloned.has(5)).to.be.false
+  expect(cloned.has(6)).to.be.false
+  expect(cloned.has(7)).to.be.false
+  expect(cloned.has(8)).to.be.true
+  expect(cloned.has(9)).to.be.false
+  expect(cloned.has(10)).to.be.true
+  expect(cloned.has(11)).to.be.false
+});
+
 
 test("Collection.toRange().size returns the correct size", (coll: Collection<string>) => {
   expect(coll.toRange().size).to.equal(0);
