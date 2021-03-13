@@ -1,0 +1,19 @@
+#!/bin/sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+# Check whether source files actually changed. If so, we will need to rebuild
+# the documentation.
+CHANGED=$(git diff-index --cached --name-only HEAD -- src/*.ts)
+
+if [ ! -x .is-generating-docs ] && [ -n "$CHANGED" ]; then
+
+  # First make sure that all tests pass
+  npm test
+
+  # We don't rebuild the documentation right now. The documentation may depend
+  # on the commit hash that is going to be created, so create a small file that
+  # indicates the post-commit hook it should create a separate commit.
+  touch .should-update-docs
+
+fi

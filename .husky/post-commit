@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+if [ -f '.should-update-docs' ] && [ ! -f '.is-generating-docs' ]; then
+  touch .is-generating-docs
+  npm run build-docs
+  git add docs/
+  HASH="$(git rev-parse HEAD)"
+  git -C docs commit -m "Regenerate documentation for commit $HASH"
+fi
+
+# Documentation should now have been completely generated or skipped, so the
+# files .is-generating-docs and .should-update-docs are not valid anymore.
+rm -f .should-update-docs
+rm -f .is-generating-docs
+

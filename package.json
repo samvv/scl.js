@@ -23,9 +23,11 @@
     "chai": "^4.3.4",
     "coveralls": "^3.1.0",
     "eslint": "^7.21.0",
+    "husky": "^5.1.3",
     "merge-char": "^1.3.4",
     "mocha": "^8.3.2",
     "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
     "source-map-support": "^0.5.19",
     "ts-node": "^9.1.1",
     "typedoc": "^0.20.30",
@@ -34,13 +36,13 @@
   },
   "scripts": {
     "watch": "mocha --watch lib/test --require source-map-support/register",
-    "prepare": "npm run lint && tsc",
+    "prepare": "husky install",
     "lint": "eslint . --ext .ts",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "mocha lib/test --require source-map-support/register",
     "write-coverage": "nyc --reporter json mocha 'src/test/**/*.ts' --require ts-node/register --require source-map-support/register",
     "coverage": "nyc mocha 'src/test/**/*.ts' --require ts-node/register --require source-map-support/register",
-    "build-docs": "typedoc --out docs"
+    "build-docs": "rimraf docs/* && typedoc --out docs --disableOutputCheck"
   },
   "authors": [
     "Sam Vervaeck"
