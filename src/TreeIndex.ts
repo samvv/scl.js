@@ -1,5 +1,5 @@
 
-import { RBTreeIndex } from "./RBTreeIndex"
+import { RBTreeIndex } from "./RBTreeIndex.js"
 
 export interface TreeIndexOptions<T, K = T> {
 

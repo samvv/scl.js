@@ -1,6 +1,6 @@
 
-import { Range, Cursor, Dict, Pair } from "./interfaces";
-import { CursorBase, RangeBase } from "./util";
+import type { Range, Cursor, Dict, Pair } from "./interfaces.js";
+import { CursorBase, RangeBase } from "./util.js";
 
 class ObjectCursor<V> extends CursorBase<[string, V]> {
 

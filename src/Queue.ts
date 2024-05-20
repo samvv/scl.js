@@ -1,7 +1,7 @@
 
-import { Queuelike } from "./interfaces";
+import type { Queuelike } from "./interfaces.js";
 
-import DoubleLinkedList, {DoubleLinkedListCursor} from "./DoubleLinkedList";
+import DoubleLinkedList, {DoubleLinkedListCursor} from "./DoubleLinkedList.js";
 
 /**
  * A _FIFO queue_, where the first element pushed into the collection is also

@@ -1,5 +1,5 @@
 
-import { RBTreeMultiDict } from "./RBTreeMultiDict"
+import { RBTreeMultiDict } from "./RBTreeMultiDict.js"
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but

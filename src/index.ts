@@ -17,7 +17,7 @@ export type {
   Set,
   SortedIndex,
   Vec2
-} from "./interfaces";
+} from "./interfaces.js";
 
 export {
   isIterable,
@@ -30,23 +30,23 @@ export {
   hash,
   hashTag,
   Hasher
-} from "./util";
+} from "./util.js";
 
-export { DoubleLinkedList, DoubleLinkedListRange, DoubleLinkedListCursor } from "./DoubleLinkedList";
-export { SingleLinkedList, SingleLinkedListRange, SingleLinkedListCursor } from "./SingleLinkedList";
-export { Vector } from "./Vector";
-export { Stack } from "./Stack";
-export { Queue } from "./Queue";
-export { PriorityQueue, PriorityQueueOptions } from "./PriorityQueue";
-export { TreeIndex, TreeIndexOptions } from "./TreeIndex";
-export { NativeIndex, NativeIndexOptions } from "./NativeIndex";
-export { RBTreeIndex, RBTreeIndexOptions, RBTreeIndexCursor } from "./RBTreeIndex";
-export { AVLTreeIndex, AVLTreeIndexOptions, AVLTreeIndexCursor } from "./AVLTreeIndex";
-export { HashSet, HashSetCursor } from "./HashSet";
-export { HashIndex, HashIndexOptions, HashIndexCursor } from "./HashIndex";
-export { StringDict } from "./StringDict";
-export { HashDict } from "./HashDict";
-export { HashMultiDict } from "./HashMultiDict";
-export { TreeDict } from "./TreeDict";
-export { TreeMultiDict } from "./TreeMultiDict";
+export { DoubleLinkedList, DoubleLinkedListRange, DoubleLinkedListCursor } from "./DoubleLinkedList.js";
+export { SingleLinkedList, SingleLinkedListRange, SingleLinkedListCursor } from "./SingleLinkedList.js";
+export { Vector } from "./Vector.js";
+export { Stack } from "./Stack.js";
+export { Queue } from "./Queue.js";
+export { PriorityQueue, PriorityQueueOptions } from "./PriorityQueue.js";
+export { TreeIndex, TreeIndexOptions } from "./TreeIndex.js";
+export { NativeIndex, NativeIndexOptions } from "./NativeIndex.js";
+export { RBTreeIndex, RBTreeIndexOptions, RBTreeIndexCursor } from "./RBTreeIndex.js";
+export { AVLTreeIndex, AVLTreeIndexOptions, AVLTreeIndexCursor } from "./AVLTreeIndex.js";
+export { HashSet, HashSetCursor } from "./HashSet.js";
+export { HashIndex, HashIndexOptions, HashIndexCursor } from "./HashIndex.js";
+export { StringDict } from "./StringDict.js";
+export { HashDict } from "./HashDict.js";
+export { HashMultiDict } from "./HashMultiDict.js";
+export { TreeDict } from "./TreeDict.js";
+export { TreeMultiDict } from "./TreeMultiDict.js";
 

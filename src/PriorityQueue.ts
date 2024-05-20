@@ -1,8 +1,8 @@
 
-import Heap, { HeapOptions } from "./Heap";
-import { Queuelike } from "./interfaces";
-import { isIterable, lessThan as defaultLessThan } from "./util";
-import { Vector, VectorCursor } from "./Vector";
+import Heap, { HeapOptions } from "./Heap.js";
+import type { Queuelike } from "./interfaces.js";
+import { isIterable, lessThan as defaultLessThan } from "./util.js";
+import { Vector, VectorCursor } from "./Vector.js";
 
 export interface PriorityQueueOptions<T> extends HeapOptions<T> {
 

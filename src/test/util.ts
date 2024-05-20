@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
 
-import { isEqual, lessThan } from "../util";
+import { isEqual, lessThan } from "../util.js";
 
 function equalByLesser(a: any, b: any): boolean {
   return !lessThan(a, b) && !lessThan(b, a);

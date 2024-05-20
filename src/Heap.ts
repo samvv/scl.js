@@ -1,6 +1,6 @@
 
-import { Cursor } from "./interfaces";
-import Vector, { VectorCursor, VectorOptions } from "./Vector";
+import type { Cursor } from "./interfaces.js";
+import Vector, { VectorCursor, VectorOptions } from "./Vector.js";
 
 export interface HeapOptions<T> extends VectorOptions<T> {
   compare?: (a: T, b: T) => boolean;

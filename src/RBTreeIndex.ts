@@ -1,5 +1,5 @@
-import { AddResult, Index } from "./interfaces";
-import { BST, BSNode, BSTreeIndexOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex"
+import { AddResult, Index } from "./interfaces.js";
+import { BST, BSNode, BSTreeIndexOptions, equalKeysNoStrict, BSNodeRange } from "./BSTreeIndex.js"
 
 export const enum RBColor {
   Red,

@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
-import { DictLike } from "../interfaces";
-import { test } from "./_helpers";
+import { DictLike } from "../interfaces.js";
+import { test } from "./_helpers.js";
 
 test<DictLike<number, number>>("DictLike.size increases its size when new entries are added", dict => {
   expect(dict.size).to.equal(0);

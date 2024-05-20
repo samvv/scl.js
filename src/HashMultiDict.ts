@@ -1,8 +1,8 @@
 
-import { HashIndex } from "./HashIndex";
-import { isEqual, isIterable, ResolveAction } from "./util";
-import { HashDictOptions } from "./HashDict";
-import { MultiDictBase } from "./MultiDictBase";
+import { HashIndex } from "./HashIndex.js";
+import { isEqual, isIterable, ResolveAction } from "./util.js";
+import { HashDictOptions } from "./HashDict.js";
+import { MultiDictBase } from "./MultiDictBase.js";
 
 /**
  * A hash-based dictionary that can store multiple items with the same key.
@@ -57,7 +57,7 @@ export class HashMultiDict<K, V> extends MultiDictBase<K, V> {
    *   hash: num => num,
    *   keysEqual: (a, b) => a === b,
    *   valuesEqual: (a, b) => a === b,
-   *   elements: [[1, 'one'], [2, 'two']]
+   g   elements: [[1, 'one'], [2, 'two']]
    * })
    * ```
    *

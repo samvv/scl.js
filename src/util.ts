@@ -1,5 +1,5 @@
 
-import { Range, Cursor } from "./interfaces";
+import type { Range, Cursor } from "./interfaces.js";
 
 export function isIterable<T = any>(value: any): value is Iterable<T> {
   return Symbol.iterator in Object(value);

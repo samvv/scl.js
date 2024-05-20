@@ -1,7 +1,7 @@
 
-import { DictBase } from "./DictBase";
-import { HashIndex, HashIndexOptions } from "./HashIndex";
-import { isEqual, isIterable, ResolveAction } from "./util";
+import { DictBase } from "./DictBase.js";
+import { HashIndex, HashIndexOptions } from "./HashIndex.js";
+import { isEqual, isIterable, ResolveAction } from "./util.js";
 
 /**
  * Options passed to a hash-like dictionary in order to configure its behaviour.

@@ -1,11 +1,11 @@
 
-import { BSNode, BSNodeRange, BST, BSTreeIndexOptions, equalKeysNoStrict } from "./BSTreeIndex";
-import { AddResult } from "./interfaces";
+import type { AddResult } from "./interfaces.js";
+import { BSNode, BSNodeRange, BST, BSTreeIndexOptions, equalKeysNoStrict } from "./BSTreeIndex.js";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Cursor } from "./interfaces";
+import { Cursor } from "./interfaces.js";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ResolveAction } from "./util";
+import { ResolveAction } from "./util.js";
 
 export class AVLNode<T> extends BSNode<T> {
 

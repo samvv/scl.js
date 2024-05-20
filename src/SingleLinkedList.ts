@@ -1,6 +1,6 @@
 
-import { List } from "./interfaces";
-import { CursorBase, RangeBase } from "./util";
+import type { List } from "./interfaces.js";
+import { CursorBase, RangeBase } from "./util.js";
 
 interface Node<T> {
   next: Node<T> | null;

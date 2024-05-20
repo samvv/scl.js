@@ -1,17 +1,18 @@
-import { DictBase } from "./DictBase";
-import RBTreeIndex from "./RBTreeIndex";
-import { TreeDictOptions } from "./TreeDict";
-import { isEqual, isIterable } from "./util";
 
-function parseTreeDictOptions<K, V>(opts: Iterable<[K, V]> | TreeDictOptions<K, V>) {
-  if (isIterable(opts)) {
-    opts = { elements: opts };
-  }
-  const {
-    valuesEqual = isEqual,
-    elements = []
-  } = opts;
-  return { valuesEqual, elements };
+import { DictBase } from "./DictBase.js";
+import RBTreeIndex from "./RBTreeIndex.js";
+import { TreeDictOptions } from "./TreeDict.js";
+import { isEqual, isIterable } from "./util.js";
+
+function parseTreeDictOptions<K, V>(arg0: Iterable<[K, V]> | TreeDictOptions<K, V>) {
+  let opts: TreeDictOptions<K, V> & { elements?: Iterable<[K, V]> }
+    = isIterable(arg0) 
+      ? { elements: arg0 }
+      : arg0;
+  return {
+    valuesEqual: opts.valuesEqual ?? isEqual,
+    elements: opts.elements ?? [],
+  };
 }
 
 export class RBTreeDict<K, V> extends DictBase<K, V> {

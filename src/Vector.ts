@@ -1,7 +1,7 @@
 
-import { DEFAULT_VECTOR_ALLOC_STEP, DEFAULT_VECTOR_CAPACITY } from "./constants";
-import { Sequence } from "./interfaces";
-import { CursorBase, isIterable, RangeBase } from "./util";
+import type { Sequence } from "./interfaces.js";
+import { DEFAULT_VECTOR_ALLOC_STEP, DEFAULT_VECTOR_CAPACITY } from "./constants.js";
+import { CursorBase, isIterable, RangeBase } from "./util.js";
 
 export class VectorCursor<T> extends CursorBase<T> {
 

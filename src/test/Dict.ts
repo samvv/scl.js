@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
-import { Dict } from "../interfaces";
-import { test } from "./_helpers";
+import { Dict } from "../interfaces.js";
+import { test } from "./_helpers.js";
 
 test<Dict<number, number>>("Dict.emplace() throws an error by default when keys are the same", dict => {
   dict.emplace(1, 2);

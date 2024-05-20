@@ -1,4 +1,4 @@
-import { AddResult, Cursor, Index, MultiDict, Range } from "./interfaces";
+import type { AddResult, Cursor, Index, MultiDict, Range } from "./interfaces.js";
 
 export abstract class MultiDictBase<K, V> implements MultiDict<K, V> {
 

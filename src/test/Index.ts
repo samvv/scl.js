@@ -1,12 +1,12 @@
 
 import { expect } from "chai";
-import { test } from "./_helpers"
-import { Index } from "../interfaces";
+import { test } from "./_helpers.js"
+import { Index } from "../interfaces.js";
+import { checkInvariants } from "./invariants.js";
+import { Newable, ResolveAction } from "../util.js";
 
-import numbers1 from "./data/numbers1.json"
-import numbers2 from "./data/numbers2.json"
-import { checkInvariants } from "./invariants";
-import { Newable, ResolveAction } from "../util";
+import numbers1 from "./data/numbers1.json" with { "type": "json" };
+import numbers2 from "./data/numbers2.json" with { "type": "json" };
 
 test<Index<number>>("Index.add() correctly reports the element added on some random numbers", index => {
   for (const num of numbers1) {

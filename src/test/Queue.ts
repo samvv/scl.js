@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
-import Queue from "../Queue";
-import { test } from "./_helpers";
+import Queue from "../Queue.js";
+import { test } from "./_helpers.js";
 
 test("Queue.peek() always peeks the front of the queue", (queue: Queue<number>) => {
   queue.add(1);

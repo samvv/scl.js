@@ -1,5 +1,5 @@
-import { AddResult, Range, SortedIndex } from "./interfaces";
-import { ResolveAction, isEqual, getKey, isIterable, lessThan } from "./util";
+import type { AddResult, Range, SortedIndex } from "./interfaces.js";
+import { ResolveAction, isEqual, getKey, isIterable, lessThan } from "./util.js";
 
 export interface BSNodeLike<T> {
   parent: BSNodeLike<T> | null;

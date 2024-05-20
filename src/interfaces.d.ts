@@ -1,7 +1,4 @@
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { PriorityQueue } from "./PriorityQueue";
-
 /**
  * Base interface for any data structure that contains multiple elements.
  *

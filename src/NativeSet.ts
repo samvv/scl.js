@@ -1,4 +1,4 @@
-import { NativeIndex } from "./NativeIndex";
+import { NativeIndex } from "./NativeIndex.js";
 
 /**
  * @experimental

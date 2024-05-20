@@ -1,11 +1,11 @@
 
 import { expect } from "chai";
-import { test } from "./_helpers"
-import { SortedIndex } from "../interfaces";
+import { test } from "./_helpers.js"
+import { SortedIndex } from "../interfaces.js";
 
-import numbers1 from "./data/numbers1.json"
-import { Newable, ResolveAction } from "../util";
-import { checkInvariants } from "./invariants";
+import numbers1 from "./data/numbers1.json" with { "type": "json" };
+import { Newable, ResolveAction } from "../util.js";
+import { checkInvariants } from "./invariants.js";
 
 test<SortedIndex<number>>("SortedIndex.add() stores elements in the correct order", index => {
   index.add(1);

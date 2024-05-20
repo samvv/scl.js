@@ -1,7 +1,8 @@
 
 import { expect } from "chai";
-import { Collection } from "../interfaces";
-import { test } from "./_helpers";
+
+import { Collection } from "../interfaces.js";
+import { test } from "./_helpers.js";
 
 test("Collection.has() correctly reports added elements as being present", (coll: Collection<string>) => {
   expect(coll.has("a")).to.be.false;

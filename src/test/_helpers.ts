@@ -1,18 +1,18 @@
 
-import AVLTreeIndex from "../AVLTreeIndex";
-import DoubleLinkedList from "../DoubleLinkedList";
-import HashDict from "../HashDict";
-import HashMultiDict from "../HashMultiDict";
-import PriorityQueue from "../PriorityQueue";
-import Queue from "../Queue";
-import RBTreeIndex from "../RBTreeIndex";
-import SingleLinkedList from "../SingleLinkedList";
-import Stack from "../Stack";
-import TreeDict from "../TreeDict";
-import TreeMultiDict from "../TreeMultiDict";
-import Vector from "../Vector";
-import { RBTreeDict } from "../RBTreeDict";
-import RBTreeMultiDict from "../RBTreeMultiDict";
+import AVLTreeIndex from "../AVLTreeIndex.js";
+import DoubleLinkedList from "../DoubleLinkedList.js";
+import HashDict from "../HashDict.js";
+import HashMultiDict from "../HashMultiDict.js";
+import PriorityQueue from "../PriorityQueue.js";
+import Queue from "../Queue.js";
+import RBTreeIndex from "../RBTreeIndex.js";
+import SingleLinkedList from "../SingleLinkedList.js";
+import Stack from "../Stack.js";
+import TreeDict from "../TreeDict.js";
+import TreeMultiDict from "../TreeMultiDict.js";
+import Vector from "../Vector.js";
+import { RBTreeDict } from "../RBTreeDict.js";
+import RBTreeMultiDict from "../RBTreeMultiDict.js";
 
 type Newable<T> = { new (...args: any[]): T; }
 

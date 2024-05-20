@@ -1,9 +1,9 @@
 
-import { AVLTreeIndex, AVLNode } from "../AVLTreeIndex";
-import { BST, BSNode } from "../BSTreeIndex";
-import { Collection } from "../interfaces";
-import { RBTreeIndex, RBNode, RBColor } from "../RBTreeIndex";
-import { ResolveAction } from "../util";
+import { AVLTreeIndex, AVLNode } from "../AVLTreeIndex.js";
+import { BST, BSNode } from "../BSTreeIndex.js";
+import { Collection } from "../interfaces.js";
+import { RBTreeIndex, RBNode, RBColor } from "../RBTreeIndex.js";
+import { ResolveAction } from "../util.js";
 
 function checkBinaryTreeNode<T, K>(tree: BST<T, K>, node: BSNode<T>) {
   const key = tree.getKey(node.value);

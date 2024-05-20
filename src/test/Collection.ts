@@ -1,11 +1,11 @@
 
 import { expect } from "chai";
-import { Collection } from "../interfaces";
-import { checkInvariants } from "./invariants";
-import { test } from "./_helpers";
+import { Collection } from "../interfaces.js";
+import { checkInvariants } from "./invariants.js";
+import { test } from "./_helpers.js";
 
-import numbers1 from "./data/numbers1.json";
-import numbers2 from "./data/numbers2.json";
+import numbers1 from "./data/numbers1.json" with { "type": "json" };
+import numbers2 from "./data/numbers2.json" with { "type": "json" };
 
 test("Collection.add() returns a cursor to the added element", (coll: Collection<number>) => {
   const [added1, pos1] = coll.add(1);

@@ -1,6 +1,6 @@
 
-import { List, Range } from "./interfaces";
-import { CursorBase, RangeBase } from "./util";
+import type { List, Range } from "./interfaces.js";
+import { CursorBase, RangeBase } from "./util.js";
 
 export class DLNode<T> extends CursorBase<T> {
 

@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
-import { MultiDict } from "../interfaces";
-import { test } from "./_helpers";
+import { MultiDict } from "../interfaces.js";
+import { test } from "./_helpers.js";
 
 // test<MultiDict<number, number>>("ManyDict.add() only allows one element of the same key and value", dict => {
 //   const res1 = dict.add([1, 2]);

@@ -1,7 +1,8 @@
 
 import { expect } from "chai";
-import Stack from "../Stack";
-import { test } from "./_helpers";
+
+import Stack from "../Stack.js";
+import { test } from "./_helpers.js";
 
 test("Stack.peek() always peeks the top of the stack", (stack: Stack<number>) => {
   stack.add(1);

@@ -1,6 +1,6 @@
 
-import { AddResult, Cursor, Index, Range } from "./interfaces";
-import { getKey, isEqual, isIterable, ResolveAction } from "./util";
+import type { AddResult, Cursor, Index, Range } from "./interfaces.js";
+import { getKey, isEqual, isIterable, ResolveAction } from "./util.js";
 
 export class NativeIndexCursor<T, K extends PropertyKey> implements Cursor<T> {
 

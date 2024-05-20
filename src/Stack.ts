@@ -1,6 +1,6 @@
 
-import { Queuelike } from "./interfaces";
-import { SingleLinkedList } from "./SingleLinkedList";
+import type { Queuelike } from "./interfaces.js";
+import { SingleLinkedList } from "./SingleLinkedList.js";
 
 /**
  * A _LIFO queue_, where the last element to be pushed into the queue is the

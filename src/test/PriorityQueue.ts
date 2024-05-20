@@ -1,9 +1,9 @@
 
 import { expect } from "chai";
 
-import { Queuelike } from "../interfaces";
-import PriorityQueue from "../PriorityQueue";
-import { test } from "./_helpers";
+import { Queuelike } from "../interfaces.js";
+import PriorityQueue from "../PriorityQueue.js";
+import { test } from "./_helpers.js";
 
 test("PriorityQueue[Symbol.iterator]() iterates over elements in the correct order", (q: Queuelike<number>) => {
   q.add(10);

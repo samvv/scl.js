@@ -1,7 +1,7 @@
 
-import { Cursor, Index, AddResult, Range } from "./interfaces";
-import { DoubleLinkedList, DoubleLinkedListCursor } from "./DoubleLinkedList";
-import { getKey as defaultGetKey, EmptyRange, isEqual, RangeBase, hash, ResolveAction, isIterable } from "./util";
+import type { Cursor, Index, AddResult, Range } from "./interfaces.js";
+import { DoubleLinkedList, DoubleLinkedListCursor } from "./DoubleLinkedList.js";
+import { getKey as defaultGetKey, EmptyRange, isEqual, RangeBase, hash, ResolveAction, isIterable } from "./util.js";
 
 /**
  * @ignore

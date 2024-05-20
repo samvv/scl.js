@@ -1,6 +1,6 @@
 
-import { BSTreeIndexOptions } from "./BSTreeIndex";
-import { RBTreeDict } from "./RBTreeDict";
+import { BSTreeIndexOptions } from "./BSTreeIndex.js";
+import { RBTreeDict } from "./RBTreeDict.js";
 
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.

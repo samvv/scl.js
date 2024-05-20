@@ -1,5 +1,5 @@
 
-import { HashIndex, HashIndexCursor, HashIndexOptions } from "./HashIndex";
+import { HashIndex, HashIndexCursor, HashIndexOptions } from "./HashIndex.js";
 
 export type HashSetCursor<T> = HashIndexCursor<T>;
 

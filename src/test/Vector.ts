@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
-import Vector from "../Vector";
-import { test } from "./_helpers";
+import Vector from "../Vector.js";
+import { test } from "./_helpers.js";
 
 test("Vector.slice() can take slices", (v: Vector<number>) => {
   v.append(1);

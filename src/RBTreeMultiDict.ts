@@ -1,8 +1,8 @@
 
-import { MultiDictBase } from "./MultiDictBase";
-import { isEqual, isIterable, ResolveAction } from "./util";
-import { TreeDictOptions } from "./TreeDict";
-import { RBTreeIndex } from "./RBTreeIndex";
+import { MultiDictBase } from "./MultiDictBase.js";
+import { isEqual, isIterable, ResolveAction } from "./util.js";
+import { TreeDictOptions } from "./TreeDict.js";
+import { RBTreeIndex } from "./RBTreeIndex.js";
 
 /**
  * A tree-based dictionary that can store multile items with the same key, but

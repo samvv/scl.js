@@ -1,5 +1,5 @@
 
-import { AddResult, Cursor, Dict, Index, Range } from "./interfaces"
+import type { AddResult, Cursor, Dict, Index, Range } from "./interfaces.js"
 
 export abstract class DictBase<K, V> implements Dict<K, V> {
 

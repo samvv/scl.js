@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
-import { Sequence } from "../interfaces";
-import { test } from "./_helpers";
+import { Sequence } from "../interfaces.js";
+import { test } from "./_helpers.js";
 
 test("Sequence.prepend() places the element at the beginning of the collection", (seq: Sequence<number>) => {
   seq.prepend(3);
