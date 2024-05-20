@@ -43,7 +43,7 @@
     "test": "mocha lib/test --require source-map-support/register",
     "write-coverage": "nyc --reporter json mocha 'src/test/**/*.ts' --require ts-node/register --require source-map-support/register",
     "coverage": "nyc mocha 'src/test/**/*.ts' --require ts-node/register --require source-map-support/register",
-    "build-docs": "rimraf docs/* && typedoc --out docs --disableOutputCheck"
+    "build-docs": "rimraf docs/* && typedoc --out docs"
   },
   "authors": [
     "Sam Vervaeck"

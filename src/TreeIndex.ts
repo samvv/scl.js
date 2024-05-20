@@ -30,14 +30,14 @@ export interface TreeIndexOptions<T, K = T> {
 
   /**
    * Set to `false` to prevent an element with the same key for which
-   * [[isEqual]] returns true to be added to the collection.
+   * {@link isEqual} returns true to be added to the collection.
    */
   allowDuplicates?: boolean;
 
 }
 
 /**
- * An [[Index | indexed collection]] that is backed by the recommended
+ * An {@link Index | indexed collection} that is backed by the recommended
  * implementation that strikes a balance between fast storage and fast
  * retrieval of elements. You may assume that most operations are at least
  * within `O(log(n))` and that all elements are ordered from smallest to

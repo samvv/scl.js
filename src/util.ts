@@ -39,7 +39,7 @@ export function getKey(value: any) {
  * A symbol that is used to define a custom hash method for a certain class or
  * object.
  *
- * If this tag is present on an object, [[hash]] will call it with a callback
+ * If this tag is present on an object, {@link hash} will call it with a callback
  * that you can use to add your fields to the resulting hash.
  *
  * ```
@@ -61,14 +61,14 @@ export function getKey(value: any) {
  * }
  * ```
  *
- * @see [[Hasher]]
+ * @see {@link Hasher}
  */
 export const hashTag = Symbol('object hash method');
 
 /**
- * The callback given to methods that implement the [[hashTag]] protocol.
+ * The callback given to methods that implement the {@link hashTag} protocol.
  *
- * @see [[hashTag]]
+ * @see {@link hashTag}
  */
 export type Hasher = (value: any) => void;
 
@@ -76,7 +76,7 @@ export type Hasher = (value: any) => void;
  * Hash any value to a number that should provide the least amount of
  * collisions.
  *
- * This method will use [[hashTag]] if it is present on an object to hash
+ * This method will use {@link hashTag} if it is present on an object to hash
  * according to a method you provided.
  *
  * The logic of this hash function was roughly taken from [this StackOverflow answer][1].
@@ -85,7 +85,7 @@ export type Hasher = (value: any) => void;
  *
  * @param value The value to hash
  * @returns A hash code
- * @see [[hashTag]]
+ * @see {@link hashTag}
  */
 export function hash(value: any): number {
   let result = 17;
@@ -137,7 +137,7 @@ export function hash(value: any): number {
  * A symbol that is used to define a custom hash method for a certain class or
  * object.
  *
- * If this tag is present on an object, [[lessThan]] will use the method
+ * If this tag is present on an object, {@link lessThan} will use the method
  * associated with this tag to compare the given object with something else.
  *
  * Note that the value passed to the object's method does not have to be of the
@@ -159,17 +159,17 @@ export function hash(value: any): number {
  * }
  * ```
  *
- * @see [[lessThan]]
+ * @see {@link lessThan}
  */
 export const compareTag = Symbol('object comparison method');
 
 /**
  * Check whether the given value is smaller than another value.
  *
- * If a value is an object that contains a [[compareTag]], then this function
+ * If a value is an object that contains a {@link compareTag}, then this function
  * will call that method and return whatever that method returned. This way,
  * you can define your own classes with custom comparison operators. See the
- * [[compareTag]] for an example.
+ * {@link compareTag} for an example.
  *
  * There are some specific rules when it comes to checking built-in JavaScript
  * objects:
@@ -197,7 +197,7 @@ export const compareTag = Symbol('object comparison method');
  *
  * The above rules might seem strange at first, but they ensure that we can
  * perform equality checks on string, arrays and objects by just using
- * [[lessThan]], as demonstrated in the following code:
+ * {@link lessThan}, as demonstrated in the following code:
  * 
  * ```
  * import { lessThan } from "scl";
@@ -216,9 +216,9 @@ export const compareTag = Symbol('object comparison method');
  * console.log(equalByLesser({ foo: 42 }, { foo: 42, bar: 33 }) // false
  * ```
  *
- * @see [[compareTag]]
- * @see [[hash]]
- * @see [[isEqual]]
+ * @see {@link compareTag}
+ * @see {@link hash}
+ * @see {@link isEqual}
  */
 export function lessThan(a: any, b: any) {
   if (typeof(a) === "number" && typeof(b) === "number") {
@@ -288,25 +288,25 @@ export function lessThan(a: any, b: any) {
  * }
  * ```
  *
- * @see [[isEqual]]
+ * @see {@link isEqual}
  */
 export const isEqualTag = Symbol('object equality method');
 
 /**
  * Check whether two values are the same
  *
- * If `a` is an object that contains the [[isEqualTag]], then this function
+ * If `a` is an object that contains the {@link isEqualTag}, then this function
  * will call that method and return whatever that method returned. If `b`
- * contains the [[isEqualTag]], it will attempt the same with `b`. This way,
+ * contains the {@link isEqualTag}, it will attempt the same with `b`. This way,
  * you can define your own classes with custom equality operators. See the
- * [[isEqualTag]] for more information.
+ * {@link isEqualTag} for more information.
  *
  * Built-in JavaScript objects are just checked as if they were encoded to a
  * JSON format and the resulting ouput is identical. For exmple, two plain
  * JavaScript are the same if their enumerable keys contain the same values.
  *
- * @see [[isEqualTag]]
- * @see [[lessThan]]
+ * @see {@link isEqualTag}
+ * @see {@link lessThan}
  */
 export function isEqual(a: any, b: any): boolean {
   if (typeof a === "number" && typeof b === "number") {

@@ -48,7 +48,7 @@ export class HashMultiDict<K, V> extends MultiDictBase<K, V> {
    * ])
    * ```
    *
-   * The dictionary can be tweaked by providing a [[HashDictOptions]]-object,
+   * The dictionary can be tweaked by providing a {@link HashDictOptions}-object,
    * which allows to configure things like the default hashing function and
    * value equality.
    *

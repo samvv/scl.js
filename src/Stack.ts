@@ -21,8 +21,8 @@ import { SingleLinkedList } from "./SingleLinkedList.js";
  *
  * @typeparam T The type of element in this queue.
  *
- * @see [[Queue]]
- * @see [[PriorityQueue]]
+ * @see {@link Queue}
+ * @see {@link PriorityQueue}
  */
 export class Stack<T> extends SingleLinkedList<T> implements Queuelike<T> {
 

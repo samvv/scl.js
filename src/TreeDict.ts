@@ -5,8 +5,8 @@ import { RBTreeDict } from "./RBTreeDict.js";
 /**
  * Options passed to a tree-like dictionary to configure its behaviour.
  *
- * @see [[TreeDict]]
- * @see [[TreeMultiDict]]
+ * @see {@link TreeDict}
+ * @see {@link TreeMultiDict}
  */
 export interface TreeDictOptions<K, V> extends BSTreeIndexOptions<[K, V], K> {
 
@@ -69,8 +69,8 @@ export interface TreeDictOptions<K, V> extends BSTreeIndexOptions<[K, V], K> {
  * assert.deepEqual([...d], [[1, 'one'], [2, 'two'], [3, 'three']])
  * ```
  *
- * @see [[HashDict]] for a fast, unordered version of this collection.
- * @see [[TreeMultiDict]] when you need to store multiple items.
+ * @see {@link HashDict} for a fast, unordered version of this collection.
+ * @see {@link TreeMultiDict} when you need to store multiple items.
  *
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.

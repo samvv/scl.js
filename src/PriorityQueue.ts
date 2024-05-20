@@ -32,8 +32,8 @@ export interface PriorityQueueOptions<T> extends HeapOptions<T> {
  * ## Examples
  * 
  * 
- * @see [[Queue]]
- * @see [[Stack]]
+ * @see {@link Queue}
+ * @see {@link Stack}
  */
 export class PriorityQueue<T> implements Queuelike<T> {
 

@@ -83,7 +83,7 @@ export type DoubleLinkedListCursor<T> = DLNode<T>;
  * | {@link DoubleLinkedList.prepend prepend()}           | O(1)       |
  * | {@link DoubleLinkedList.size size}                   | O(1)       |
  *
- * @see [[SingleLinkedList]]
+ * @see {@link SingleLinkedList}
  *
  * @typeparam T The type of element in this collection.
  */

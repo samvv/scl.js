@@ -140,8 +140,8 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
  *
  *  - Deleting at the beginning of a singly-linked list is guaranteed to be in `O(1)`.
  *
- * @see [[DoubleLinkedList]]
- * @see [[Vector]]
+ * @see {@link DoubleLinkedList}
+ * @see {@link Vector}
  *
  * @typeparam T The type of element in this collection.
  */

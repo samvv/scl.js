@@ -285,7 +285,7 @@ export interface Range<T> {
   /**
    * Indicates whether this range will traverse its elements in reverse order.
    *
-   * @see [[reverse]]
+   * @see {@link reverse}
    */
   readonly reversed?: boolean;
 
@@ -433,7 +433,7 @@ export interface Queuelike<T> extends Collection<T> {
  * A collection that stores at most one copy of an element and generally
  * provides fast ways to check the presence of an element.
  *
- * @see [[Dict]]
+ * @see {@link Dict}
  */
 export interface Set<T> extends Index<T> {
 

@@ -107,12 +107,12 @@ function createArray<T>(iterable: Iterable<T>, capacity: number) {
 }
 
 /**
- * Options to be passed to the constructor of [[Vector]].
+ * Options to be passed to the constructor of {@link Vector}.
  *
  * You don't have to specify these values, as the vector implementation will
  * attempt to load sane defaults.
  *
- * @see [[Vector.constructor]]
+ * @see {@link Vector.constructor}
  */
 export interface VectorOptions<T> {
 
@@ -167,8 +167,8 @@ export interface VectorOptions<T> {
  * assert.strictEqual(v.size, 3)
  * ```
  *
- * @see [[DoubleLinkedList]]
- * @see [[SingleLinkedList]]
+ * @see {@link DoubleLinkedList}
+ * @see {@link SingleLinkedList}
  *
  * @typeparam T The type of element in the collection.
  */
@@ -230,7 +230,7 @@ export class Vector<T> implements Sequence<T> {
   /**
    * Get how much elements this vector can hold before it needs to re-allocate.
    *
-   * @see [[Vector.size]]
+   * @see {@link Vector.size}
    */
   public get capacity(): number {
     return this._elements.length;
@@ -239,7 +239,7 @@ export class Vector<T> implements Sequence<T> {
   /**
    * Ensure the vector can store at least `count` amount of elements.
    * 
-   * The [[size]] property of this vector is never changed during this call.
+   * The {@link size} property of this vector is never changed during this call.
    */
   public allocate(count: number): void {
     this._elements.length = Math.max(this._elements.length, count);
@@ -281,7 +281,7 @@ export class Vector<T> implements Sequence<T> {
   /**
    * Get how many elements are actually in the container.
    *
-   * @see [[capacity]]
+   * @see {@link capacity}
    */
   public get size(): number {
     return this._elementCount;

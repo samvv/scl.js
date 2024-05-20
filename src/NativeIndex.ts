@@ -50,7 +50,7 @@ export interface NativeIndexOptions<T, K extends PropertyKey = T & PropertyKey> 
    * Two keys may produce the same hash result, but that does not necessarily
    * mean that they are equal. This function resolves any conflicts.
    *
-   * If omitted, the [[isEqual built-in equality function]] will be used.
+   * If omitted, the {@link isEqual | built-in equality function} will be used.
    */
   keysEqual?: (a: K, b: K) => boolean;
 
@@ -60,7 +60,7 @@ export interface NativeIndexOptions<T, K extends PropertyKey = T & PropertyKey> 
    * This function is only called after is has been determined that the keys
    * are equal, so you may safely skip the equality check for the keys.
    *
-   * If omitted, the [[isEqual built-in equality function]] will be used.
+   * If omitted, the {@link isEqual | built-in equality function} will be used.
    */
   elementsEqual?: (a: T, b: T) => boolean
 
@@ -75,14 +75,14 @@ export interface NativeIndexOptions<T, K extends PropertyKey = T & PropertyKey> 
   /**
    * What to do when the key of the element being added already exists in the index.
    * 
-   * This property defaults to [[ResolveAction.Error]].
+   * This property defaults to {@link ResolveAction.Error}.
    */
   onDuplicateKeys?: ResolveAction;
 
   /**
    * What to do when the the element being added already exists in the index.
    * 
-   * This property defaults to [[ResolveAction.Error]].
+   * This property defaults to {@link ResolveAction.Error}.
    */
   onDuplicateElements?: ResolveAction;
 
@@ -217,7 +217,7 @@ export class NativeIndex<T, K extends PropertyKey = T & PropertyKey> implements 
     if (otherElement !== undefined) {
       switch (this.onDuplicateKeys) {
         case ResolveAction.Error:
-          throw new Error(`The key ${key} already exists in this index and duplicates are not allowed.`);
+          throw new Error(`The key ${String(key)} already exists in this index and duplicates are not allowed.`);
         case ResolveAction.Ignore:
           return [false, cursor];
         case ResolveAction.Insert:

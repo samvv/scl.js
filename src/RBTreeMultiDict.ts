@@ -56,9 +56,9 @@ import { RBTreeIndex } from "./RBTreeIndex.js";
  * assert.deepEqual([...d], [[1, 'one'], [2, 'two'], [3, 'three']])
  * ```
  *
- * @see [[HashMultiDict]] for a fast, unordered version of this collection.
- * @see [[TreeDict]] when you need your keys to be unique.
- * @see [[TreeManyDict]] when you want the values to be unique but not the keys.
+ * @see {@link HashMultiDict} for a fast, unordered version of this collection.
+ * @see {@link TreeDict} when you need your keys to be unique.
+ * @see {@link TreeManyDict} when you want the values to be unique but not the keys.
  *
  * @typeparam K The type of key of a given entry.
  * @typeparam V The type of value associated with the given key.
@@ -83,7 +83,7 @@ export class RBTreeMultiDict<K, V> extends MultiDictBase<K, V> {
    * ])
    * ```
    *
-   * The dictionary can be tweaked by providing a [[TreeDictOptions]]-object,
+   * The dictionary can be tweaked by providing a {@link TreeDictOptions}-object,
    * which allows to configure things like the default compare function and
    * value equality.
    *

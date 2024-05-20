@@ -25,8 +25,8 @@ import DoubleLinkedList, {DoubleLinkedListCursor} from "./DoubleLinkedList.js";
  *
  * @typeparam T The type of element in this queue.
  *
- * @see [[Stack]]
- * @see [[PriorityQueue]]
+ * @see {@link Stack}
+ * @see {@link PriorityQueue}
  */
 export class Queue<T> extends DoubleLinkedList<T> implements Queuelike<T> {
 

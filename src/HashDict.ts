@@ -20,8 +20,8 @@ import { isEqual, isIterable, ResolveAction } from "./util.js";
  * })
  * ```
  *
- * @see [[HashDict]]
- * @see [[HashMultiDict]]
+ * @see {@link HashDict}
+ * @see {@link HashMultiDict}
  */
 export interface HashDictOptions<K, V> extends HashIndexOptions<[K, V], K> {
 
@@ -31,7 +31,7 @@ export interface HashDictOptions<K, V> extends HashIndexOptions<[K, V], K> {
    * This function is only called after is has been determined that the keys
    * are equal, so you may safely skip the equality check for the keys.
    *
-   * If omitted, the [[equal built-in equality function]] will be used.
+   * If omitted, the {@link equal | built-in equality function} will be used.
    */
   valuesEqual?: (a: V, b: V) => boolean;
 
@@ -82,7 +82,7 @@ export class HashDict<K, V> extends DictBase<K, V> {
    * ])
    * ```
    *
-   * The dictionary can be tweaked by providing a [[HashDictOptions]] object,
+   * The dictionary can be tweaked by providing a {@link HashDictOptions} object,
    * which allows to configure things like the default hashing function and
    * value equality.
    *

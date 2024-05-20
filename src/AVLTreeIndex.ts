@@ -26,7 +26,7 @@ export interface AVLTreeIndexOptions<T, K = T> extends BSTreeIndexOptions<T, K> 
 }
 
 /**
- * A transparent [[Cursor]] that only works on the right AVL tree.
+ * A transparent {@link Cursor} that only works on the right AVL tree.
  */
 export type AVLTreeIndexCursor<T> = AVLNode<T>;
 
@@ -60,7 +60,7 @@ export type AVLTreeIndexCursor<T> = AVLNode<T>;
  *
  * ### Constructing AVL trees and adding elements
  *
- * You create a new AVL tree by using the `new` keyword. Use [[add]] to insert
+ * You create a new AVL tree by using the `new` keyword. Use {@link add} to insert
  * elements into the tree.
  *
  * ```
@@ -218,10 +218,10 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
    * keys of the elements should be extracted and how to comare individual
    * elements.
    *
-   * See the examples [[AVLTreeIndex | on the top of this page]] for more
+   * See the examples {@link AVLTreeIndex | on the top of this page} for more
    * information on how to construct a new index of this type.
    *
-   * @see [[AVLTreeIndexOptions]]
+   * @see {@link AVLTreeIndexOptions}
    */
   constructor(opts: Iterable<T> | AVLTreeIndexOptions<T, K> = {}) {
     super(opts, value => new AVLNode(value));
@@ -355,12 +355,12 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
   /**
    * Add a new element to the index. Whether the element is ignored, replaced or
    * whether an error is thrown depends on the value passed to
-   * [[onDuplicateKeys]] and [[onDuplicateElements]].
+   * {@link onDuplicateKeys]] and [[onDuplicateElements}.
    *
    * This operation takes `O(log(n))` time.
    *
-   * The function will first attempt to apply [[onDuplicateElements]] and if
-   * that didn't do anything special it will continue with [[onDuplicateKeys]].
+   * The function will first attempt to apply {@link onDuplicateElements} and if
+   * that didn't do anything special it will continue with {@link onDuplicateKeys}.
    *
    * The return value of the function depends on whether `element` was added,
    * ignored or replaced:
@@ -373,11 +373,11 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
    *    pointing to the location of the element in the index that forced this
    *    element to be ignored.
    *
-   * @param hint A transparent object obtained with [[AVLTreeIndex.getAddHint]]
+   * @param hint A transparent object obtained with {@link AVLTreeIndex.getAddHint}
    *             that can speed up the insertion process.
    *
-   * @see [[AddResult]]
-   * @see [[delete]]
+   * @see {@link AddResult}
+   * @see {@link delete}
    */
   public add(element: T, hint?: unknown): AddResult<T> {
 
@@ -483,7 +483,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 
   /**
    * Delete an element from the tree by providing its location in the tree with
-   * an [[AVLTreeIndexCursor]].
+   * an {@link AVLTreeIndexCursor}.
    *
    * This method takes `O(log(n))` time. It is slightly faster than deleting
    * the element by key due to the fact that a search for the node has already

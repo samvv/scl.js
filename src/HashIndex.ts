@@ -71,14 +71,14 @@ export interface HashIndexOptions<T, K = T> {
    * Two keys may produce the same hash result, but that does not necessarily
    * mean that they are equal. This function resolves any conflicts.
    *
-   * If omitted, the [[isEqual built-in equality function]] will be used.
+   * If omitted, the {@link isEqual | built-in equality function} will be used.
    */
   keysEqual?: (a: K, b: K) => boolean;
 
   /**
    * The hashing function that will be used to map entries to a certain bucket.
    *
-   * If omitted, the [[hash built-in hash function]] will be used.
+   * If omitted, the {@link hash | built-in hash function} will be used.
    */
   getHash?: (element: K) => number;
 
@@ -88,7 +88,7 @@ export interface HashIndexOptions<T, K = T> {
    * This function is only called after is has been determined that the keys
    * are equal, so you may safely skip the equality check for the keys.
    *
-   * If omitted, the [[isEqual built-in equality function]] will be used.
+   * If omitted, the {@link isEqual | built-in equality function} will be used.
    */
   elementsEqual?: (a: T, b: T) => boolean
 
@@ -108,14 +108,14 @@ export interface HashIndexOptions<T, K = T> {
   /**
    * What to do when the key of the element being added already exists in the index.
    * 
-   * This property defaults to [[ResolveAction.Error]].
+   * This property defaults to {@link ResolveAction.Error}.
    */
   onDuplicateKeys?: ResolveAction;
 
   /**
    * What to do when the the element being added already exists in the index.
    * 
-   * This property defaults to [[ResolveAction.Error]].
+   * This property defaults to {@link ResolveAction.Error}.
    */
   onDuplicateElements?: ResolveAction;
 }
@@ -130,7 +130,7 @@ export interface HashIndexOptions<T, K = T> {
  * Each state has a unique `id` that we'd like to use as key. There is only one
  * instance of each unique `FSMState`, so we can instruct `HashIndex` to use
  * the much simpler strict equality check instead of the more advanced
- * [[isEqual]]. Likewise, keys are just numbers, so we can save come CPU cycles
+ * {@link isEqual}. Likewise, keys are just numbers, so we can save come CPU cycles
  * by directly comparing them.
  *
  * ```
@@ -171,8 +171,8 @@ export interface HashIndexOptions<T, K = T> {
  *
  * [2]: https://en.wikipedia.org/wiki/Finite-state_machine
  *
- * @see [[AVLTreeIndex]] for when the elements have to be sorted and there are frequent lookups
- * @see [[RBTreeIndex]] for when the elements have to be sorted and there are frequent mutations
+ * @see {@link AVLTreeIndex} for when the elements have to be sorted and there are frequent lookups
+ * @see {@link RBTreeIndex} for when the elements have to be sorted and there are frequent mutations
  */
 export class HashIndex<T, K = T> implements Index<T, K> {
 

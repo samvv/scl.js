@@ -35,7 +35,7 @@ export class RBTreeDict<K, V> extends DictBase<K, V> {
    * ])
    * ```
    *
-   * The dictionary can be tweaked by providing a [[TreeDictOptions]]-object,
+   * The dictionary can be tweaked by providing a {@link TreeDictOptions}-object,
    * which allows to configure things like the default compare function and
    * value equality.
    *

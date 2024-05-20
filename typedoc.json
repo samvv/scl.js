@@ -8,8 +8,7 @@
   "exclude": [
     "src/test"
   ],
-  "theme": "minimal",
-  "listInvalidSymbolLinks": true,
+  "theme": "default",
   "excludeExternals": true,
   "excludeProtected": true,
   "excludePrivate": true,
