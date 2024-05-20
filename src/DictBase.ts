@@ -13,7 +13,7 @@ export abstract class DictBase<K, V> implements Dict<K, V> {
 
   public getValue(key: K): V | undefined {
     const cursor = this.index.findKey(key);
-    if (cursor === null) {
+    if (cursor === undefined) {
       return;
     }
     return cursor.value[1];
@@ -27,7 +27,7 @@ export abstract class DictBase<K, V> implements Dict<K, V> {
     return this.index.hasKey(key);
   }
 
-  public findKey(key: K): Cursor<[K, V]> | null {
+  public findKey(key: K): Cursor<[K, V]> | undefined {
     return this.index.findKey(key);
   }
 

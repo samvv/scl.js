@@ -226,7 +226,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
 
   public equalKeys(key: K): Range<T> {
     const bucket = this._getBucket(key);
-    if (bucket === null) {
+    if (bucket === undefined) {
       return new EmptyRange<T>();
     }
     return bucket
@@ -273,17 +273,16 @@ export class HashIndex<T, K = T> implements Index<T, K> {
     --this.elementCount;
   }
 
-  public findKey(key: K): HashIndexCursor<T> | null {
+  public findKey(key: K): HashIndexCursor<T> | undefined {
     const bucket = this._getBucket(key);
-    if (bucket === null) {
-      return null;
+    if (bucket === undefined) {
+      return;
     }
     for (const cursor of bucket.toRange().cursors()) {
       if (this.keysEqual(this.getKey(cursor.value), key)) {
         return new HashIndexCursor<T>(bucket, cursor);
       }
     }
-    return null;
   }
 
   public has(element: T): boolean {
@@ -295,26 +294,26 @@ export class HashIndex<T, K = T> implements Index<T, K> {
     return false;
   }
 
-  public hasKey(key: K) {
-    return this.findKey(key) !== null;
+  public hasKey(key: K): boolean {
+    return this.findKey(key) !== undefined;
   }
 
   /**
    * @ignore
    */
-  public _getBucket(key: K): Bucket<T> | null {
+  public _getBucket(key: K): Bucket<T> | undefined {
     const h = this.getHash(key);
     const i = h % this._array.length;
     const bucket = this._array[i];
     if (bucket === undefined) {
-      return null;
+      return;
     }
     return bucket;
   }
 
-  public deleteKey(key: K) {
+  public deleteKey(key: K): number {
     const bucket = this._getBucket(key);
-    if (bucket === null) {
+    if (bucket === undefined) {
       return 0;
     }
     let deleted = 0;
@@ -336,16 +335,16 @@ export class HashIndex<T, K = T> implements Index<T, K> {
     return new FullHashRange<T, K>(this);
   }
 
-  public delete(el: T) {
+  public delete(el: T): boolean {
     const cursor = this.findKey(this.getKey(el));
-    if (cursor === null || !this.elementsEqual(el, cursor.value)) {
+    if (cursor === undefined || !this.elementsEqual(el, cursor.value)) {
       return false;
     }
     this.deleteAt(cursor);
     return true;
   }
 
-  public deleteAll(element: T) {
+  public deleteAll(element: T): number {
     const key = this.getKey(element);
     const h = this.getHash(key);
     const i = h % this._array.length;

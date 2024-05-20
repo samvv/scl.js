@@ -3,7 +3,7 @@ import type { List } from "./interfaces.js";
 import { CursorBase, RangeBase } from "./util.js";
 
 interface Node<T> {
-  next: Node<T> | null;
+  next: Node<T> | undefined;
   value: T;
 }
 
@@ -26,17 +26,15 @@ export class SingleLinkedListCursor<T> extends CursorBase<T> {
 
   public prev() {
     const prev = this._list._findPrev(this._node);
-    if (prev === null) {
-      return null;
+    if (prev !== undefined) {
+      return new SingleLinkedListCursor<T>(this._list, prev);
     }
-    return new SingleLinkedListCursor<T>(this._list, prev);
   }
 
   public next() {
-    if (this._node.next === null) {
-      return null;
+    if (this._node.next !== undefined) {
+      return new SingleLinkedListCursor<T>(this._list, this._node.next);
     }
-    return new SingleLinkedListCursor<T>(this._list, this._node.next);
   }
 
 }
@@ -46,7 +44,12 @@ export class SingleLinkedListCursor<T> extends CursorBase<T> {
  */
 export class SingleLinkedListRange<T> extends RangeBase<T> {
 
- constructor(protected _list: SingleLinkedList<T>, protected _startNode: Node<T> | null, protected _endNode: Node<T> | null, public readonly reversed: boolean) {
+ constructor(
+    protected _list: SingleLinkedList<T>,
+    protected _startNode: Node<T> | undefined,
+    protected _endNode: Node<T> | undefined,
+    public readonly reversed: boolean
+  ) {
     super();
   }
 
@@ -56,7 +59,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
     }
     let count = 0;
     let node = this._startNode;
-    while (node !== null) {
+    while (node !== undefined) {
       count++;
       if (node === this._endNode) {
         break;
@@ -73,7 +76,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
   public *[Symbol.iterator]() {
     if (!this.reversed) {
       let node = this._startNode;
-      while (node !== null) {
+      while (node !== undefined) {
         yield node.value;
         if (node === this._endNode) {
           break;
@@ -82,7 +85,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
       }
     } else {
       let node = this._endNode;
-      while (node !== null) {
+      while (node !== undefined) {
         yield node.value;
         if (node === this._startNode) {
           break;
@@ -95,7 +98,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
   public *cursors() {
     if (!this.reversed) {
       let node = this._startNode;
-      while (node !== null) {
+      while (node !== undefined) {
         yield new SingleLinkedListCursor<T>(this._list, node);
         if (node === this._endNode) {
           break;
@@ -104,7 +107,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
       }
     } else {
       let node = this._endNode;
-      while (node !== null) {
+      while (node !== undefined) {
         yield new SingleLinkedListCursor<T>(this._list, node);
         if (node === this._startNode) {
           break;
@@ -150,12 +153,12 @@ export class SingleLinkedList<T> implements List<T> {
   /**
    * @ignore
    */
-  public _firstNode: Node<T> | null = null;
+  public _firstNode?: Node<T>;
 
   /**
    * @ignore
    */
-  public _lastNode: Node<T> | null = null;
+  public _lastNode?: Node<T>;
 
   /**
    * @ignore
@@ -188,7 +191,7 @@ export class SingleLinkedList<T> implements List<T> {
    */
   public _findPrev(node: Node<T>) {
     let prev = this._firstNode;
-    while (prev !== null && prev.next !== node) {
+    while (prev !== undefined && prev.next !== node) {
       prev = prev.next;
     }
     return prev;
@@ -203,14 +206,14 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   public first() {
-    if (this._firstNode === null) {
+    if (this._firstNode === undefined) {
       throw new Error(`Cannot get first element: collection is empty.`);
     }
     return this._firstNode.value;
   }
 
   public last() {
-    if (this._lastNode === null) {
+    if (this._lastNode === undefined) {
       throw new Error(`Cannot get last element: collection is empty.`);
     }
     return this._lastNode.value;
@@ -230,7 +233,7 @@ export class SingleLinkedList<T> implements List<T> {
 
   public insertAfter(pos: SingleLinkedListCursor<T>, el: T) {
     const newNode = { value: el, next: pos._node.next };
-    if (pos._node.next === null) {
+    if (pos._node.next === undefined) {
       this._lastNode = newNode;
     }
     pos._node.next = newNode;
@@ -241,7 +244,7 @@ export class SingleLinkedList<T> implements List<T> {
   public prepend(el: T) {
     const newNode = { next: this._firstNode, value: el };
     this._firstNode = newNode;
-    if (this._lastNode === null) {
+    if (this._lastNode === undefined) {
       this._lastNode = newNode;
     }
     ++this._size;
@@ -249,8 +252,8 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   public append(el: T) {
-    const newNode = { next: null, value: el };
-    if (this._lastNode === null) {
+    const newNode = { value: el } as Node<T>;
+    if (this._lastNode === undefined) {
       this._firstNode = newNode;
       this._lastNode = newNode;
     } else {
@@ -267,7 +270,7 @@ export class SingleLinkedList<T> implements List<T> {
 
   public has(el: T) {
     let node = this._firstNode;
-    while (node !== null) {
+    while (node !== undefined) {
       if (node.value === el) {
         return true;
       }
@@ -279,7 +282,7 @@ export class SingleLinkedList<T> implements List<T> {
 
   public *[Symbol.iterator](): IterableIterator<T> {
     let node = this._firstNode;
-    while (node !== null) {
+    while (node !== undefined) {
       yield node.value;
       node = node.next;
     }
@@ -289,13 +292,13 @@ export class SingleLinkedList<T> implements List<T> {
     let curr = this._firstNode;
     let i = position;
     while (i > 0) {
-      if (curr === null) {
+      if (curr === undefined) {
         throw new RangeError(`Could not get element at i ${position}: index out of bounds.`);
       }
       curr = curr.next;
       --i;
     }
-    if (curr === null) {
+    if (curr === undefined) {
       throw new RangeError(`Could not get element at position ${position}: index out of bounds.`);
     }
     return new SingleLinkedListCursor<T>(this, curr);
@@ -304,29 +307,29 @@ export class SingleLinkedList<T> implements List<T> {
   public deleteAt(pos: SingleLinkedListCursor<T>) {
     const prev = this._findPrev(pos._node)
         , next = pos._node.next;
-    if (prev === null) {
+    if (prev === undefined) {
       this._firstNode = next;
     } else {
       prev.next = next;
     }
-    if (next === null) {
+    if (next === undefined) {
       this._lastNode = prev;
     }
     --this._size;
   }
 
   public delete(element: T): boolean {
-    let node: Node<T> | null = this._firstNode;
-    let prev = null;
-    while (node !== null) {
+    let node: Node<T> | undefined = this._firstNode;
+    let prev;
+    while (node !== undefined) {
       if (node.value === element) {
         const next = node.next;
-        if (prev === null) {
+        if (prev === undefined) {
           this._firstNode = next;
         } else {
           prev.next = node.next;
         }
-        if (next === null) {
+        if (next === undefined) {
           this._lastNode = prev;
         }
         this._size--;
@@ -340,22 +343,22 @@ export class SingleLinkedList<T> implements List<T> {
 
   public deleteAll(el: T): number {
     let count = 0;
-    let node: Node<T> | null = this._firstNode;
-    let prev = null;
-    while (node !== null) {
+    let node: Node<T> | undefined = this._firstNode;
+    let prev;
+    while (node !== undefined) {
       if (node.value === el) {
         node = node.next;
         this._size--;
-        while (node !== null && node.value === el) {
+        while (node !== undefined && node.value === el) {
           this._size--;
           node = node.next;
         }
-        if (prev === null) {
+        if (prev === undefined) {
           this._firstNode = node;
         } else {
           prev.next = node;
         }
-        if (node === null) {
+        if (node === undefined) {
           this._lastNode = prev;
         }
         count++;
@@ -372,7 +375,7 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   public rest(): List<T> {
-    if (this._firstNode === null) {
+    if (this._firstNode === undefined) {
       throw new Error(`Could not get rest of list: list is empty.`);
     }
     const list = new SingleLinkedList<T>();
@@ -387,8 +390,8 @@ export class SingleLinkedList<T> implements List<T> {
   }
 
   public clear() {
-    this._firstNode = null;
-    this._lastNode = null;
+    delete this._firstNode;
+    delete this._lastNode;
     this._size = 0;
   }
 

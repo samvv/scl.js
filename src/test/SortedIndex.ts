@@ -138,7 +138,7 @@ test<SortedIndex<number>>("SortedIndex.getLeastUpperBound() finds the nearest up
   const pos15 = index.getLeastUpperBound(15);
   expect(pos15!.value).to.equal(15);
   const pos16 = index.getLeastUpperBound(16);
-  expect(pos16).to.be.null
+  expect(pos16).to.be.undefined
 });
 
 test<SortedIndex<number>>("SortedIndex.getGreatestLowerBound() finds the nearest lower bound if the key is not found", index => {

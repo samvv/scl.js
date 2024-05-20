@@ -9,10 +9,10 @@ export const enum RBColor {
 export class RBNode<T> extends BSNode<T> {
 
   constructor(
-    parentNode: RBNode<T> | null,
+    parentNode: RBNode<T> | undefined,
     value: T,
-    left: RBNode<T> | null = null,
-    right: RBNode<T> | null = null,
+    left: RBNode<T> | undefined = undefined,
+    right: RBNode<T> | undefined = undefined,
     public color: RBColor = RBColor.Red,
   ) {
     super(parentNode, value, left, right);
@@ -222,7 +222,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
    * @see {@link RBTreeIndexOptions}
    */
   constructor(opts: Iterable<T> | RBTreeIndexOptions<T, K> = {}) {
-    super(opts, value => new RBNode<T>(null, value));
+    super(opts, value => new RBNode<T>(undefined, value));
   }
 
   /**
@@ -287,12 +287,12 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
       // The uncle is the node next to `parent` and shares the same
       // `grandParent` with it.
-      const uncle = node.getUncle() as RBNode<T> | null;
+      const uncle = node.getUncle() as RBNode<T> | undefined;
 
       // The following is a simple case where we just invert the colors of
       // parent, grandParent and uncle so that the only node that needs
       // checking is `grandParent`.
-      if (uncle !== null && uncle.color === RBColor.Red) {
+      if (uncle !== undefined && uncle.color === RBColor.Red) {
         uncle.color = RBColor.Black;
         parent.color = RBColor.Black;
         grandParent.color = RBColor.Red;
@@ -392,7 +392,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
       break;
     }
 
-    // We don't have to check for null because this function is only called
+    // We don't have to check for undefined because this function is only called
     // when a node has been inserted.
     const root = this.root as RBNode<T>;
 
@@ -419,7 +419,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
       // If `node` is a leaf node without any children, this means that we can
       // delete `node` and be done with it. We just need to make sure our
       // coloring remains correct.
-      if (node.left === null && node.right === null) {
+      if (node.left === undefined && node.right === undefined) {
 
         // If `node` is black, then 'replacing' it with a null node results in
         // a double-black because null counts as black. Therefore, we need to
@@ -431,12 +431,12 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
         // This logic performs the actual deletion of `node`.
         if (node === this.root) {
-          this.root = null;
+          delete this.root;
         } else {
           if (node === parent.left) {
-            parent.left = null;
+            parent.left = undefined;
           } else {
-            parent.right = null;
+            parent.right = undefined;
           }
         }
 
@@ -447,9 +447,9 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
       // If `node` only has one child, we can replace the node with that child
       // and be done with it. As with the previous case, we need some extra
       // logic to ensure coloring remains correct.
-      } else if (node.left === null || node.right === null) {
+      } else if (node.left === undefined || node.right === undefined) {
 
-        const replacement = (node.left !== null ? node.left : node.right) as RBNode<T>;
+        const replacement = (node.left !== undefined ? node.left : node.right) as RBNode<T>;
 
         // This logic performs the actual deletion of `node`.
         replacement.parent = parent;
@@ -502,7 +502,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
     while (node !== this.root) {
 
-      const sibling = this.getSibling(node) as RBNode<T> | null;
+      const sibling = this.getSibling(node) as RBNode<T> | undefined;
 
       // We may take the non-nullable parent of `node` because the loop
       // invariant guarantees that `node` is not the root node.
@@ -510,13 +510,13 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
       // If the sibling is not there then the double-black just transplants
       // itself to the parent node.
-      if (sibling === null) {
+      if (sibling === undefined) {
         node = parent;
         continue;
       }
 
-      const siblingLeft = sibling.left as RBNode<T> | null;
-      const siblingRight = sibling.right as RBNode<T> | null;
+      const siblingLeft = sibling.left as RBNode<T> | undefined;
+      const siblingRight = sibling.right as RBNode<T> | undefined;
 
       // First case where the sibling is a red node. In essence, we
       // 'transplant' the red node to the other side of the tree so that
@@ -543,8 +543,8 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
       // Second case is when sibling node is black and both of its children are
       // black too.
       } else if (sibling.color === RBColor.Black
-            && (siblingLeft === null || siblingLeft.color === RBColor.Black)
-            && (siblingRight === null || siblingRight.color === RBColor.Black)) {
+            && (siblingLeft === undefined || siblingLeft.color === RBColor.Black)
+            && (siblingRight === undefined || siblingRight.color === RBColor.Black)) {
 
         // In order to fix the double black, we color the sibling red. Now
         // there's one black less in the path passing through the sibling,
@@ -571,7 +571,7 @@ export class RBTreeIndex<T, K = T> extends BST<T, K> implements Index<T, K> {
 
         // We can make this variable non-nullable because we know the red child
         // must exist and `null` counts as a black node.
-        const redChild = (siblingLeft !== null && siblingLeft.color === RBColor.Red ? sibling.left! : sibling.right) as RBNode<T>;
+        const redChild = (siblingLeft !== undefined && siblingLeft.color === RBColor.Red ? sibling.left! : sibling.right) as RBNode<T>;
 
         if (sibling === parent.right) {
 

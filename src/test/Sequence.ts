@@ -17,7 +17,7 @@ test("Sequence.prepend() returns a working cursor", (seq: Sequence<string>) => {
   expect(pos).to.be.ok;
   expect(pos.value).to.equal("a");
   const prev = pos.prev!();
-  expect(prev).to.be.null;
+  expect(prev).to.be.undefined;
   const next = pos.next!();
   expect(next).to.be.ok;
   expect(next!.value).to.equal("b");
@@ -36,7 +36,7 @@ test("Sequence.append() returns a working cursor", (seq: Sequence<string>) => {
   const pos = seq.append("c");
   expect(pos.value).to.equal("c");
   expect(pos).to.be.ok;
-  expect(pos.next!()).to.be.null;
+  expect(pos.next!()).to.be.undefined;
   const p = pos.prev!();
   expect(p).to.be.ok;
   expect(p!.value).to.equal("b");
@@ -77,7 +77,7 @@ test("Sequence.insertBefore() returns a working cursor even when inserting at th
   expect(newPos).to.be.ok;
   expect(newPos.value).to.equal("a");
   const p = newPos.prev!();
-  expect(p).to.be.null;
+  expect(p).to.be.undefined;
   const n = newPos.next!();
   expect(n).to.be.ok;
   expect(n!.value).to.equal("b");
@@ -111,7 +111,7 @@ test("Sequence.insertAfter() returns a working cursor even when inserting at the
   expect(prev).to.be.ok;
   expect(prev!.value).to.equal("b");
   const next = newPos.next!();
-  expect(next).to.be.null;
+  expect(next).to.be.undefined;
 });
 
 test("Sequence.insertAfter() inserts elements after a given position", (seq: Sequence<string>) => {
@@ -205,7 +205,7 @@ test("Sequence.at().next() correcly traverses the elements of the container", (s
   expect(r4).to.be.ok;
   expect(r4!.value).to.equal("d");
   const r5 = r4!.next!();
-  expect(r5).to.be.null;
+  expect(r5).to.be.undefined;
 });
 
 test("Sequence.at().prev() correcly traverses the elements of the container in reverse order", (seq: Sequence<string>) => {
@@ -227,7 +227,7 @@ test("Sequence.at().prev() correcly traverses the elements of the container in r
   expect(r4).to.be.ok;
   expect(r4!.value).to.equal("a");
   const r5 = r4!.prev!();
-  expect(r5).to.be.null;
+  expect(r5).to.be.undefined;
 });
 
 test("Sequence.deleteAt() deletes the correct element", (seq: Sequence<string>) => {

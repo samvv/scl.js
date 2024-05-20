@@ -7,7 +7,7 @@ import { ResolveAction } from "../util.js";
 
 function checkBinaryTreeNode<T, K>(tree: BST<T, K>, node: BSNode<T>) {
   const key = tree.getKey(node.value);
-  if (node.left !== null) {
+  if (node.left !== undefined) {
     const leftKey =  tree.getKey(node.left.value);
     const keysEqual = tree.areKeysEqual(key, leftKey);
     if (keysEqual) {
@@ -18,7 +18,7 @@ function checkBinaryTreeNode<T, K>(tree: BST<T, K>, node: BSNode<T>) {
       throw new Error(`Child on the left of ${node.value} is not strictly smaller than its parent.`)
     }
   }
-  if (node.right !== null) {
+  if (node.right !== undefined) {
     const rightKey = tree.getKey(node.right.value);
     const keysEqual = tree.areKeysEqual(key, rightKey);
     if (keysEqual) {
@@ -33,9 +33,9 @@ function checkBinaryTreeNode<T, K>(tree: BST<T, K>, node: BSNode<T>) {
 
 export function checkAVLTreeInvariants<T, K>(this: AVLTreeIndex<T, K>) {
 
-  const visit = (node: AVLNode<T> | null): number => {
+  const visit = (node: AVLNode<T> | undefined): number => {
 
-    if (node === null) {
+    if (node === undefined) {
       return 0;
     }
 
@@ -55,14 +55,14 @@ export function checkAVLTreeInvariants<T, K>(this: AVLTreeIndex<T, K>) {
     return Math.max(leftHeight, rightHeight) + 1;
   }
 
-  visit(this.root as AVLNode<T> | null);
+  visit(this.root as AVLNode<T> | undefined);
 }
 
 export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
 
-  const visit = (node: RBNode<T> | null): number => {
+  const visit = (node: RBNode<T> | undefined): number => {
 
-    if (node === null) {
+    if (node === undefined) {
       return 0;
     }
 
@@ -76,10 +76,10 @@ export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
     // child nodes will be checked in the next iteration, we can just compare
     // `node` with both of its children.
     if (node.color === RBColor.Red) {
-      if (left !== null && left.color === RBColor.Red) {
+      if (left !== undefined && left.color === RBColor.Red) {
         throw new Error(`Node on the left of node with value ${node.value} is red while the parent is also red.`)
       }
-      if (right !== null && right.color === RBColor.Red) {
+      if (right !== undefined && right.color === RBColor.Red) {
         throw new Error(`Node on the right of node with value ${node.value} is red while the parent is also red.`)
       }
     }
@@ -88,8 +88,8 @@ export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
     // same amount of black nodes. We make use of the function's return value
     // to calculate the amount of black nodes in the children and compare the
     // results.
-    const blackCountLeft = node.left !== null ? visit(left) : 0;
-    const blackCountRight = node.right !== null ? visit(right) : 0;
+    const blackCountLeft = node.left !== undefined ? visit(left) : 0;
+    const blackCountRight = node.right !== undefined ? visit(right) : 0;
     if (blackCountLeft !== blackCountRight) {
       throw new Error(`The amount of black nodes on the left of node with value ${node.value} does not equal the amount of black nodes on the right`)
     }
@@ -98,7 +98,7 @@ export function checkRBTreeInvariants<T, K>(this: RBTreeIndex<T, K>): void {
     return blackCountLeft + node.color === RBColor.Black ? 1 : 0;
   }
 
-  visit(this.root as RBNode<T> | null);
+  visit(this.root as RBNode<T> | undefined);
 }
 
 export function checkInvariants<T>(collection: Collection<T>) {

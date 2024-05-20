@@ -26,14 +26,14 @@ export class VectorCursor<T> extends CursorBase<T> {
 
   public next() {
     if (this._index === this.vector._elementCount - 1) {
-      return null;
+      return;
     }
     return new VectorCursor<T>(this.vector, this._index + 1);
   }
 
   public prev() {
     if (this._index === 0) {
-      return null;
+      return;
     }
     return new VectorCursor<T>(this.vector, this._index - 1);
   }

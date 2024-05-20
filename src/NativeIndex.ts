@@ -173,11 +173,10 @@ export class NativeIndex<T, K extends PropertyKey = T & PropertyKey> implements 
     return this.mapping[key] !== undefined;
   }
 
-  public findKey(key: K): NativeIndexCursor<T, K> | null {
-    if (this.mapping[key] === undefined) {
-      return null;
+  public findKey(key: K): NativeIndexCursor<T, K> | undefined {
+    if (this.mapping[key] !== undefined) {
+      return new NativeIndexCursor(this, key);
     }
-    return new NativeIndexCursor(this, key);
   }
 
   public clone(): NativeIndex<T, K> {

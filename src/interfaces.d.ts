@@ -179,7 +179,7 @@ export interface Index<T, K = T> extends Collection<T> {
    * Similar to `Dict.getValue`, except that it returns the pair that was
    * inserted in the collection.
    */
-  findKey(key: K): Cursor<T> | null;
+  findKey(key: K): Cursor<T> | undefined;
 
   /**
    * Delete a pair from the underlying collection that has the given key as key.
@@ -195,12 +195,12 @@ export interface SortedIndex<T, K = T> extends Index<T, K> {
   /**
    * Returns the value that is just below the given value, if any.
    */
-  getGreatestLowerBound(key: K): Cursor<T> | null;
+  getGreatestLowerBound(key: K): Cursor<T> | undefined;
 
   /**
    * Return the value that is just above the given value, if any.
    */
-  getLeastUpperBound(key: K): Cursor<T> | null;
+  getLeastUpperBound(key: K): Cursor<T> | undefined;
 }
 
 /**
@@ -235,14 +235,14 @@ export interface Cursor<T> {
    *
    * If the collection does not specify an order, this method will not exist.
    */
-  next?(): Cursor<T> | null;
+  next?(): Cursor<T> | undefined;
 
   /**
    * Get a reference to the cursor that is immediately before to this one. 
    *
    * If the collection does not specify an order, this method will not exist.
    */
-  prev?(): Cursor<T> | null;
+  prev?(): Cursor<T> | undefined;
 
 }
 

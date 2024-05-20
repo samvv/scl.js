@@ -1,18 +1,18 @@
 
-import type { List, Range } from "./interfaces.js";
+import type { Cursor, List, Range } from "./interfaces.js";
 import { CursorBase, RangeBase } from "./util.js";
 
 export class DLNode<T> extends CursorBase<T> {
 
-  constructor(public value: T, public _prevNode: DLNode<T> | null = null, public _nextNode: DLNode<T> | null = null) {
+  constructor(public value: T, public _prevNode?: DLNode<T>, public _nextNode?: DLNode<T>) {
     super();
   }
 
-  public next(): DLNode<T> | null {
+  public next(): DLNode<T> | undefined {
     return this._nextNode;
   }
 
-  public prev(): DLNode<T> | null {
+  public prev(): DLNode<T> | undefined {
     return this._prevNode;
   }
 
@@ -20,7 +20,7 @@ export class DLNode<T> extends CursorBase<T> {
 
 export class DoubleLinkedListRange<T> extends RangeBase<T> {
 
-  constructor(protected _startNode: DLNode<T> | null, protected _endNode: DLNode<T> | null, public readonly reversed: boolean) {
+  constructor(protected _startNode: DLNode<T> | undefined, protected _endNode: DLNode<T> | undefined, public readonly reversed: boolean) {
     super();
   }
 
@@ -32,7 +32,7 @@ export class DoubleLinkedListRange<T> extends RangeBase<T> {
 
   public *cursors(): IterableIterator<DoubleLinkedListCursor<T>> {
     let node = this._startNode;
-    while (node !== null) {
+    while (node !== undefined) {
       yield node;
       if (node === this._endNode) {
         break;
@@ -48,7 +48,7 @@ export class DoubleLinkedListRange<T> extends RangeBase<T> {
   get size(): number {
     let count = 0;
     let node = this._startNode;
-    while (node !== null) {
+    while (node !== undefined) {
       count++;
       if (node === this._endNode) {
         break;
@@ -112,12 +112,12 @@ export class DoubleLinkedList<T> implements List<T> {
   /**
    * @ignore
    */
-  public _firstNode: DLNode<T> | null = null;
+  public _firstNode?: DLNode<T>;
 
   /**
    * @ignore
    */
-  public _lastNode: DLNode<T> | null = null;
+  public _lastNode?: DLNode<T>;
 
   /**
    * @ignore
@@ -147,7 +147,7 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public insertBefore(pos: DLNode<T>, el: T): DoubleLinkedListCursor<T> {
-    if (pos._prevNode === null) {
+    if (pos._prevNode === undefined) {
       return this.prepend(el);
     } else {
       const newNode = new DLNode(el, pos._prevNode, pos);
@@ -159,14 +159,14 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public first(): T {
-    if (this._firstNode === null) {
+    if (this._firstNode === undefined) {
       throw new Error(`Cannot get first element: collection is empty.`);
     }
     return this._firstNode.value;
   }
 
   public last(): T {
-    if (this._lastNode === null) {
+    if (this._lastNode === undefined) {
       throw new Error(`Cannot get last element: collection is empty.`);
     }
     return this._lastNode.value;
@@ -177,7 +177,7 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public insertAfter(pos: DLNode<T>, el: T): DoubleLinkedListCursor<T> {
-    if (pos._nextNode === null) {
+    if (pos._nextNode === undefined) {
       return this.append(el);
     } else {
       const newNode = new DLNode<T>(el, pos, pos._nextNode);
@@ -189,9 +189,9 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public prepend(el: T): DoubleLinkedListCursor<T> {
-    const newNode = new DLNode<T>(el, null, this._firstNode);
+    const newNode = new DLNode<T>(el, undefined, this._firstNode);
     this._firstNode = newNode;
-    if (this._lastNode === null) {
+    if (this._lastNode === undefined) {
       this._lastNode = newNode;
     }
     ++this._size;
@@ -199,8 +199,8 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public append(el: T): DoubleLinkedListCursor<T> {
-    const newNode = new DLNode<T>(el, this._lastNode, null);
-    if (this._firstNode === null) {
+    const newNode = new DLNode<T>(el, this._lastNode, undefined);
+    if (this._firstNode === undefined) {
       this._firstNode = newNode;
     } else {
       this._lastNode!._nextNode = newNode;
@@ -212,7 +212,7 @@ export class DoubleLinkedList<T> implements List<T> {
 
   public has(el: T): boolean {
     let node = this._firstNode;
-    while (node !== null) {
+    while (node !== undefined) {
       if (node.value === el) {
         return true;
       }
@@ -223,7 +223,7 @@ export class DoubleLinkedList<T> implements List<T> {
 
   public *[Symbol.iterator](): IterableIterator<T> {
     let node = this._firstNode;
-    while (node !== null) {
+    while (node !== undefined) {
       yield node.value;
       node = node._nextNode;
     }
@@ -237,7 +237,7 @@ export class DoubleLinkedList<T> implements List<T> {
     let node = this._firstNode!;
     while (position > 0) {
       node = node._nextNode!;
-      if (node === null) {
+      if (node === undefined) {
         throw new RangeError(`Cannot get element at position ${position}: index out of bounds.`);
       }
       --position;
@@ -250,10 +250,10 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public deleteAt(position: DLNode<T>): void {
-    if (position._prevNode !== null) {
+    if (position._prevNode !== undefined) {
       position._prevNode._nextNode = position._nextNode;
     }
-    if (position._nextNode !== null) {
+    if (position._nextNode !== undefined) {
       position._nextNode._prevNode = position._prevNode;
     }
     --this._size;
@@ -267,7 +267,7 @@ export class DoubleLinkedList<T> implements List<T> {
 
   public delete(el: T): boolean {
     let node = this._firstNode;
-    while (node !== null) {
+    while (node !== undefined) {
       if (node.value === el) {
         this.deleteAt(node);
         return true;
@@ -280,7 +280,7 @@ export class DoubleLinkedList<T> implements List<T> {
   public deleteAll(el: T): number {
     let count = 0;
     let node = this._firstNode;
-    while (node !== null) {
+    while (node !== undefined) {
       if (node.value === el) {
         this.deleteAt(node);
         count++;
@@ -291,7 +291,7 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public rest(): List<T> {
-    if (this._firstNode === null) {
+    if (this._firstNode === undefined) {
       throw new Error(`Cannot get rest of list: collection is empty`);
     }
     const list = new DoubleLinkedList<T>();
@@ -302,14 +302,22 @@ export class DoubleLinkedList<T> implements List<T> {
   }
 
   public clear(): void {
-    this._firstNode = null;
-    this._lastNode = null;
+    delete this._firstNode;
+    delete this._lastNode;
     this._size = 0;
   }
 
- public clone(): DoubleLinkedList<T> {
-   return new DoubleLinkedList<T>(this);
- }
+  public clone(): DoubleLinkedList<T> {
+    return new DoubleLinkedList<T>(this);
+  }
+
+  public begin(): Cursor<T> | undefined {
+    return this._firstNode;
+  }
+
+  public end(): Cursor<T> | undefined {
+    return this._lastNode;
+  }
 
 }
 

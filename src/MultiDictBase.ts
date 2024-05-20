@@ -25,7 +25,7 @@ export abstract class MultiDictBase<K, V> implements MultiDict<K, V> {
     return this.index.hasKey(key);
   }
 
-  public findKey(key: K): Cursor<[K, V]> | null {
+  public findKey(key: K): Cursor<[K, V]> | undefined {
     return this.index.findKey(key);
   }
 

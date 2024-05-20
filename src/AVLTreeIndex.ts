@@ -11,9 +11,9 @@ export class AVLNode<T> extends BSNode<T> {
 
   constructor(
     value: T,
-    parent: AVLNode<T> | null = null,
-    public left: AVLNode<T> | null = null,
-    public right: AVLNode<T> | null =  null,
+    parent: AVLNode<T> | undefined = undefined,
+    public left: AVLNode<T> | undefined = undefined,
+    public right: AVLNode<T> | undefined =  undefined,
     public balance: number = 0
   ) {
     super(parent, value, left, right);
@@ -257,13 +257,13 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
     const t2 = Y.left;
     const t3 = Y.right;
     Z.left = t3;
-    if (t3 !== null) {
+    if (t3 !== undefined) {
       t3.parent = Z;
     }
     Y.right = Z;
     Z.parent = Y;
     X.right = t2;
-    if (t2 !== null) {
+    if (t2 !== undefined) {
       t2.parent = X;
     }
     if (X === this.root) {
@@ -300,13 +300,13 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
     const t2 = Y.left;
     const t3 = Y.right;
     Z.right = t2;
-    if (t2 !== null) {
+    if (t2 !== undefined) {
       t2.parent = Z;
     }
     Y.left =  Z;
     Z.parent = Y;
     X.left = t3;
-    if (t3 !== null) {
+    if (t3 !== undefined) {
       t3.parent = X;
     }
     if (X === this.root) {
@@ -348,8 +348,8 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
    * const oldestPersonYoungerThan30 = personsSortedByAge.lowerKey(30)
    * ```
    */
-  public getLeastUpperBound(key: K): AVLTreeIndexCursor<T> | null {
-    return super.getLeastUpperBound(key) as AVLTreeIndexCursor<T> | null;
+  public getLeastUpperBound(key: K): AVLTreeIndexCursor<T> | undefined {
+    return super.getLeastUpperBound(key) as AVLTreeIndexCursor<T> | undefined;
   }
 
   /**
@@ -394,9 +394,9 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
     let node: AVLNode<T> = insertedNode;
 
     for (
-      let parent: AVLNode<T> | null = node.parent as AVLNode<T>;
-      parent !== null;
-      parent = node.parent as AVLNode<T> | null
+      let parent: AVLNode<T> | undefined = node.parent as AVLNode<T>;
+      parent !== undefined;
+      parent = node.parent as AVLNode<T> | undefined
     ) {
 
       if (node === parent.right) {
@@ -494,23 +494,23 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
     this.elementCount--;
 
     while (true) {
-      const parent = node.parent as AVLNode<T> | null;
-      if (node.left === null && node.right === null) {
+      const parent = node.parent as AVLNode<T> | undefined;
+      if (node.left === undefined && node.right === undefined) {
         this.retrace(node);
-        if (parent === null) {
-          this.root = null;
+        if (parent === undefined) {
+          this.root = undefined;
         } else {
           if (node === parent.left) {
-            parent.left = null;
+            parent.left = undefined;
           } else {
-            parent.right = null;
+            parent.right = undefined;
           }
         }
         break;
-      } else if (node.left === null || node.right === null) {
-        const replacement = (node.left !== null ? node.left : node.right) as AVLNode<T>;
+      } else if (node.left === undefined || node.right === undefined) {
+        const replacement = (node.left !== undefined ? node.left : node.right) as AVLNode<T>;
         replacement.parent = parent;
-        if (parent === null) {
+        if (parent === undefined) {
           this.root = replacement;
         } else {
           if (node === parent.left) {
@@ -534,9 +534,9 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
   private retrace(N: AVLNode<T>) {
 
     for (
-      let X = N.parent as AVLNode<T> | null;
-      X !== null;
-      X = N.parent as AVLNode<T> | null
+      let X = N.parent as AVLNode<T> | undefined;
+      X !== undefined;
+      X = N.parent as AVLNode<T> | undefined
     ) {
 
       if (N === X.left) {

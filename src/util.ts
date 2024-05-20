@@ -414,19 +414,19 @@ export abstract class CursorBase<T> implements Cursor<T> {
   public abstract value: T;
 
   public *nextAll(): IterableIterator<Cursor<T>> {
-    let cursor: Cursor<T> | null = this;
+    let cursor: Cursor<T> | undefined = this;
     do {
       yield cursor;
       cursor = cursor.next!();
-    } while (cursor !== null);
+    } while (cursor !== undefined);
   }
 
   public *prevAll(): IterableIterator<Cursor<T>> {
-    let cursor: Cursor<T> | null = this;
+    let cursor: Cursor<T> | undefined = this;
     do {
       yield cursor;
       cursor = cursor.prev!();
-    } while (cursor !== null);
+    } while (cursor !== undefined);
   }
 
 }
@@ -496,3 +496,8 @@ export function isObject(val: any): boolean {
 export function isArray(val: any): boolean {
   return Object.prototype.toString.call(val) === "[object Array]";
 }
+
+export function unimplemented(): never {
+  throw new Error(`Trying to call a method that was never meant to be implemented.`);
+}
+
