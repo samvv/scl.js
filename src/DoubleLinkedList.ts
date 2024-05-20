@@ -73,15 +73,15 @@ export type DoubleLinkedListCursor<T> = DLNode<T>;
  * The following table summarises the time complexity of the most commonly used
  * properties.
  *
- * | Property name                                        | Worst-case |
- * |------------------------------------------------------|------------|
- * | {@link DoubleLinkedList.append append()}             | O(1)       |
- * | {@link DoubleLinkedList.at at()}                     | O(n)       |
- * | {@link DoubleLinkedList.insertAfter insertAfter()}   | O(1)       |
- * | {@link DoubleLinkedList.insertBefore insertBefore()} | O(1)       |
- * | {@link DoubleLinkedList.deleteAt deleteAt()}         | O(1)       |
- * | {@link DoubleLinkedList.prepend prepend()}           | O(1)       |
- * | {@link DoubleLinkedList.size size}                   | O(1)       |
+ * | Property name                                          | Worst-case |
+ * |--------------------------------------------------------|------------|
+ * | {@link DoubleLinkedList.append | append()}             | O(1)       |
+ * | {@link DoubleLinkedList.at | at()}                     | O(n)       |
+ * | {@link DoubleLinkedList.insertAfter | insertAfter()}   | O(1)       |
+ * | {@link DoubleLinkedList.insertBefore | insertBefore()} | O(1)       |
+ * | {@link DoubleLinkedList.deleteAt | deleteAt()}         | O(1)       |
+ * | {@link DoubleLinkedList.prepend | prepend()}           | O(1)       |
+ * | {@link DoubleLinkedList.size | size}                   | O(1)       |
  *
  * @see {@link SingleLinkedList}
  *
