@@ -54,11 +54,7 @@ export class BSNode<T> implements BSNodeLike<T> {
 
   public prev(): BSNode<T> | undefined {
     if (this.left !== undefined) {
-      let node = this.left;
-      while (node.right !== undefined) {
-        node = node.right;
-      }
-      return node;
+      return this.left.getRightmost();
     }
     let node: BSNode<T> = this;
     while (node.parent !== undefined && node === node.parent.left) {
