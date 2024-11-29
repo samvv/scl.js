@@ -146,7 +146,7 @@ export class SingleLinkedListRange<T> extends RangeBase<T> {
  * @see {@link DoubleLinkedList}
  * @see {@link Vector}
  *
- * @typeparam T The type of element in this collection.
+ * @typeParam T The type of element in this collection.
  */
 export class SingleLinkedList<T> implements List<T> {
 

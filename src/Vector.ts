@@ -170,7 +170,7 @@ export interface VectorOptions<T> {
  * @see {@link DoubleLinkedList}
  * @see {@link SingleLinkedList}
  *
- * @typeparam T The type of element in the collection.
+ * @typeParam T The type of element in the collection.
  */
 export class Vector<T> implements Sequence<T> {
 

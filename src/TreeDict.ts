@@ -86,8 +86,8 @@ export interface TreeDictOptions<K, V> {
  * @see {@link HashDict} for a fast, unordered version of this collection.
  * @see {@link TreeMultiDict} when you need to store multiple items.
  *
- * @typeparam K The type of key of a given entry.
- * @typeparam V The type of value associated with the given key.
+ * @typeParam K The type of key of a given entry.
+ * @typeParam V The type of value associated with the given key.
  */
 export class TreeDict<K, V> extends RBTreeDict<K, V> {
 

@@ -23,7 +23,7 @@ import DoubleLinkedList, {DoubleLinkedListCursor} from "./DoubleLinkedList.js";
  * | {@link Queue.pop pop()}       | O(1)       |
  * | {@link Queue.size size}       | O(1)       |
  *
- * @typeparam T The type of element in this queue.
+ * @typeParam T The type of element in this queue.
  *
  * @see {@link Stack}
  * @see {@link PriorityQueue}

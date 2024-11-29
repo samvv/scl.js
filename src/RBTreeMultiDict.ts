@@ -60,8 +60,8 @@ import { RBTreeIndex } from "./RBTreeIndex.js";
  * @see {@link TreeDict} when you need your keys to be unique.
  * @see {@link TreeManyDict} when you want the values to be unique but not the keys.
  *
- * @typeparam K The type of key of a given entry.
- * @typeparam V The type of value associated with the given key.
+ * @typeParam K The type of key of a given entry.
+ * @typeParam V The type of value associated with the given key.
  */
 export class RBTreeMultiDict<K, V> extends MultiDictBase<K, V> {
 

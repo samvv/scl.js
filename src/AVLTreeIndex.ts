@@ -207,8 +207,8 @@ export type AVLTreeIndexCursor<T> = AVLNode<T>;
  * [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol
  * [2]: https://en.wikipedia.org/wiki/Deterministic_finite_automaton
  *
- * @typeparam T The type of element that will be stored
- * @typeparam K The type of key used to index
+ * @typeParam T The type of element that will be stored
+ * @typeParam K The type of key used to index
  */
 export class AVLTreeIndex<T, K = T> extends BST<T, K> {
 

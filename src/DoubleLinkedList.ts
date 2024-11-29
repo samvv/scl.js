@@ -88,7 +88,7 @@ export type DoubleLinkedListCursor<T> = DLNode<T>;
  *
  * @see {@link SingleLinkedList}
  *
- * @typeparam T The type of element in this collection.
+ * @typeParam T The type of element in this collection.
  */
 export class DoubleLinkedList<T> implements List<T> {
 

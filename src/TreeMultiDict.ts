@@ -56,8 +56,8 @@ import { RBTreeMultiDict } from "./RBTreeMultiDict.js"
  * @see {@link HashMultiDict} for a fast, unordered version of this collection.
  * @see {@link TreeDict} when you need your keys to be unique.
  *
- * @typeparam K The type of key of a given entry.
- * @typeparam V The type of value associated with the given key.
+ * @typeParam K The type of key of a given entry.
+ * @typeParam V The type of value associated with the given key.
  */
 export class TreeMultiDict<K, V> extends RBTreeMultiDict<K, V> {
 

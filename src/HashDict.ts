@@ -59,8 +59,8 @@ export interface HashDictOptions<K, V> extends HashIndexOptions<[K, V], K> {
  * assert.strictEqual(d.getValue(1), 'bar')
  * ```
  *
- * @typeparam K The type of key of a given entry.
- * @typeparam V The type of value associated with the given key.
+ * @typeParam K The type of key of a given entry.
+ * @typeParam V The type of value associated with the given key.
  */
 export class HashDict<K, V> extends DictBase<K, V> {
 

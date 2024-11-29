@@ -2,7 +2,7 @@
 /**
  * Base interface for any data structure that contains multiple elements.
  *
- * @typeparam T The type of element in the collection.
+ * @typeParam T The type of element in the collection.
  */
 export interface Collection<T> {
 
@@ -385,7 +385,7 @@ export interface Grid<T> {
  * 1
  * </pre>
  *
- * @typeparam T The type of element in the list.
+ * @typeParam T The type of element in the list.
  */
 export interface List<T> extends Sequence<T> {
 

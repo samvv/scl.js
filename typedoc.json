@@ -2,9 +2,6 @@
   "entryPoints": [
     "src/index.ts"
   ],
-  "includes": [
-    "src"
-  ],
   "exclude": [
     "src/test"
   ],

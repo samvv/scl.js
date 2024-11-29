@@ -19,7 +19,7 @@ import { SingleLinkedList } from "./SingleLinkedList.js";
  * | {@link Stack.pop pop()}       | O(1)       |
  * | {@link Stack.size size}       | O(1)       |
  *
- * @typeparam T The type of element in this queue.
+ * @typeParam T The type of element in this queue.
  *
  * @see {@link Queue}
  * @see {@link PriorityQueue}
