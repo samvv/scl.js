@@ -1,7 +1,5 @@
 #!/bin/sh
 
-. "$(dirname "$0")/_/husky.sh"
-
 if [ -f '.should-update-docs' ] && [ ! -f '.is-generating-docs' ]; then
   touch .is-generating-docs
   npm run build-docs
