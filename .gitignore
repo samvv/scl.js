@@ -6,4 +6,3 @@ scl-*.tgz
 dist/
 lib/
 coverage/
-docs/
