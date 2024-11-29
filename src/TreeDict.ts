@@ -8,7 +8,21 @@ import { RBTreeDict } from "./RBTreeDict.js";
  * @see {@link TreeDict}
  * @see {@link TreeMultiDict}
  */
-export interface TreeDictOptions<K, V> extends BSTreeIndexOptions<[K, V], K> {
+export interface TreeDictOptions<K, V> {
+
+  /**
+   * An iterable that will be consumed to fill the collection.
+   */
+  elements?: Iterable<[K, V]>;
+
+  /**
+   * Compares two keys and returns whether the first key is less than the
+   * second.
+   *
+   * If left unspecified, a default function will be chosen that works on most
+   * keys.
+   */
+  compareKeys?: (a: K, b: K) => boolean;
 
   /**
    * Compares two values in the dictionary and returns whether the values are

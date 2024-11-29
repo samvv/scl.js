@@ -231,11 +231,17 @@ export interface BSTreeIndexOptions<T, K = T> {
   isEqual?: (a: T, b: T) => boolean;
 
   /**
-   * Set to `false` to prevent an element with the same key to be added to the
-   * collection.
+   * What to do when an element with the same key (according to [compareKeys]) is added.
+   *
+   * @see [ResolveAction]
    */
   onDuplicateKeys?: ResolveAction;
 
+  /**
+   * What to do when an identical element (according to [isEqual]) is added.
+   *
+   * @see [ResolveAction]
+   */
   onDuplicateElements?: ResolveAction;
 
 }
@@ -402,20 +408,6 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
     left.right = node;
     return left;
   }
-
-  // public getLeftmost(node: BSNode<T>): BSNode<T> {
-  //   while (node.left !== null) {
-  //     node = node.left;
-  //   }
-  //   return node;
-  // }
-
-  // protected getRightmost(node: BSNode<T>): BSNode<T> {
-  //   while (node.left !== null) {
-  //     node = node.left;
-  //   }
-  //   return node;
-  // }
 
   /**
    * This method always returns the topmost node that contains the given key,
