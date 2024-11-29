@@ -2,6 +2,9 @@
 import type { Cursor, List, Range } from "./interfaces.js";
 import { CursorBase, RangeBase } from "./util.js";
 
+/**
+ * @ignore
+ */
 export class DLNode<T> extends CursorBase<T> {
 
   constructor(public value: T, public _prevNode?: DLNode<T>, public _nextNode?: DLNode<T>) {
