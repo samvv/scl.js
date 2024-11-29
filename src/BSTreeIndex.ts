@@ -231,16 +231,16 @@ export interface BSTreeIndexOptions<T, K = T> {
   isEqual?: (a: T, b: T) => boolean;
 
   /**
-   * What to do when an element with the same key (according to [compareKeys]) is added.
+   * What to do when an element with the same key (according to [[compareKeys]]) is added.
    *
-   * @see [ResolveAction]
+   * @see [[ResolveAction]]
    */
   onDuplicateKeys?: ResolveAction;
 
   /**
-   * What to do when an identical element (according to [isEqual]) is added.
+   * What to do when an identical element (according to [[isEqual]]) is added.
    *
-   * @see [ResolveAction]
+   * @see [[ResolveAction]]
    */
   onDuplicateElements?: ResolveAction;
 
