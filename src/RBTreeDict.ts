@@ -5,7 +5,7 @@ import { TreeDictOptions } from "./TreeDict.js";
 import { isEqual, isIterable, lessThan } from "./util.js";
 
 function parseTreeDictOptions<K, V>(arg0: Iterable<[K, V]> | TreeDictOptions<K, V>) {
-  let opts: TreeDictOptions<K, V> & { elements?: Iterable<[K, V]> }
+  const opts: TreeDictOptions<K, V> & { elements?: Iterable<[K, V]> }
     = isIterable(arg0)
       ? { elements: arg0 }
       : arg0;
