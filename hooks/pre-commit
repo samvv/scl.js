@@ -1,7 +1,5 @@
 #!/bin/sh
 
-. "$(dirname "$0")/_/husky.sh"
-
 # Check whether source files actually changed. If so, we will need to rebuild
 # the documentation.
 CHANGED=$(git diff-index --cached --name-only HEAD -- src/*.ts)
