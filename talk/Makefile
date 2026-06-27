@@ -1,7 +1,7 @@
 
 all: main.html
 	mkdir -p ../docs/talk
-	cp *.html ../docs/talk/
+	cp *.html *.png ../docs/talk/
 
 %.html: %.md
 	marp --html $<
