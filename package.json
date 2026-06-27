@@ -35,6 +35,7 @@
     "xxhashjs": "^0.2.2"
   },
   "scripts": {
+    "prepare": "tsc",
     "watch": "mocha --watch lib/test --require source-map-support/register",
     "preinstall": "git config core.hooksPath hooks",
     "lint": "eslint . --ext .ts",
