@@ -249,11 +249,15 @@ export interface Cursor<T> {
 /**
  * A range is a well-defined sequence of elements that are part of a collection.
  *
+ * A range can always be iterated over with the `[Symbol.iterator]` method.
+ *
  * Traversing a range that is being mutated results is undefined behavior (with
  * some exceptions). To be safe, you need to manually make a copy of the
  * elements in the range before adding or removing elements.
  */
-export interface Range<T> {
+export type Range<T> = Iterable<T> | ProperRange<T>;
+
+export interface ProperRange<T> {
 
   /**
    * Get how many elements are in this range.
