@@ -49,4 +49,5 @@ export { HashDict } from "./HashDict.js";
 export { HashMultiDict } from "./HashMultiDict.js";
 export { TreeDict } from "./TreeDict.js";
 export { TreeMultiDict } from "./TreeMultiDict.js";
+export { QuadTree, Rect, QuadTreeOptions, QuadTreeCursor } from "./QuadTree.js";
 
