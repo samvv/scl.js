@@ -138,24 +138,24 @@ export class QuadTree<T> implements Index<[Vec2, T], Vec2> {
 
     for (;;) {
 
-      const { topLeft, bottomRight } = curr.shape;
+      const { top, left, bottom, right } = curr.shape;
 
-      if  (Math.abs(curr.shape.topLeft[0] - curr.shape.bottomRight[0]) <= this.minX
-          && Math.abs(curr.shape.topLeft[1] - curr.shape.bottomRight[1]) <= this.minY) {
+      if  (Math.abs(left - right) <= this.minX
+          && Math.abs(top - bottom) <= this.minY) {
         const pair: [Vec2, T] = [point, value];
         curr.values.push(pair);
         this.count++;
         return [ true, new QuadTreeCursor(pair) ];
       }
 
-      if ((topLeft[0] + bottomRight[0]) / 2 >= point[0]) {
+      if ((left + right) / 2 >= point[0]) {
 
-        if ((topLeft[1] + bottomRight[1]) / 2 >= point[1]) {
+        if ((top + bottom) / 2 >= point[1]) {
           if (curr.topLeft === undefined) {
             curr.topLeft = new Node<T>(
               new Rect(
-                [ topLeft[0], topLeft[1] ],
-                [ (topLeft[0] + bottomRight[0]) / 2, (topLeft[1] + bottomRight[1]) / 2 ],
+                [ left, top ],
+                [ (left + right) / 2, (top + bottom) / 2 ],
               )
             );
           }
@@ -164,8 +164,8 @@ export class QuadTree<T> implements Index<[Vec2, T], Vec2> {
           if (curr.bottomLeft === undefined) {
             curr.bottomLeft = new Node<T>(
               new Rect(
-                [ topLeft[0], (topLeft[1] + bottomRight[1]) / 2 ],
-                [ (topLeft[0] + bottomRight[0]) / 2, bottomRight[1] ],
+                [ left, (top + bottom) / 2 ],
+                [ (left + right) / 2, bottom ],
               )
             );
           }
@@ -174,12 +174,12 @@ export class QuadTree<T> implements Index<[Vec2, T], Vec2> {
 
       } else {
 
-        if ((topLeft[1] + bottomRight[1]) / 2 >= point[1]) {
+        if ((top + bottom) / 2 >= point[1]) {
           if (curr.topRight === undefined) {
             curr.topRight = new Node<T>(
               new Rect(
-                [ (topLeft[0]  + bottomRight[0]) / 2, topLeft[1] ],
-                [ bottomRight[0], (topLeft[1] + bottomRight[1]) / 2 ],
+                [ (left  + right) / 2, top ],
+                [ right, (top + bottom) / 2 ],
               )
             );
           }
@@ -188,8 +188,8 @@ export class QuadTree<T> implements Index<[Vec2, T], Vec2> {
           if (curr.bottomRight === undefined) {
             curr.bottomRight = new Node<T>(
               new Rect(
-                [ (topLeft[0]  + bottomRight[0]) / 2, (topLeft[1] + bottomRight[1]) / 2 ],
-                [ bottomRight[0], bottomRight[1] ],
+                [ (left + right) / 2, (top + bottom) / 2 ],
+                [ right, bottom ],
               )
             );
           }
