@@ -5,6 +5,10 @@ export function isIterable<T = any>(value: any): value is Iterable<T> {
   return Symbol.iterator in Object(value);
 }
 
+export function todo(): never {
+  throw new Error(`You are trying to use a feature that has not been implemented yet.`);
+}
+
 export enum ResolveAction {
   Error,
   Ignore,
