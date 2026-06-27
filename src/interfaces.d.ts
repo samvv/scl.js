@@ -98,7 +98,7 @@ export interface Collection<T> {
 
 }
 
-export type AddResult<T> = [boolean, Cursor<T>];
+export type AddResult<T, C extends Cursor<T> = Cursor<T>> = [boolean, C];
 
 /**
  * Represents any collection that has an order defined on its elements.
