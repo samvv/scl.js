@@ -13,6 +13,8 @@ import TreeMultiDict from "../TreeMultiDict.js";
 import Vector from "../Vector.js";
 import { RBTreeDict } from "../RBTreeDict.js";
 import RBTreeMultiDict from "../RBTreeMultiDict.js";
+import { assert, isProperRange } from "../util.js";
+import { Range } from "../interfaces.js";
 
 type Newable<T> = { new (...args: any[]): T; }
 
@@ -227,3 +229,9 @@ export function test<C>(title: string, execute: (collection: C) => void) {
     willExecute: false,
   })
 }
+
+export function getSize<T>(range: Range<T>): number {
+  assert(isProperRange(range));
+  return range.size;
+}
+

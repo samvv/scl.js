@@ -1,7 +1,7 @@
 
 import { expect } from "chai";
 import { DictLike } from "../interfaces.js";
-import { test } from "./_helpers.js";
+import { getSize as getRangeSize, test } from "./_helpers.js";
 
 test<DictLike<number, number>>("DictLike.size increases its size when new entries are added", dict => {
   expect(dict.size).to.equal(0);
@@ -46,13 +46,13 @@ test<DictLike<number, number>>("DictLike.clear() clear the entire dictionary", d
 
 test<DictLike<number, number>>("DictLike.toRange().size returns the correct size", dict => {
   expect(dict.size).to.equal(0);
-  expect(dict.toRange().size).to.equal(0);
+  expect(getRangeSize(dict.toRange())).to.equal(0);
   dict.add([1, 2]);
   expect(dict.size).to.equal(1);
-  expect(dict.toRange().size).to.equal(1);
+  expect(getRangeSize(dict.toRange())).to.equal(1);
   dict.add([3, 4]);
   expect(dict.size).to.equal(2);
-  expect(dict.toRange().size).to.equal(2);
+  expect(getRangeSize(dict.toRange())).to.equal(2);
 });
 
 test<DictLike<number, number>>("DictLike.delete() deletes at most one element", dict => {

@@ -1,11 +1,12 @@
 
 import { expect } from "chai";
-import { Collection } from "../interfaces.js";
+import { Collection, Range } from "../interfaces.js";
 import { checkInvariants } from "./invariants.js";
-import { test } from "./_helpers.js";
+import { getSize, test } from "./_helpers.js";
 
 import numbers1 from "./data/numbers1.json" with { "type": "json" };
 import numbers2 from "./data/numbers2.json" with { "type": "json" };
+import { assert, isProperRange } from "../util.js";
 
 test("Collection.add() returns a cursor to the added element", (coll: Collection<number>) => {
   const [added1, pos1] = coll.add(1);
@@ -192,13 +193,12 @@ test('Collection.clone() creates a copy that is not dependant on the first colle
   expect(cloned.has(11)).to.be.false
 });
 
-
 test("Collection.toRange().size returns the correct size", (coll: Collection<string>) => {
-  expect(coll.toRange().size).to.equal(0);
+  expect(getSize(coll.toRange())).to.equal(0);
   coll.add("a");
-  expect(coll.toRange().size).to.equal(1);
+  expect(getSize(coll.toRange())).to.equal(1);
   coll.add("b");
-  expect(coll.toRange().size).to.equal(2);
+  expect(getSize(coll.toRange())).to.equal(2);
   coll.add("c");
-  expect(coll.toRange().size).to.equal(3);
+  expect(getSize(coll.toRange())).to.equal(3);
 });

@@ -4,7 +4,7 @@ import { test } from "./_helpers.js"
 import { SortedIndex } from "../interfaces.js";
 
 import numbers1 from "./data/numbers1.json" with { "type": "json" };
-import { Newable, ResolveAction } from "../util.js";
+import { assert, isProperRange, Newable, ResolveAction } from "../util.js";
 import { checkInvariants } from "./invariants.js";
 
 test<SortedIndex<number>>("SortedIndex.add() stores elements in the correct order", index => {
@@ -22,7 +22,9 @@ test<SortedIndex<number>>("SortedIndex.toRange() can reverse-iterate over elemen
   index.add(2);
   index.add(3);
   index.add(4);
-  expect([...index.toRange().reverse!()]).to.deep.equal([5, 4, 3, 2, 1]);
+  const all = index.toRange();
+  assert(isProperRange(all));
+  expect([...all.reverse!()]).to.deep.equal([5, 4, 3, 2, 1]);
 });
 
 test<SortedIndex<number>>("SortedIndex.delete() deletes elements while retaining order", index => {
