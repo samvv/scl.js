@@ -231,7 +231,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
     }
     return bucket
       .toRange()
-      .filter((cursor: Cursor<T>) => this.keysEqual(this.getKey(cursor.value), key));
+      .filter(element => this.keysEqual(this.getKey(element), key));
   }
 
   public add(element: T): AddResult<T> {
@@ -286,8 +286,8 @@ export class HashIndex<T, K = T> implements Index<T, K> {
   }
 
   public has(element: T): boolean {
-    for (const cursor of this.equalKeys(this.getKey(element)).cursors()) {
-      if (this.elementsEqual(cursor.value, element)) {
+    for (const cursor of this.equalKeys(this.getKey(element))) {
+      if (this.elementsEqual(cursor, element)) {
         return true;
       }
     }

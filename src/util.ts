@@ -1,5 +1,5 @@
 
-import type { Range, Cursor } from "./interfaces.js";
+import type { Range, Cursor, ProperRange } from "./interfaces.js";
 
 export function isIterable<T = any>(value: any): value is Iterable<T> {
   return Symbol.iterator in Object(value);
@@ -7,6 +7,16 @@ export function isIterable<T = any>(value: any): value is Iterable<T> {
 
 export function todo(): never {
   throw new Error(`You are trying to use a feature that has not been implemented yet.`);
+}
+
+export function unimplemented(): never {
+  throw new Error(`Trying to call a method that was deliberately not implemented.`);
+}
+
+export function assert(test: boolean): asserts test {
+  if (!test) {
+    throw new Error(`Assertion failed. See the stack trace for more information.`);
+  }
 }
 
 export enum ResolveAction {
@@ -369,12 +379,12 @@ export function omit<O extends AnyObject, K extends keyof O>(obj: O, ...keys: K[
   return out;
 }
 
-export class EmptyRange<T> implements Range<T> {
+export class EmptyRange<T> implements ProperRange<T> {
 
   constructor(public readonly reversed = false) { }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public filter(predicate: (element: Cursor<T>) => boolean) {
+  public filter(_predicate: (element: T) => boolean) {
     return this;
   }
 
@@ -445,46 +455,47 @@ export abstract class CursorBase<T> implements Cursor<T> {
  * }
  * ```
  */
-export abstract class RangeBase<T> implements Range<T> {
+export abstract class RangeBase<T> implements ProperRange<T> {
 
   public abstract readonly size: number;
 
-  public abstract cursors(): IterableIterator<Cursor<T>>;
-
   public abstract [Symbol.iterator](): IterableIterator<T>;
 
-  public filter(pred: (el: Cursor<T>) => boolean): Range<T> {
+  public filter(pred: (el: T) => boolean): Range<T> {
     return new FilteredRange<T>(this, pred);
   }
 
 }
 
+export function isProperRange(value: any): value is ProperRange<any> {
+  return value instanceof RangeBase;
+}
+
 export class FilteredRange<T> extends RangeBase<T> {
 
-  constructor(public _range: Range<T>, public _pred: (el: Cursor<T>) => boolean) {
+  constructor(public _range: Range<T>, public _pred: (el: T) => boolean) {
     super();
   }
 
   public get size(): number {
+    assert(isProperRange(this._range));
     return this._range.size;
   }
 
-  public *cursors(): IterableIterator<Cursor<T>> {
-    for (const cursor of this._range.cursors()) {
-      if (this._pred(cursor)) {
-        yield cursor;
-      }
-    }
+  public get reversed(): boolean {
+    assert(isProperRange(this._range));
+    return this._range.reversed!;
   }
 
   public reverse(): FilteredRange<T> {
+    assert(isProperRange(this._range));
     return new FilteredRange<T>(this._range.reverse!(), this._pred);
   }
 
   public *[Symbol.iterator](): IterableIterator<T> {
-    for (const cursor of this._range.cursors()) {
-      if (this._pred(cursor)) {
-        yield cursor.value;
+    for (const element of this._range) {
+      if (this._pred(element)) {
+        yield element;
       }
     }
   }
@@ -499,9 +510,5 @@ export function isObject(val: any): boolean {
 
 export function isArray(val: any): boolean {
   return Object.prototype.toString.call(val) === "[object Array]";
-}
-
-export function unimplemented(): never {
-  throw new Error(`Trying to call a method that was never meant to be implemented.`);
 }
 

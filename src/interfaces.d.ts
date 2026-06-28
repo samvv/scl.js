@@ -273,18 +273,11 @@ export interface ProperRange<T> {
   [Symbol.iterator](): IterableIterator<T>;
 
   /**
-   * Return an iterator that provides cursors to inspect or delete the given element. 
-   *
-   * @see  {@link Cursor}
-   */
-  cursors(): IterableIterator<Cursor<T>>;
-
-  /**
    * Filters this range using the given predicate. Iterating over the newly
    * returned range will cause all cursors that did not match the predicate to
    * be omitted.
    */
-  filter?(pred: (element: Cursor<T>) => boolean): Range<T>;
+  filter?(pred: (element: T) => boolean): Range<T>;
 
   /**
    * Indicates whether this range will traverse its elements in reverse order.

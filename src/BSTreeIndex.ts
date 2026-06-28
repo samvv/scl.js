@@ -1,4 +1,4 @@
-import type { AddResult, Range, SortedIndex } from "./interfaces.js";
+import type { AddResult, ProperRange, Range, SortedIndex } from "./interfaces.js";
 import { ResolveAction, isEqual, getKey, isIterable, lessThan } from "./util.js";
 
 export interface BSNodeLike<T> {
@@ -141,7 +141,7 @@ export function equalKeysStrict<T, K>(this: BST<T, K>, key: K): BSNodeRange<T> {
   return new BSNodeRange(min, max, count, false);
 }
 
-export class BSNodeRange<T> implements Range<T> {
+export class BSNodeRange<T> implements ProperRange<T> {
 
   constructor(
     public min: BSNode<T> | undefined,
