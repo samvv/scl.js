@@ -63,8 +63,5 @@
     "map",
     "set"
   ],
-  "license": "MIT",
-  "dependencies": {
-    "reflect-types": "^2.0.0"
-  }
+  "license": "MIT"
 }
