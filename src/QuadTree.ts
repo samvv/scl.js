@@ -244,7 +244,7 @@ export class QuadTree<T> implements Index<[Vec2, T], Vec2> {
       return;
     }
     for (const [point2, data] of node.values) {
-      if (Vec2.isStrictEqual(point, point2)) {
+      if (Vec2.isEqual(point, point2)) {
         yield [point2, data];
       }
     }
@@ -256,7 +256,7 @@ export class QuadTree<T> implements Index<[Vec2, T], Vec2> {
       return;
     }
     for (const pair of node.values) {
-      if (Vec2.isStrictEqual(point, pair[0])) {
+      if (Vec2.isEqual(point, pair[0])) {
         return new QuadTreeCursor(pair);
       }
     }

@@ -3,7 +3,7 @@ export type Vec2 = [x: number, y: number];
 
 export namespace Vec2 {
 
-  export function isStrictEqual(a: Vec2, b: Vec2): boolean {
+  export function isEqual(a: Vec2, b: Vec2): boolean {
     return a[0] === b[0] && a[1] === b[1];
   }
 
