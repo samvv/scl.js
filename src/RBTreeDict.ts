@@ -64,7 +64,7 @@ export class RBTreeDict<K, V> extends DictBase<K, V> {
           elements,
           compareKeys,
           getKey: pair => pair[0],
-          isEqual: (a, b) => valuesEqual(a[1], b[1]),
+          elementsEqual: (a, b) => valuesEqual(a[1], b[1]),
         })
       );
     }

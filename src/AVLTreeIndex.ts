@@ -616,7 +616,7 @@ export class AVLTreeIndex<T, K = T> extends BST<T, K> {
     return new AVLTreeIndex<T, K>({
       compareKeys: this.isKeyLessThan
     , getKey: this.getKey
-    , isEqual: this.isEqual
+    , elementsEqual: this.isEqual
     , onDuplicateKeys: this.onDuplicateKeys
     , onDuplicateElements: this.onDuplicateElements
     , elements: this

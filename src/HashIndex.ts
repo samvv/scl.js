@@ -80,7 +80,7 @@ export interface HashIndexOptions<T, K = T> {
    *
    * If omitted, the {@link hash | built-in hash function} will be used.
    */
-  getHash?: (element: K) => number;
+  hashKey?: (key: K) => number;
 
   /**
    * A predicate determining when two elements are equal.
@@ -186,7 +186,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
    */
   protected elementCount = 0;
 
-  protected getHash: (element: K) => number
+  protected hashKey: (element: K) => number
   protected keysEqual: (a: K, b: K) => boolean
   protected elementsEqual: (a: T, b: T) => boolean
   protected getKey: (value: T) => K;
@@ -203,7 +203,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
     }
     this.keysEqual = opts.keysEqual ?? isEqual;
     this.elementsEqual = opts.elementsEqual ?? isEqual;
-    this.getHash = opts.getHash ?? hash;
+    this.hashKey = opts.hashKey ?? hash;
     this.getKey = opts.getKey ?? defaultGetKey;
     this.onDuplicateKeys = opts.onDuplicateKeys ?? ResolveAction.Error;
     this.onDuplicateElements = opts.onDuplicateElements ?? ResolveAction.Error;
@@ -236,7 +236,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
 
   public add(element: T): AddResult<T> {
     const key = this.getKey(element);
-    const h = this.getHash(key);
+    const h = this.hashKey(key);
     const i = h % this._array.length;
     const bucket = this._array[i] === undefined
       ? this._array[i] = new DoubleLinkedList<T>()
@@ -302,7 +302,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
    * @ignore
    */
   public _getBucket(key: K): Bucket<T> | undefined {
-    const h = this.getHash(key);
+    const h = this.hashKey(key);
     const i = h % this._array.length;
     const bucket = this._array[i];
     if (bucket === undefined) {
@@ -346,7 +346,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
 
   public deleteAll(element: T): number {
     const key = this.getKey(element);
-    const h = this.getHash(key);
+    const h = this.hashKey(key);
     const i = h % this._array.length;
     if (this._array[i] === undefined) {
       return 0;
@@ -367,7 +367,7 @@ export class HashIndex<T, K = T> implements Index<T, K> {
       elements: this,
       capacity: this._array.length,
       elementsEqual: this.elementsEqual,
-      getHash: this.getHash,
+      hashKey: this.hashKey,
       getKey: this.getKey,
       keysEqual: this.keysEqual,
       onDuplicateElements: this.onDuplicateElements,

@@ -108,7 +108,7 @@ export class RBTreeMultiDict<K, V> extends MultiDictBase<K, V> {
       super(
         new RBTreeIndex({
           getKey: pair => pair[0],
-          isEqual: (a, b) => valuesEqual(a[1], b[1]),
+          elementsEqual: (a, b) => valuesEqual(a[1], b[1]),
           onDuplicateKeys: ResolveAction.Insert,
           onDuplicateElements: ResolveAction.Insert,
           ...opts

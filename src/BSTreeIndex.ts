@@ -222,13 +222,12 @@ export interface BSTreeIndexOptions<T, K = T> {
   /**
    * Extracts the key part of the element.
    */
-  getKey?: (elements: T) => K;
-
+  getKey?: (element: T) => K;
 
   /**
    * Used for checking two elements with the same key in the collection.
    */
-  isEqual?: (a: T, b: T) => boolean;
+  elementsEqual?: (a: T, b: T) => boolean;
 
   /**
    * What to do when an element with the same key (according to [[compareKeys]]) is added.
@@ -277,7 +276,7 @@ export abstract class BST<T, K = T> implements SortedIndex<T, K> {
     }
     this.getKey = opts.getKey ?? getKey;
     this.isKeyLessThan = opts.compareKeys ?? lessThan;
-    this.isEqual = opts.isEqual ?? isEqual;
+    this.isEqual = opts.elementsEqual ?? isEqual;
     this.onDuplicateElements = opts.onDuplicateElements ?? ResolveAction.Error;
     this.onDuplicateKeys = opts.onDuplicateKeys ?? ResolveAction.Error;
     for (const element of elements) {
